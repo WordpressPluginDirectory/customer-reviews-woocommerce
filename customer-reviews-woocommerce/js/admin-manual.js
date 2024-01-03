@@ -125,9 +125,10 @@ jQuery(document).ready(function($) {
 				success: function( response ) {
 					jQuery(this).closest( '.cr-send-wa-link-btn' ).removeClass( 'cr-send-wa-btn-spnr' );
 					if ( 0 === response.code ) {
-						jQuery(this).closest( '.cr-send-menu' ).removeClass( 'cr-send-menu-wa' );
-						jQuery(this).closest( '.cr-send-menu' ).addClass( 'cr-send-menu-wa2' );
-						jQuery(this).closest( '.cr-send-menu' ).find( '.cr-send-wa-link-msg' ).html( response.phone );
+						jQuery(this).closest( '.cr-send-menu' ).removeClass( 'cr-send-menu-wa2' );
+						jQuery(this).closest( '.cr-send-menu' ).addClass( 'cr-send-menu-wa4' );
+						jQuery(this).closest( '.cr-send-menu' ).find( '.cr-send-wa-error-msg' ).html( response.message );
+						jQuery( '#post-' + response.order_id + ',#order-' + response.order_id ).find( '.ivole-review-reminder' ).text( response.reminders );
 					} else {
 						jQuery(this).closest( '.cr-send-menu' ).removeClass( 'cr-send-menu-wa2' );
 						jQuery(this).closest( '.cr-send-menu' ).addClass( 'cr-send-menu-wa4' );

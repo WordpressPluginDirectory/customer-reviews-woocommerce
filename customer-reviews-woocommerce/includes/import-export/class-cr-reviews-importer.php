@@ -34,13 +34,25 @@ if (! class_exists('CR_Reviews_Importer')):
 		*/
 		public function handle_upload()
 		{
-			if (! current_user_can('upload_files')) {
+			if ( ! current_user_can( 'manage_options' ) ) {
 				echo wp_json_encode(
 					array(
 						'success' => false,
 						'data'    => array(
 							'message' => __('Permission denied', 'customer-reviews-woocommerce')
 						),
+					)
+				);
+				wp_die();
+			}
+
+			if( ! check_ajax_referer( 'media-form', '_wpnonce', false ) ) {
+				echo wp_json_encode(
+					array(
+						'success' => false,
+						'data'    => array(
+							'message'  => __( 'Error: nonce expired, please reload the page and try again', 'customer-reviews-woocommerce' )
+						)
 					)
 				);
 				wp_die();

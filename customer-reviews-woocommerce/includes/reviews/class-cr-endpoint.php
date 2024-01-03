@@ -521,8 +521,7 @@ if ( ! class_exists( 'CR_Endpoint' ) ) :
 					}
 					// send a coupon to the customer
 					$coupon = CR_Discount_Tiers::get_coupon( $media_count_total );
-					$coupon_enabled = $coupon['is_enabled'];
-					if( $coupon_enabled ) {
+					if ( $coupon['is_enabled'] ) {
 						//qTranslate integration
 						$lang = $order->get_meta( '_user_language', true );
 						$old_lang = '';
@@ -567,76 +566,40 @@ if ( ! class_exists( 'CR_Endpoint' ) ) :
 									$discount_string = trim( strip_tags( CR_Email_Func::cr_price( $discount_amount, array( 'currency' => get_option( 'woocommerce_currency' ) ) ) ) );
 								}
 
-								$ec->replace['customer-first-name'] = $customer_first_name;
-								$ec->replace['customer-last-name'] = $customer_last_name;
-								$ec->replace['customer-name'] = $customer_name;
-								$ec->replace['coupon-code'] = $coupon_code;
-								$ec->replace['discount-amount'] = $discount_string;
-
-								$from_address = get_option( 'ivole_email_from', '' );
-								$from_name = get_option( 'ivole_email_from_name', Ivole_Email::get_blogname() );
-								$footer = get_option( 'ivole_email_footer', '' );
-
-								// check if Reply-To address needs to be added to email
-								$replyto = get_option( 'ivole_coupon_email_replyto', get_option( 'admin_email' ) );
-								if( filter_var( $replyto, FILTER_VALIDATE_EMAIL ) ) {
-									$replyto = $replyto;
+								if ( 'wa' === $coupon['channel'] ) {
+									$wa = new CR_Wtsap( $order_id );
+									$coupon_res = $wa->send_coupon(
+										$customer_first_name,
+										$customer_last_name,
+										$customer_name,
+										$coupon_code,
+										$discount_string,
+										$customer_email,
+										$order_id,
+										$order_date,
+										$order_currency,
+										$order,
+										$discount_type,
+										$discount_amount
+									);
 								} else {
-									$replyto = get_option( 'admin_email' );
+									$coupon_res = $ec->trigger_coupon(
+										$customer_first_name,
+										$customer_last_name,
+										$customer_name,
+										$coupon_code,
+										$discount_string,
+										$customer_email,
+										$order_id,
+										$order_date,
+										$order_currency,
+										$order,
+										$discount_type,
+										$discount_amount
+									);
 								}
 
-								$bcc_address = get_option( 'ivole_coupon_email_bcc', '' );
-								if( !filter_var( $bcc_address, FILTER_VALIDATE_EMAIL ) ) {
-									$bcc_address = '';
-								}
-
-								$message = $ec->get_content();
-								$message = $ec->replace_variables( $message );
-
-								// in case of local email templates, discount amount is expected with '%' or currency sign
-								$mailer = get_option( 'ivole_mailer_review_reminder', 'cr' );
-								if( 'wp' === $mailer ) {
-									$discount_amount = $discount_string;
-								}
-
-								$data = array(
-									'token' => '164592f60fbf658711d47b2f55a1bbba',
-									'shop' => array( "name" => Ivole_Email::get_blogname(),
-										'domain' => Ivole_Email::get_blogurl(),
-										'country' => apply_filters( 'woocommerce_get_base_location', get_option( 'woocommerce_default_country' ) ) ),
-									'email' => array( 'to' => $customer_email,
-										'from' => $from_address,
-										'fromText' => $from_name,
-										'replyTo' => $replyto,
-										'bcc' => $bcc_address,
-										'subject' => $ec->replace_variables( $ec->subject ),
-										'header' => $ec->replace_variables( $ec->heading ),
-										'body' => $message,
-										'footer' => $ec->replace_variables( $ec->footer ) ),
-									'customer' => array( 'firstname' => $customer_first_name,
-										'lastname' => $customer_last_name ),
-									'order' => array( 'id' => strval( $order_id ),
-										'date' => $order_date,
-										'currency' => $order_currency,
-										'items' => CR_Email_Func::get_order_items2( $order, $order_currency ) ),
-									'discount' => array('type' => $discount_type,
-										'amount' => $discount_amount,
-										'code' => $coupon_code ),
-									'colors' => array(
-										'email' => array(
-											"bg" => get_option( 'ivole_email_coupon_color_bg', '#0f9d58' ),
-											'text' => get_option( 'ivole_email_coupon_color_text', '#ffffff' )
-										)
-									),
-									'language' => $ec->language,
-								);
-								$license = get_option( 'ivole_license_key', '' );
-								if( strlen( $license ) > 0 ) {
-									$data['licenseKey'] = $license;
-								}
-								$result = CR_Email_Func::send_email_coupon( $data, false );
-								//error_log( $result );
-								$result = json_decode( $result );
+								$order->add_order_note( 'CR: ' . $coupon_res[1] );
 							}
 						}
 

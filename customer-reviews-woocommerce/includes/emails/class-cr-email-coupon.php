@@ -234,12 +234,6 @@ class CR_Email_Coupon {
 		}
 	}
 
-	/**
-	 * Generate a coupon for the given email
-	 *
-	 * @access public
-	 * @return int|false id of generated coupon
-	 */
 	public function generate_coupon( $to, $review_id, $coupon ) {
 		$prefix = $coupon['cr_coupon_prefix'];
 		$unique_code = ( !empty( $to ) ) ? strtoupper( uniqid( substr( preg_replace( '/[^a-z0-9]/i', '', sanitize_title( $to ) ), 0, 5 ) ) ) : strtoupper( uniqid() );
@@ -314,12 +308,7 @@ class CR_Email_Coupon {
 		}
 		return $coupon_id;
 	}
-	/**
-	 * Get content
-	 *
-	 * @access public
-	 * @return string
-	 */
+
 	public function get_content() {
 		ob_start();
 		//$email_heading = $this->heading;
@@ -331,6 +320,105 @@ class CR_Email_Coupon {
 
 	public function replace_variables( $input ) {
 		return str_replace( $this->find, $this->replace, __( $input ) );
+	}
+
+	public function trigger_coupon( $customer_first_name, $customer_last_name, $customer_name, $coupon_code, $discount_string, $customer_email, $order_id, $order_date, $order_currency, $order, $discount_type, $discount_amount ) {
+		$this->replace['customer-first-name'] = $customer_first_name;
+		$this->replace['customer-last-name'] = $customer_last_name;
+		$this->replace['customer-name'] = $customer_name;
+		$this->replace['coupon-code'] = $coupon_code;
+		$this->replace['discount-amount'] = $discount_string;
+
+		$from_address = get_option( 'ivole_email_from', '' );
+		$from_name = get_option( 'ivole_email_from_name', Ivole_Email::get_blogname() );
+		$footer = get_option( 'ivole_email_footer', '' );
+
+		// check if Reply-To address needs to be added to email
+		$replyto = get_option( 'ivole_coupon_email_replyto', get_option( 'admin_email' ) );
+		if ( filter_var( $replyto, FILTER_VALIDATE_EMAIL ) ) {
+			$replyto = $replyto;
+		} else {
+			$replyto = get_option( 'admin_email' );
+		}
+
+		$bcc_address = get_option( 'ivole_coupon_email_bcc', '' );
+		if ( ! filter_var( $bcc_address, FILTER_VALIDATE_EMAIL ) ) {
+			$bcc_address = '';
+		}
+
+		$message = $this->get_content();
+		$message = $this->replace_variables( $message );
+
+		// in case of local email templates, discount amount is expected with '%' or currency sign
+		$mailer = get_option( 'ivole_mailer_review_reminder', 'cr' );
+		if ( 'wp' === $mailer ) {
+			$discount_amount = $discount_string;
+		}
+
+		$data = array(
+			'token' => '164592f60fbf658711d47b2f55a1bbba',
+			'shop' => array(
+				"name" => Ivole_Email::get_blogname(),
+				'domain' => Ivole_Email::get_blogurl(),
+				'country' => apply_filters( 'woocommerce_get_base_location', get_option( 'woocommerce_default_country' ) )
+			),
+			'email' => array(
+				'to' => $customer_email,
+				'from' => $from_address,
+				'fromText' => $from_name,
+				'replyTo' => $replyto,
+				'bcc' => $bcc_address,
+				'subject' => $this->replace_variables( $this->subject ),
+				'header' => $this->replace_variables( $this->heading ),
+				'body' => $message,
+				'footer' => $this->replace_variables( $this->footer )
+			),
+			'customer' => array(
+				'firstname' => $customer_first_name,
+				'lastname' => $customer_last_name
+			),
+			'order' => array(
+				'id' => strval( $order_id ),
+				'date' => $order_date,
+				'currency' => $order_currency,
+				'items' => CR_Email_Func::get_order_items2( $order, $order_currency )
+			),
+			'discount' => array('type' => $discount_type,
+				'amount' => $discount_amount,
+				'code' => $coupon_code ),
+			'colors' => array(
+				'email' => array(
+					"bg" => get_option( 'ivole_email_coupon_color_bg', '#0f9d58' ),
+					'text' => get_option( 'ivole_email_coupon_color_text', '#ffffff' )
+				)
+			),
+			'language' => $this->language,
+		);
+
+		$license = get_option( 'ivole_license_key', '' );
+		if ( strlen( $license ) > 0 ) {
+			$data['licenseKey'] = $license;
+		}
+
+		$result = CR_Email_Func::send_email_coupon( $data, false );
+		$result = json_decode( $result );
+		if( isset( $result->status ) && $result->status === 'OK' ) {
+			return array(
+				0,
+				sprintf(
+					__( 'Discount coupon %s has been successfully sent to the customer by email.', 'customer-reviews-woocommerce' ),
+					$coupon_code
+				)
+			);
+		} else {
+			return array(
+				1,
+				sprintf(
+					__( 'An error occurred when sending the discount coupon %s to the customer by email.', 'customer-reviews-woocommerce' ),
+					$coupon_code
+				)
+			);
+		}
 	}
 
 }

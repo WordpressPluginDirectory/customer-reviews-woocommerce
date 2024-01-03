@@ -31,6 +31,8 @@ class CR_Wtsap {
 		$this->find['order-date'] = '{order_date}';
 		$this->find['list-products'] = '{list_products}';
 		$this->find['review-form'] = '{review_form}';
+		$this->find['coupon-code'] = '{coupon_code}';
+		$this->find['discount-amount'] = '{discount_amount}';
 
 		// fetch language - either from the plugin's option or from WordPress standard locale
 		if ( 'yes' !== get_option( 'ivole_verified_reviews', 'no' ) ) {
@@ -106,8 +108,8 @@ class CR_Wtsap {
 		$this->language = CR_Email_Func::cr_map_language( $this->language );
 	}
 
-	public function get_review_form( $order_id ) {
-		$data_for_sending = $this->get_data_for_sending( $order_id );
+	public function get_review_form( $order_id, $schedule ) {
+		$data_for_sending = $this->get_data_for_sending( $order_id, $schedule );
 
 		if ( 0 === $data_for_sending[0] ) {
 			$data = $data_for_sending[1];
@@ -148,7 +150,7 @@ class CR_Wtsap {
 		}
 	}
 
-	public function get_data_for_sending( $order_id ) {
+	public function get_data_for_sending( $order_id, $schedule ) {
 		$comment_required = get_option( 'ivole_form_comment_required', 'no' );
 		if( 'no' === $comment_required ) {
 			$comment_required = 0;
@@ -387,22 +389,18 @@ class CR_Wtsap {
 					)
 				),
 				'language' => $this->language,
+				'schedule' => $schedule,
 				'liveMode' => $liveMode,
 				'channel' => 'whatsapp',
-				'phone' => $this->phone
+				'phone' => $this->phone,
+				'licenseKey' => strval( get_option( 'ivole_license_key', '' ) )
 			);
 			//check that array of items is not empty
 			if( 1 > count( $data['order']['items'] ) ) {
 				return array( 7, __( 'Error: the order does not contain any products for which review reminders are enabled in the settings.', 'customer-reviews-woocommerce' ) );
 			}
-			$is_test = false;
 		} else {
 			return array( 8, __( 'Error: invalid order ID', 'customer-reviews-woocommerce' ) );
-		}
-
-		$license = get_option( 'ivole_license_key', '' );
-		if( strlen( $license ) > 0 ) {
-			$data['licenseKey'] = $license;
 		}
 
 		return array( 0, $data );
@@ -521,8 +519,8 @@ class CR_Wtsap {
 		return array( 7, 'Error: no order number provided' );
 	}
 
-	public function send_message( $order_id ) {
-		$data_for_sending = $this->get_data_for_sending( $order_id );
+	public function send_message( $order_id, $schedule ) {
+		$data_for_sending = $this->get_data_for_sending( $order_id, $schedule );
 
 		if ( 0 === $data_for_sending[0] ) {
 			$api_url = 'https://api.cusrev.com/v1/production/review-reminder';
@@ -538,9 +536,111 @@ class CR_Wtsap {
 				'Content-Length: ' . strlen( $data_string ) )
 			);
 			$result = curl_exec( $ch );
+			$result = json_decode( $result );
 			// error_log( print_r($result, true) );
+			if ( isset( $result->status ) && $result->status === 'OK' ) {
+				Ivole_Email::update_reminders_meta( $order_id, $schedule );
+				return array( 0, $result->status );
+			} else {
+				if ( isset( $result->details ) ) {
+					return array( 1, $result->details );
+				} else {
+					return array( 2, 'Unknown error' );
+				}
+			}
 		} else {
 			return $data_for_sending;
+		}
+	}
+
+	public function send_coupon( $customer_first_name, $customer_last_name, $customer_name, $coupon_code, $discount_string, $customer_email, $order_id, $order_date, $order_currency, $order, $discount_type, $discount_amount ) {
+		$billing_country = apply_filters( 'woocommerce_get_base_location', get_option( 'woocommerce_default_country' ) );
+		$shipping_country = apply_filters( 'woocommerce_get_base_location', get_option( 'woocommerce_default_country' ) );
+
+		if( method_exists( $order, 'get_billing_phone' ) ) {
+			$temp_country = $order->get_billing_country();
+			if( strlen( $temp_country ) > 0 ) {
+				$billing_country = $temp_country;
+			}
+			$temp_country = $order->get_shipping_country();
+			if( strlen( $temp_country ) > 0 ) {
+				$shipping_country = $temp_country;
+			}
+			$this->phone = $order->get_billing_phone();
+			$this->phone_country = $billing_country;
+			if ( ! $this->phone && method_exists( $order, 'get_shipping_phone' ) ) {
+				$this->phone = $order->get_shipping_phone();
+				$this->phone_country = $shipping_country;
+			}
+		} else {
+			return;
+		}
+
+		$data = array(
+			'token' => '164592f60fbf658711d47b2f55a1bbba',
+			'shop' => array(
+				"name" => Ivole_Email::get_blogname(),
+				'domain' => Ivole_Email::get_blogurl(),
+				'country' => apply_filters( 'woocommerce_get_base_location', get_option( 'woocommerce_default_country' ) )
+			),
+			'email' => array(
+				'to' => $customer_email,
+				'subject' => 'WA',
+				'header' => 'WA',
+				'body' => 'WA'
+			),
+			'customer' => array(
+				'firstname' => $customer_first_name,
+				'lastname' => $customer_last_name
+			),
+			'order' => array(
+				'id' => strval( $order_id ),
+				'date' => $order_date,
+				'currency' => $order_currency,
+				'items' => CR_Email_Func::get_order_items2( $order, $order_currency )
+			),
+			'discount' => array(
+				'type' => $discount_type,
+				'amount' => $discount_amount,
+				'code' => $coupon_code
+			),
+			'language' => $this->language,
+			'channel' => 'whatsapp',
+			'phone' => $this->phone,
+			'licenseKey' => strval( get_option( 'ivole_license_key', '' ) )
+		);
+
+		$api_url = 'https://api.cusrev.com/v1/production/review-discount';
+
+		$data_string = json_encode( $data );
+		$ch = curl_init();
+		curl_setopt( $ch, CURLOPT_URL, $api_url );
+		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+		curl_setopt( $ch, CURLOPT_CUSTOMREQUEST, "POST" );
+		curl_setopt( $ch, CURLOPT_POSTFIELDS, $data_string );
+		curl_setopt( $ch, CURLOPT_HTTPHEADER, array(
+			'Content-Type: application/json',
+			'Content-Length: ' . strlen( $data_string ) )
+		);
+		$result = curl_exec( $ch );
+		$result = json_decode( $result );
+		// error_log( print_r($result, true) );
+		if( isset( $result->status ) && $result->status === 'OK' ) {
+			return array(
+				0,
+				sprintf(
+					__( 'Discount coupon %s has been successfully sent to the customer by WhatsApp.', 'customer-reviews-woocommerce' ),
+					$coupon_code
+				)
+			);
+		} else {
+			return array(
+				1,
+				sprintf(
+					__( 'An error occurred when sending the discount coupon %s to the customer by WhatsApp.', 'customer-reviews-woocommerce' ),
+					$coupon_code
+				)
+			);
 		}
 	}
 

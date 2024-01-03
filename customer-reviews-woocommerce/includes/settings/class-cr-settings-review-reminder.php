@@ -972,7 +972,7 @@ if ( ! class_exists( 'CR_Review_Reminder_Settings' ) ):
 											case 'channel':
 												echo '<td><select name="' . esc_attr( $field['type'] . '_' . $key . '_' . $count );
 												echo '" id="' . esc_attr( $field['type'] . '_' . $key . '_' . $count ) . '">';
-												echo $this->output_channels( $reminder['channel'] );
+												echo self::output_channels( $reminder['channel'] );
 												echo '</select></td>';
 												break;
 											default:
@@ -1060,7 +1060,7 @@ if ( ! class_exists( 'CR_Review_Reminder_Settings' ) ):
 			<?php
 		}
 
-		public function output_channels( $selected_channel ) {
+		public static function output_channels( $selected_channel ) {
 			$output = '';
 			$available_channels = apply_filters(
 				'cr_available_channels',

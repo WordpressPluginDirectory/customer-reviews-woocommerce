@@ -778,10 +778,12 @@ li.select2-results__option {
 }
 .ivole-new-settings .cr-rtn-crta-table,
 .ivole-new-settings .cr-cus-atts-table,
-.ivole-new-settings .cr-snd-dlay-table {
+.ivole-new-settings .cr-snd-dlay-table,
+.ivole-new-settings .cr-rev-disc-table {
 	width: auto;
 }
-.ivole-new-settings .cr-snd-dlay-table {
+.ivole-new-settings .cr-snd-dlay-table,
+.ivole-new-settings .cr-rev-disc-table {
 	max-width: 675px;
 }
 .ivole-new-settings .cr-cus-atts-table th,
@@ -789,7 +791,9 @@ li.select2-results__option {
 .ivole-new-settings .cr-rtn-crta-table th,
 .ivole-new-settings .cr-rtn-crta-table td,
 .ivole-new-settings .cr-snd-dlay-table th,
-.ivole-new-settings .cr-snd-dlay-table td {
+.ivole-new-settings .cr-snd-dlay-table td,
+.ivole-new-settings .cr-rev-disc-table th,
+.ivole-new-settings .cr-rev-disc-table td {
 	padding: 8px 0 8px 8px;
 }
 .ivole-new-settings .forminp-cr_customer_attributes .cr-cus-atts-table .cr-cus-atts-table-label,
@@ -799,7 +803,8 @@ li.select2-results__option {
 .ivole-new-settings .forminp-cr_sending_delay .cr-snd-dlay-table .cr-snd-dlay-tr input[type=number] {
 	width: 80px;
 }
-.ivole-new-settings .forminp-cr_sending_delay .cr-snd-dlay-table .cr-snd-dlay-tr select {
+.ivole-new-settings .forminp-cr_sending_delay .cr-snd-dlay-table .cr-snd-dlay-tr select,
+.ivole-new-settings .forminp-cr_enable_review_discount .cr-rev-disc-table .cr-rev-disc-table-tr select {
 	width: 100px;
 }
 .ivole-new-settings .forminp-cr_customer_attributes .cr-cus-atts-table .cr-cus-atts-table-type {
@@ -1026,7 +1031,8 @@ li.select2-results__option {
 }
 .ivole-new-settings .cr-cus-atts-table tbody tr:nth-child(odd),
 .ivole-new-settings .cr-rtn-crta-table tbody tr:nth-child(odd),
-.ivole-new-settings .cr-snd-dlay-table tbody tr:nth-child(odd) {
+.ivole-new-settings .cr-snd-dlay-table tbody tr:nth-child(odd),
+.ivole-new-settings .cr-rev-disc-table tbody tr:nth-child(odd) {
 	background-color: #f6f7f7;
 }
 .cr-cus-atts-button-manage {
@@ -1145,6 +1151,8 @@ li.select2-results__option {
 .wc_actions .cr-send-menu .cr-send-wa-fbck .cr-send-wa-fbck-btn,
 .wc_actions .cr-send-menu .cr-send-wa-error .cr-send-wa-error-btn {
 	display: block;
+	height: 25px;
+	line-height: 25px;
 }
 .wc_actions .cr-send-menu .cr-send-wa-cons .cr-send-wa-cons-btn a,
 .wc_actions .cr-send-menu .cr-send-wa-link .cr-send-wa-link-btn a,
@@ -1175,11 +1183,13 @@ li.select2-results__option {
 	margin: 0;
 	background: url(../img/spinner-2x.gif) no-repeat;
 	background-size: 18px 18px;
+	background-position-y: 1px;
 	width: 18px;
 	height: 18px;
 	display: none;
 	text-decoration: none;
 	vertical-align: middle;
+	padding: 2px 0;
 }
 .wc_actions .cr-send-menu .cr-send-wa-cons .cr-send-wa-cons-btn.cr-send-wa-btn-spnr a,
 .wc_actions .cr-send-menu .cr-send-wa-link .cr-send-wa-link-btn.cr-send-wa-btn-spnr a,

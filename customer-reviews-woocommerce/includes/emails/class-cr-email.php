@@ -36,9 +36,9 @@ class Ivole_Email {
 		$this->subject          = strval( get_option( 'ivole_email_subject', '[{site_title}] ' . __( 'Review Your Experience with Us', 'customer-reviews-woocommerce' ) ) );
 		$this->form_header      = strval( get_option( 'ivole_form_header', __( 'How did we do?', 'customer-reviews-woocommerce' ) ) );
 		$this->form_body        = strval( get_option( 'ivole_form_body', __( 'Please review your experience with products and services that you purchased at {site_title}.', 'customer-reviews-woocommerce' ) ) );
-		$this->template_html    = Ivole_Email::plugin_path() . '/templates/email.php';
+		$this->template_html    = self::plugin_path() . '/templates/email.php';
 		$this->from							= get_option( 'ivole_email_from', '' );
-		$this->from_name				= get_option( 'ivole_email_from_name', Ivole_Email::get_blogname() );
+		$this->from_name				= get_option( 'ivole_email_from_name', self::get_blogname() );
 		$this->replyto					= get_option( 'ivole_email_replyto', get_option( 'admin_email' ) );
 		$this->footer						= get_option( 'ivole_email_footer', '' );
 		$this->review_button		= __( 'Review', 'customer-reviews-woocommerce' );
@@ -57,7 +57,7 @@ class Ivole_Email {
 		}
 
 		$this->find['site-title'] = '{site_title}';
-		$this->replace['site-title'] = Ivole_Email::get_blogname();
+		$this->replace['site-title'] = self::get_blogname();
 
 		//qTranslate integration
 		if( function_exists( 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage' ) ) {
@@ -364,8 +364,8 @@ class Ivole_Email {
 
 			$data = array(
 				'token' => '164592f60fbf658711d47b2f55a1bbba',
-				'shop' => array( "name" => Ivole_Email::get_blogname(),
-			 		'domain' => Ivole_Email::get_blogurl(),
+				'shop' => array( "name" => self::get_blogname(),
+			 		'domain' => self::get_blogurl(),
 				 	'country' => apply_filters( 'woocommerce_get_base_location', get_option( 'woocommerce_default_country' ) ) ),
 				'email' => array( 'to' => $this->to,
 					'from' => strval( $this->from ),
@@ -443,8 +443,8 @@ class Ivole_Email {
 
 			$data = array(
 				'token' => '164592f60fbf658711d47b2f55a1bbba',
-				'shop' => array( "name" => Ivole_Email::get_blogname(),
-			 	'domain' => Ivole_Email::get_blogurl() ),
+				'shop' => array( "name" => self::get_blogname(),
+			 	'domain' => self::get_blogurl() ),
 				'email' => array( 'to' => $to,
 					'from' => strval( $this->from ),
 					'fromText' => $this->from_name,
@@ -507,27 +507,7 @@ class Ivole_Email {
 		//error_log( $result );
 		$result = json_decode( $result );
 		if( isset( $result->status ) && $result->status === 'OK' ) {
-			//update count of review reminders sent in order meta
-			if( $order_id ) {
-				$order = wc_get_order( $order_id );
-				if( $schedule ) {
-					// CR Cron
-					$order->update_meta_data( '_ivole_cr_cron', 1 );
-					$order->save();
-				} else {
-					// WP Cron
-					$count = $order->get_meta( '_ivole_review_reminder', true );
-					$new_count = 0;
-					if( '' === $count ) {
-						$new_count = 1;
-					} else {
-						$count = intval( $count );
-						$new_count = $count + 1;
-					}
-					$order->update_meta_data( '_ivole_review_reminder', $new_count );
-					$order->save();
-				}
-			}
+			self::update_reminders_meta( $order_id, $schedule );
 			return 0;
 		} elseif( isset( $result->status ) && $result->status === 'Error' ) {
 			if( isset( $result->details ) && 0 === strcmp( 'Too many review invitations for a single order', $result->details ) ) {
@@ -552,7 +532,7 @@ class Ivole_Email {
 
 	public function get_content() {
 		ob_start();
-		$def_body = Ivole_Email::$default_body;
+		$def_body = self::$default_body;
 		$lang = $this->language;
 		include( $this->template_html );
 		return ob_get_clean();
@@ -571,7 +551,7 @@ class Ivole_Email {
 		if( !$blog_name ) {
 			$blog_name = get_option( 'blogname' );
 			if( !$blog_name ) {
-				$blog_name = Ivole_Email::get_blogurl();
+				$blog_name = self::get_blogurl();
 			}
 		}
 		return wp_specialchars_decode( $blog_name, ENT_QUOTES );
@@ -595,6 +575,30 @@ class Ivole_Email {
 			$temp = '';
 		}
 		return $temp;
+	}
+
+	public static function update_reminders_meta( $order_id, $schedule ) {
+		//update count of review reminders sent in order meta
+		if( $order_id ) {
+			$order = wc_get_order( $order_id );
+			if( $schedule ) {
+				// CR Cron
+				$order->update_meta_data( '_ivole_cr_cron', 1 );
+				$order->save();
+			} else {
+				// WP Cron
+				$count = $order->get_meta( '_ivole_review_reminder', true );
+				$new_count = 0;
+				if( '' === $count ) {
+					$new_count = 1;
+				} else {
+					$count = intval( $count );
+					$new_count = $count + 1;
+				}
+				$order->update_meta_data( '_ivole_review_reminder', $new_count );
+				$order->save();
+			}
+		}
 	}
 
 }

@@ -191,14 +191,7 @@ if ( ! class_exists( 'CR_Manual' ) ) :
 					}
 				}
 
-				$schedule = false;
-				if (
-					$order->get_meta( $order_id, '_ivole_cr_cron', true ) ||
-					( '' === $order->get_meta( '_ivole_review_reminder', true ) && 'cr' === get_option( 'ivole_scheduler_type', 'wp' ) )
-				) {
-					//reminder should be sent via CR Cron
-					$schedule = true;
-				}
+				$schedule = $this->get_schedule( $order );
 
 				$e = new Ivole_Email( $order_id );
 				$result = $e->trigger2( $order_id, null, $schedule );
@@ -251,7 +244,7 @@ if ( ! class_exists( 'CR_Manual' ) ) :
 						if( $timestamp ) {
 							wp_unschedule_event( $timestamp, 'ivole_send_reminder', array( $order_id ) );
 						}
-						$order->add_order_note( __( 'CR: a review reminder was triggered manually.', 'customer-reviews-woocommerce' ) );
+						$order->add_order_note( __( 'CR: a review reminder was triggered manually via email.', 'customer-reviews-woocommerce' ) );
 					} else {
 						$msg = __( 'Successfully synced with CR Cron', 'customer-reviews-woocommerce' );
 					}
@@ -526,7 +519,7 @@ if ( ! class_exists( 'CR_Manual' ) ) :
 					}
 
 					$wa = new CR_Wtsap( $order_id );
-					$result = $wa->get_review_form( $order_id );
+					$result = $wa->get_review_form( $order_id, false );
 
 					if ( is_array( $result ) && count( $result)  > 1 ) {
 						if ( 0 !== $result[0] ) {
@@ -601,17 +594,45 @@ if ( ! class_exists( 'CR_Manual' ) ) :
 					);
 				}
 
+				$schedule = $this->get_schedule( $order );
 				$wa = new CR_Wtsap( $order_id );
-				$result = $wa->send_message( $order_id );
+				$result = $wa->send_message( $order_id, $schedule );
 
 				if ( is_array( $result ) && count( $result)  > 1 ) {
 					if ( 0 !== $result[0] ) {
-						wp_send_json( array( 'code' => 1, 'message' => $result[1] ) );
+						wp_send_json(
+							array(
+								'code' => 1,
+								'message' => 'Error: ' . $result[1]
+							)
+						);
 					} else {
+						// unschedule automatic review reminder if manual sending was successful (for reminders sent via WP Cron)
+						if( !$schedule ) {
+							$timestamp = wp_next_scheduled( 'ivole_send_reminder', array( $order_id ) );
+							if( $timestamp ) {
+								wp_unschedule_event( $timestamp, 'ivole_send_reminder', array( $order_id ) );
+							}
+							$order->add_order_note( __( 'CR: a review reminder was triggered manually via WhatsApp.', 'customer-reviews-woocommerce' ) );
+						}
+						// get an updated count of reminders for the review reminder column
+						$order->read_meta_data( true );
+						$rmndr_msg = __( 'No reminders sent', 'customer-reviews-woocommerce' );
+						$rmndr_count = $order->get_meta( '_ivole_review_reminder', true );
+						if ( $rmndr_count ) {
+							$rmndr_count = intval( $rmndr_count );
+							if ( 0 < $rmndr_count ) {
+								/* translators: %d will be automatically replaced with the count of review reminders */
+								$rmndr_msg = sprintf( _n( '%d reminder sent', '%d reminders sent', $rmndr_count, 'customer-reviews-woocommerce' ), $rmndr_count );
+							}
+						}
+						//
 						wp_send_json(
 							array(
 								'code' => 0,
-								'message' => __( 'A review reminder has been successfully sent via WhatsApp.', 'customer-reviews-woocommerce' )
+								'message' => __( 'A review reminder has been successfully sent via WhatsApp.', 'customer-reviews-woocommerce' ),
+								'order_id' => $order_id,
+								'reminders' => $rmndr_msg
 							)
 						);
 					}
@@ -704,6 +725,18 @@ if ( ! class_exists( 'CR_Manual' ) ) :
 			} else {
 				return false;
 			}
+		}
+
+		public function get_schedule( $order ) {
+			$schedule = false;
+			if (
+				$order->get_meta( '_ivole_cr_cron', true ) ||
+				( '' === $order->get_meta( '_ivole_review_reminder', true ) && 'cr' === get_option( 'ivole_scheduler_type', 'wp' ) )
+			) {
+				//reminder should be sent via CR Cron
+				$schedule = true;
+			}
+			return $schedule;
 		}
 
 	}

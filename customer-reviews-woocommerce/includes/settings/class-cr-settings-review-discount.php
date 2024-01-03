@@ -8,24 +8,12 @@ if ( ! class_exists( 'CR_Review_Discount_Settings' ) ):
 
 	class CR_Review_Discount_Settings {
 
-		/**
-		* @var CR_Settings_Admin_Menu The instance of the settings admin menu
-		*/
 		protected $settings_menu;
-
-		/**
-		* @var string The slug of this tab
-		*/
 		protected $tab;
-
-		/**
-		* @var array The fields for this tab
-		*/
 		protected $settings;
 
 		public function __construct( $settings_menu ) {
 			$this->settings_menu = $settings_menu;
-
 			$this->tab = 'review_discount';
 
 			add_filter( 'cr_settings_tabs', array( $this, 'register_tab' ) );
@@ -34,11 +22,13 @@ if ( ! class_exists( 'CR_Review_Discount_Settings' ) ):
 			add_action( 'admin_head', array( $this, 'add_admin_js' ) );
 
 			add_action( 'woocommerce_admin_field_coupon_tiers_table', array( 'CR_Discount_Tiers', 'show_coupon_tiers_table' ) );
+			add_action( 'woocommerce_admin_field_cr_enable_review_discount', array( $this, 'display_review_discount' ) );
 
 			// array_filter with one argument will filter empty values from the array
 			add_action( 'woocommerce_admin_settings_sanitize_option_ivole_coupon__product_ids', 'array_filter', 10, 1 );
 			add_action( 'woocommerce_admin_settings_sanitize_option_ivole_coupon__exclude_product_ids', 'array_filter', 10, 1 );
 			add_action( 'woocommerce_admin_settings_sanitize_option_ivole_coupon_tiers', array( 'CR_Discount_Tiers', 'save_coupon_tiers_table' ), 10, 3 );
+			add_action( 'woocommerce_admin_settings_sanitize_option_ivole_coupon_enable', array( $this, 'save_review_discount' ), 10, 3 );
 
 			add_action( 'wp_ajax_woocommerce_json_search_coupons', array( $this, 'woocommerce_json_search_coupons' ) );
 			add_action( 'wp_ajax_ivole_send_test_email_coupon', array( $this, 'send_test_email' ) );
@@ -65,6 +55,15 @@ if ( ! class_exists( 'CR_Review_Discount_Settings' ) ):
 
 		protected function init_settings() {
 			$tmp_terms = __( 'Customize the plugin\'s settings for sending discount coupons to customers who left reviews. This feature works only with reviews left in response to review invitations.', 'customer-reviews-woocommerce' );
+			$coupon_enable_option = self::get_review_discounts();
+			$email_channel_enabled = false;
+			foreach( $coupon_enable_option as $coupon_enable ) {
+				if ( 'email' === $coupon_enable['channel'] ) {
+					$email_channel_enabled = true;
+					break;
+				}
+			}
+			//
 			$this->settings = array(
 				array(
 					'title' => __( 'Review for Discount', 'customer-reviews-woocommerce' ),
@@ -73,14 +72,17 @@ if ( ! class_exists( 'CR_Review_Discount_Settings' ) ):
 					'id' => 'ivole_coupon_options_selector'
 				),
 				array(
-					'title'   => __( 'Enable Review for Discount', 'customer-reviews-woocommerce' ),
-					'desc'    => __( 'Enable generation of discount coupons for customers who provide reviews.', 'customer-reviews-woocommerce' ),
-					'id'      => 'ivole_coupon_enable',
-					'default' => 'no',
-					'autoload' => false,
-					'type'    => 'checkbox'
-				),
-				array(
+					'title'    => __( 'Review for Discount', 'customer-reviews-woocommerce' ),
+					'type'     => 'cr_enable_review_discount',
+					'desc'     => __( 'Enable generation of discount coupons for customers who provide reviews.', 'customer-reviews-woocommerce' ),
+					'id'       => 'ivole_coupon_enable',
+					'desc_tip' => true,
+					'autoload' => false
+				)
+			);
+			// some options are available only when discounts are sent by email
+			if ( $email_channel_enabled ) {
+				$this->settings[] = array(
 					'title'    => __( 'BCC Address', 'customer-reviews-woocommerce' ),
 					'type'     => 'text',
 					'desc'     => __( 'Add a BCC recipient for emails with discount coupon. It can be useful to verify that emails are being sent properly.', 'customer-reviews-woocommerce' ),
@@ -89,8 +91,8 @@ if ( ! class_exists( 'CR_Review_Discount_Settings' ) ):
 					'css'      => 'min-width:300px;',
 					'autoload' => false,
 					'desc_tip' => true
-				),
-				array(
+				);
+				$this->settings[] = array(
 					'title'    => __( 'Reply-To Address', 'customer-reviews-woocommerce' ),
 					'type'     => 'text',
 					'desc'     => __( 'Add a Reply-To address for emails with discount coupons. If customers decide to reply to automatic emails, their replies will be sent to this address.', 'customer-reviews-woocommerce' ),
@@ -99,68 +101,69 @@ if ( ! class_exists( 'CR_Review_Discount_Settings' ) ):
 					'css'      => 'min-width:300px;',
 					'autoload' => false,
 					'desc_tip' => true
-				),
-				array(
-					'id'       => 'ivole_coupon_tiers',
-					'autoload' => false,
-					'type'     => 'coupon_tiers_table'
-				),
-				array(
-					'type' => 'sectionend',
-					'id'   => 'ivole_coupon_options_selector'
-				),
-				array(
-					'title' => __( 'Email Template', 'customer-reviews-woocommerce' ),
-					'type'  => 'title',
-					/* translators: %s is a special symbol that will be replaced with the name of the website; please keep it as is */
-					'desc'  => sprintf( __( 'The email template for discounts can be configured on the <a href="%s">Emails</a> tab.', 'customer-reviews-woocommerce' ), admin_url( 'admin.php?page=cr-reviews-settings&tab=emails' ) ),
-					'id'    => 'ivole_options_email_coupon'
-				),
-				array(
-					'type' => 'sectionend',
-					'id' => 'ivole_options_email_coupon'
-				),
-				array(
-					'title' => __( 'Email Testing', 'customer-reviews-woocommerce' ),
-					'type'  => 'title',
-					/* translators: %s is a special symbol that will be replaced with the name of the website; please keep it as is */
-					'desc'  => __( 'Send a test email to verify settings for discount coupons.', 'customer-reviews-woocommerce' ),
-					'id'    => 'cr_options_email_coupon_test'
-				),
-				array(
-					'title'       => __( 'Photos/videos uploaded', 'customer-reviews-woocommerce' ),
-					'type'        => 'select',
-					'is_option'		=> false,
-					'desc'        => __( 'Simulate sending of different coupons depending on how many photos/videos a customer attached to their review. This field can be changed without saving changes.', 'customer-reviews-woocommerce' ),
-					'default'     => '0',
-					'is_option' 	=> false,
-					'id'          => 'cr_email_test_media_count',
-					'css'         => 'width:100px;',
-					'desc_tip'    => true,
-					'options'			=> array(
-						'0' => '0',
-						'1' => '1',
-						'2' => '2',
-						'3' => '3',
-						'4' => '4',
-						'5' => '5'
-					)
-				),
-				array(
-					'title'       => __( 'Send Test To', 'customer-reviews-woocommerce' ),
-					'type'        => 'emailtest',
-					'desc'        => __( 'Send a test email to this address. You must save changes before sending a test email.', 'customer-reviews-woocommerce' ),
-					'default'     => '',
-					'placeholder' => 'Email address',
-					'id'          => 'ivole_email_test_coupon',
-					'css'         => 'min-width:300px;',
-					'desc_tip'    => true,
-					'class' => 'coupon_mail'
-				),
-				array(
-					'type' => 'sectionend',
-					'id' => 'cr_options_email_coupon_test'
-				),
+				);
+			}
+			//
+			$this->settings[] = array(
+				'id'       => 'ivole_coupon_tiers',
+				'autoload' => false,
+				'type'     => 'coupon_tiers_table'
+			);
+			$this->settings[] = array(
+				'type' => 'sectionend',
+				'id'   => 'ivole_coupon_options_selector'
+			);
+			$this->settings[] = array(
+				'title' => __( 'Email Template', 'customer-reviews-woocommerce' ),
+				'type'  => 'title',
+				/* translators: %s is a special symbol that will be replaced with the name of the website; please keep it as is */
+				'desc'  => sprintf( __( 'The email template for discounts can be configured on the <a href="%s">Emails</a> tab.', 'customer-reviews-woocommerce' ), admin_url( 'admin.php?page=cr-reviews-settings&tab=emails' ) ),
+				'id'    => 'ivole_options_email_coupon'
+			);
+			$this->settings[] = array(
+				'type' => 'sectionend',
+				'id' => 'ivole_options_email_coupon'
+			);
+			$this->settings[] = array(
+				'title' => __( 'Email Testing', 'customer-reviews-woocommerce' ),
+				'type'  => 'title',
+				/* translators: %s is a special symbol that will be replaced with the name of the website; please keep it as is */
+				'desc'  => __( 'Send a test email to verify settings for discount coupons.', 'customer-reviews-woocommerce' ),
+				'id'    => 'cr_options_email_coupon_test'
+			);
+			$this->settings[] = array(
+				'title'       => __( 'Photos/videos uploaded', 'customer-reviews-woocommerce' ),
+				'type'        => 'select',
+				'is_option'		=> false,
+				'desc'        => __( 'Simulate sending of different coupons depending on how many photos/videos a customer attached to their review. This field can be changed without saving changes.', 'customer-reviews-woocommerce' ),
+				'default'     => '0',
+				'is_option' 	=> false,
+				'id'          => 'cr_email_test_media_count',
+				'css'         => 'width:100px;',
+				'desc_tip'    => true,
+				'options'			=> array(
+					'0' => '0',
+					'1' => '1',
+					'2' => '2',
+					'3' => '3',
+					'4' => '4',
+					'5' => '5'
+				)
+			);
+			$this->settings[] = array(
+				'title'       => __( 'Send Test To', 'customer-reviews-woocommerce' ),
+				'type'        => 'emailtest',
+				'desc'        => __( 'Send a test email to this address. You must save changes before sending a test email.', 'customer-reviews-woocommerce' ),
+				'default'     => '',
+				'placeholder' => 'Email address',
+				'id'          => 'ivole_email_test_coupon',
+				'css'         => 'min-width:300px;',
+				'desc_tip'    => true,
+				'class' => 'coupon_mail'
+			);
+			$this->settings[] = array(
+				'type' => 'sectionend',
+				'id' => 'cr_options_email_coupon_test'
 			);
 		}
 
@@ -547,6 +550,147 @@ if ( ! class_exists( 'CR_Review_Discount_Settings' ) ):
 			}
 
 			wp_send_json( array( 'code' => 98, 'message' => '' ) );
+		}
+
+		public function display_review_discount( $field ) {
+			$review_discounts = self::get_review_discounts();
+			?>
+			<tr valign="top">
+				<th scope="row" class="titledesc">
+					<label for="<?php echo esc_attr( $field['id'] ); ?>"><?php echo esc_html( $field['title'] ); ?>
+						<span class="woocommerce-help-tip" data-tip="<?php echo esc_attr( $field['desc'] ); ?>"></span>
+					</label>
+				</th>
+				<td class="forminp forminp-<?php echo sanitize_title( $field['type'] ); ?>">
+					<table class="widefat cr-rev-disc-table" cellspacing="0">
+						<thead>
+							<tr>
+								<?php
+								$columns = array(
+									'review_discount' => array(
+										'title' => '',
+										'help' => ''
+									),
+									'enabled' => array(
+										'title' => __( 'Enable', 'customer-reviews-woocommerce' ),
+										'help' => __( 'Enable generation of discount coupons for customers who provide reviews.', 'customer-reviews-woocommerce' )
+									),
+									'channel' => array(
+										'title' => __( 'Channel', 'customer-reviews-woocommerce' ),
+										'help' => __( 'A channel for sending discount coupons to customers. For example, by email.', 'customer-reviews-woocommerce' )
+									)
+								);
+								foreach( $columns as $key => $column ) {
+									echo '<th class="cr-rev-disc-table-' . esc_attr( $key ) . '">';
+									echo	esc_html( $column['title'] );
+									if( $column['help'] ) {
+										echo '<span class="woocommerce-help-tip" data-tip="' . esc_attr( $column['help'] ) . '"></span>';
+									}
+									echo '</th>';
+								}
+								?>
+							</tr>
+						</thead>
+						<tbody>
+							<?php
+								$count = 0;
+								foreach ( $review_discounts as $coupon_message ) {
+									echo '<tr class="cr-rev-disc-table-tr">';
+									foreach ( $columns as $key => $column ) {
+										switch ( $key ) {
+											case 'review_discount':
+												echo '<td>' . __( 'Review for Discount', 'customer-reviews-woocommerce' ) . '</td>';
+												break;
+											case 'enabled':
+												echo '<td><input type="checkbox" id="';
+												echo esc_attr( $field['type'] . '_' . $key . '_' . $count );
+												echo '" name="' . esc_attr( $field['type'] . '_' . $key . '_' . $count ) . '"';
+												echo ( $coupon_message['enabled'] ? ' checked' : '' ) . ' /></td>';
+												break;
+											case 'channel':
+												echo '<td><select name="' . esc_attr( $field['type'] . '_' . $key . '_' . $count );
+												echo '" id="' . esc_attr( $field['type'] . '_' . $key . '_' . $count ) . '">';
+												echo CR_Review_Reminder_Settings::output_channels( $coupon_message['channel'] );
+												echo '</select></td>';
+												break;
+											default:
+												break;
+										}
+									}
+									echo '</tr>';
+									$count++;
+								}
+							?>
+						</tbody>
+					</table>
+				</td>
+			</tr>
+			<?php
+		}
+
+		public static function get_max_coupon_messages() {
+			return apply_filters( 'cr_max_coupon_messages', 1 );
+		}
+
+		public function save_review_discount( $value, $option, $raw_value ) {
+			$review_discounts = array();
+			if ( isset( $option['type'] ) && $option['type'] ) {
+				$max_coupon_messages = self::get_max_coupon_messages();
+				for ( $i=0; $i < $max_coupon_messages; $i++ ) {
+					if ( isset( $_POST[$option['type'] . '_channel_' . $i] ) ) {
+						$review_discounts[] = array(
+							'enabled' => ( isset( $_POST[$option['type'] . '_enabled_' . $i] ) ? true : false ),
+							'channel' => strval( $_POST[$option['type'] . '_channel_' . $i] )
+						);
+					}
+				}
+			}
+			if ( 0 < count( $review_discounts ) ) {
+				return $review_discounts;
+			} else {
+				return self::get_default_coupons_setting();
+			}
+		}
+
+		public static function get_review_discounts() {
+			$review_discounts = get_option( 'ivole_coupon_enable', 'no' );
+			if ( is_array( $review_discounts ) && 0 < count( $review_discounts ) ) {
+				$ret = array();
+				foreach( $review_discounts as $review_discount ) {
+					if (
+						isset( $review_discount['enabled'] ) &&
+						isset( $review_discount['channel'] )
+					) {
+						$ret[] = array(
+							'enabled' => boolval( $review_discount['enabled'] ),
+							'channel' => strval( $review_discount['channel'] )
+						);
+					}
+				}
+				if ( 0 === count( $review_discounts ) ) {
+					$ret = self::get_default_coupons_setting();
+				}
+				return $ret;
+			} else {
+				return array(
+					array(
+						'enabled' => ( 'yes' === $review_discounts ? true : false ),
+						'channel' => 'email'
+					)
+				);
+			}
+		}
+
+		public static function get_default_coupons_setting() {
+			return apply_filters(
+				'cr_default_coupon_messages',
+				array(
+					array(
+						'enabled' => false,
+						'channel' => 'email'
+					)
+				)
+			);
 		}
 
 	}

@@ -129,7 +129,6 @@ if ( ! class_exists( 'CR_Sender' ) ) :
 					return;
 				}
 
-				$delay = intval( $this->get_sending_delay() );
 				//if (1) no reminders was previously scheduled via WP Cron and CR Cron is currently enabled or (2) a reminder was previously scheduled via CR Cron
 				if(
 					( 'cr' === get_option( 'ivole_scheduler_type', 'wp' ) && '' === $order->get_meta( '_ivole_review_reminder', true ) ) ||
@@ -152,6 +151,8 @@ if ( ! class_exists( 'CR_Sender' ) ) :
 					}
 				} else {
 					//the logic for WP Cron otherwise
+					$delay_channel = $this->get_sending_delay();
+					$delay = $delay_channel[0];
 					$timestamp = apply_filters( 'cr_reminder_delay', time() + $delay * DAY_IN_SECONDS, $order_id, $delay );
 					if( false === wp_schedule_single_event( $timestamp, 'ivole_send_reminder', array( $order_id ) ) ) {
 						$order->add_order_note( __( 'CR: a review reminder could not be scheduled.', 'customer-reviews-woocommerce' ) );
@@ -192,8 +193,14 @@ if ( ! class_exists( 'CR_Sender' ) ) :
 				}
 			}
 
-			$e = new Ivole_Email( $order_id );
-			$result = $e->trigger2( $order_id, null, $schedule );
+			$delay_channel = $this->get_sending_delay();
+			if ( 'wa' === $delay_channel[1] ) {
+				$w = new CR_Wtsap( $order_id );
+				$result = $w->send_message( $order_id, $schedule );
+			} else {
+				$e = new Ivole_Email( $order_id );
+				$result = $e->trigger2( $order_id, null, $schedule );
+			}
 
 			//qTranslate integration
 			if( $lang ) {
@@ -263,12 +270,21 @@ if ( ! class_exists( 'CR_Sender' ) ) :
 					isset( $delay_option[0]['delay'] ) &&
 					isset( $delay_option[0]['channel'] )
 				) {
-					return $delay_option[0]['delay'];
+					return array(
+						intval( $delay_option[0]['delay'] ),
+						strval( $delay_option[0]['channel'] )
+					);
 				} else {
-					return 5;
+					return array(
+						5,
+						'email'
+					);
 				}
 			} else {
-				return $delay_option;
+				return array(
+					intval( $delay_option ),
+					'email'
+				);
 			}
 		}
 

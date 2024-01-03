@@ -627,13 +627,14 @@ if ( ! class_exists( 'CR_Discount_Tiers' ) ):
 		}
 
 		public static function get_coupon( $media_count ) {
-			$coupon_enabled = get_option( 'ivole_coupon_enable', 'no' );
+			$coupon_settings = CR_Review_Discount_Settings::get_review_discounts();
 
 			$coupon = array(
 				'is_enabled' => false
 			);
 
-			if( 'yes' === $coupon_enabled ) {
+			if ( 0 < count( $coupon_settings ) && $coupon_settings[0]['enabled'] ) {
+				$coupon['channel'] = $coupon_settings[0]['channel'];
 				$s = self::read_coupon_tiers_table();
 				if( $s and is_array( $s ) ) {
 					$tier_w_coupon = 0;
