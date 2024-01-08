@@ -75,7 +75,7 @@ require_once( __DIR__ . '/includes/qna/class-cr-qna-shortcode.php' );
 require_once( __DIR__ . '/includes/qna/class-cr-qna-email.php' );
 
 class Ivole {
-	const CR_VERSION = '5.38.9';
+	const CR_VERSION = '5.38.10';
 
 	public function __construct() {
 		if( function_exists( 'wc' ) ) {

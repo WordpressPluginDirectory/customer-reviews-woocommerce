@@ -40,7 +40,7 @@ if ( ! class_exists( 'Ivole_Reviews_Admin_Menu' ) ):
 		* @since 3.36
 		*/
 		public function register_reviews_menu() {
-			$notification_count = Ivole_Reviews_Admin_Menu::notification_count();
+			$notification_count = self::notification_count();
 			$notification_count_all = $notification_count + CR_Qna_Admin_Menu::notification_count();
 
 			Ivole_Reviews_Admin_Menu::$screen_id_bubble = sprintf( ' <span class="awaiting-mod cr-awaiting-mod count-%1$d"><span class="pending-count" aria-hidden="true">%2$d</span></span>', $notification_count_all, $notification_count_all );

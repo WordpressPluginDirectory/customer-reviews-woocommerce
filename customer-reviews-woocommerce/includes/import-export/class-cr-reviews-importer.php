@@ -88,11 +88,15 @@ if (! class_exists('CR_Reviews_Importer')):
 				}
 			}
 
-			$file_data = wp_handle_upload($_FILES['file'], array(
-				'action' => 'ivole_import_upload_csv', 'test_type' => false
-			));
+			$file_data = wp_handle_upload(
+				$_FILES['file'],
+				array(
+					'action' => 'ivole_import_upload_csv',
+					'test_type' => true
+				)
+			);
 
-			if (isset($file_data['error'])) {
+			if ( isset( $file_data['error'] ) ) {
 				echo wp_json_encode(
 					array(
 						'success' => false,

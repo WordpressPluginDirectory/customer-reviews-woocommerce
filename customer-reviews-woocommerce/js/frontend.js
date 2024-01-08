@@ -609,24 +609,20 @@
 			}
 			event.stopPropagation();
 		} );
-		jQuery('.cr-slider-read-more a').each( function() {
-			this.onclick = function(e) {
-				e.preventDefault();
-				let parent = jQuery(this).parents(".review-text");
-				parent.find(".cr-slider-read-more").hide();
-				parent.find(".cr-slider-details").css("display", "inline");
-				jQuery(this).parents(".cr-reviews-slider").slick('setPosition');
-			}
-		});
-		jQuery('.cr-slider-read-less a').each( function() {
-			this.onclick = function(e) {
-				e.preventDefault();
-				let parent = jQuery(this).parents(".review-text");
-				parent.find(".cr-slider-details").hide();
-				parent.find(".cr-slider-read-more").css("display", "inline");
-				jQuery(this).parents(".cr-reviews-slider").slick('setPosition');
-			}
-		});
+		jQuery( '.cr-reviews-slider' ).on( 'click', '.cr-slider-read-more a', function (e) {
+			e.preventDefault();
+			let parent = jQuery(this).parents(".review-text");
+			parent.find(".cr-slider-read-more").hide();
+			parent.find(".cr-slider-details").css("display", "inline");
+			jQuery(this).parents(".cr-reviews-slider").slick('setPosition');
+		} );
+		jQuery( '.cr-reviews-slider' ).on( 'click', '.cr-slider-read-less a', function (e) {
+			e.preventDefault();
+			let parent = jQuery(this).parents(".review-text");
+			parent.find(".cr-slider-details").hide();
+			parent.find(".cr-slider-read-more").css("display", "inline");
+			jQuery(this).parents(".cr-reviews-slider").slick('setPosition');
+		} );
 		jQuery('#cr_qna.cr-qna-block .cr-qna-search-block button.cr-qna-ask-button').on( 'click', function (e) {
 			e.preventDefault();
 			jQuery( this ).closest( '.cr-qna-block' ).find( '.cr-qna-new-q-overlay .cr-qna-new-q-form' ).addClass( 'cr-q-modal' );

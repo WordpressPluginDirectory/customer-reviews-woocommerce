@@ -61,7 +61,16 @@ if ( ! class_exists( 'CR_Email_Template' ) ):
 					$enabled = 'yes' === get_option( 'ivole_enable', 'no' ) ? true : false;
 					break;
 				case 'review_discount':
-					$enabled = 'yes' === get_option( 'ivole_coupon_enable', 'no' ) ? true : false;
+					$coupon_enable_option = CR_Review_Discount_Settings::get_review_discounts();
+					foreach( $coupon_enable_option as $coupon_enable ) {
+						if (
+							'email' === $coupon_enable['channel'] &&
+							$coupon_enable['enabled']
+						) {
+							$enabled = true;
+							break;
+						}
+					}
 					break;
 				case 'qna_reply':
 					$enabled = 'yes' === get_option( 'ivole_qna_email_reply', 'no' ) ? true : false;
