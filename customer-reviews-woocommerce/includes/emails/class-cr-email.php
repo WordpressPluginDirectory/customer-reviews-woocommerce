@@ -411,6 +411,9 @@ class Ivole_Email {
 			);
 			//check that array of items is not empty
 			if( 1 > count( $data['order']['items'] ) ) {
+				$order->add_order_note(
+					__( 'CR: A review invitation cannot be sent because the order does not contain any products for which review reminders are enabled in the settings.', 'customer-reviews-woocommerce' ),
+				);
 				return array( 4, __( 'Error: the order does not contain any products for which review reminders are enabled in the settings.', 'customer-reviews-woocommerce' ) );
 			}
 			$is_test = false;

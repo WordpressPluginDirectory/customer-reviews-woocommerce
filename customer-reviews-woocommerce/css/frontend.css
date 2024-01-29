@@ -2455,6 +2455,7 @@ img.ivole-verified-badge-ext-icon {
 	cursor: pointer;
 	display: inline-block;
 	outline-style: none;
+	padding: 5px 15px;
 }
 #cr_qna.cr-qna-block #cr-show-more-q-id {
 	display: block;

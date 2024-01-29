@@ -57,9 +57,14 @@ if ( ! class_exists( 'CR_Review_Discount_Settings' ) ):
 			$tmp_terms = __( 'Customize the plugin\'s settings for sending discount coupons to customers who left reviews. This feature works only with reviews left in response to review invitations.', 'customer-reviews-woocommerce' );
 			$coupon_enable_option = self::get_review_discounts();
 			$email_channel_enabled = false;
+			$wa_channel_enabled = false;
 			foreach( $coupon_enable_option as $coupon_enable ) {
 				if ( 'email' === $coupon_enable['channel'] ) {
 					$email_channel_enabled = true;
+					break;
+				}
+				if ( 'wa' === $coupon_enable['channel'] ) {
+					$wa_channel_enabled = true;
 					break;
 				}
 			}
@@ -113,58 +118,87 @@ if ( ! class_exists( 'CR_Review_Discount_Settings' ) ):
 				'type' => 'sectionend',
 				'id'   => 'ivole_coupon_options_selector'
 			);
-			$this->settings[] = array(
-				'title' => __( 'Email Template', 'customer-reviews-woocommerce' ),
-				'type'  => 'title',
-				/* translators: %s is a special symbol that will be replaced with the name of the website; please keep it as is */
-				'desc'  => sprintf( __( 'The email template for discounts can be configured on the <a href="%s">Emails</a> tab.', 'customer-reviews-woocommerce' ), admin_url( 'admin.php?page=cr-reviews-settings&tab=emails' ) ),
-				'id'    => 'ivole_options_email_coupon'
-			);
-			$this->settings[] = array(
-				'type' => 'sectionend',
-				'id' => 'ivole_options_email_coupon'
-			);
-			$this->settings[] = array(
-				'title' => __( 'Email Testing', 'customer-reviews-woocommerce' ),
-				'type'  => 'title',
-				/* translators: %s is a special symbol that will be replaced with the name of the website; please keep it as is */
-				'desc'  => __( 'Send a test email to verify settings for discount coupons.', 'customer-reviews-woocommerce' ),
-				'id'    => 'cr_options_email_coupon_test'
-			);
-			$this->settings[] = array(
-				'title'       => __( 'Photos/videos uploaded', 'customer-reviews-woocommerce' ),
-				'type'        => 'select',
-				'is_option'		=> false,
-				'desc'        => __( 'Simulate sending of different coupons depending on how many photos/videos a customer attached to their review. This field can be changed without saving changes.', 'customer-reviews-woocommerce' ),
-				'default'     => '0',
-				'is_option' 	=> false,
-				'id'          => 'cr_email_test_media_count',
-				'css'         => 'width:100px;',
-				'desc_tip'    => true,
-				'options'			=> array(
-					'0' => '0',
-					'1' => '1',
-					'2' => '2',
-					'3' => '3',
-					'4' => '4',
-					'5' => '5'
-				)
-			);
-			$this->settings[] = array(
-				'title'       => __( 'Send Test To', 'customer-reviews-woocommerce' ),
-				'type'        => 'emailtest',
-				'desc'        => __( 'Send a test email to this address. You must save changes before sending a test email.', 'customer-reviews-woocommerce' ),
-				'default'     => '',
-				'placeholder' => 'Email address',
-				'id'          => 'ivole_email_test_coupon',
-				'css'         => 'min-width:300px;',
-				'desc_tip'    => true,
-				'class' => 'coupon_mail'
-			);
-			$this->settings[] = array(
-				'type' => 'sectionend',
-				'id' => 'cr_options_email_coupon_test'
-			);
+			// some options are available only when discounts are sent by email
+			if ( $email_channel_enabled ) {
+				$this->settings[] = array(
+					'title' => __( 'Email Template', 'customer-reviews-woocommerce' ),
+					'type'  => 'title',
+					/* translators: %s is a special symbol that will be replaced with the name of the website; please keep it as is */
+					'desc'  => sprintf( __( 'The email template for discounts can be configured on the <a href="%s">Emails</a> tab.', 'customer-reviews-woocommerce' ), admin_url( 'admin.php?page=cr-reviews-settings&tab=emails' ) ),
+					'id'    => 'cr_options_email_coupon'
+				);
+				$this->settings[] = array(
+					'type' => 'sectionend',
+					'id' => 'cr_options_email_coupon'
+				);
+			}
+			// some options are available only when discounts are sent by email
+			if ( $wa_channel_enabled ) {
+				$this->settings[] = array(
+					'title' => __( 'WhatsApp Template', 'customer-reviews-woocommerce' ),
+					'type'  => 'title',
+					/* translators: %s is a special symbol that will be replaced with the name of the website; please keep it as is */
+					'desc'  => sprintf(
+						__( 'WhatsApp template for messages with discounts can be configured in the %s.', 'customer-reviews-woocommerce' ),
+						'<a href="https://www.cusrev.com/dashboard" target="_blank">CusRev Dashboard</a><img src="' . untrailingslashit( plugin_dir_url( dirname( dirname( __FILE__ ) ) ) ) . '/img/external-link.png" class="cr-product-feed-categories-ext-icon">'
+					),
+					'id'    => 'cr_options_wa_coupon'
+				);
+				$this->settings[] = array(
+					'type' => 'sectionend',
+					'id' => 'cr_options_wa_coupon'
+				);
+			}
+			if ( $email_channel_enabled ) {
+				$this->settings[] = array(
+					'title' => __( 'Email Testing', 'customer-reviews-woocommerce' ),
+					'type'  => 'title',
+					/* translators: %s is a special symbol that will be replaced with the name of the website; please keep it as is */
+					'desc'  => __( 'Send a test email to verify settings for discount coupons.', 'customer-reviews-woocommerce' ),
+					'id'    => 'cr_options_email_coupon_test'
+				);
+				$this->settings[] = self::get_media_count_field( 'cr_email_test_media_count' );
+				$this->settings[] = array(
+					'title'       => __( 'Send Test To', 'customer-reviews-woocommerce' ),
+					'type'        => 'emailtest',
+					'desc'        => __( 'Send a test email to this address. You must save changes before sending a test email.', 'customer-reviews-woocommerce' ),
+					'default'     => '',
+					'placeholder' => 'Email address',
+					'id'          => 'ivole_email_test_coupon',
+					'css'         => 'min-width:300px;',
+					'desc_tip'    => true,
+					'class' => 'coupon_mail'
+				);
+				$this->settings[] = array(
+					'type' => 'sectionend',
+					'id' => 'cr_options_email_coupon_test'
+				);
+			}
+			//
+			if ( $wa_channel_enabled ) {
+				$this->settings[] = array(
+					'title' => __( 'WhatsApp Testing', 'customer-reviews-woocommerce' ),
+					'type'  => 'title',
+					/* translators: %s is a special symbol that will be replaced with the name of the website; please keep it as is */
+					'desc'  => __( 'Send a test WhatsApp message to verify settings for discount coupons.', 'customer-reviews-woocommerce' ),
+					'id'    => 'cr_options_wa_coupon_test'
+				);
+				$this->settings[] = self::get_media_count_field( 'cr_wa_test_media_count' );
+				$this->settings[] = array(
+					'title'       => __( 'Send Test To', 'customer-reviews-woocommerce' ),
+					'type'        => 'waapitest',
+					'desc'        => __( 'Send a test message to this phone number by WhatsApp. You must save changes before sending a test message.', 'customer-reviews-woocommerce' ),
+					'default'     => '',
+					'placeholder' => 'Phone number',
+					'css'         => 'min-width:300px;',
+					'desc_tip'    => true,
+					'class' => 'cr-test-wa-coupon-input'
+				);
+				$this->settings[] = array(
+					'type' => 'sectionend',
+					'id' => 'cr_options_wa_coupon_test'
+				);
+			}
 		}
 
 		public function add_admin_js() {
@@ -480,60 +514,25 @@ if ( ! class_exists( 'CR_Review_Discount_Settings' ) ):
 				$q_config['language'] = $q_language;
 			}
 
-			$db_settings = get_option( 'ivole_coupon_tiers', false );
-			if( $db_settings and is_array( $db_settings ) ) {
-				$tier_w_coupon = 0;
-				$compare_count = -1;
-				foreach( CR_Discount_Tiers::$tiers as $tier ) {
-					if( in_array( $db_settings[CR_Discount_Tiers::$tiers_settings['cr_coupon_type']][$tier], array( 'dynamic', 'static' ) ) &&
-				 		$media_count >= $db_settings[CR_Discount_Tiers::$tiers_settings['cr_media_count']][$tier] &&
-						$compare_count < $db_settings[CR_Discount_Tiers::$tiers_settings['cr_media_count']][$tier] ) {
-							$compare_count = $db_settings[CR_Discount_Tiers::$tiers_settings['cr_media_count']][$tier];
-							$tier_w_coupon = $tier;
-					}
-				}
-				if( 0 < $tier_w_coupon ) {
-					$discount_string = '';
-					$coupon_type = $db_settings[CR_Discount_Tiers::$tiers_settings['cr_coupon_type']][$tier_w_coupon];
-					if ( $coupon_type === 'static' ) {
-						$coupon_id = intval( $db_settings[CR_Discount_Tiers::$tiers_settings['cr_existing_coupon']][$tier_w_coupon] );
-						if ( get_post_type( $coupon_id ) == 'shop_coupon' && get_post_status( $coupon_id ) == 'publish' ) {
-							$coupon_code = get_post_field( 'post_title', $coupon_id );
-							$discount_type = get_post_meta( $coupon_id, 'discount_type', true );
-							$discount_amount = intval( get_post_meta( $coupon_id, 'coupon_amount', true ) );
-							if ( $discount_type == 'percent' ) {
-								$discount_string = $discount_amount . '%';
-							} else {
-								$discount_string = trim( strip_tags( CR_Email_Func::cr_price( $discount_amount,  array( 'currency' => get_option( 'woocommerce_currency' ) ) ) ) );
-							}
-						} else {
-							$coupon_code = "<strong>NO_COUPON_SET</strong>";
-							$discount_string = "<strong>NO_AMOUNT_SET</strong>";
-						}
-					} else {
-						$discount_type = $db_settings[CR_Discount_Tiers::$tiers_settings['cr_coupon__discount_type']][$tier_w_coupon];
-						$discount_amount = intval( $db_settings[CR_Discount_Tiers::$tiers_settings['cr_coupon__coupon_amount']][$tier_w_coupon] );
-						if ( $discount_type === "percent" && $discount_amount > 0 ){
-							$discount_string = $discount_amount . "%";
-						} elseif ( $discount_amount > 0 ) {
-							$discount_string = trim(
-								strip_tags( CR_Email_Func::cr_price( $discount_amount, array( 'currency' => get_option( 'woocommerce_currency' ) ) ) )
-							);
-						}
-						$prefix = $db_settings[CR_Discount_Tiers::$tiers_settings['cr_coupon_prefix']][$tier_w_coupon];
-						$coupon_code = strtoupper( $prefix . uniqid( 'TEST' ) );
-					}
-				} else {
-					/* translators: %d is a special symbol that will be replaced with the count of uploaded media files */
-					wp_send_json( array( 'code' => 95, 'message' => sprintf( __( 'Coupons are not enabled in any of the discount tiers for reviews with %d uploaded media file(s)', 'customer-reviews-woocommerce' ), $media_count ) ) );
-				}
-			} else {
-				wp_send_json( array( 'code' => 96, 'message' => __( 'Please re-save settings and try again', 'customer-reviews-woocommerce' ) ) );
+			$cpn = self::get_coupon_for_testing( $media_count );
+			if ( 0 !== $cpn['code'] ) {
+				wp_send_json(
+					array(
+						'code' => $cpn['code'],
+						'message' => $cpn['message']
+					)
+				);
 			}
 
 			if ( filter_var( $email, FILTER_VALIDATE_EMAIL ) ) {
 				$e = new CR_Email_Coupon();
-				$result = $e->triggerTest( null, $email, $coupon_code, $discount_string, $discount_type );
+				$result = $e->triggerTest(
+					null,
+					$email,
+					$cpn['coupon_code'],
+					$cpn['discount_string'],
+					$cpn['discount_type']
+				);
 				if ( is_array( $result ) && count( $result )  > 1 && 2 === $result[0] ) {
 					wp_send_json( array( 'code' => 2, 'message' => $result[1] ) );
 				} elseif( is_array( $result ) && count( $result )  > 1 && 100 === $result[0] ) {
@@ -691,6 +690,95 @@ if ( ! class_exists( 'CR_Review_Discount_Settings' ) ):
 					)
 				)
 			);
+		}
+
+		public static function get_media_count_field( $id ) {
+			return array(
+				'title'       => __( 'Photos/videos uploaded', 'customer-reviews-woocommerce' ),
+				'type'        => 'select',
+				'is_option'		=> false,
+				'desc'        => __( 'Simulate sending of different coupons depending on how many photos/videos a customer attached to their review. This field can be changed without saving changes.', 'customer-reviews-woocommerce' ),
+				'default'     => '0',
+				'is_option' 	=> false,
+				'id'          => $id,
+				'css'         => 'width:100px;',
+				'desc_tip'    => true,
+				'options'			=> array(
+					'0' => '0',
+					'1' => '1',
+					'2' => '2',
+					'3' => '3',
+					'4' => '4',
+					'5' => '5'
+				)
+			);
+		}
+
+		public static function get_coupon_for_testing( $media_count ) {
+			$coupon_code = '';
+			$discount_string = '';
+			$discount_type = '';
+			$db_settings = get_option( 'ivole_coupon_tiers', false );
+			if( $db_settings && is_array( $db_settings ) ) {
+				$tier_w_coupon = 0;
+				$compare_count = -1;
+				foreach( CR_Discount_Tiers::$tiers as $tier ) {
+					if( in_array( $db_settings[CR_Discount_Tiers::$tiers_settings['cr_coupon_type']][$tier], array( 'dynamic', 'static' ) ) &&
+				 		$media_count >= $db_settings[CR_Discount_Tiers::$tiers_settings['cr_media_count']][$tier] &&
+						$compare_count < $db_settings[CR_Discount_Tiers::$tiers_settings['cr_media_count']][$tier] ) {
+							$compare_count = $db_settings[CR_Discount_Tiers::$tiers_settings['cr_media_count']][$tier];
+							$tier_w_coupon = $tier;
+					}
+				}
+				if( 0 < $tier_w_coupon ) {
+					$coupon_type = $db_settings[CR_Discount_Tiers::$tiers_settings['cr_coupon_type']][$tier_w_coupon];
+					if ( $coupon_type === 'static' ) {
+						$coupon_id = intval( $db_settings[CR_Discount_Tiers::$tiers_settings['cr_existing_coupon']][$tier_w_coupon] );
+						if ( get_post_type( $coupon_id ) == 'shop_coupon' && get_post_status( $coupon_id ) == 'publish' ) {
+							$coupon_code = get_post_field( 'post_title', $coupon_id );
+							$discount_type = get_post_meta( $coupon_id, 'discount_type', true );
+							$discount_amount = intval( get_post_meta( $coupon_id, 'coupon_amount', true ) );
+							if ( $discount_type == 'percent' ) {
+								$discount_string = $discount_amount . '%';
+							} else {
+								$discount_string = trim( strip_tags( CR_Email_Func::cr_price( $discount_amount,  array( 'currency' => get_option( 'woocommerce_currency' ) ) ) ) );
+							}
+						} else {
+							$coupon_code = "<strong>NO_COUPON_SET</strong>";
+							$discount_string = "<strong>NO_AMOUNT_SET</strong>";
+						}
+					} else {
+						$discount_type = $db_settings[CR_Discount_Tiers::$tiers_settings['cr_coupon__discount_type']][$tier_w_coupon];
+						$discount_amount = intval( $db_settings[CR_Discount_Tiers::$tiers_settings['cr_coupon__coupon_amount']][$tier_w_coupon] );
+						if ( $discount_type === "percent" && $discount_amount > 0 ){
+							$discount_string = $discount_amount . "%";
+						} elseif ( $discount_amount > 0 ) {
+							$discount_string = trim(
+								strip_tags( CR_Email_Func::cr_price( $discount_amount, array( 'currency' => get_option( 'woocommerce_currency' ) ) ) )
+							);
+						}
+						$prefix = $db_settings[CR_Discount_Tiers::$tiers_settings['cr_coupon_prefix']][$tier_w_coupon];
+						$coupon_code = strtoupper( $prefix . uniqid( 'TEST' ) );
+					}
+					return array(
+						'code' => 0,
+						'coupon_code' => $coupon_code,
+						'discount_string' => $discount_string,
+						'discount_type' => $discount_type
+					);
+				} else {
+					return array(
+						'code' => 95,
+						/* translators: %d is a special symbol that will be replaced with the count of uploaded media files */
+						'message' => sprintf( __( 'Coupons are not enabled in any of the discount tiers for reviews with %d uploaded media file(s)', 'customer-reviews-woocommerce' ), $media_count )
+					);
+				}
+			} else {
+				return array(
+					'code' => 96,
+					'message' => __( 'Please re-save settings and try again', 'customer-reviews-woocommerce' )
+				);
+			}
 		}
 
 	}

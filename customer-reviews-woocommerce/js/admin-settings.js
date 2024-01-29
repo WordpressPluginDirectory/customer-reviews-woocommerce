@@ -77,7 +77,7 @@
 				};
 			}
 
-			jQuery('#ivole_test_email_status').text('Sending...');
+			jQuery('#ivole_test_email_status').text(cr_settings_object.sending);
 			jQuery('#ivole_test_email_status').css('visibility', 'visible');
 			jQuery('.cr-test-email-button').prop('disabled', true);
 			jQuery.post(ajaxurl, data, function(response) {
@@ -537,6 +537,36 @@
 			if ( ! jQuery(this).parent().hasClass('cr-test-wa-cont-send') ) {
 				return false;
 			}
+		} );
+
+		jQuery('.cr-test-waapi-button').on( "click", function(e) {
+			let data = {
+				'action': 'cr_send_test_waapi',
+				'test_type': jQuery(this).data('testtype'),
+				'phone': jQuery(this).closest('td').find('input[type=text]').val(),
+				'media_count': jQuery('#cr_wa_test_media_count').val(),
+				'nonce': jQuery(this).data('nonce')
+			};
+
+			jQuery(this).parent().addClass('cr-test-wa-cont-validation');
+			jQuery(this).closest('td').find('.cr-test-waapi-status').text(cr_settings_object.sending);
+			jQuery(this).closest('td').find('.cr-test-waapi-status').css('visibility', 'visible');
+			jQuery(this).prop('disabled', true);
+
+			jQuery.post(
+				{
+					url: ajaxurl,
+					data: data,
+					context: this,
+					success: function(response) {
+						jQuery(this).parent().removeClass('cr-test-wa-cont-validation');
+						jQuery(this).prop('disabled', false);
+						jQuery(this).closest('td').find('.cr-test-waapi-status').text(response.message);
+					}
+				}
+			);
+
+			return false;
 		} );
 
 		function crUpdateCusAttsInput() {

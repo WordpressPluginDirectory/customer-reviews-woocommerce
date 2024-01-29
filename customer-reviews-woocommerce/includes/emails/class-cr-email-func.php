@@ -14,7 +14,7 @@ if ( ! class_exists( 'CR_Email_Func' ) ) :
 		const TEMPLATE_REVIEW_REMINDER = 'email-review-reminder.php';
 		const TEMPLATE_REVIEW_DISCOUNT = 'email-review-discount.php';
 
-		public static function get_order_items2( $order, $currency = '' ) {
+		public static function get_order_items2( $order, $currency ) {
 			// read options
 			$enabled_for = get_option( 'ivole_enable_for', 'all' );
 			$enabled_categories = get_option( 'ivole_enabled_categories', array() );
@@ -37,6 +37,7 @@ if ( ! class_exists( 'CR_Email_Func' ) ) :
 			} else {
 				$inc_tax = true;
 			}
+			$mailer = get_option( 'ivole_mailer_review_reminder', 'cr' );
 
 			foreach ( $items as $item_id => $item ) {
 				// a filter to optionally exclude some items from being added to a review form
@@ -130,6 +131,29 @@ if ( ! class_exists( 'CR_Email_Func' ) ) :
 					// check if name of the product is empty (this could happen if a product was deleted)
 					if( strlen( $q_name ) === 0 ) {
 						continue;
+					}
+
+					// a proactive check if the product belongs to prohibited categories
+					if ( 'cr' === $mailer ) {
+						$stop_words = array( 'kratom', 'cbd', 'cannabis', 'marijuana' );
+						$name_lowercase = mb_strtolower( $q_name );
+						$stop_word_found = false;
+						foreach ( $stop_words as $word ) {
+							if ( false !== strpos( $name_lowercase, $word ) ) {
+								$stop_word_found = true;
+								break;
+							}
+						}
+						if ( $stop_word_found ) {
+							$order->add_order_note(
+								sprintf(
+									__( 'CR: %1$s cannot be included in a review invitation because it is related to one of the prohibited categories of products. If you would like to send review invitations for this product, please set the \'Verified Reviews\' option to \'No verification\' in the <a href="%2$s">settings</a>.', 'customer-reviews-woocommerce' ),
+									'\'' . $q_name . '\'',
+									admin_url( 'admin.php?page=cr-reviews-settings&tab=review_reminder' )
+								)
+							);
+							continue;
+						}
 					}
 
 					// check if we have several variations of the same product in our order

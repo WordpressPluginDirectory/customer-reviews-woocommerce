@@ -33,16 +33,20 @@ if ( ! class_exists( 'CR_Messages_Settings' ) ):
 				'wa_review_reminder' => 'wa_review_reminder'
 			);
 
-			if ( 'no' === get_option( 'ivole_verified_reviews', 'no' ) ) {
-				add_filter( 'cr_settings_tabs', array( $this, 'register_tab' ) );
-			}
+			add_filter( 'cr_settings_tabs', array( $this, 'register_tab' ) );
 			add_action( 'ivole_settings_display_' . $this->tab, array( $this, 'display' ) );
 			add_action( 'cr_save_settings_' . $this->tab, array( $this, 'save' ) );
 			add_action( 'woocommerce_admin_field_cr_whatsapp_templates', array( $this, 'list_whatsapp_templates' ) );
 		}
 
 		public function register_tab( $tabs ) {
-			$tabs[$this->tab] = __( 'Messages', 'customer-reviews-woocommerce' );
+			$verified_reviews = get_option( 'ivole_verified_reviews', 'no' );
+			if (
+				'no' === $verified_reviews ||
+				apply_filters( 'cr_settings_messages_tab', false, $verified_reviews )
+			) {
+				$tabs[$this->tab] = __( 'Messages', 'customer-reviews-woocommerce' );
+			}
 			return $tabs;
 		}
 
@@ -111,7 +115,7 @@ if ( ! class_exists( 'CR_Messages_Settings' ) ):
 								)
 							);
 							foreach ( $columns as $key => $column ) {
-								echo '<th class="cr-email-settings-' . esc_attr( $key ) . ' wc-email-settings-table-' . esc_attr( $key ) . '">' . esc_html( $column ) . '</th>';
+								echo '<th class="cr-wa-settings-' . esc_attr( $key ) . ' wc-email-settings-table-' . esc_attr( $key ) . '">' . esc_html( $column ) . '</th>';
 							}
 							?>
 							</tr>
@@ -165,6 +169,7 @@ if ( ! class_exists( 'CR_Messages_Settings' ) ):
 		}
 
 		public function get_wa_templates() {
+			$this->wa_templates = apply_filters( 'cr_settings_messages_templates', $this->wa_templates );
 			return $wa_templates = array_map( function( $template ) {
 				return new CR_WA_Template( $template );
 			}, $this->wa_templates );

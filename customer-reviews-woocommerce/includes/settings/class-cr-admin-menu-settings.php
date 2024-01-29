@@ -38,8 +38,10 @@ if ( ! class_exists( 'CR_Settings_Admin_Menu' ) ):
 			add_action( 'woocommerce_admin_field_htmltext', array( $this, 'show_htmltext' ) );
 			add_action( 'woocommerce_admin_field_emailtest', array( $this, 'show_emailtest' ) );
 			add_action( 'woocommerce_admin_field_watest', array( $this, 'show_watest' ) );
+			add_action( 'woocommerce_admin_field_waapitest', array( $this, 'show_waapitest' ) );
 			add_action( 'woocommerce_admin_field_license_status', array( $this, 'show_license_status' ) );
 			add_action( 'woocommerce_admin_field_textvars', array( $this, 'show_textvars' ) );
+			add_action( 'woocommerce_admin_field_exteditable', array( $this, 'show_exteditable' ) );
 			add_action( 'cr_admin_settings_footer', array( $this, 'display_features_banner' ) );
 
 			add_action( 'woocommerce_admin_settings_sanitize_option_ivole_enabled_categories', array( $this, 'save_cselect' ), 10, 3 );
@@ -51,6 +53,7 @@ if ( ! class_exists( 'CR_Settings_Admin_Menu' ) ):
 
 			add_action( 'wp_ajax_ivole_send_test_email', array( $this, 'send_test_email' ) );
 			add_action( 'wp_ajax_cr_send_test_wa', array( $this, 'send_test_wa' ) );
+			add_action( 'wp_ajax_cr_send_test_waapi', array( $this, 'send_test_waapi' ) );
 			add_action( 'wp_ajax_ivole_check_license_ajax', array( $this, 'check_license_ajax' ) );
 			add_action( 'wp_ajax_cr_settings_download_addon', array( $this, 'download_addon' ) );
 			add_action( 'wp_ajax_cr_settings_hide_banner', array( $this, 'hide_banner' ) );
@@ -145,6 +148,7 @@ if ( ! class_exists( 'CR_Settings_Admin_Menu' ) ):
 						'no_ratings' => CR_Forms_Settings_Rating::$no_atts,
 						'wa_prepare_test' => __( 'Starting a test...', 'customer-reviews-woocommerce' ),
 						'wa_ready_test' => __( 'A test review form is ready. Click on the button to send a WhatsApp message.', 'customer-reviews-woocommerce' ),
+						'sending' => __( 'Sending...', 'customer-reviews-woocommerce' ),
 						'footer_status' => sprintf( __( 'While editing the footer text please make sure to keep the unsubscribe link markup: %s', 'customer-reviews-woocommerce' ), '<a href="{{unsubscribeLink}}" style="color:#555555; text-decoration: underline; line-height: 12px; font-size: 10px;">unsubscribe</a>.' ),
 						'info_from' => 'Review reminders are sent by CusRev from \'feedback@cusrev.com\'. This indicates to customers that review process is independent and trustworthy. \'From Address\' can be modified with the <a href="' . admin_url( 'admin.php?page=cr-reviews-settings&tab=license-key' ) . '">Pro license</a> for CusRev.',
 						'info_from_name' => 'Since review invitations are sent via CusRev, \'From Name\' will be based on \'Shop Name\' (see above) with a reference to CusRev. This field can be modified with the <a href="' . admin_url( 'admin.php?page=cr-reviews-settings&tab=license-key' ) . '">Pro license</a> for CusRev.',
@@ -362,17 +366,13 @@ if ( ! class_exists( 'CR_Settings_Admin_Menu' ) ):
 		}
 
 		/**
-		* Custom field type for WhatsApp test
+		* Custom field type for WhatsApp test (click to chat)
 		*/
 		public function show_watest( $value ) {
 			$tmp = CR_Admin::cr_get_field_description( $value );
 			$tooltip_html = $tmp['tooltip_html'];
 			$description = $tmp['description'];
-			$coupon_class = '';
 
-			if( false !== strpos( $value['class'], 'coupon_mail' )  ) {
-				$coupon_class='coupon_mail';
-			}
 			?>
 			<tr valign="top">
 				<th scope="row" class="titledesc">
@@ -390,7 +390,7 @@ if ( ! class_exists( 'CR_Settings_Admin_Menu' ) ):
 					<?php echo $description; ?>
 					<div class="cr-test-wa-cont">
 						<a href="" data-nonce="<?php echo wp_create_nonce( 'cr-send-test-wa' ); ?>"
-						class="cr-test-wa-button button-primary <?php echo $coupon_class; ?>">
+						class="cr-test-wa-button button-primary">
 							<span class="cr-test-wa-prep"><?php _e( 'Send Test', 'customer-reviews-woocommerce' ); ?></span>
 							<span class="cr-test-wa-send"><?php _e( 'Send', 'customer-reviews-woocommerce' ); ?></span>
 							<img src="<?php echo plugin_dir_url( dirname( dirname( __FILE__ ) ) ) . 'img/spinner-dots.svg'; ?>" alt="Loading" />
@@ -398,6 +398,39 @@ if ( ! class_exists( 'CR_Settings_Admin_Menu' ) ):
 						<span class="dashicons dashicons-external cr-test-wa-ext"></span>
 					</div>
 					<p class="cr-test-wa-status" style="font-style:italic;visibility:hidden;"></p>
+				</td>
+			</tr>
+			<?php
+		}
+
+		/**
+		* Custom field type for WhatsApp test (API)
+		*/
+		public function show_waapitest( $value ) {
+			$tmp = CR_Admin::cr_get_field_description( $value );
+			$tooltip_html = $tmp['tooltip_html'];
+			$description = $tmp['description'];
+
+			?>
+			<tr valign="top">
+				<th scope="row" class="titledesc cr-send-test-th">
+					<div style="position:relative;">
+						<?php echo esc_html( $value['title'] ); ?>
+						<?php echo $tooltip_html; ?>
+					</div>
+				</th>
+				<td class="forminp forminp-<?php echo sanitize_title( $value['type'] ) ?>">
+					<input
+					type="text"
+					style="<?php echo esc_attr( $value['css'] ); ?>"
+					class="<?php echo esc_attr( $value['class'] ); ?>"
+					placeholder="<?php echo esc_attr( $value['placeholder'] ); ?>" />
+					<?php echo $description; ?>
+					<input type="button" value="<?php _e( 'Send Test', 'customer-reviews-woocommerce' ); ?>"
+					data-nonce="<?php echo wp_create_nonce( 'cr-send-test-waapi' ); ?>"
+					data-testtype="<?php echo ( 'cr-test-wa-coupon-input' === $value['class'] ? 1 : 0 ); ?>"
+					class="cr-test-waapi-button button-primary" />
+					<p class="cr-test-waapi-status" style="font-style:italic;visibility:hidden;"></p>
 				</td>
 			</tr>
 			<?php
@@ -428,6 +461,29 @@ if ( ! class_exists( 'CR_Settings_Admin_Menu' ) ):
 					readonly />
 					<?php echo $description; ?>
 					<p id="ivole_test_email_status" style="font-style:italic;visibility:hidden;">A</p>
+				</td>
+			</tr>
+			<?php
+		}
+
+		/**
+		* Custom field type for an externally editable field
+		*/
+		public function show_exteditable( $value ) {
+			$tmp = CR_Admin::cr_get_field_description( $value );
+			$tooltip_html = $tmp['tooltip_html'];
+			$description = $tmp['description'];
+
+			?>
+			<tr valign="top">
+				<th scope="row" class="titledesc cr-send-test-th">
+					<div style="position:relative;">
+						<?php echo esc_html( $value['title'] ); ?>
+						<?php echo $tooltip_html; ?>
+					</div>
+				</th>
+				<td class="forminp forminp-<?php echo sanitize_title( $value['type'] ) ?>">
+					<p class="cr-exteditable-p"><?php echo $description; ?></p>
 				</td>
 			</tr>
 			<?php
@@ -579,6 +635,83 @@ if ( ! class_exists( 'CR_Settings_Admin_Menu' ) ):
 			}
 
 			wp_send_json( array( 'code' => 98, 'message' => '' ) );
+		}
+
+		public function send_test_waapi() {
+			if( ! check_ajax_referer( 'cr-send-test-waapi', 'nonce', false ) ) {
+				wp_send_json(
+					array(
+						'code' => 96,
+						'message' => __( 'Error: nonce expired, please reload the page and try again', 'customer-reviews-woocommerce' )
+					)
+				);
+			}
+
+			$phone = strval( $_POST['phone'] );
+
+			$shop_country = '';
+			$base_location = wc_get_base_location();
+			if (
+				$base_location &&
+				is_array( $base_location ) &&
+				$base_location['country']
+			) {
+				$shop_country = $base_location['country'];
+			}
+
+			// check if customer phone number is valid
+			$vldtr = new CR_Phone_Vldtr();
+			$phone = $vldtr->parse_phone_number( $phone, $shop_country );
+			if ( ! $phone ) {
+				wp_send_json(
+					array(
+						'code' => 95,
+						'message' => __( 'Error: phone number is not valid. Use a full phone number in international format. Omit any zeroes, brackets, or dashes.', 'customer-reviews-woocommerce' )
+					)
+				);
+			}
+
+			// determine which WhatsApp template needs to be tested
+			$test_type = intval( $_POST['test_type'] );
+
+			// check if media files count was provided for simulation
+			$media_count = 0;
+			if ( isset( $_POST['media_count'] ) ) {
+				$media_count = intval( $_POST['media_count'] );
+			}
+
+			// create a test review form
+			$wa = new CR_Wtsap();
+			$res = $wa->send_test( $phone, $test_type, $media_count, $shop_country );
+			if (
+				is_array( $res ) &&
+				1 < count( $res )
+			) {
+				if ( 0 === $res[0] ) {
+					wp_send_json(
+						array(
+							'code' => $res[0],
+							'message' => $res[1]
+						)
+					);
+				} else {
+					wp_send_json(
+						array(
+							'code' => $res[0],
+							'message' => $res[1]
+						)
+					);
+				}
+			} else {
+				wp_send_json(
+					array(
+						'code' => 96,
+						'message' => __( 'Error: a test message could not be sent.', 'customer-reviews-woocommerce' )
+					)
+				);
+			}
+
+			wp_send_json( array( 'code' => 98, 'message' => 'Generic error (code 98)' ) );
 		}
 
 		/**

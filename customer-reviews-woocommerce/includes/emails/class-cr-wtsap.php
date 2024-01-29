@@ -397,6 +397,9 @@ class CR_Wtsap {
 			);
 			//check that array of items is not empty
 			if( 1 > count( $data['order']['items'] ) ) {
+				$order->add_order_note(
+					__( 'CR: A review invitation cannot be sent because the order does not contain any products for which review reminders are enabled in the settings.', 'customer-reviews-woocommerce' ),
+				);
 				return array( 7, __( 'Error: the order does not contain any products for which review reminders are enabled in the settings.', 'customer-reviews-woocommerce' ) );
 			}
 		} else {
@@ -572,6 +575,15 @@ class CR_Wtsap {
 				$this->phone = $order->get_shipping_phone();
 				$this->phone_country = $shipping_country;
 			}
+			// check if customer phone number is valid
+			$vldtr = new CR_Phone_Vldtr();
+			$this->phone = $vldtr->parse_phone_number( $this->phone, $this->phone_country );
+			if ( ! $this->phone ) {
+				return array(
+					6,
+					'Error: no valid phone numbers found in the order'
+				);
+			}
 		} else {
 			return;
 		}
@@ -597,6 +609,7 @@ class CR_Wtsap {
 				'id' => strval( $order_id ),
 				'date' => $order_date,
 				'currency' => $order_currency,
+				'country' => $shipping_country,
 				'items' => CR_Email_Func::get_order_items2( $order, $order_currency )
 			),
 			'discount' => array(
@@ -613,6 +626,7 @@ class CR_Wtsap {
 		$api_url = 'https://api.cusrev.com/v1/production/review-discount';
 
 		$data_string = json_encode( $data );
+		// error_log( print_r($data_string, true) );
 		$ch = curl_init();
 		curl_setopt( $ch, CURLOPT_URL, $api_url );
 		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
@@ -640,6 +654,140 @@ class CR_Wtsap {
 					__( 'An error occurred when sending the discount coupon %s to the customer by WhatsApp.', 'customer-reviews-woocommerce' ),
 					$coupon_code
 				)
+			);
+		}
+	}
+
+	public function send_test( $phone, $test_type, $media_count, $country ) {
+		// some dummy information for tests
+		$this->replace['customer-first-name'] = __( 'Jane', 'customer-reviews-woocommerce' );
+		$this->replace['customer-last-name'] = __( 'Doe', 'customer-reviews-woocommerce' );
+		$this->replace['customer-name'] = __( 'Jane Doe', 'customer-reviews-woocommerce' );
+		//
+		$data = array(
+			'token' => '164592f60fbf658711d47b2f55a1bbba',
+			'shop' => array(
+				"name" => Ivole_Email::get_blogname(),
+				'domain' => Ivole_Email::get_blogurl()
+			),
+			'email' => array(
+				'to' => 'watest@cusrev.com',
+				'subject' => 'WA',
+				'header' => 'WA',
+				'body' => 'WA'
+			),
+			'customer' => array(
+				'firstname' => __( 'Jane', 'customer-reviews-woocommerce' ),
+				'lastname' => __( 'Doe', 'customer-reviews-woocommerce' )
+			),
+			'order' => array(
+				'id' => '12345',
+				'date' => date_i18n( 'd.m.Y', time() ),
+				'currency' => get_woocommerce_currency(),
+				'country' => $country,
+				'items' => array(
+					array( 'id' => 1,
+						'name' => __( 'Item 1 Test', 'customer-reviews-woocommerce' ),
+						'price' => 15,
+						'image' => plugin_dir_url( dirname( dirname( __FILE__ ) ) ) . 'img/test-product-1.jpeg'
+					),
+					array( 'id' => 2,
+						'name' => __( 'Item 2 Test', 'customer-reviews-woocommerce' ),
+						'price' => 150,
+						'image' => plugin_dir_url( dirname( dirname( __FILE__ ) ) ) . 'img/test-product-2.jpeg'
+					)
+				)
+			),
+			'language' => $this->language,
+			'channel' => 'whatsapp',
+			'phone' => $phone,
+			'licenseKey' => strval( get_option( 'ivole_license_key', '' ) )
+		);
+
+		if ( 1 === $test_type ) {
+			// review for discount testing
+			$cpn = CR_Review_Discount_Settings::get_coupon_for_testing( $media_count );
+			if ( 0 !== $cpn['code'] ) {
+				return $cpn;
+			}
+			$this->replace['coupon-code'] = $cpn['coupon_code'];
+			$this->replace['discount-amount'] = ( $cpn['discount_string'] == "" ) ? '10%' : $cpn['discount_string'];
+			//
+			$data['discount'] = array(
+				'type' => $cpn['discount_type'],
+				'amount' => $this->replace['discount-amount'],
+				'code' => $this->replace['coupon-code']
+			);
+		} else {
+			// review reminder testing
+			$comment_required = get_option( 'ivole_form_comment_required', 'no' );
+			if( 'no' === $comment_required ) {
+				$comment_required = 0;
+			} else {
+				$comment_required = 1;
+			}
+			$shop_rating = 'yes' === get_option( 'ivole_form_shop_rating', 'no' ) ? true : false;
+			$allowMedia = 'yes' === get_option( 'ivole_form_attach_media', 'no' ) ? true : false;
+			$ratingBar = 'star' === get_option( 'ivole_form_rating_bar', 'smiley' ) ? 'star' : 'smiley';
+			$geolocation = 'yes' === get_option( 'ivole_form_geolocation', 'no' ) ? true : false;
+			//
+			$data['form'] = array(
+				'header' => $this->replace_variables( $this->form_header ),
+				'description' => $this->replace_variables( $this->form_body ),
+				'commentRequired' => $comment_required,
+				'allowMedia' => $allowMedia,
+			 	'shopRating' => $shop_rating,
+			 	'ratingBar' => $ratingBar,
+			 	'geoLocation' => $geolocation
+			);
+		}
+
+		$api_url = 'https://api.cusrev.com/v1/production/test-email';
+
+		$data_string = json_encode( $data );
+		// error_log( print_r($data_string, true) );
+		$ch = curl_init();
+		curl_setopt( $ch, CURLOPT_URL, $api_url );
+		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+		curl_setopt( $ch, CURLOPT_CUSTOMREQUEST, "POST" );
+		curl_setopt( $ch, CURLOPT_POSTFIELDS, $data_string );
+		curl_setopt( $ch, CURLOPT_HTTPHEADER, array(
+			'Content-Type: application/json',
+			'Content-Length: ' . strlen( $data_string ) )
+		);
+		$result = curl_exec( $ch );
+		$result = json_decode( $result );
+		// error_log( print_r($result, true) );
+		if ( isset( $result->status ) && $result->status === 'OK' ) {
+			return array(
+				0,
+				sprintf(
+					__( 'A test message has been successfully sent by WhatsApp to %s.', 'customer-reviews-woocommerce' ),
+					$phone
+				)
+			);
+		} else {
+			if ( isset( $result->error ) && $result->error ) {
+				if ( isset( $result->details ) ) {
+					$error_msg = sprintf(
+						__( 'An error occurred when sending a test message by WhatsApp: %1$s; %2$s', 'customer-reviews-woocommerce' ),
+						$result->error,
+						$result->details
+					);
+				} else {
+					$error_msg = sprintf(
+						__( 'An error occurred when sending a test message by WhatsApp: %s', 'customer-reviews-woocommerce' ),
+						$result->error
+					);
+				}
+				return array(
+					1,
+					$error_msg
+				);
+			}
+			return array(
+				2,
+				__( 'An error occurred when sending a test message by WhatsApp.', 'customer-reviews-woocommerce' )
 			);
 		}
 	}

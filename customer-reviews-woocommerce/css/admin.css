@@ -465,9 +465,22 @@ li.select2-results__option {
 .form-table .cr-email-settings-name {
 	width: 210px;
 }
+.form-table .cr-wa-settings-name {
+	width: 280px;
+}
 .form-table .cr-email-settings-message {
 	width: auto;
 	max-width: 500px;
+}
+.form-table .cr-wa-settings-message {
+	width: auto;
+	max-width: 700px;
+}
+.form-table .cr-wa-settings-actions {
+	width: 100px;
+}
+.form-table .cr-exteditable-p .description {
+	font-size: 14px;
 }
 .ivole-new-settings .cr-twocols-cont {
 	display: flex;
@@ -1231,7 +1244,8 @@ li.select2-results__option {
 .ivole-new-settings .cr-test-wa-cont.cr-test-wa-cont-send .cr-test-wa-button {
 	padding-right: 25px;
 }
-.ivole-new-settings .cr-test-wa-cont.cr-test-wa-cont-validation .cr-test-wa-button {
+.ivole-new-settings .cr-test-wa-cont.cr-test-wa-cont-validation .cr-test-wa-button,
+.ivole-new-settings .cr-test-wa-cont-validation .cr-test-waapi-button {
 	pointer-events: none;
 }
 .ivole-new-settings .cr-test-wa-cont .cr-test-wa-button img {

@@ -26,7 +26,11 @@ if ( ! class_exists( 'CR_WA_Template' ) ):
 				default:
 					break;
 			}
-			return $title;
+			return apply_filters(
+				'cr_settings_wa_template_title',
+				$title,
+				$this->name
+			);
 		}
 
 		public function get_description() {
@@ -38,7 +42,11 @@ if ( ! class_exists( 'CR_WA_Template' ) ):
 				default:
 					break;
 			}
-			return $description;
+			return apply_filters(
+				'cr_settings_wa_template_description',
+				$description,
+				$this->name
+			);
 		}
 
 		public function is_enabled() {
@@ -50,7 +58,11 @@ if ( ! class_exists( 'CR_WA_Template' ) ):
 				default:
 					break;
 			}
-			return $enabled;
+			return apply_filters(
+				'cr_settings_wa_template_enabled',
+				$enabled,
+				$this->name
+			);
 		}
 
 		public function get_message() {
@@ -62,7 +74,11 @@ if ( ! class_exists( 'CR_WA_Template' ) ):
 				default:
 					break;
 			}
-			return $message;
+			return apply_filters(
+				'cr_settings_wa_template_message',
+				$message,
+				$this->name
+			);
 		}
 
 		private function init_fields() {
@@ -90,7 +106,7 @@ if ( ! class_exists( 'CR_WA_Template' ) ):
 			$this->fields[45] = array(
 				'title'    => __( 'Message', 'customer-reviews-woocommerce' ),
 				'type'     => 'textvars',
-				'desc'     => __( 'Body of the email that will be sent to customers.', 'customer-reviews-woocommerce' ),
+				'desc'     => __( 'Message that will be sent to customers via WhatsApp Click to Chat.', 'customer-reviews-woocommerce' ),
 				'id'       => $id,
 				'desc_tip' => true,
 				'default' => $default,
