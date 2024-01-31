@@ -4,7 +4,7 @@ Tags: woocommerce, review plugin, review reminder, customer reviews, review for 
 Requires at least: 4.5
 Tested up to: 6.4
 Requires PHP: 7.2
-Stable tag: 5.38.11
+Stable tag: 5.38.12
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl.html
 
@@ -229,6 +229,8 @@ If you would like to change how reviews are sorted on product pages, it is possi
 
 == Changelog ==
 
+= 5.38.12 =
+* Improvement: a check for databases that convert tables prefixes to lowercase
 = 5.38.11 =
 * Improvement: a preventive check for prohibited categories of products and additional error messages in the order notes
 = 5.38.10 =

@@ -263,24 +263,12 @@ if ( ! class_exists( 'CR_Local_Forms' ) ) :
 			// check if the table exists
 			global $wpdb;
 			$table_name = $wpdb->prefix . self::FORMS_TABLE;
-			if( $wpdb->get_var( $wpdb->prepare( "SHOW TABLES LIKE %s", $table_name ) ) !== $table_name ) {
-				if( true !== $wpdb->query(
-						"CREATE TABLE `$table_name` (
-							`formId` varchar(190),
-							`orderId` varchar(190) DEFAULT NULL,
-							`customerEmail` varchar(1024) DEFAULT NULL,
-							`customerName` varchar(1024) DEFAULT NULL,
-							`displayName` varchar(1024) DEFAULT NULL,
-							`formHeader` varchar(1024) DEFAULT NULL,
-							`formBody` varchar(1024) DEFAULT NULL,
-							`items` json DEFAULT NULL,
-							`language` varchar(10) DEFAULT NULL,
-							`extra` text DEFAULT NULL,
-							PRIMARY KEY (`formId`),
-							KEY `orderId_index` (`orderId`)
-						) CHARACTER SET 'utf8mb4';" ) ) {
-					// it is possible that Maria DB is used that does not support JSON type
-					if( true !== $wpdb->query(
+			$name_check = $wpdb->get_var( $wpdb->prepare( "SHOW TABLES LIKE %s", $table_name ) );
+			if ( $name_check !== $table_name ) {
+				// check if the database converted the table name to lowercase
+				$table_name = strtolower( $table_name );
+				if ( $name_check !== $table_name ) {
+					if ( true !== $wpdb->query(
 							"CREATE TABLE `$table_name` (
 								`formId` varchar(190),
 								`orderId` varchar(190) DEFAULT NULL,
@@ -289,14 +277,33 @@ if ( ! class_exists( 'CR_Local_Forms' ) ) :
 								`displayName` varchar(1024) DEFAULT NULL,
 								`formHeader` varchar(1024) DEFAULT NULL,
 								`formBody` varchar(1024) DEFAULT NULL,
-								`items` text DEFAULT NULL,
+								`items` json DEFAULT NULL,
 								`language` varchar(10) DEFAULT NULL,
 								`extra` text DEFAULT NULL,
 								PRIMARY KEY (`formId`),
 								KEY `orderId_index` (`orderId`)
 							) CHARACTER SET 'utf8mb4';" ) ) {
-						return array( 'code' => 1, 'text' => 'Table ' . $table_name . ' could not be created' );
+						// it is possible that Maria DB is used that does not support JSON type
+						if( true !== $wpdb->query(
+								"CREATE TABLE `$table_name` (
+									`formId` varchar(190),
+									`orderId` varchar(190) DEFAULT NULL,
+									`customerEmail` varchar(1024) DEFAULT NULL,
+									`customerName` varchar(1024) DEFAULT NULL,
+									`displayName` varchar(1024) DEFAULT NULL,
+									`formHeader` varchar(1024) DEFAULT NULL,
+									`formBody` varchar(1024) DEFAULT NULL,
+									`items` text DEFAULT NULL,
+									`language` varchar(10) DEFAULT NULL,
+									`extra` text DEFAULT NULL,
+									PRIMARY KEY (`formId`),
+									KEY `orderId_index` (`orderId`)
+								) CHARACTER SET 'utf8mb4';" ) ) {
+							return array( 'code' => 1, 'text' => 'Table ' . $table_name . ' could not be created' );
+						}
 					}
+				} else {
+					$table_name = $name_check;
 				}
 			}
 
