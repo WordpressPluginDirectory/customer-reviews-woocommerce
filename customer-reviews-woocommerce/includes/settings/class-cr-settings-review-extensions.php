@@ -111,13 +111,6 @@ if ( ! class_exists( 'CR_Review_Extensions_Settings' ) ):
 					'class'    => 'wc-enhanced-select',
 					'options'  => $sorting_options
 				);
-				$this->settings[] = array(
-					'title'   => __( 'Review Form', 'customer-reviews-woocommerce' ),
-					'desc'    => __( 'Display a review form on product pages. If you would like to protect your site from SPAM reviews and allow customers to submit reviews only via invitations (review reminders), this option should be disabled.', 'customer-reviews-woocommerce' ),
-					'id'      => 'ivole_ajax_reviews_form',
-					'default' => 'yes',
-					'type'    => 'checkbox'
-				);
 			}
 			$this->settings[] = array(
 				'type' => 'sectionend',

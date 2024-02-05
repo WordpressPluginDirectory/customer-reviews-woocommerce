@@ -1175,6 +1175,7 @@ if (! class_exists('CR_All_Reviews')) :
 					$media_upload = true;
 				}
 			}
+			$cr_form_permissions = CR_Forms_Settings::get_default_review_permissions();
 			ob_start();
 			wc_get_template(
 				'cr-review-form.php',
@@ -1184,7 +1185,8 @@ if (! class_exists('CR_All_Reviews')) :
 					'cr_item_pic' => $item_pic,
 					'cr_form_media_enabled' => $media_upload,
 					'cr_form_item_media_array' => $cr_form_item_media_array,
-					'cr_form_item_media_desc' => $cr_form_item_media_desc
+					'cr_form_item_media_desc' => $cr_form_item_media_desc,
+					'cr_form_permissions' => $cr_form_permissions
 				),
 				'customer-reviews-woocommerce',
 				dirname( dirname( dirname( __FILE__ ) ) ) . '/templates/'
@@ -1198,90 +1200,124 @@ if (! class_exists('CR_All_Reviews')) :
 				'description' => __( 'Data validation error', 'customer-reviews-woocommerce' ),
 				'button' => __( 'OK', 'customer-reviews-woocommerce' )
 			);
-			if (
-				isset( $_POST['rating'] ) &&
-				isset( $_POST['review'] ) &&
-				isset( $_POST['id'] ) &&
-				isset( $_POST['name'] ) &&
-				isset( $_POST['email'] ) &&
-				is_numeric( $_POST['id'] )
-			) {
-				$page_id = 0;
-				if ( -1 == $_POST['id'] ) {
-					$page_id = wc_get_page_id( 'shop' );
-					// WPML compatibility
-					if ( has_filter( 'wpml_object_id' ) ) {
-						$page_id = apply_filters( 'wpml_object_id', $page_id, 'page', true );
-					}
-				} else {
-					$page_id = $_POST['id'];
-				}
-				if( 0 < $page_id ) {
-					$rating = intval( $_POST['rating'] );
-					$review = sanitize_textarea_field( trim( $_POST['review'] ) );
-					$name = sanitize_text_field( trim( $_POST['name'] ) );
-					$email = sanitize_email( trim( $_POST['email'] ) );
-					//
+			// read settings for review permissions
+			$cr_form_permissions = CR_Forms_Settings::get_default_review_permissions();
+			// check if reviews are allowed
+			if ( ! in_array( $cr_form_permissions, array( 'registered', 'verified', 'anybody' ) ) ) {
+				$return['code'] = 3;
+				$return['description'] = __( 'Currently, we are not accepting new reviews', 'customer-reviews-woocommerce' );
+			} else {
+				if (
+					isset( $_POST['rating'] ) &&
+					isset( $_POST['review'] ) &&
+					isset( $_POST['id'] ) &&
+					isset( $_POST['name'] ) &&
+					isset( $_POST['email'] ) &&
+					is_numeric( $_POST['id'] )
+				) {
+					// check if a user is logged-in and permission is 'registered'
+					// check if a user is logged-in, it is a shop review, and permission is 'verified'
 					if (
-						$rating &&
-						$review &&
-						$name &&
-						is_email( $email )
+						(
+							'registered' === $cr_form_permissions &&
+							! is_user_logged_in()
+						) ||
+						(
+							'verified' === $cr_form_permissions &&
+							0 > $_POST['id'] &&
+							! is_user_logged_in()
+						)
 					) {
-						$user = get_user_by( 'email', $email );
-						if( $user ) {
-							$user = $user->ID;
-						} else {
-							$user = 0;
-						}
-						$commentdata = array(
-							'comment_author' => $name,
-							'comment_author_email' => $email,
-							'comment_author_url' => '',
-							'comment_content' => $review,
-							'comment_type' => 'review',
-							'comment_post_ID' => $page_id,
-							'user_id' => $user,
-							'comment_meta' => array(
-								'rating' => intval( $rating )
-							)
-						);
-						add_filter( 'pre_comment_approved', array( 'CR_All_Reviews', 'is_review_approved' ), 10, 2 );
-						$result = wp_new_comment( $commentdata, true );
-						remove_filter( 'pre_comment_approved', array( 'CR_All_Reviews', 'is_review_approved' ), 10 );
-
-						$error_description = __( 'Your review could not be added', 'customer-reviews-woocommerce' );
-						$error_button = __( 'Try again', 'customer-reviews-woocommerce' );
-						$success_description = __( 'Your review has been successfully added', 'customer-reviews-woocommerce' );
-						$success_button = __( 'Continue', 'customer-reviews-woocommerce' );
-
-						if (
-							!$result ||
-							is_wp_error( $result )
-						) {
-							if( is_wp_error( $result ) ) {
-								$error_description = $result->get_error_message();
-							}
-							$return = array(
-								'code' => 1,
-								'description' => $error_description,
-								'button' => $error_button
-							);
-						} else {
-							wp_update_comment_count_now( $page_id );
-							$return = array(
-								'code' => 0,
-								'description' => $success_description,
-								'button' => $success_button
-							);
-						}
-					}
-				} else {
-					if ( -1 == $_POST['id'] ) {
-						// no shop page configured in the settings
-						$return['description'] = __( 'Error: no shop page configured in WooCommerce settings (WooCommerce > Settings > Products > Shop page)', 'customer-reviews-woocommerce' );
+						$return['code'] = 4;
+						$return['description'] = __( 'You must be logged in to post a review', 'customer-reviews-woocommerce' );
 					} else {
-						$return['description'] = sprintf( __( 'Error: no product with ID %d found', 'customer-reviews-woocommerce' ), $page_id );
+						$page_id = 0;
+						if ( -1 == $_POST['id'] ) {
+							$page_id = wc_get_page_id( 'shop' );
+							// WPML compatibility
+							if ( has_filter( 'wpml_object_id' ) ) {
+								$page_id = apply_filters( 'wpml_object_id', $page_id, 'page', true );
+							}
+						} else {
+							$page_id = $_POST['id'];
+						}
+						if( 0 < $page_id ) {
+							$rating = intval( $_POST['rating'] );
+							$review = sanitize_textarea_field( trim( $_POST['review'] ) );
+							$name = sanitize_text_field( trim( $_POST['name'] ) );
+							$email = sanitize_email( trim( $_POST['email'] ) );
+							//
+							if (
+								$rating &&
+								$review &&
+								$name &&
+								is_email( $email )
+							) {
+								// check if a user bought the product in the past and permission is 'verified'
+								if (
+									'verified' === $cr_form_permissions &&
+									! wc_customer_bought_product( $email, get_current_user_id(), $page_id )
+								) {
+									$return['code'] = 5;
+									$return['description'] = __( 'Only customers who have purchased this product may leave a review. Please use the same email address as in your order for this product.', 'customer-reviews-woocommerce' );
+								} else {
+									$user = get_user_by( 'email', $email );
+									if( $user ) {
+										$user = $user->ID;
+									} else {
+										$user = 0;
+									}
+									$commentdata = array(
+										'comment_author' => $name,
+										'comment_author_email' => $email,
+										'comment_author_url' => '',
+										'comment_content' => $review,
+										'comment_type' => 'review',
+										'comment_post_ID' => $page_id,
+										'user_id' => $user,
+										'comment_meta' => array(
+											'rating' => intval( $rating )
+										)
+									);
+									add_filter( 'pre_comment_approved', array( 'CR_All_Reviews', 'is_review_approved' ), 10, 2 );
+									$result = wp_new_comment( $commentdata, true );
+									remove_filter( 'pre_comment_approved', array( 'CR_All_Reviews', 'is_review_approved' ), 10 );
+
+									$error_description = __( 'Your review could not be added', 'customer-reviews-woocommerce' );
+									$error_button = __( 'Try again', 'customer-reviews-woocommerce' );
+									$success_description = __( 'Your review has been successfully added', 'customer-reviews-woocommerce' );
+									$success_button = __( 'Continue', 'customer-reviews-woocommerce' );
+
+									if (
+										!$result ||
+										is_wp_error( $result )
+									) {
+										if( is_wp_error( $result ) ) {
+											$error_description = $result->get_error_message();
+										}
+										$return = array(
+											'code' => 1,
+											'description' => $error_description,
+											'button' => $error_button
+										);
+									} else {
+										wp_update_comment_count_now( $page_id );
+										$return = array(
+											'code' => 0,
+											'description' => $success_description,
+											'button' => $success_button
+										);
+									}
+								}
+							}
+						} else {
+							if ( -1 == $_POST['id'] ) {
+								// no shop page configured in the settings
+								$return['description'] = __( 'Error: no shop page configured in WooCommerce settings (WooCommerce > Settings > Products > Shop page)', 'customer-reviews-woocommerce' );
+							} else {
+								$return['description'] = sprintf( __( 'Error: no product with ID %d found', 'customer-reviews-woocommerce' ), $page_id );
+							}
+						}
 					}
 				}
 			}

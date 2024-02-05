@@ -216,6 +216,18 @@ if ( ! class_exists( 'CR_Admin' ) ) :
 		}
 
 		/**
+		 * Function to show media count update notice in admin area
+		 */
+		public function admin_notice_update8() {
+			if ( current_user_can( 'manage_options' ) ) {
+				$class = 'notice notice-info is-dismissible ivole-updated';
+				$settings_url = admin_url( 'admin.php?page=cr-reviews-settings&tab=forms' );
+				$message = sprintf( '<strong>Customer Reviews for WooCommerce</strong> plugin has been updated. This update includes a new setting \'Review Permissions\' that determines whether a user is eligible to submit a review via on-site review forms. Please check this setting <a href="%s">here</a> and verify that it is configured according to your requirements.', $settings_url );
+				printf( '<div class="%1$s"><p>%2$s</p></div>', esc_attr( $class ), $message );
+			}
+		}
+
+		/**
 		 * Function to show milestone in collected reviews notice in admin area
 		 */
 		public function admin_notice_reviews() {
@@ -331,6 +343,9 @@ if ( ! class_exists( 'CR_Admin' ) ) :
 						update_option( 'ivole_verified_reviews', 'yes', false );
 						update_option( 'ivole_mailer_review_reminder', 'cr', false );
 						update_option( 'ivole_version', $this->ver );
+					} elseif ( version_compare( $version, '5.39.0', '<' ) ) {
+						add_action( 'admin_notices', array( $this, 'admin_notice_update8' ) );
+						$no_notices = false;
 					} else {
 						update_option( 'ivole_version', $this->ver );
 					}

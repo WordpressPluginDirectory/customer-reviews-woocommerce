@@ -61,6 +61,7 @@ if ( ! class_exists( 'CR_Forms_Settings' ) ) :
 			add_action( 'cr_save_settings_' . $this->tab, array( $this, 'save' ) );
 			add_action( 'woocommerce_admin_field_cr_customer_attributes', array( $this, 'display_customer_attributes' ) );
 			add_action( 'woocommerce_admin_field_cr_rating_criteria', array( 'CR_Forms_Settings_Rating', 'display_rating_criteria' ) );
+			add_action( 'woocommerce_admin_field_cr_review_permissions', array( $this, 'display_review_permissions' ) );
 
 			new CR_Forms_Settings_Rating();
 		}
@@ -129,6 +130,13 @@ if ( ! class_exists( 'CR_Forms_Settings' ) ) :
 					$ivole_review_forms[0]['cus_atts'] = $cus_atts;
 					$update_ivole_review_forms = true;
 				}
+				// save the review permissions
+				if ( ! empty( $_POST ) && isset( $_POST['ivole_review_permissions'] ) ) {
+					$rev_perm = strval( $_POST['ivole_review_permissions'] );
+					$ivole_review_forms[0]['rev_perm'] = $rev_perm;
+					$update_ivole_review_forms = true;
+				}
+				//
 				if ( $update_ivole_review_forms ) {
 					$_POST['ivole_review_forms'] = $ivole_review_forms;
 				}
@@ -245,6 +253,19 @@ if ( ! class_exists( 'CR_Forms_Settings' ) ) :
 					'default'  => 25,
 					'type'     => 'number',
 					'desc_tip' => true
+				),
+				23 => array(
+					'title'    => __( 'Review Permissions', 'customer-reviews-woocommerce' ),
+					'desc'     => __( 'Specify review permissions for on-site review forms. This setting applies to review forms on single product pages when CusRev visual style is enabled and to review forms added via shortcodes.', 'customer-reviews-woocommerce' ),
+					'id'       => 'ivole_review_permissions',
+					'type'     => 'cr_review_permissions',
+					'desc_tip' => true,
+					'options'  => array(
+						'nobody'  => __( 'Nobody can submit reviews', 'customer-reviews-woocommerce' ),
+						'registered' => __( 'Reviewers must be registered and logged in', 'customer-reviews-woocommerce' ),
+						'verified' => __( 'Reviewers must be verified owners', 'customer-reviews-woocommerce' ),
+						'anybody' => __( 'Anyone can submit reviews', 'customer-reviews-woocommerce' )
+					)
 				),
 				25 => array(
 					'title'   => __( 'reCAPTCHA V2 for Reviews', 'customer-reviews-woocommerce' ),
@@ -625,6 +646,63 @@ if ( ! class_exists( 'CR_Forms_Settings' ) ) :
 
 		public static function get_max_cus_atts() {
 			return apply_filters( 'cr_onsite_questions', 2 );
+		}
+
+		public static function get_default_review_permissions() {
+			$form_settings = self::get_default_form_settings();
+			$permissions = '';
+			if ( $form_settings ) {
+				if (
+					is_array( $form_settings ) &&
+					isset( $form_settings['rev_perm'] )
+				) {
+					$permissions = $form_settings['rev_perm'];
+				}
+			}
+			if ( ! $permissions ) {
+				$ivole_ajax_reviews_form = get_option( 'ivole_ajax_reviews_form' );
+				$permissions = $ivole_ajax_reviews_form === 'yes' ? 'registered' : 'nobody';
+			}
+			return $permissions;
+		}
+
+		public function display_review_permissions( $value ) {
+			$option_value = self::get_default_review_permissions();
+			$tooltip_html = CR_Admin::ivole_wc_help_tip( $value['desc'] );
+			?>
+				<tr valign="top">
+					<th scope="row" class="titledesc">
+						<label for="<?php echo esc_attr( $value['id'] ); ?>"><?php echo esc_html( $value['title'] ); ?> <?php echo $tooltip_html; // WPCS: XSS ok. ?></label>
+					</th>
+					<td class="forminp forminp-<?php echo esc_attr( sanitize_title( $value['type'] ) ); ?>">
+						<select
+							name="<?php echo esc_attr( $value['field_name'] ); ?><?php echo ( 'multiselect' === $value['type'] ) ? '[]' : ''; ?>"
+							id="<?php echo esc_attr( $value['id'] ); ?>"
+							style="<?php echo esc_attr( $value['css'] ); ?>"
+							class="<?php echo esc_attr( $value['class'] ); ?>"
+							<?php echo 'multiselect' === $value['type'] ? 'multiple="multiple"' : ''; ?>
+							>
+							<?php
+							foreach ( $value['options'] as $key => $val ) {
+								?>
+								<option value="<?php echo esc_attr( $key ); ?>"
+									<?php
+
+									if ( is_array( $option_value ) ) {
+										selected( in_array( (string) $key, $option_value, true ), true );
+									} else {
+										selected( $option_value, (string) $key );
+									}
+
+									?>
+								><?php echo esc_html( $val ); ?></option>
+								<?php
+							}
+							?>
+						</select>
+					</td>
+				</tr>
+			<?php
 		}
 
 	}

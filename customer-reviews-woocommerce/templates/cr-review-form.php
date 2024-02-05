@@ -39,7 +39,7 @@ if( $cr_current_user instanceof WP_User ) {
 	</div>
 
 	<?php if (
-		get_option( 'woocommerce_review_rating_verification_required' ) === 'yes' &&
+		'verified' === $cr_form_permissions &&
 		0 < $cr_item_id &&
 		! wc_customer_bought_product( '', get_current_user_id(), $cr_item_id ) &&
 		is_user_logged_in()
@@ -51,13 +51,24 @@ if( $cr_current_user instanceof WP_User ) {
 			</span>
 		</div>
 
-	<?php elseif ( get_option( 'comment_registration' ) && ! is_user_logged_in() ) : ?>
+	<?php elseif (
+		( 'registered' === $cr_form_permissions && ! is_user_logged_in() ) ||
+		( 'verified' === $cr_form_permissions && 0 > $cr_item_id && ! is_user_logged_in() )
+	) : ?>
 
 		<div class="cr-review-form-not-logged-in">
 			<span>
 			<?php _e( 'You must be logged in to post a review', 'customer-reviews-woocommerce' ); ?>
 			</span>
 			<a class="cr-review-form-continue" href="<?php echo esc_url( wp_login_url( apply_filters( 'the_permalink', get_the_permalink(), $cr_item_id ) ) ); ?>"><?php _e( 'Log In', 'customer-reviews-woocommerce' ); ?></a>
+		</div>
+
+	<?php elseif ( 'nobody' === $cr_form_permissions ) : ?>
+
+		<div class="cr-review-form-not-logged-in">
+			<span>
+			<?php _e( 'Currently, we are not accepting new reviews', 'customer-reviews-woocommerce' ); ?>
+			</span>
 		</div>
 
 	<?php else : ?>

@@ -49,7 +49,8 @@ if( method_exists( $product, 'get_id' ) ) {
 		</h2>
 
 		<?php
-		$new_reviews_allowed = ( 'yes' === get_option( 'ivole_ajax_reviews_form', 'yes' ) ) ? true : false;
+		$cr_form_permissions = CR_Forms_Settings::get_default_review_permissions();
+		$new_reviews_allowed = in_array( $cr_form_permissions, array( 'registered', 'verified', 'anybody' ) ) ? true : false;
 		$cr_per_page = CR_Ajax_Reviews::get_per_page();
 		if ( have_comments() ) : ?>
 			<?php
@@ -151,7 +152,8 @@ if( method_exists( $product, 'get_id' ) ) {
 						'cr_item_pic' => $item_pic,
 						'cr_form_media_enabled' => $media_upload,
 						'cr_form_item_media_array' => $cr_form_item_media_array,
-						'cr_form_item_media_desc' => $cr_form_item_media_desc
+						'cr_form_item_media_desc' => $cr_form_item_media_desc,
+						'cr_form_permissions' => $cr_form_permissions
 					),
 					'customer-reviews-woocommerce',
 					dirname( dirname( __FILE__ ) ) . '/templates/'
