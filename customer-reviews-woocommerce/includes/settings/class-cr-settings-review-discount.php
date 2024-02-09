@@ -514,7 +514,7 @@ if ( ! class_exists( 'CR_Review_Discount_Settings' ) ):
 				$q_config['language'] = $q_language;
 			}
 
-			$cpn = self::get_coupon_for_testing( $media_count );
+			$cpn = self::get_coupon_for_testing( $media_count, 'email' );
 			if ( 0 !== $cpn['code'] ) {
 				wp_send_json(
 					array(
@@ -714,7 +714,7 @@ if ( ! class_exists( 'CR_Review_Discount_Settings' ) ):
 			);
 		}
 
-		public static function get_coupon_for_testing( $media_count ) {
+		public static function get_coupon_for_testing( $media_count, $channel ) {
 			$coupon_code = '';
 			$discount_string = '';
 			$discount_type = '';
@@ -738,10 +738,14 @@ if ( ! class_exists( 'CR_Review_Discount_Settings' ) ):
 							$coupon_code = get_post_field( 'post_title', $coupon_id );
 							$discount_type = get_post_meta( $coupon_id, 'discount_type', true );
 							$discount_amount = intval( get_post_meta( $coupon_id, 'coupon_amount', true ) );
-							if ( $discount_type == 'percent' ) {
-								$discount_string = $discount_amount . '%';
+							if ( 'wa' === $channel ) {
+								$discount_string = strval( $discount_amount );
 							} else {
-								$discount_string = trim( strip_tags( CR_Email_Func::cr_price( $discount_amount,  array( 'currency' => get_option( 'woocommerce_currency' ) ) ) ) );
+								if ( $discount_type == 'percent' ) {
+									$discount_string = $discount_amount . '%';
+								} else {
+									$discount_string = trim( strip_tags( CR_Email_Func::cr_price( $discount_amount,  array( 'currency' => get_option( 'woocommerce_currency' ) ) ) ) );
+								}
 							}
 						} else {
 							$coupon_code = "<strong>NO_COUPON_SET</strong>";
@@ -750,12 +754,16 @@ if ( ! class_exists( 'CR_Review_Discount_Settings' ) ):
 					} else {
 						$discount_type = $db_settings[CR_Discount_Tiers::$tiers_settings['cr_coupon__discount_type']][$tier_w_coupon];
 						$discount_amount = intval( $db_settings[CR_Discount_Tiers::$tiers_settings['cr_coupon__coupon_amount']][$tier_w_coupon] );
-						if ( $discount_type === "percent" && $discount_amount > 0 ){
-							$discount_string = $discount_amount . "%";
-						} elseif ( $discount_amount > 0 ) {
-							$discount_string = trim(
-								strip_tags( CR_Email_Func::cr_price( $discount_amount, array( 'currency' => get_option( 'woocommerce_currency' ) ) ) )
-							);
+						if ( 'wa' === $channel ) {
+							$discount_string = strval( $discount_amount );
+						} else {
+							if ( $discount_type === "percent" && $discount_amount > 0 ) {
+								$discount_string = $discount_amount . '%';
+							} elseif ( $discount_amount > 0 ) {
+								$discount_string = trim(
+									strip_tags( CR_Email_Func::cr_price( $discount_amount, array( 'currency' => get_option( 'woocommerce_currency' ) ) ) )
+								);
+							}
 						}
 						$prefix = $db_settings[CR_Discount_Tiers::$tiers_settings['cr_coupon_prefix']][$tier_w_coupon];
 						$coupon_code = strtoupper( $prefix . uniqid( 'TEST' ) );

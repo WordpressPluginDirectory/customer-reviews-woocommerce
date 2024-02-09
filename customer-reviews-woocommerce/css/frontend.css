@@ -1070,6 +1070,7 @@ div.ivole-summaryBox.cr-summaryBar-updating,
 .cr-all-reviews-shortcode ol.commentlist li .comment-text p,
 #reviews.cr-reviews-ajax-reviews #comments.cr-reviews-ajax-comments .cr-ajax-reviews-list .comment-text p {
 	margin: 1em 0;
+	text-align: left;
 }
 .cr-all-reviews-shortcode ol.commentlist li .comment-text .meta {
 	font-size: .83em;
@@ -1713,6 +1714,7 @@ img.ivole-verified-badge-ext-icon {
 	margin-left: 5px;
 	margin-right: 0px;
 	white-space: nowrap;
+	width: auto;
 }
 .rtl #reviews.cr-reviews-ajax-reviews .cr-button-search,
 .rtl .cr-all-reviews-shortcode .cr-button-search {

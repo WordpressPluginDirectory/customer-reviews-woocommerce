@@ -275,12 +275,10 @@ if ( ! class_exists( 'CR_Background_Importer' ) ) :
 				);
 
 				// WPML compatibility
-				if ( has_filter( 'wpml_object_id' ) && $ivole_language === 'WPML' ) {
-					if( class_exists( 'WCML_Comments' ) ) {
-						global $woocommerce_wpml;
-						if( $woocommerce_wpml ) {
-							add_action( 'added_comment_meta', array( $woocommerce_wpml->comments, 'maybe_duplicate_comment_rating' ), 10, 4 );
-						}
+				if ( has_filter( 'wpml_object_id' ) && class_exists( 'WCML_Comments' ) ) {
+					global $woocommerce_wpml;
+					if ( $woocommerce_wpml ) {
+						add_action( 'added_comment_meta', array( $woocommerce_wpml->comments, 'maybe_duplicate_comment_rating' ), 10, 4 );
 					}
 				}
 
@@ -354,6 +352,9 @@ if ( ! class_exists( 'CR_Background_Importer' ) ) :
 
 			foreach ( $_COOKIE as $name => $value ) {
 				if ( session_name() === $name ) {
+					continue;
+				}
+				if ( is_array( $value ) ) {
 					continue;
 				}
 				$cookies[] = new WP_Http_Cookie( array(

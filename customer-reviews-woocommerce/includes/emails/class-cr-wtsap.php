@@ -706,12 +706,12 @@ class CR_Wtsap {
 
 		if ( 1 === $test_type ) {
 			// review for discount testing
-			$cpn = CR_Review_Discount_Settings::get_coupon_for_testing( $media_count );
+			$cpn = CR_Review_Discount_Settings::get_coupon_for_testing( $media_count, 'wa' );
 			if ( 0 !== $cpn['code'] ) {
 				return $cpn;
 			}
 			$this->replace['coupon-code'] = $cpn['coupon_code'];
-			$this->replace['discount-amount'] = ( $cpn['discount_string'] == "" ) ? '10%' : $cpn['discount_string'];
+			$this->replace['discount-amount'] = ( $cpn['discount_string'] == "" ) ? '10' : $cpn['discount_string'];
 			//
 			$data['discount'] = array(
 				'type' => $cpn['discount_type'],
