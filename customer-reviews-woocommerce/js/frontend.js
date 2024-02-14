@@ -995,6 +995,16 @@
 			jQuery( this ).closest( ".cr-review-form-wrap" ).removeClass( "cr-review-form-res" );
 			cr_reset_review_form( jQuery( this ) );
 		} );
+		jQuery( ".cr-reviews-grid .cr-nav-left svg, .cr-reviews-grid .cr-nav-right svg, .cr-reviews-grid .cr-review-form-cancel" ).on( "click", function( e ) {
+			jQuery( this ).closest( ".cr-reviews-grid" ).removeClass( "cr-reviews-grid-new-review" );
+			jQuery( this ).closest( ".cr-review-form-wrap" ).removeClass( "cr-review-form-res" );
+			cr_reset_review_form( jQuery( this ) );
+		} );
+		jQuery( ".cr-reviews-grid .cr-review-form-wrap" ).on( "click", ".cr-review-form-success", function( e ) {
+			jQuery( this ).closest( ".cr-reviews-grid" ).removeClass( "cr-reviews-grid-new-review" );
+			jQuery( this ).closest( ".cr-review-form-wrap" ).removeClass( "cr-review-form-res" );
+			cr_reset_review_form( jQuery( this ) );
+		} );
 
 		// submit the review form
 		jQuery( ".cr-review-form-wrap .cr-review-form-submit" ).on( "click", function( e ) {
@@ -1109,7 +1119,12 @@
 		// open the review form
 		jQuery( ".cr-all-reviews-add-review" ).on( "click", function(t) {
 			t.preventDefault();
-			jQuery( this ).closest( ".cr-all-reviews-shortcode" ).addClass( "cr-all-reviews-new-review" );
+			if ( 0 < jQuery( this ).closest( ".cr-all-reviews-shortcode" ).length ) {
+				jQuery( this ).closest( ".cr-all-reviews-shortcode" ).addClass( "cr-all-reviews-new-review" );
+			}
+			if ( 0 < jQuery( this ).closest( ".cr-reviews-grid" ).length ) {
+				jQuery( this ).closest( ".cr-reviews-grid" ).addClass( "cr-reviews-grid-new-review" );
+			}
 		} );
 
 		// upload media trigger

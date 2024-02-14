@@ -76,7 +76,7 @@ if (! class_exists('CR_All_Reviews')) :
 					is_string( $attributes['products'] ) &&
 					'current' === trim( strtolower( $attributes['products'] ) )
 				) {
-					$product_id = $this->is_it_a_product_page();
+					$product_id = self::is_it_a_product_page();
 					if ( $product_id ) {
 						$attributes['products'] = array( $product_id );
 					} else {
@@ -126,7 +126,7 @@ if (! class_exists('CR_All_Reviews')) :
 				$this->shortcode_atts['users'] = 'all';
 			}
 			if ( 'true' === $this->shortcode_atts['add_review'] ) {
-				$product_id = $this->is_it_a_product_page();
+				$product_id = self::is_it_a_product_page();
 				if ( $product_id ) {
 					$this->shortcode_atts['add_review'] = $product_id;
 				} else {
@@ -475,7 +475,7 @@ if (! class_exists('CR_All_Reviews')) :
 
 			// add review form
 			if ( $this->shortcode_atts['add_review'] ) {
-				$return .= $this->show_add_review_form();
+				$return .= self::show_add_review_form( $this->shortcode_atts['add_review'] );
 			}
 
 			// show summary bar
@@ -1159,15 +1159,15 @@ if (! class_exists('CR_All_Reviews')) :
 			}
 		}
 
-		private function show_add_review_form() {
+		public static function show_add_review_form( $add_review ) {
 			$item_id = -1;
 			$item_name = Ivole_Email::get_blogname();
 			$item_pic = get_site_icon_url( 512, plugins_url( '/img/store.svg', dirname( dirname( __FILE__ ) ) ) );
 			$media_upload = false;
 			$cr_form_item_media_array = array();
 			$cr_form_item_media_desc = __( 'Add photos or video to your review', 'customer-reviews-woocommerce' );
-			if ( is_numeric( $this->shortcode_atts['add_review'] ) ) {
-				$product = wc_get_product( $this->shortcode_atts['add_review'] );
+			if ( is_numeric( $add_review ) ) {
+				$product = wc_get_product( $add_review );
 				$item_id = $product->get_id();
 				$item_name = $product->get_name();
 				$item_pic = wp_get_attachment_image_url( $product->get_image_id(), 'thumbnail', false );
@@ -1333,7 +1333,7 @@ if (! class_exists('CR_All_Reviews')) :
 			return $approved;
 		}
 
-		private function is_it_a_product_page() {
+		public static function is_it_a_product_page() {
 			if ( is_product() ) {
 				$product = wc_get_product();
 				if ( is_object( $product ) ) {

@@ -151,7 +151,7 @@ if ( ! class_exists( 'CR_Sender' ) ) :
 					}
 				} else {
 					//the logic for WP Cron otherwise
-					$delay_channel = $this->get_sending_delay();
+					$delay_channel = self::get_sending_delay();
 					$delay = $delay_channel[0];
 					$timestamp = apply_filters( 'cr_reminder_delay', time() + $delay * DAY_IN_SECONDS, $order_id, $delay );
 					if( false === wp_schedule_single_event( $timestamp, 'ivole_send_reminder', array( $order_id ) ) ) {
@@ -193,7 +193,7 @@ if ( ! class_exists( 'CR_Sender' ) ) :
 				}
 			}
 
-			$delay_channel = $this->get_sending_delay();
+			$delay_channel = self::get_sending_delay();
 			if ( 'wa' === $delay_channel[1] ) {
 				$w = new CR_Wtsap( $order_id );
 				$result = $w->send_message( $order_id, $schedule );
@@ -263,7 +263,7 @@ if ( ! class_exists( 'CR_Sender' ) ) :
 			return $is_eu;
 		}
 
-		private function get_sending_delay() {
+		public static function get_sending_delay() {
 			$delay_option = get_option( 'ivole_delay', 5 );
 			if ( is_array( $delay_option ) && 0 < count( $delay_option ) ) {
 				if (

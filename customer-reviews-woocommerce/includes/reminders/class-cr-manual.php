@@ -78,20 +78,20 @@ if ( ! class_exists( 'CR_Manual' ) ) :
 							'action'    => "view ivole-order ivole-order-cr ivole-o-" . $order_id,
 						);
 					} else {
-						$whatsapp_class = '';
-						if ( 'yes' !== $verified_reviews ) {
-							$whatsapp_class = 'cr-whatsapp-act';
-							if ( ! $this->is_phone_exists( $order ) ) {
-								$whatsapp_class .= ' cr-no-phone';
-							}
+						// $whatsapp_class = '';
+						// if ( 'yes' !== $verified_reviews ) {
+						// 	$whatsapp_class = 'cr-whatsapp-act';
+						// 	if ( ! $this->is_phone_exists( $order ) ) {
+						// 		$whatsapp_class .= ' cr-no-phone';
+						// 	}
+						// }
+						$whatsapp_class = 'cr-whatsapp-act';
+						if ( 'yes' === $verified_reviews ) {
+							$whatsapp_class .= ' cr-whatsapp-api';
 						}
-						// $whatsapp_class = 'cr-whatsapp-act';
-						// if ( 'yes' === $verified_reviews ) {
-						// 	$whatsapp_class .= ' cr-whatsapp-api';
-						// }
-						// if ( ! $this->is_phone_exists( $order ) ) {
-						// 	$whatsapp_class .= ' cr-no-phone';
-						// }
+						if ( ! $this->is_phone_exists( $order ) ) {
+							$whatsapp_class .= ' cr-no-phone';
+						}
 						$actions['ivole'] = array(
 							'url'       => wp_nonce_url( admin_url( 'admin-ajax.php?action=ivole_manual_review_reminder&order_id=' . $order_id ), 'cr-man-rem', 'cr_manual_reminder' ),
 							'name'      => __( 'Send review reminder now', 'customer-reviews-woocommerce' ),
@@ -193,8 +193,14 @@ if ( ! class_exists( 'CR_Manual' ) ) :
 
 				$schedule = $this->get_schedule( $order );
 
-				$e = new Ivole_Email( $order_id );
-				$result = $e->trigger2( $order_id, null, $schedule );
+				$delay_channel = CR_Sender::get_sending_delay();
+				if ( 'wa' === $delay_channel[1] ) {
+					$wa = new CR_Wtsap( $order_id );
+					$result = $wa->send_message( $order_id, $schedule );
+				} else {
+					$e = new Ivole_Email( $order_id );
+					$result = $e->trigger2( $order_id, null, $schedule );
+				}
 
 				//qTranslate integration
 				if( $lang ) {
@@ -223,28 +229,23 @@ if ( ! class_exists( 'CR_Manual' ) ) :
 					}
 				}
 
-				if( is_array( $result ) && count( $result)  > 1 && 2 === $result[0] ) {
-					wp_send_json( array( 'code' => 2, 'message' => $result[1], 'order_id' => $order_id ) );
-				} elseif( is_array( $result ) && count( $result)  > 1 && 7 === $result[0] ) {
-					wp_send_json( array( 'code' => 7, 'message' => $result[1], 'order_id' => $order_id ) );
-				} elseif( is_array( $result ) && count( $result)  > 1 && 9 === $result[0] ) {
-					wp_send_json( array( 'code' => 9, 'message' => $result[1], 'order_id' => $order_id ) );
-				} elseif( is_array( $result ) && count( $result)  > 1 && 12 === $result[0] ) {
-					wp_send_json( array( 'code' => 12, 'message' => $result[1], 'order_id' => $order_id ) );
-				} elseif( is_array( $result ) && count( $result)  > 1 && 100 === $result[0] ) {
-					wp_send_json( array( 'code' => 100, 'message' => $result[1], 'order_id' => $order_id ) );
-				} elseif( is_array( $result ) && count( $result)  > 1 && 14 <= $result[0] ) {
+				if( is_array( $result ) && count( $result ) > 1 && 0 !== $result[0] ) {
 					wp_send_json( array( 'code' => $result[0], 'message' => $result[1], 'order_id' => $order_id ) );
-				} elseif( is_array( $result ) && count( $result)  > 1 && 4 === $result[0] ) {
-					wp_send_json( array( 'code' => $result[0], 'message' => $result[1], 'order_id' => $order_id ) );
-				} elseif( 0 === $result ) {
+				} elseif (
+					0 === $result ||
+					( is_array( $result ) && count( $result ) > 1 && 0 === $result[0] )
+				) {
 					// unschedule automatic review reminder if manual sending was successful (for reminders sent via WP Cron)
 					if( !$schedule ) {
 						$timestamp = wp_next_scheduled( 'ivole_send_reminder', array( $order_id ) );
 						if( $timestamp ) {
 							wp_unschedule_event( $timestamp, 'ivole_send_reminder', array( $order_id ) );
 						}
-						$order->add_order_note( __( 'CR: a review reminder was triggered manually via email.', 'customer-reviews-woocommerce' ) );
+						if ( 'wa' === $delay_channel[1] ) {
+							$order->add_order_note( __( 'CR: a review reminder was triggered manually via WhatsApp.', 'customer-reviews-woocommerce' ) );
+						} else {
+							$order->add_order_note( __( 'CR: a review reminder was triggered manually via email.', 'customer-reviews-woocommerce' ) );
+						}
 					} else {
 						$msg = __( 'Successfully synced with CR Cron', 'customer-reviews-woocommerce' );
 					}

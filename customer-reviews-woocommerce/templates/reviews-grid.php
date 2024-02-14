@@ -6,6 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div class="cr-reviews-grid" id="<?php echo $id; ?>" style="<?php echo esc_attr( $section_style ); ?>" data-attributes="<?php echo wc_esc_json(wp_json_encode($attributes));?>">
 	<?php
 		echo $cr_credits_line;
+		echo $review_form;
 		echo $summary_bar;
 	?>
 	<div class="cr-reviews-grid-inner">

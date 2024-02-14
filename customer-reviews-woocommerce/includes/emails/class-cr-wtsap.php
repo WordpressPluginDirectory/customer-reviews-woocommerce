@@ -648,13 +648,24 @@ class CR_Wtsap {
 				)
 			);
 		} else {
-			return array(
-				1,
-				sprintf(
-					__( 'An error occurred when sending the discount coupon %s to the customer by WhatsApp.', 'customer-reviews-woocommerce' ),
-					$coupon_code
-				)
-			);
+			if ( isset( $result->details ) ) {
+				return array(
+					1,
+					sprintf(
+						__( 'An error occurred when sending the discount coupon %1$s to the customer by WhatsApp. Error: %2$s.', 'customer-reviews-woocommerce' ),
+						$coupon_code,
+						$result->details
+					)
+				);
+			} else {
+				return array(
+					2,
+					sprintf(
+						__( 'An error occurred when sending the discount coupon %s to the customer by WhatsApp.', 'customer-reviews-woocommerce' ),
+						$coupon_code
+					)
+				);
+			}
 		}
 	}
 

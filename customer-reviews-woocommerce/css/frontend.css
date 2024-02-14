@@ -205,6 +205,9 @@ div.iv-comment-image img {
 .cr-all-reviews-shortcode.cr-all-reviews-new-review .cr-summaryBox-wrap {
 	display: none;
 }
+.cr-reviews-grid.cr-reviews-grid-new-review .cr-summaryBox-wrap {
+	display: none;
+}
 #reviews .cr-summaryBox-wrap {
 	margin: 0 0 1em 0;
 	background-color: #F9F9F9;
@@ -214,20 +217,24 @@ div.iv-comment-image img {
 	margin: 0;
 	background-color: #F9F9F9;
 }
-.cr-all-reviews-shortcode .cr-summaryBox-wrap .cr-summary-separator {
+.cr-all-reviews-shortcode .cr-summaryBox-wrap .cr-summary-separator,
+.cr-reviews-grid .cr-summaryBox-wrap .cr-summary-separator {
 	width: auto;
 	height: 40px;
 }
-.cr-all-reviews-shortcode .cr-summaryBox-wrap.cr-summaryBox-add-review .cr-summary-separator {
+.cr-all-reviews-shortcode .cr-summaryBox-wrap.cr-summaryBox-add-review .cr-summary-separator,
+.cr-reviews-grid .cr-summaryBox-wrap.cr-summaryBox-add-review .cr-summary-separator {
 	flex: 2 2 auto;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 }
-.cr-all-reviews-shortcode .cr-summaryBox-wrap.cr-summaryBox-add-review .cr-summary-separator-side {
+.cr-all-reviews-shortcode .cr-summaryBox-wrap.cr-summaryBox-add-review .cr-summary-separator-side,
+.cr-reviews-grid .cr-summaryBox-wrap.cr-summaryBox-add-review .cr-summary-separator-side {
 	flex: 1 1 auto;
 }
-.cr-all-reviews-shortcode .cr-summaryBox-wrap .cr-summary-separator-int {
+.cr-all-reviews-shortcode .cr-summaryBox-wrap .cr-summary-separator-int,
+.cr-reviews-grid .cr-summaryBox-wrap .cr-summary-separator-int {
 	width: 2px;
 	height: 40px;
 	background-color: #BCCCD4;
@@ -249,19 +256,23 @@ div.iv-comment-image img {
 	border: 0px solid #e4e1e3;
 	box-sizing: border-box;
 }
-.cr-all-reviews-shortcode .cr-summaryBox-wrap.cr-summaryBox-add-review .ivole-summaryBox {
+.cr-all-reviews-shortcode .cr-summaryBox-wrap.cr-summaryBox-add-review .ivole-summaryBox,
+.cr-reviews-grid .cr-summaryBox-wrap.cr-summaryBox-add-review .ivole-summaryBox {
 	width: 35%;
 	flex: 1 0 35%;
 }
 .cr-all-reviews-shortcode .cr-summaryBox-wrap.cr-summaryBox-add-review .cr-overall-rating-wrap,
-.cr-all-reviews-shortcode .cr-summaryBox-wrap.cr-summaryBox-add-review .cr-add-review-wrap {
+.cr-all-reviews-shortcode .cr-summaryBox-wrap.cr-summaryBox-add-review .cr-add-review-wrap,
+.cr-reviews-grid .cr-summaryBox-wrap.cr-summaryBox-add-review .cr-overall-rating-wrap,
+.cr-reviews-grid .cr-summaryBox-wrap.cr-summaryBox-add-review .cr-add-review-wrap {
 	width: auto;
 	flex: 0 0 auto;
 }
 #reviews .cr-summaryBox-wrap .cr-overall-rating-wrap,
 .cr-all-reviews-shortcode .cr-summaryBox-wrap .cr-overall-rating-wrap,
 .cr-all-reviews-shortcode .cr-summaryBox-wrap .cr-add-review-wrap,
-.cr-reviews-grid .cr-summaryBox-wrap .cr-overall-rating-wrap {
+.cr-reviews-grid .cr-summaryBox-wrap .cr-overall-rating-wrap,
+.cr-reviews-grid .cr-summaryBox-wrap .cr-add-review-wrap {
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -283,15 +294,18 @@ div.iv-comment-image img {
 	color: #0E252C;
 	line-height: 25px;
 }
-.cr-all-reviews-shortcode .cr-review-form-wrap {
+.cr-all-reviews-shortcode .cr-review-form-wrap,
+.cr-reviews-grid .cr-review-form-wrap {
 	display: none;
 }
 .cr-all-reviews-shortcode.cr-all-reviews-new-review .cr-review-form-wrap,
-.cr-ajax-reviews-review-form .cr-review-form-wrap {
+.cr-ajax-reviews-review-form .cr-review-form-wrap,
+.cr-reviews-grid.cr-reviews-grid-new-review .cr-review-form-wrap {
 	display: block;
 }
 .cr-all-reviews-shortcode .cr-review-form-wrap .cr-review-form-nav,
-.cr-ajax-reviews-review-form .cr-review-form-wrap .cr-review-form-nav {
+.cr-ajax-reviews-review-form .cr-review-form-wrap .cr-review-form-nav,
+.cr-reviews-grid .cr-review-form-wrap .cr-review-form-nav {
 	display: flex;
 	justify-content: space-between;
 	border-top: 1px solid #E5E9EB;
@@ -301,7 +315,9 @@ div.iv-comment-image img {
 .cr-all-reviews-shortcode .cr-review-form-wrap .cr-review-form-nav .cr-nav-left,
 .cr-all-reviews-shortcode .cr-review-form-wrap .cr-review-form-nav .cr-nav-right,
 .cr-ajax-reviews-review-form .cr-review-form-wrap .cr-review-form-nav .cr-nav-left,
-.cr-ajax-reviews-review-form .cr-review-form-wrap .cr-review-form-nav .cr-nav-right {
+.cr-ajax-reviews-review-form .cr-review-form-wrap .cr-review-form-nav .cr-nav-right,
+.cr-reviews-grid .cr-review-form-wrap .cr-review-form-nav .cr-nav-left,
+.cr-reviews-grid .cr-review-form-wrap .cr-review-form-nav .cr-nav-right {
 	display: flex;
 	align-items: center;
 }
@@ -309,7 +325,8 @@ div.iv-comment-image img {
 	display: none;
 }
 .cr-all-reviews-shortcode .cr-review-form-wrap .cr-review-form-nav .cr-nav-left svg,
-.cr-ajax-reviews-review-form .cr-review-form-wrap .cr-review-form-nav .cr-nav-left svg {
+.cr-ajax-reviews-review-form .cr-review-form-wrap .cr-review-form-nav .cr-nav-left svg,
+.cr-reviews-grid .cr-review-form-wrap .cr-review-form-nav .cr-nav-left svg {
 	margin: 0 5px 0 0;
 }
 .cr-ajax-reviews-review-form.cr-ajax-reviews-review-form-nc .cr-review-form-wrap .cr-review-form-nav .cr-nav-left svg {
@@ -318,16 +335,20 @@ div.iv-comment-image img {
 .cr-all-reviews-shortcode .cr-review-form-wrap .cr-review-form-nav .cr-nav-left svg:hover,
 .cr-all-reviews-shortcode .cr-review-form-wrap .cr-review-form-nav .cr-nav-right svg:hover,
 .cr-ajax-reviews-review-form .cr-review-form-wrap .cr-review-form-nav .cr-nav-left svg:hover,
-.cr-ajax-reviews-review-form .cr-review-form-wrap .cr-review-form-nav .cr-nav-right svg:hover {
+.cr-ajax-reviews-review-form .cr-review-form-wrap .cr-review-form-nav .cr-nav-right svg:hover,
+.cr-reviews-grid .cr-review-form-wrap .cr-review-form-nav .cr-nav-left svg:hover,
+.cr-reviews-grid .cr-review-form-wrap .cr-review-form-nav .cr-nav-right svg:hover {
 	cursor: pointer;
 }
 .cr-all-reviews-shortcode .cr-review-form-wrap .cr-review-form-nav .cr-nav-left span,
-.cr-ajax-reviews-review-form .cr-review-form-wrap .cr-review-form-nav .cr-nav-left span {
+.cr-ajax-reviews-review-form .cr-review-form-wrap .cr-review-form-nav .cr-nav-left span,
+.cr-reviews-grid .cr-review-form-wrap .cr-review-form-nav .cr-nav-left span {
 	font-size: 16px;
 	color: #0E252C;
 }
 .cr-all-reviews-shortcode .cr-review-form-item,
-.cr-ajax-reviews-review-form .cr-review-form-item {
+.cr-ajax-reviews-review-form .cr-review-form-item,
+.cr-reviews-grid .cr-review-form-item {
 	display: flex;
 	max-width: 500px;
 	margin: 0 auto;
@@ -337,21 +358,24 @@ div.iv-comment-image img {
 	align-items: center;
 }
 .cr-all-reviews-shortcode .cr-review-form-item img,
-.cr-ajax-reviews-review-form .cr-review-form-item img {
+.cr-ajax-reviews-review-form .cr-review-form-item img,
+.cr-reviews-grid .cr-review-form-item img {
 	display: block;
 	height: 60px;
 	width: auto;
 	margin: 0 20px 0 0;
 }
 .cr-all-reviews-shortcode .cr-review-form-item span,
-.cr-ajax-reviews-review-form .cr-review-form-item span {
+.cr-ajax-reviews-review-form .cr-review-form-item span,
+.cr-reviews-grid .cr-review-form-item span {
 	display: block;
 	font-size: 22px;
 	font-weight: 500;
 	color: #0E252C;
 }
 .cr-all-reviews-shortcode .cr-review-form-rating,
-.cr-ajax-reviews-review-form .cr-review-form-rating {
+.cr-ajax-reviews-review-form .cr-review-form-rating,
+.cr-reviews-grid .cr-review-form-rating {
 	max-width: 500px;
 	margin: 0 auto;
 	padding: 30px 0 30px 0;
@@ -378,14 +402,16 @@ div.iv-comment-image img {
 }
 .cr-all-reviews-shortcode .cr-review-form-rating .cr-review-form-rating-cont,
 .cr-onsite-ratings .cr-review-form-rating .cr-review-form-rating-cont,
-.cr-review-form-rating-overall .cr-review-form-rating .cr-review-form-rating-cont {
+.cr-review-form-rating-overall .cr-review-form-rating .cr-review-form-rating-cont,
+.cr-reviews-grid .cr-review-form-rating .cr-review-form-rating-cont {
 	display: flex;
 	position: relative;
 	height: auto;
 	padding: 5px 0;
 }
 .cr-all-reviews-shortcode .cr-review-form-rating .cr-review-form-rating-cont .cr-review-form-rating-inner,
-.cr-onsite-ratings .cr-review-form-rating .cr-review-form-rating-cont .cr-review-form-rating-inner {
+.cr-onsite-ratings .cr-review-form-rating .cr-review-form-rating-cont .cr-review-form-rating-inner,
+.cr-reviews-grid .cr-review-form-rating .cr-review-form-rating-cont .cr-review-form-rating-inner {
 	height: 20px;
 	padding: 0 5px;
 }
@@ -404,15 +430,18 @@ div.iv-comment-image img {
 .cr-all-reviews-shortcode .cr-review-form-rating .cr-review-form-rating-cont .cr-review-form-rating-inner .cr-rating-act,
 .cr-onsite-ratings .cr-review-form-rating .cr-review-form-rating-cont .cr-review-form-rating-inner .cr-rating-act,
 .cr-review-form-rating-overall .cr-review-form-rating .cr-review-form-rating-cont .cr-review-form-rating-inner .cr-rating-act,
-.cr-ajax-reviews-review-form .cr-review-form-rating .cr-review-form-rating-cont .cr-review-form-rating-inner .cr-rating-act {
+.cr-ajax-reviews-review-form .cr-review-form-rating .cr-review-form-rating-cont .cr-review-form-rating-inner .cr-rating-act,
+.cr-reviews-grid .cr-review-form-rating .cr-review-form-rating-cont .cr-review-form-rating-inner .cr-rating-act {
 	display: none;
 }
 .cr-all-reviews-shortcode .cr-review-form-rating .cr-review-form-rating-cont .cr-review-form-rating-inner svg:hover,
-.cr-ajax-reviews-review-form .cr-review-form-rating .cr-review-form-rating-cont .cr-review-form-rating-inner svg:hover {
+.cr-ajax-reviews-review-form .cr-review-form-rating .cr-review-form-rating-cont .cr-review-form-rating-inner svg:hover,
+.cr-reviews-grid .cr-review-form-rating .cr-review-form-rating-cont .cr-review-form-rating-inner svg:hover {
 	cursor: pointer;
 }
 .cr-all-reviews-shortcode .cr-review-form-rating .cr-review-form-rating-cont .cr-review-form-rating-nbr,
-.cr-onsite-ratings .cr-review-form-rating .cr-review-form-rating-cont .cr-review-form-rating-nbr {
+.cr-onsite-ratings .cr-review-form-rating .cr-review-form-rating-cont .cr-review-form-rating-nbr,
+.cr-reviews-grid .cr-review-form-rating .cr-review-form-rating-cont .cr-review-form-rating-nbr {
 	font-size: 14px;
 	line-height: 20px;
 	height: 20px;
@@ -428,14 +457,16 @@ div.iv-comment-image img {
 	font-size: 18px;
 }
 .cr-all-reviews-shortcode .cr-review-form-rating-overall .cr-review-form-rating-label,
-.cr-ajax-reviews-review-form .cr-review-form-rating-overall .cr-review-form-rating-label {
+.cr-ajax-reviews-review-form .cr-review-form-rating-overall .cr-review-form-rating-label,
+.cr-reviews-grid .cr-review-form-rating-overall .cr-review-form-rating-label {
 	font-size: 16px;
 }
 .cr-all-reviews-shortcode .cr-review-form-field-error,
 .cr-onsite-ratings .cr-review-form-field-error,
 .cr-review-form-rating-overall .cr-review-form-field-error,
 .cr-onsite-questions .cr-onsite-question .cr-review-form-field-error,
-.cr-ajax-reviews-review-form .cr-review-form-field-error {
+.cr-ajax-reviews-review-form .cr-review-form-field-error,
+.cr-reviews-grid .cr-review-form-field-error {
 	font-size: 11px;
 	color: #CE2B37;
 	margin: 5px 0 0 0;
@@ -443,7 +474,8 @@ div.iv-comment-image img {
 }
 .cr-all-reviews-shortcode .cr-review-form-rating.cr-review-form-error .cr-review-form-rating-cont,
 .cr-onsite-ratings .cr-review-form-rating.cr-review-form-error .cr-review-form-rating-cont,
-.cr-review-form-rating-overall .cr-review-form-rating.cr-review-form-error .cr-review-form-rating-cont {
+.cr-review-form-rating-overall .cr-review-form-rating.cr-review-form-error .cr-review-form-rating-cont,
+.cr-reviews-grid .cr-review-form-rating.cr-review-form-error .cr-review-form-rating-cont {
 	background-color: #fae9eb;
 }
 .cr-all-reviews-shortcode .cr-review-form-rating.cr-review-form-error .cr-review-form-field-error,
@@ -459,18 +491,25 @@ div.iv-comment-image img {
 .cr-ajax-reviews-review-form .cr-review-form-name.cr-review-form-error .cr-review-form-field-error,
 .cr-ajax-reviews-review-form .cr-review-form-email.cr-review-form-error .cr-review-form-field-error,
 .cr-ajax-reviews-review-form .cr-review-form-captcha.cr-review-form-error .cr-review-form-field-error,
-.cr-ajax-reviews-review-form .cr-form-item-media.cr-review-form-error .cr-review-form-field-error {
+.cr-ajax-reviews-review-form .cr-form-item-media.cr-review-form-error .cr-review-form-field-error,
+.cr-reviews-grid .cr-review-form-comment.cr-review-form-error .cr-review-form-field-error,
+.cr-reviews-grid .cr-review-form-name.cr-review-form-error .cr-review-form-field-error,
+.cr-reviews-grid .cr-review-form-email.cr-review-form-error .cr-review-form-field-error,
+.cr-reviews-grid .cr-review-form-captcha.cr-review-form-error .cr-review-form-field-error,
+.cr-reviews-grid .cr-form-item-media.cr-review-form-error .cr-review-form-field-error {
 	display: block;
 }
 .cr-all-reviews-shortcode .cr-review-form-comment,
-.cr-ajax-reviews-review-form .cr-review-form-comment {
+.cr-ajax-reviews-review-form .cr-review-form-comment,
+.cr-reviews-grid .cr-review-form-comment {
 	max-width: 500px;
 	margin: 0 auto;
 	padding: 0 0 20px 0;
 	position: relative;
 }
 .cr-all-reviews-shortcode .cr-review-form-comment .cr-review-form-comment-txt,
-.cr-ajax-reviews-review-form .cr-review-form-comment .cr-review-form-comment-txt {
+.cr-ajax-reviews-review-form .cr-review-form-comment .cr-review-form-comment-txt,
+.cr-reviews-grid .cr-review-form-comment .cr-review-form-comment-txt {
 	border: solid 1px #D8E2E7;
 	background-color: #FFFFFF;
 	box-shadow: none;
@@ -482,7 +521,8 @@ div.iv-comment-image img {
 	margin: 0;
 }
 .cr-all-reviews-shortcode .cr-review-form-comment.cr-review-form-error .cr-review-form-comment-txt,
-.cr-ajax-reviews-review-form .cr-review-form-comment.cr-review-form-error .cr-review-form-comment-txt {
+.cr-ajax-reviews-review-form .cr-review-form-comment.cr-review-form-error .cr-review-form-comment-txt,
+.cr-reviews-grid .cr-review-form-comment.cr-review-form-error .cr-review-form-comment-txt {
 	border: #CE2B37 solid 2px;
 }
 .cr-all-reviews-shortcode .cr-review-form-comment .cr-review-form-lbl,
@@ -490,7 +530,10 @@ div.iv-comment-image img {
 .cr-all-reviews-shortcode .cr-review-form-email .cr-review-form-lbl,
 .cr-ajax-reviews-review-form .cr-review-form-comment .cr-review-form-lbl,
 .cr-ajax-reviews-review-form .cr-review-form-name .cr-review-form-lbl,
-.cr-ajax-reviews-review-form .cr-review-form-email .cr-review-form-lbl {
+.cr-ajax-reviews-review-form .cr-review-form-email .cr-review-form-lbl,
+.cr-reviews-grid .cr-review-form-comment .cr-review-form-lbl,
+.cr-reviews-grid .cr-review-form-name .cr-review-form-lbl,
+.cr-reviews-grid .cr-review-form-email .cr-review-form-lbl {
 	position: absolute;
 	top: -7px;
 	z-index: 1;
@@ -503,13 +546,15 @@ div.iv-comment-image img {
 	color: #4D5D64;
 }
 .cr-all-reviews-shortcode .cr-form-item-media,
-.cr-ajax-reviews-review-form .cr-form-item-media {
+.cr-ajax-reviews-review-form .cr-form-item-media,
+.cr-reviews-grid .cr-form-item-media {
 	max-width: 500px;
 	margin: 0 auto;
 	padding: 0 0 20px 0;
 }
 .cr-all-reviews-shortcode .cr-review-form-ne,
-.cr-ajax-reviews-review-form .cr-review-form-ne {
+.cr-ajax-reviews-review-form .cr-review-form-ne,
+.cr-reviews-grid .cr-review-form-ne {
 	max-width: 500px;
 	margin: 0 auto;
 	padding: 0 0 20px 0;
@@ -520,18 +565,23 @@ div.iv-comment-image img {
 .cr-all-reviews-shortcode .cr-review-form-ne .cr-review-form-name,
 .cr-all-reviews-shortcode .cr-review-form-ne .cr-review-form-email,
 .cr-ajax-reviews-review-form .cr-review-form-ne .cr-review-form-name,
-.cr-ajax-reviews-review-form .cr-review-form-ne .cr-review-form-email {
+.cr-ajax-reviews-review-form .cr-review-form-ne .cr-review-form-email,
+.cr-reviews-grid .cr-review-form-ne .cr-review-form-name,
+.cr-reviews-grid .cr-review-form-ne .cr-review-form-email {
 	width: 50%;
 	position: relative;
 }
 .cr-all-reviews-shortcode .cr-review-form-ne .cr-review-form-name input,
 .cr-all-reviews-shortcode .cr-review-form-ne .cr-review-form-email input,
 .cr-ajax-reviews-review-form .cr-review-form-ne .cr-review-form-name input,
-.cr-ajax-reviews-review-form .cr-review-form-ne .cr-review-form-email input {
+.cr-ajax-reviews-review-form .cr-review-form-ne .cr-review-form-email input,
+.cr-reviews-grid .cr-review-form-ne .cr-review-form-name input,
+.cr-reviews-grid .cr-review-form-ne .cr-review-form-email input {
 	width: 100%;
 }
 .cr-all-reviews-shortcode .cr-review-form-ne .cr-review-form-txt,
-.cr-ajax-reviews-review-form .cr-review-form-ne .cr-review-form-txt {
+.cr-ajax-reviews-review-form .cr-review-form-ne .cr-review-form-txt,
+.cr-reviews-grid .cr-review-form-ne .cr-review-form-txt {
 	border: solid 1px #D8E2E7;
 	background-color: #FFFFFF;
 	box-shadow: none;
@@ -573,11 +623,14 @@ div.iv-comment-image img {
 .cr-ajax-reviews-review-form .cr-review-form-email.cr-review-form-error .cr-review-form-txt,
 .cr-onsite-questions .cr-onsite-question.cr-review-form-error input[type='text'],
 .cr-onsite-questions .cr-onsite-question.cr-review-form-error input[type='number'],
-.cr-single-product-review .cr-review-form-textbox.cr-review-form-error {
+.cr-single-product-review .cr-review-form-textbox.cr-review-form-error,
+.cr-reviews-grid .cr-review-form-name.cr-review-form-error .cr-review-form-txt,
+.cr-reviews-grid .cr-review-form-email.cr-review-form-error .cr-review-form-txt {
 	border: #CE2B37 solid 2px;
 }
 .cr-all-reviews-shortcode .cr-review-form-captcha,
-.cr-ajax-reviews-review-form .cr-review-form-captcha {
+.cr-ajax-reviews-review-form .cr-review-form-captcha,
+.cr-reviews-grid .cr-review-form-captcha {
 	max-width: 500px;
 	margin: 0 auto;
 	padding: 0 0 20px 0;
@@ -586,11 +639,13 @@ div.iv-comment-image img {
 	align-items: start;
 }
 .cr-all-reviews-shortcode .cr-review-form-captcha .cr-recaptcha,
-.cr-ajax-reviews-review-form .cr-review-form-captcha .cr-recaptcha {
+.cr-ajax-reviews-review-form .cr-review-form-captcha .cr-recaptcha,
+.cr-reviews-grid .cr-review-form-captcha .cr-recaptcha {
 	margin: 0;
 }
 .cr-all-reviews-shortcode .cr-review-form-buttons,
-.cr-ajax-reviews-review-form .cr-review-form-buttons {
+.cr-ajax-reviews-review-form .cr-review-form-buttons,
+.cr-reviews-grid .cr-review-form-buttons {
 	max-width: 500px;
 	margin: 0 auto;
 	padding: 0 0 30px 0;
@@ -599,7 +654,8 @@ div.iv-comment-image img {
 	gap: 10px;
 }
 .cr-all-reviews-shortcode .cr-review-form-buttons .cr-review-form-submit,
-.cr-ajax-reviews-review-form .cr-review-form-buttons .cr-review-form-submit {
+.cr-ajax-reviews-review-form .cr-review-form-buttons .cr-review-form-submit,
+.cr-reviews-grid .cr-review-form-buttons .cr-review-form-submit {
 	display: flex;
 	background-color: #31856C;
 	color: #ffffff;
@@ -617,7 +673,8 @@ div.iv-comment-image img {
 	width: 100%;
 }
 .cr-all-reviews-shortcode .cr-review-form-buttons .cr-review-form-submit:hover,
-.cr-ajax-reviews-review-form .cr-review-form-buttons .cr-review-form-submit:hover {
+.cr-ajax-reviews-review-form .cr-review-form-buttons .cr-review-form-submit:hover,
+.cr-reviews-grid .cr-review-form-buttons .cr-review-form-submit:hover {
 	background-color: #276A56;
 	text-decoration: none;
 	cursor: pointer;
@@ -639,28 +696,42 @@ div.iv-comment-image img {
 .cr-ajax-reviews-review-form .cr-review-form-submitting .cr-review-form-ne .cr-review-form-txt,
 .cr-ajax-reviews-review-form .cr-review-form-submitting .cr-review-form-captcha,
 .cr-ajax-reviews-review-form .cr-review-form-submitting .cr-onsite-question,
-.cr-ajax-reviews-review-form .cr-review-form-submitting .cr-onsite-question-inp {
+.cr-ajax-reviews-review-form .cr-review-form-submitting .cr-onsite-question-inp,
+.cr-reviews-grid .cr-review-form-submitting .cr-review-form-buttons .cr-review-form-submit,
+.cr-reviews-grid .cr-review-form-submitting .cr-review-form-buttons .cr-review-form-cancel,
+.cr-reviews-grid .cr-review-form-submitting .cr-review-form-rating .cr-review-form-rating-inner,
+.cr-reviews-grid .cr-review-form-submitting .cr-review-form-rating .cr-review-form-rating-inner,
+.cr-reviews-grid .cr-review-form-submitting .cr-review-form-comment .cr-review-form-comment-txt,
+.cr-reviews-grid .cr-review-form-submitting .cr-review-form-ne .cr-review-form-txt,
+.cr-reviews-grid .cr-review-form-submitting .cr-review-form-captcha,
+.cr-reviews-grid .cr-review-form-submitting .cr-onsite-question,
+.cr-reviews-grid .cr-review-form-submitting .cr-onsite-question-inp {
 	pointer-events: none;
 }
 .cr-all-reviews-shortcode .cr-review-form-buttons .cr-review-form-submit span,
-.cr-ajax-reviews-review-form .cr-review-form-buttons .cr-review-form-submit span {
+.cr-ajax-reviews-review-form .cr-review-form-buttons .cr-review-form-submit span,
+.cr-reviews-grid .cr-review-form-buttons .cr-review-form-submit span {
 	display: block;
 }
 .cr-all-reviews-shortcode .cr-review-form-submitting .cr-review-form-buttons .cr-review-form-submit span,
-.cr-ajax-reviews-review-form .cr-review-form-submitting .cr-review-form-buttons .cr-review-form-submit span {
+.cr-ajax-reviews-review-form .cr-review-form-submitting .cr-review-form-buttons .cr-review-form-submit span,
+.cr-reviews-grid .cr-review-form-submitting .cr-review-form-buttons .cr-review-form-submit span {
 	display: none;
 }
 .cr-all-reviews-shortcode .cr-review-form-buttons .cr-review-form-submit img,
-.cr-ajax-reviews-review-form .cr-review-form-buttons .cr-review-form-submit img {
+.cr-ajax-reviews-review-form .cr-review-form-buttons .cr-review-form-submit img,
+.cr-reviews-grid .cr-review-form-buttons .cr-review-form-submit img {
 	display: none;
 	height: 10px;
 }
 .cr-all-reviews-shortcode .cr-review-form-submitting .cr-review-form-buttons .cr-review-form-submit img,
-.cr-ajax-reviews-review-form .cr-review-form-submitting .cr-review-form-buttons .cr-review-form-submit img {
+.cr-ajax-reviews-review-form .cr-review-form-submitting .cr-review-form-buttons .cr-review-form-submit img,
+.cr-reviews-grid .cr-review-form-submitting .cr-review-form-buttons .cr-review-form-submit img {
 	display: block;
 }
 .cr-all-reviews-shortcode .cr-review-form-buttons .cr-review-form-cancel,
-.cr-ajax-reviews-review-form .cr-review-form-buttons .cr-review-form-cancel {
+.cr-ajax-reviews-review-form .cr-review-form-buttons .cr-review-form-cancel,
+.cr-reviews-grid .cr-review-form-buttons .cr-review-form-cancel {
 	display: flex;
 	background-color: #ffffff;
 	color: #0E252C;
@@ -679,7 +750,8 @@ div.iv-comment-image img {
 	display: none;
 }
 .cr-all-reviews-shortcode .cr-review-form-buttons .cr-review-form-cancel:hover,
-.cr-ajax-reviews-review-form .cr-review-form-buttons .cr-review-form-cancel:hover {
+.cr-ajax-reviews-review-form .cr-review-form-buttons .cr-review-form-cancel:hover,
+.cr-reviews-grid .cr-review-form-buttons .cr-review-form-cancel:hover {
 	border: solid 1px #4D5D64;
 	text-decoration: none;
 	cursor: pointer;
@@ -699,13 +771,23 @@ div.iv-comment-image img {
 .cr-ajax-reviews-review-form .cr-review-form-res .cr-review-form-buttons,
 .cr-ajax-reviews-review-form .cr-review-form-res .cr-onsite-ratings,
 .cr-ajax-reviews-review-form .cr-review-form-res .cr-onsite-question,
-.cr-ajax-reviews-review-form .cr-review-form-res .cr-form-item-media {
+.cr-ajax-reviews-review-form .cr-review-form-res .cr-form-item-media,
+.cr-reviews-grid .cr-review-form-res .cr-review-form-rating,
+.cr-reviews-grid .cr-review-form-res .cr-review-form-comment,
+.cr-reviews-grid .cr-review-form-res .cr-review-form-ne,
+.cr-reviews-grid .cr-review-form-res .cr-review-form-captcha,
+.cr-reviews-grid .cr-review-form-res .cr-review-form-buttons,
+.cr-reviews-grid .cr-review-form-res .cr-onsite-ratings,
+.cr-reviews-grid .cr-review-form-res .cr-onsite-question,
+.cr-reviews-grid .cr-review-form-res .cr-form-item-media {
 	display: none;
 }
 .cr-all-reviews-shortcode .cr-review-form-result,
 .cr-ajax-reviews-review-form .cr-review-form-result,
 .cr-all-reviews-shortcode .cr-review-form-not-logged-in,
-.cr-ajax-reviews-review-form .cr-review-form-not-logged-in {
+.cr-ajax-reviews-review-form .cr-review-form-not-logged-in,
+.cr-reviews-grid .cr-review-form-result,
+.cr-reviews-grid .cr-review-form-not-logged-in {
 	max-width: 500px;
 	margin: 0 auto;
 	display: none;
@@ -715,7 +797,9 @@ div.iv-comment-image img {
 .cr-all-reviews-shortcode .cr-review-form-res .cr-review-form-result,
 .cr-ajax-reviews-review-form .cr-review-form-res .cr-review-form-result,
 .cr-all-reviews-shortcode .cr-review-form-not-logged-in,
-.cr-ajax-reviews-review-form .cr-review-form-not-logged-in {
+.cr-ajax-reviews-review-form .cr-review-form-not-logged-in,
+.cr-reviews-grid .cr-review-form-res .cr-review-form-result,
+.cr-reviews-grid .cr-review-form-not-logged-in {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -723,13 +807,17 @@ div.iv-comment-image img {
 .cr-all-reviews-shortcode .cr-review-form-res .cr-review-form-result span,
 .cr-ajax-reviews-review-form .cr-review-form-res .cr-review-form-result span,
 .cr-all-reviews-shortcode .cr-review-form-not-logged-in span,
-.cr-ajax-reviews-review-form .cr-review-form-not-logged-in span {
+.cr-ajax-reviews-review-form .cr-review-form-not-logged-in span,
+.cr-reviews-grid .cr-review-form-res .cr-review-form-result span,
+.cr-reviews-grid .cr-review-form-not-logged-in span {
 	padding: 0 0 20px 0;
 }
 .cr-all-reviews-shortcode .cr-review-form-res .cr-review-form-result .cr-review-form-continue,
 .cr-ajax-reviews-review-form .cr-review-form-res .cr-review-form-result .cr-review-form-continue,
 .cr-all-reviews-shortcode .cr-review-form-not-logged-in .cr-review-form-continue,
-.cr-ajax-reviews-review-form .cr-review-form-not-logged-in .cr-review-form-continue {
+.cr-ajax-reviews-review-form .cr-review-form-not-logged-in .cr-review-form-continue,
+.cr-reviews-grid .cr-review-form-res .cr-review-form-result .cr-review-form-continue,
+.cr-reviews-grid .cr-review-form-not-logged-in .cr-review-form-continue {
 	display: flex;
 	background-color: #31856C;
 	color: #ffffff;
@@ -743,7 +831,8 @@ div.iv-comment-image img {
 	justify-content: center;
 }
 .cr-all-reviews-shortcode .cr-review-form-not-logged-in .cr-review-form-continue,
-.cr-ajax-reviews-review-form .cr-review-form-not-logged-in .cr-review-form-continue {
+.cr-ajax-reviews-review-form .cr-review-form-not-logged-in .cr-review-form-continue,
+.cr-reviews-grid .cr-review-form-not-logged-in .cr-review-form-continue {
 	padding: 10px 20px;
 	min-width: 100px;
 	text-align: center;
@@ -751,7 +840,9 @@ div.iv-comment-image img {
 .cr-all-reviews-shortcode .cr-review-form-res .cr-review-form-result .cr-review-form-continue:hover,
 .cr-ajax-reviews-review-form .cr-review-form-res .cr-review-form-result .cr-review-form-continue:hover,
 .cr-all-reviews-shortcode .cr-review-form-not-logged-in .cr-review-form-continue:hover,
-.cr-ajax-reviews-review-form .cr-review-form-not-logged-in .cr-review-form-continue:hover {
+.cr-ajax-reviews-review-form .cr-review-form-not-logged-in .cr-review-form-continue:hover,
+.cr-reviews-grid .cr-review-form-res .cr-review-form-result .cr-review-form-continue:hover,
+.cr-reviews-grid .cr-review-form-not-logged-in .cr-review-form-continue:hover {
 	background-color: #276A56;
 	text-decoration: none;
 	cursor: pointer;
@@ -828,8 +919,10 @@ div.ivole-summaryBox {
 .cr-all-reviews-shortcode .cr-summaryBox-wrap .cr-count-filtered-reviews,
 .cr-reviews-grid .cr-summaryBox-wrap .cr-count-filtered-reviews {
 	width: 100%;
-	padding: 0px;
-	margin-top: 10px;
+	padding: 5px 10px;
+	margin-top: 0;
+	font-size: 14px;
+	color: #0E252C;
 }
 #ivole-histogramTable tr.ivole-histogramRow a {
 	display: inline;
@@ -1271,7 +1364,8 @@ p.ivole-verified-badge span.ivole-review-country-text, p.ivole-verified-badge sp
 	border: 0;
 	padding: 0;
 }
-.cr-all-reviews-shortcode.cr-all-reviews-new-review ol.commentlist {
+.cr-all-reviews-shortcode.cr-all-reviews-new-review ol.commentlist,
+.cr-reviews-grid.cr-reviews-grid-new-review .cr-reviews-grid-inner {
 	display: none;
 }
 .cr-all-reviews-shortcode .ivole-review-country-icon,
@@ -1523,7 +1617,12 @@ img.ivole-verified-badge-ext-icon {
 	.cr-all-reviews-shortcode .cr-summaryBox-wrap.cr-summaryBox-add-review .ivole-summaryBox,
 	.cr-all-reviews-shortcode .cr-summaryBox-wrap .cr-overall-rating-wrap,
 	.cr-all-reviews-shortcode .cr-summaryBox-wrap.cr-summaryBox-add-review .cr-overall-rating-wrap,
-	.cr-all-reviews-shortcode .cr-summaryBox-wrap.cr-summaryBox-add-review .cr-add-review-wrap {
+	.cr-all-reviews-shortcode .cr-summaryBox-wrap.cr-summaryBox-add-review .cr-add-review-wrap,
+	.cr-reviews-grid .cr-summaryBox-wrap .ivole-summaryBox,
+	.cr-reviews-grid .cr-summaryBox-wrap.cr-summaryBox-add-review .ivole-summaryBox,
+	.cr-reviews-grid .cr-summaryBox-wrap .cr-overall-rating-wrap,
+	.cr-reviews-grid .cr-summaryBox-wrap.cr-summaryBox-add-review .cr-overall-rating-wrap,
+	.cr-reviews-grid .cr-summaryBox-wrap.cr-summaryBox-add-review .cr-add-review-wrap {
 		width: 100%;
 		flex: 0 0 100%;
 	}
@@ -1531,20 +1630,24 @@ img.ivole-verified-badge-ext-icon {
 		margin-left: 0px;
 		margin-right: 0px;
 	}
-	.cr-all-reviews-shortcode .cr-summaryBox-wrap .cr-summary-separator {
+	.cr-all-reviews-shortcode .cr-summaryBox-wrap .cr-summary-separator,
+	.cr-reviews-grid .cr-summaryBox-wrap .cr-summary-separator {
 		width: 100%;
 		display: flex;
 		justify-content: center;
 		align-items: center;
 	}
-	.cr-all-reviews-shortcode .cr-summaryBox-wrap .cr-summary-separator-int {
+	.cr-all-reviews-shortcode .cr-summaryBox-wrap .cr-summary-separator-int,
+	.cr-reviews-grid .cr-summaryBox-wrap .cr-summary-separator-int {
 		width: 50px;
 		height: 2px;
 	}
-	.cr-all-reviews-shortcode .cr-summaryBox-wrap .cr-summary-separator-side {
+	.cr-all-reviews-shortcode .cr-summaryBox-wrap .cr-summary-separator-side,
+	.cr-reviews-grid .cr-summaryBox-wrap .cr-summary-separator-side {
 		display: none;
 	}
-	.cr-all-reviews-shortcode .cr-summaryBox-wrap .cr-add-review-wrap {
+	.cr-all-reviews-shortcode .cr-summaryBox-wrap .cr-add-review-wrap,
+	.cr-reviews-grid .cr-summaryBox-wrap .cr-add-review-wrap {
 		width: 100%;
 		padding: 10px;
 	}
@@ -1644,7 +1747,8 @@ img.ivole-verified-badge-ext-icon {
 	background-color: transparent;
 	color: #0E252C;
 }
-.cr-all-reviews-shortcode.cr-all-reviews-new-review .cr-show-more-button {
+.cr-all-reviews-shortcode.cr-all-reviews-new-review .cr-show-more-button,
+.cr-reviews-grid.cr-reviews-grid-new-review .cr-show-more-button {
 	display: none;
 }
 .cr-reviews-ajax-reviews .cr-show-more-reviews-prd:hover,
@@ -1665,7 +1769,8 @@ img.ivole-verified-badge-ext-icon {
 	width: 20px;
 	height: 20px;
 }
-.cr-all-reviews-shortcode.cr-all-reviews-new-review .cr-show-more-review-spinner {
+.cr-all-reviews-shortcode.cr-all-reviews-new-review .cr-show-more-review-spinner,
+.cr-reviews-grid.cr-reviews-grid-new-review .cr-show-more-review-spinner {
 	display: none;
 }
 .cr-show-more-review-spinner-cnt {
@@ -1911,7 +2016,8 @@ img.ivole-verified-badge-ext-icon {
 	background: linear-gradient(to bottom,#e7eaf0,#d9dce1);
 	text-decoration: none;
 }
-.cr-all-reviews-shortcode .cr-all-reviews-add-review {
+.cr-all-reviews-shortcode .cr-all-reviews-add-review,
+.cr-reviews-grid .cr-all-reviews-add-review {
 	display: block;
 	background-color: #31856C;
 	color: #ffffff;
@@ -1923,7 +2029,8 @@ img.ivole-verified-badge-ext-icon {
 	padding: 10px 20px;
 	margin: 0;
 }
-.cr-all-reviews-shortcode .cr-all-reviews-add-review:hover {
+.cr-all-reviews-shortcode .cr-all-reviews-add-review:hover,
+.cr-reviews-grid .cr-all-reviews-add-review:hover {
 	background-color: #276A56;
 	text-decoration: none;
 	cursor: pointer;
@@ -2874,10 +2981,10 @@ img.ivole-verified-badge-ext-icon {
 
 .cr-reviews-grid .cr-review-card .top-row .reviewer .reviewer-verified {
 	font-family: sans-serif;
-	font-size: 16px;
+	font-size: 14px;
 	font-style: normal;
 	font-weight: 400;
-	line-height: 16px;
+	line-height: 14px;
 	letter-spacing: 0em;
 	text-align: left;
 	color: #18B394;

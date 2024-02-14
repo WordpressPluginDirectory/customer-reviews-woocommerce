@@ -361,9 +361,15 @@ if ( ! class_exists( 'CR_Reviews_Grid' ) ) {
 				$cr_credits_line .= '</div>';
 			}
 
+			// add review form
+			$review_form = '';
+			if ( $attributes['add_review'] ) {
+				$review_form = CR_All_Reviews::show_add_review_form( $attributes['add_review'] );
+			}
+
 			// display a summary bar
 			$summary_bar = '';
-			if ( $attributes['show_summary_bar'] ) {
+			if ( $attributes['show_summary_bar'] || $attributes['add_review'] ) {
 				if( !empty($args_s) ) $summary_bar = $this->show_summary_table( $args, $args_s );
 				else $summary_bar = $this->show_summary_table( $args );
 			}
@@ -415,6 +421,7 @@ if ( ! class_exists( 'CR_Reviews_Grid' ) ) {
 					'product_tags' => [],
 					'min_chars' => 0,
 					'show_summary_bar' => 'false',
+					'add_review' => 'false',
 					'comment__not_in' => []
 				), $attributes, 'cusrev_reviews_grid' );
 
@@ -467,6 +474,19 @@ if ( ! class_exists( 'CR_Reviews_Grid' ) ) {
 			 		! is_array( $attributes['product_tags'] )
 				) {
 					$attributes['product_tags'] = array_filter( array_map( 'trim', explode( ',', $attributes['product_tags'] ) ) );
+				}
+
+				if ( 'true' === $attributes['add_review'] ) {
+					$product_id = CR_All_Reviews::is_it_a_product_page();
+					if ( $product_id ) {
+						$attributes['add_review'] = $product_id;
+					} else {
+						$attributes['add_review'] = true;
+					}
+				} elseif ( is_numeric( $attributes['add_review'] ) ) {
+					$attributes['add_review'] = intval( $attributes['add_review'] );
+				} else {
+					$attributes['add_review'] = false;
 				}
 
 				return $this->render_reviews_grid( $attributes );
@@ -872,12 +892,20 @@ if ( ! class_exists( 'CR_Reviews_Grid' ) ) {
 					}
 				}
 				$average = ( 5 * $five + 4 * $four + 3 * $three + 2 * $two + 1 * $one ) / $all;
-				$output .= '<div class="cr-summaryBox-wrap">';
+				$summary_box_classes = 'cr-summaryBox-wrap';
+				if ( $this->attributes['add_review'] ) {
+					$summary_box_classes .= ' cr-summaryBox-add-review';
+				}
+				$output .= '<div class="' . $summary_box_classes . '">';
+				if ( $this->attributes['add_review'] ) {
+					$output .= '<div class="cr-summary-separator-side"></div>';
+				}
 				$output .= '<div class="cr-overall-rating-wrap">';
 				$output .= '<div class="cr-average-rating"><span>' . number_format_i18n( $average, 1 ) . '</span></div>';
 				$output .= '<div class="cr-average-rating-stars"><div class="crstar-rating"><span style="width:'.($average / 5 * 100).'%;"></span></div></div>';
 				$output .= '<div class="cr-total-rating-count">' . sprintf( _n( 'Based on %s review', 'Based on %s reviews', $all, 'customer-reviews-woocommerce' ), number_format_i18n( $all ) ) . '</div>';
 				$output .= '</div>';
+				$output .= '<div class="cr-summary-separator"><div class="cr-summary-separator-int"></div></div>';
 				if( 0 < $this->attributes['show_more'] ) {
 					$output .= '<div class="ivole-summaryBox cr-grid-reviews-ajax">';
 				} else {
@@ -953,6 +981,14 @@ if ( ! class_exists( 'CR_Reviews_Grid' ) ) {
 				$output .= '</tbody>';
 				$output .= '</table>';
 				$output .= '</div>';
+
+				if ( $this->attributes['add_review'] ) {
+					$output .= '<div class="cr-summary-separator"><div class="cr-summary-separator-int"></div></div>';
+					$output .= '<div class="cr-add-review-wrap">';
+					$output .= '<button class="cr-all-reviews-add-review" type="button">' . __( 'Add a review', 'customer-reviews-woocommerce' ) . '</button>';
+					$output .= '</div>';
+					$output .= '<div class="cr-summary-separator-side"></div>';
+				}
 
 				if (get_query_var($this->ivrating)) {
 					$rating = intval(get_query_var($this->ivrating));
