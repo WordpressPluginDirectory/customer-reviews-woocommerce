@@ -32,9 +32,11 @@ if( method_exists( $product, 'get_id' ) ) {
 	$cr_product_id  = $product->id;
 }
 
+$nonce = wp_create_nonce( "cr_product_reviews_" . $cr_product_id );
+
 ?>
 <div id="reviews" class="cr-reviews-ajax-reviews">
-	<div id="comments" class="cr-reviews-ajax-comments">
+	<div id="comments" class="cr-reviews-ajax-comments" data-nonce="<?php echo $nonce; ?>" data-page="1">
 		<h2 class="woocommerce-Reviews-title">
 			<?php
 			$count = $product->get_review_count();
@@ -102,10 +104,9 @@ if( method_exists( $product, 'get_id' ) ) {
 
 			<?php
 			if ( $cr_get_reviews['reviews_count'] > $cr_per_page ) {
-				$nonce = wp_create_nonce( "cr_product_reviews_" . $cr_product_id );
 				?>
 					<div class="cr-show-more-review-spinner-cnt">
-						<button class="cr-show-more-reviews-prd" type="button" data-nonce="<?php echo $nonce; ?>" data-page="1">
+						<button class="cr-show-more-reviews-prd" type="button">
 							<?php
 								echo sprintf(
 									__( 'Show more reviews (%d)', 'customer-reviews-woocommerce' ),

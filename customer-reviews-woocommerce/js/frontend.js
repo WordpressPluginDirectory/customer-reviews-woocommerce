@@ -122,64 +122,7 @@
 		//show more ajax reviews
 		jQuery(".cr-show-more-reviews-prd").on( "click", function(t) {
 			t.preventDefault();
-			var cr_product_id = jQuery(this).parents(".cr-reviews-ajax-comments").find(".commentlist.cr-ajax-reviews-list").attr("data-product");
-			var cr_nonce = jQuery(this).attr("data-nonce");
-			var cr_page = jQuery(this).attr("data-page");
-			var cr_sort = jQuery(this).parents(".cr-reviews-ajax-comments").find(".cr-ajax-reviews-sort").children("option:selected").val();
-			var cr_rating = jQuery(this).parents(".cr-reviews-ajax-comments").find(".cr-summaryBox-ajax tr.ivole-histogramRow.ivole-histogramRow-s a.ivole-histogram-a").attr("data-rating");
-			var cr_search = jQuery(this).parents(".cr-reviews-ajax-comments").find(".cr-ajax-search input").val();
-			var cr_tags = [];
-			jQuery(this).parents(".cr-reviews-ajax-comments").find(".cr-review-tags-filter .cr-tags-filter.cr-tag-selected").each(function() {
-				cr_tags.push(jQuery(this).attr("data-crtagid"));
-			});
-			if(!cr_rating){
-				cr_rating = 0;
-			}
-			var cr_data = {
-				"action": "cr_show_more_reviews",
-				"productID": cr_product_id,
-				"page": cr_page,
-				"sort": cr_sort,
-				"rating": cr_rating,
-				"search": cr_search,
-				"tags": cr_tags,
-				"security": cr_nonce
-			};
-			jQuery(this).parents(".cr-reviews-ajax-comments").find(".cr-summaryBox-ajax").addClass("cr-summaryBar-updating");
-			jQuery(this).parents(".cr-reviews-ajax-comments").find(".cr-ajax-reviews-sort").addClass("cr-sort-updating");
-			jQuery(this).parents(".cr-reviews-ajax-comments").find(".cr-review-tags-filter").addClass("cr-review-tags-filter-disabled");
-			jQuery(this).parents(".cr-reviews-ajax-comments").find(".cr-search-no-reviews").hide();
-			jQuery(this).hide();
-			jQuery(this).parents(".cr-reviews-ajax-comments").find(".cr-show-more-review-spinner").show();
-			jQuery.post( {
-				url: cr_ajax_object.ajax_url,
-				data: cr_data,
-				context: this,
-				success: function(response) {
-					jQuery(this).parents(".cr-reviews-ajax-comments").find(".cr-show-more-review-spinner").hide();
-					jQuery(this).parents(".cr-reviews-ajax-comments").find(".cr-summaryBox-ajax").removeClass("cr-summaryBar-updating");
-					jQuery(this).parents(".cr-reviews-ajax-comments").find(".cr-ajax-reviews-sort").removeClass("cr-sort-updating");
-					jQuery(this).parents(".cr-reviews-ajax-comments").find(".cr-review-tags-filter").removeClass("cr-review-tags-filter-disabled");
-					if(response.page > 0){
-						jQuery(this).parents(".cr-reviews-ajax-comments").find(".commentlist.cr-ajax-reviews-list").append(response.html);
-						jQuery(this).attr("data-page",response.page);
-						if( response.show_more_label ) {
-							jQuery(this).text( response.show_more_label );
-						}
-						if ( response.count_row ) {
-							jQuery(this).parents(".cr-reviews-ajax-comments").find(".cr-count-row .cr-count-row-count").html( response.count_row );
-						}
-						if(!response.last_page){
-							jQuery(this).show();
-						}
-						cr_maybe_download_media_frontend();
-					}
-					if(response.html == null && response.page === 1){
-						jQuery(this).parents(".cr-reviews-ajax-comments").find(".cr-search-no-reviews").show();
-					}
-				},
-				dataType: "json"
-			} );
+			crShowMoreReviewsPrd( jQuery(this) );
 		} );
 
 		// ajax sorting of reviews
@@ -234,7 +177,7 @@
 							jQuery(this).parents(".cr-reviews-ajax-comments").find(".commentlist.cr-ajax-reviews-list").empty();
 							jQuery(this).parents(".cr-reviews-ajax-comments").find(".commentlist.cr-ajax-reviews-list").append(response.html);
 							jQuery(this).parents(".cr-reviews-ajax-comments").find(".commentlist.cr-ajax-reviews-list").show();
-							jQuery(this).parents(".cr-reviews-ajax-comments").find(".cr-show-more-reviews-prd").attr("data-page",response.page);
+							jQuery(this).parents(".cr-reviews-ajax-comments").attr("data-page",response.page);
 							if( response.show_more_label ) {
 								jQuery(this).parents(".cr-reviews-ajax-comments").find(".cr-show-more-reviews-prd").text( response.show_more_label );
 							}
@@ -288,7 +231,7 @@
 						this.find(".commentlist.cr-ajax-reviews-list").empty();
 						this.find(".commentlist.cr-ajax-reviews-list").append(response.html);
 						this.find(".commentlist.cr-ajax-reviews-list").show();
-						this.find(".cr-show-more-reviews-prd").attr("data-page",response.page);
+						this.attr("data-page",response.page);
 						if( response.show_more_label ) {
 							this.find( ".cr-show-more-reviews-prd" ).text( response.show_more_label );
 						}
@@ -320,9 +263,9 @@
 		//
 		jQuery('.cr-reviews-ajax-reviews .cr-ajax-search input').on( 'keyup', crDebounce(
 			( ref ) => {
-				jQuery(ref.target).parents(".cr-reviews-ajax-reviews").find(".cr-show-more-reviews-prd").attr("data-page", 0);
+				jQuery(ref.target).parents(".cr-reviews-ajax-comments").attr("data-page", 0);
 				jQuery(ref.target).parents(".cr-reviews-ajax-reviews").find(".cr-ajax-reviews-list").empty();
-				jQuery(ref.target).parents(".cr-reviews-ajax-reviews").find(".cr-show-more-reviews-prd").trigger("click");
+				crShowMoreReviewsPrd( jQuery(ref.target) );
 			},
 			1000
 		) );
@@ -336,9 +279,9 @@
 				jQuery(this).prev("input").val("");
 				jQuery(this).parents(".cr-ajax-search").find(".cr-clear-input").hide();
 				jQuery(this).parents(".cr-ajax-search").find("button").trigger("click");
-				jQuery(this).parents(".cr-reviews-ajax-reviews").find(".cr-show-more-reviews-prd").attr("data-page", 0);
+				jQuery(this).parents(".cr-reviews-ajax-comments").attr("data-page", 0);
 				jQuery(this).parents(".cr-reviews-ajax-reviews").find(".cr-ajax-reviews-list").empty();
-				jQuery(this).parents(".cr-reviews-ajax-reviews").find(".cr-show-more-reviews-prd").trigger("click");
+				crShowMoreReviewsPrd( jQuery(this) );
 			}
 		});
 		// ajax search of reviews
@@ -366,9 +309,9 @@
 				let cr_search = jQuery(this).parents(".cr-all-reviews-shortcode").find(".cr-ajax-search input").val();
 				window.location.href = encodeURI(jQuery(this).parents(".cr-all-reviews-shortcode").data("baseurl") + "?crsearch=" + cr_search );
 			} else {
-				jQuery(this).parents(".cr-reviews-ajax-comments").find(".cr-show-more-reviews-prd").attr("data-page", 0);
+				jQuery(this).parents(".cr-reviews-ajax-comments").attr("data-page", 0);
 				jQuery(this).parents(".cr-reviews-ajax-comments").find(".cr-ajax-reviews-list").empty();
-				jQuery(this).parents(".cr-reviews-ajax-comments").find(".cr-show-more-reviews-prd").trigger("click");
+				crShowMoreReviewsPrd( jQuery(this) );
 			}
 		});
 		jQuery(".cr-ajax-reviews-add-review, .cr-nosummary-add").on( "click", function(t) {
@@ -379,14 +322,14 @@
 		// click to filter reviews by tags
 		jQuery(".cr-review-tags-filter span.cr-tags-filter").on( "click", function (e) {
 			e.preventDefault();
-			jQuery(this).parents(".cr-reviews-ajax-comments").find(".cr-show-more-reviews-prd").attr("data-page", 0);
+			jQuery(this).parents(".cr-reviews-ajax-comments").attr("data-page", 0);
 			jQuery(this).parents(".cr-reviews-ajax-comments").find(".cr-ajax-reviews-list").empty();
 			if(jQuery(this).hasClass("cr-tag-selected")) {
 				jQuery(this).removeClass("cr-tag-selected");
 			} else {
 				jQuery(this).addClass("cr-tag-selected");
 			}
-			jQuery(this).parents(".cr-reviews-ajax-comments").find(".cr-show-more-reviews-prd").trigger("click");
+			crShowMoreReviewsPrd( jQuery(this) );
 		} );
 		//open popup window with pictures
 		jQuery(".cr-comment-image-top img").on( "click", function(t) {
@@ -1619,6 +1562,69 @@
 			}
 			timeout = setTimeout(function () { callback.apply(this, args); }, wait);
 		};
+	}
+
+	function crShowMoreReviewsPrd( refElement ) {
+		let cr_product_id = refElement.parents(".cr-reviews-ajax-comments").find(".commentlist.cr-ajax-reviews-list").attr("data-product");
+		let cr_nonce = refElement.parents(".cr-reviews-ajax-comments").attr("data-nonce");
+		let cr_page = refElement.parents(".cr-reviews-ajax-comments").attr("data-page");
+		let cr_sort = refElement.parents(".cr-reviews-ajax-comments").find(".cr-ajax-reviews-sort").children("option:selected").val();
+		let cr_rating = refElement.parents(".cr-reviews-ajax-comments").find(".cr-summaryBox-ajax tr.ivole-histogramRow.ivole-histogramRow-s a.ivole-histogram-a").attr("data-rating");
+		let cr_search = refElement.parents(".cr-reviews-ajax-comments").find(".cr-ajax-search input").val();
+		let cr_tags = [];
+		refElement.parents(".cr-reviews-ajax-comments").find(".cr-review-tags-filter .cr-tags-filter.cr-tag-selected").each(
+			function() {
+				cr_tags.push( jQuery(this).attr("data-crtagid") );
+			}
+		);
+		if ( ! cr_rating ){
+			cr_rating = 0;
+		}
+		let cr_data = {
+			"action": "cr_show_more_reviews",
+			"productID": cr_product_id,
+			"page": cr_page,
+			"sort": cr_sort,
+			"rating": cr_rating,
+			"search": cr_search,
+			"tags": cr_tags,
+			"security": cr_nonce
+		};
+		refElement.parents(".cr-reviews-ajax-comments").find(".cr-summaryBox-ajax").addClass("cr-summaryBar-updating");
+		refElement.parents(".cr-reviews-ajax-comments").find(".cr-ajax-reviews-sort").addClass("cr-sort-updating");
+		refElement.parents(".cr-reviews-ajax-comments").find(".cr-review-tags-filter").addClass("cr-review-tags-filter-disabled");
+		refElement.parents(".cr-reviews-ajax-comments").find(".cr-search-no-reviews").hide();
+		refElement.parents(".cr-reviews-ajax-comments").find(".cr-show-more-reviews-prd").hide();
+		refElement.parents(".cr-reviews-ajax-comments").find(".cr-show-more-review-spinner").show();
+		jQuery.post( {
+			url: cr_ajax_object.ajax_url,
+			data: cr_data,
+			context: refElement,
+			success: function(response) {
+				jQuery(this).parents(".cr-reviews-ajax-comments").find(".cr-show-more-review-spinner").hide();
+				jQuery(this).parents(".cr-reviews-ajax-comments").find(".cr-summaryBox-ajax").removeClass("cr-summaryBar-updating");
+				jQuery(this).parents(".cr-reviews-ajax-comments").find(".cr-ajax-reviews-sort").removeClass("cr-sort-updating");
+				jQuery(this).parents(".cr-reviews-ajax-comments").find(".cr-review-tags-filter").removeClass("cr-review-tags-filter-disabled");
+				if( response.page > 0 ) {
+					jQuery(this).parents(".cr-reviews-ajax-comments").find(".commentlist.cr-ajax-reviews-list").append( response.html );
+					jQuery(this).parents(".cr-reviews-ajax-comments").attr("data-page",response.page);
+					if ( response.show_more_label ) {
+						jQuery(this).parents(".cr-reviews-ajax-comments").find(".cr-show-more-reviews-prd").text( response.show_more_label );
+					}
+					if ( response.count_row ) {
+						jQuery(this).parents(".cr-reviews-ajax-comments").find(".cr-count-row .cr-count-row-count").html( response.count_row );
+					}
+					if ( ! response.last_page ) {
+						jQuery(this).parents(".cr-reviews-ajax-comments").find(".cr-show-more-reviews-prd").show();
+					}
+					cr_maybe_download_media_frontend();
+				}
+				if ( response.html == null && response.page === 1 ) {
+					jQuery(this).parents(".cr-reviews-ajax-comments").find(".cr-search-no-reviews").show();
+				}
+			},
+			dataType: "json"
+		} );
 	}
 
 })();

@@ -1096,6 +1096,7 @@ div.ivole-summaryBox.cr-summaryBar-updating,
 	margin: 0;
 	box-shadow: none;
 	border-radius: 25px;
+	max-height: none;
 }
 #reviews #comments .cr-avatar-check {
 	display: none;

@@ -4,7 +4,7 @@ Tags: woocommerce, review plugin, review reminder, customer reviews, review for 
 Requires at least: 4.5
 Tested up to: 6.4
 Requires PHP: 7.2
-Stable tag: 5.40.0
+Stable tag: 5.40.1
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl.html
 
@@ -229,6 +229,8 @@ If you would like to change how reviews are sorted on product pages, it is possi
 
 == Changelog ==
 
+= 5.40.1 =
+* Bug fix: search by text and tags on product pages did not work when the 'Show More' button was hidden
 = 5.40.0 =
 * New feature: 'add_review' parameter for the [cusrev_reviews_grid] shortcode
 * Improvement: additional details in error messages
