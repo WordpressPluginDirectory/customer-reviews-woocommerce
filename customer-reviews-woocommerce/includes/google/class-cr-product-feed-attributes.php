@@ -71,6 +71,15 @@ if ( ! class_exists( 'CR_Attributes_Product_Feed' ) ):
 				if( isset( $_POST['cr_google_attribute_bundle'] ) ) {
 					$product_fields['bundle'] = $_POST['cr_google_attribute_bundle'];
 				}
+				if( isset( $_POST['cr_google_attribute_unit'] ) ) {
+					$product_fields['unit'] = $_POST['cr_google_attribute_unit'];
+				}
+				if( isset( $_POST['cr_google_attribute_unit_pricing_measure'] ) ) {
+					$product_fields['unit_pricing_measure'] = $_POST['cr_google_attribute_unit_pricing_measure'];
+				}
+				if( isset( $_POST['cr_google_attribute_unit_pricing_base_measure'] ) ) {
+					$product_fields['unit_pricing_base_measure'] = $_POST['cr_google_attribute_unit_pricing_base_measure'];
+				}
 			}
 			$_POST['ivole_product_feed_attributes'] = $product_fields;
 			WC_Admin_Settings::save_fields( $this->settings );
@@ -146,7 +155,10 @@ if ( ! class_exists( 'CR_Attributes_Product_Feed' ) ):
 					'size' => '',
 					'material' => '',
 					'multipack' => '',
-					'bundle' => ''
+					'bundle' => '',
+					'unit' => '',
+					'unit_pricing_measure' => '',
+					'unit_pricing_base_measure' => ''
 				);
 			}
 			$list_fields = $this->get_product_attributes();
@@ -248,6 +260,39 @@ if ( ! class_exists( 'CR_Attributes_Product_Feed' ) ):
 								</td>
 								<td class="cr-product-feed-categories-td">size</td>
 							</tr>
+							<tr>
+								<td class="cr-product-feed-categories-td">
+									<select class="cr-product-feed-identifiers-select" name="cr_google_attribute_unit">
+										<option></option>
+										<?php foreach ( $list_fields as $attribute_value => $attribute_name ): ?>
+											<option value="<?php echo $attribute_value; ?>" <?php if ( isset( $option['value']['unit'] ) && $attribute_value == $option['value']['unit'] ) echo "selected"; ?>><?php echo $attribute_name; ?></option>
+										<?php endforeach; ?>
+									</select>
+								</td>
+								<td class="cr-product-feed-categories-td">unit</td>
+							</tr>
+							<tr class="cr-alternate">
+								<td class="cr-product-feed-categories-td">
+									<select class="cr-product-feed-identifiers-select" name="cr_google_attribute_unit_pricing_measure">
+										<option></option>
+										<?php foreach ( $list_fields as $attribute_value => $attribute_name ): ?>
+											<option value="<?php echo $attribute_value; ?>" <?php if ( isset( $option['value']['unit_pricing_measure'] ) && $attribute_value == $option['value']['unit_pricing_measure'] ) echo "selected"; ?>><?php echo $attribute_name; ?></option>
+										<?php endforeach; ?>
+									</select>
+								</td>
+								<td class="cr-product-feed-categories-td">unit_pricing_measure</td>
+							</tr>
+							<tr>
+								<td class="cr-product-feed-categories-td">
+									<select class="cr-product-feed-identifiers-select" name="cr_google_attribute_unit_pricing_base_measure">
+										<option></option>
+										<?php foreach ( $list_fields as $attribute_value => $attribute_name ): ?>
+											<option value="<?php echo $attribute_value; ?>" <?php if ( isset( $option['value']['unit_pricing_base_measure'] ) && $attribute_value == $option['value']['unit_pricing_base_measure'] ) echo "selected"; ?>><?php echo $attribute_name; ?></option>
+										<?php endforeach; ?>
+									</select>
+								</td>
+								<td class="cr-product-feed-categories-td">unit_pricing_base_measure</td>
+							</tr>
 						</tbody>
 					</table>
 				</td>
@@ -282,6 +327,9 @@ if ( ! class_exists( 'CR_Attributes_Product_Feed' ) ):
 					OR meta.meta_key LIKE '\_alg_ean%'
 					OR meta.meta_key LIKE '\_wpsso_product%'
 					OR meta.meta_key = '_product_attributes'
+					OR meta.meta_key = '_unit_product'
+					OR meta.meta_key = '_unit'
+					OR meta.meta_key = '_unit_base'
 				)
 				GROUP BY meta.post_id, meta.meta_key",
 				ARRAY_A

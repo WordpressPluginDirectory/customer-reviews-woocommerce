@@ -8,15 +8,12 @@ if (! class_exists('CR_All_Reviews')) :
 
 	class CR_All_Reviews
 	{
-
-		/**
-		* @var array holds the current shorcode attributes
-		*/
 		private $shortcode_atts;
 		private $shop_page_id;
 		private $ivrating = 'ivrating';
 		private $crsearch = 'crsearch';
 		private $search = '';
+		private $tags = array();
 
 		public function __construct() {
 			$this->register_shortcode();
@@ -197,6 +194,21 @@ if (! class_exists('CR_All_Reviews')) :
 				// search
 				$args['search'] = $this->search;
 
+				// tags
+				$reviews_by_tags_shop = '';
+				if ( 0 < count( $this->tags ) ) {
+					$reviews_by_tags = get_objects_in_term( $this->tags, 'cr_tag' );
+					if (
+						$reviews_by_tags &&
+						! is_wp_error( $reviews_by_tags ) &&
+						is_array( $reviews_by_tags ) &&
+						0 < count( $reviews_by_tags )
+					) {
+						$args['comment__in'] = $reviews_by_tags;
+						$reviews_by_tags_shop = $reviews_by_tags;
+					}
+				}
+
 				if ( ! $this->shortcode_atts['inactive_products'] ) {
 					$args['post_status'] = 'publish';
 				}
@@ -322,6 +334,9 @@ if (! class_exists('CR_All_Reviews')) :
 						}
 						if( !$this->shortcode_atts['show_replies'] ) {
 							$args['meta_key'] = 'rating';
+						}
+						if ( $reviews_by_tags_shop ) {
+							$args['comment__in'] = $reviews_by_tags_shop;
 						}
 						if( get_query_var( $this->ivrating ) ) {
 							$rating = intval( get_query_var( $this->ivrating ) );
@@ -486,6 +501,9 @@ if (! class_exists('CR_All_Reviews')) :
 
 			$comments = $this->get_reviews();
 
+			// show tags
+			$return .= CR_Ajax_Reviews::get_tags_field( $comments );
+
 			$top_comments_count = array_reduce( $comments, function( $carry, $item ) {
 				if( property_exists( $item, 'comment_parent' ) && 0 == $item->comment_parent ) {
 					$carry++;
@@ -588,6 +606,15 @@ if (! class_exists('CR_All_Reviews')) :
 				} else {
 					$rating = 0;
 				}
+			}
+
+			// tags
+			if (
+				isset( $_POST['tags'] ) &&
+				is_array( $_POST['tags'] ) &&
+				count( $_POST['tags'] ) > 0
+			) {
+				$this->tags = array_map( 'intval', $_POST['tags'] );
 			}
 
 			$page = intval( $_POST['page'] ) + 1;

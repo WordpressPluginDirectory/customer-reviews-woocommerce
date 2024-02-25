@@ -556,21 +556,40 @@ class CR_Google_Shopping_Prod_Feed {
 				}
 			}
 
-			$_product->unit_pricing_measure = '';
-			$unit_product = CR_Google_Shopping_Prod_Feed::get_field( 'meta__unit_product', $product );
-			if( $_product->parent_variable && ! $unit_product ) {
-				$unit_product = CR_Google_Shopping_Prod_Feed::get_field( 'meta__unit_product', $_product->parent_variable );
+			// 'unit' field to be used for 'unit_pricing_measure' and 'unit_pricing_base_measure'
+			if ( is_array( $attributes ) && isset( $attributes['unit'] ) ) {
+				$meta__unit = $attributes['unit'];
+			} else {
+				$meta__unit = 'meta__unit';
 			}
-			$unit = CR_Google_Shopping_Prod_Feed::get_field( 'meta__unit', $product );
+			$unit = CR_Google_Shopping_Prod_Feed::get_field( $meta__unit, $product );
 			if( $_product->parent_variable && ! $unit ) {
-				$unit = CR_Google_Shopping_Prod_Feed::get_field( 'meta__unit', $_product->parent_variable );
+				$unit = CR_Google_Shopping_Prod_Feed::get_field( $meta__unit, $_product->parent_variable );
+			}
+
+			// unit_pricing_measure
+			if ( is_array( $attributes ) && isset( $attributes['unit_pricing_measure'] ) ) {
+				$meta__unit_product = $attributes['unit_pricing_measure'];
+			} else {
+				$meta__unit_product = 'meta__unit_product';
+			}
+			$_product->unit_pricing_measure = '';
+			$unit_product = CR_Google_Shopping_Prod_Feed::get_field( $meta__unit_product, $product );
+			if( $_product->parent_variable && ! $unit_product ) {
+				$unit_product = CR_Google_Shopping_Prod_Feed::get_field( $meta__unit_product, $_product->parent_variable );
 			}
 			if( !empty( $unit_product ) ) $_product->unit_pricing_measure = $unit_product . ' ' . $unit;
 
+			// unit_pricing_base_measure
+			if ( is_array( $attributes ) && isset( $attributes['unit_pricing_base_measure'] ) ) {
+				$meta__unit_base = $attributes['unit_pricing_base_measure'];
+			} else {
+				$meta__unit_base = 'meta__unit_base';
+			}
 			$_product->unit_pricing_base_measure = '';
-			$unit_base = CR_Google_Shopping_Prod_Feed::get_field( 'meta__unit_base', $product );
+			$unit_base = CR_Google_Shopping_Prod_Feed::get_field( $meta__unit_base, $product );
 			if( $_product->parent_variable && ! $unit_base ) {
-				$unit_base = CR_Google_Shopping_Prod_Feed::get_field( 'meta__unit_base', $_product->parent_variable );
+				$unit_base = CR_Google_Shopping_Prod_Feed::get_field( $meta__unit_base, $_product->parent_variable );
 			}
 			if( !empty( $unit_base ) ) $_product->unit_pricing_base_measure = $unit_base . ' ' . $unit;
 

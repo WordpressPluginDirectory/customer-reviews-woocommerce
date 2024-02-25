@@ -732,35 +732,9 @@ if (! class_exists('CR_Ajax_Reviews')) :
 
 		public static function display_search_ui( $reviews ) {
 			if( apply_filters( 'cr_ajaxreviews_show_search', true ) ) {
-				echo CR_Ajax_Reviews::get_search_field( false );
+				echo self::get_search_field( false );
 			}
-			$all_reviews = array_map( function ( $r ) { return $r->comment_ID; }, $reviews[0] );
-			// get tags based on the list of comment ids
-			$all_tags = array();
-			if( $all_reviews && is_array( $all_reviews ) && 0 < count( $all_reviews ) ) {
-				$all_tags = wp_get_object_terms( $all_reviews, 'cr_tag' );
-			}
-			//
-			if( 0 < count( $all_tags ) ) {
-				$output = '';
-				$unique_tags = array();
-				foreach ($all_tags as $tag) {
-					$tag_exists = false;
-					foreach ($unique_tags as $utag) {
-						if( $utag->term_id === $tag->term_id ) {
-							$tag_exists = true;
-							break;
-						}
-					}
-					if( !$tag_exists ) {
-						$unique_tags[] = $tag;
-						$output .= '<span class="cr-tags-filter cr-tag cr-tag-' . $tag->term_id . '" data-crtagid="' . $tag->term_id . '">' . esc_html( $tag->name ) . '</span> ';
-					}
-				}
-				if ( $output ) {
-					echo '<div class="cr-review-tags-filter">' . $output . '</div>';
-				}
-			}
+			echo self::get_tags_field( $reviews[0] );
 		}
 
 		public static function get_search_field( $search_button ) {
@@ -810,6 +784,38 @@ if (! class_exists('CR_Ajax_Reviews')) :
 					'samesite' => 'Lax' )
 				);
 			}
+		}
+
+		public static function get_tags_field( $comments ) {
+			$tags_field = '';
+			$all_reviews = array_map( function ( $r ) { return $r->comment_ID; }, $comments );
+			// get tags based on the list of comment ids
+			$all_tags = array();
+			if ( $all_reviews && is_array( $all_reviews ) && 0 < count( $all_reviews ) ) {
+				$all_tags = wp_get_object_terms( $all_reviews, 'cr_tag' );
+			}
+			//
+			if ( 0 < count( $all_tags ) ) {
+				$output = '';
+				$unique_tags = array();
+				foreach ($all_tags as $tag) {
+					$tag_exists = false;
+					foreach ($unique_tags as $utag) {
+						if ( $utag->term_id === $tag->term_id ) {
+							$tag_exists = true;
+							break;
+						}
+					}
+					if ( ! $tag_exists ) {
+						$unique_tags[] = $tag;
+						$output .= '<span class="cr-tags-filter cr-tag cr-tag-' . $tag->term_id . '" data-crtagid="' . $tag->term_id . '">' . esc_html( $tag->name ) . '</span> ';
+					}
+				}
+				if ( $output ) {
+					$tags_field = '<div class="cr-review-tags-filter">' . $output . '</div>';
+				}
+			}
+			return $tags_field;
 		}
 	}
 

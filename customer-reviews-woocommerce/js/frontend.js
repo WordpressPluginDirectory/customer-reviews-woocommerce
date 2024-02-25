@@ -131,19 +131,7 @@
 
 			if ( jQuery(this).parents(".cr-all-reviews-shortcode").length ) {
 				// sorting in the all reviews block
-				let attributes = jQuery(this).parents(".cr-all-reviews-shortcode").data("attributes"),
-				cr_rating = jQuery(this).parents(".cr-all-reviews-shortcode").find(".ivole-summaryBox .ivole-histogramRow.ivole-histogramRow-s .cr-histogram-a").attr("data-rating"),
-				cr_search = jQuery(this).parents(".cr-all-reviews-shortcode").find(".cr-ajax-search input").val(),
-				cr_sort = jQuery(this).children("option:selected").val();
-				let cr_data = {
-					"action": "cr_show_more_all_reviews",
-					"attributes": attributes,
-					"rating": cr_rating,
-					"page": 0,
-					"search": cr_search,
-					"sort": cr_sort
-				};
-				cr_filter_all_reviews( cr_data, jQuery(this) );
+				cr_filter_all_reviews( jQuery(this) );
 			} else {
 				// sorting on a product page
 				var cr_product_id = jQuery(this).parents(".cr-reviews-ajax-comments").find(".commentlist.cr-ajax-reviews-list").attr("data-product");
@@ -291,19 +279,7 @@
 			//search in the all reviews block
 			if( jQuery(this).parents(".cr-all-reviews-shortcode.cr-all-reviews-no-pagination").length ){
 				// search in ajax version of the All Reviews block / shortcode
-				let attributes = jQuery(this).parents(".cr-all-reviews-shortcode").data("attributes"),
-				cr_rating = jQuery("div.ivole-summaryBox tr.ivole-histogramRow.ivole-histogramRow-s a.cr-histogram-a").attr("data-rating"),
-				cr_search = jQuery(".cr-ajax-search input").val(),
-				cr_sort = jQuery(this).parents(".cr-all-reviews-shortcode").find(".cr-ajax-reviews-sort").children("option:selected").val();
-				let cr_data = {
-					"action": "cr_show_more_all_reviews",
-					"attributes": attributes,
-					"rating": cr_rating,
-					"page": 0,
-					"search": cr_search,
-					"sort": cr_sort
-				};
-				cr_filter_all_reviews( cr_data, jQuery(this) );
+				cr_filter_all_reviews( jQuery(this) );
 			} else if( jQuery(this).parents(".cr-all-reviews-shortcode").length ) {
 				// search in paginated version of the All Reviews block / shortcode
 				let cr_search = jQuery(this).parents(".cr-all-reviews-shortcode").find(".cr-ajax-search input").val();
@@ -322,14 +298,20 @@
 		// click to filter reviews by tags
 		jQuery(".cr-review-tags-filter span.cr-tags-filter").on( "click", function (e) {
 			e.preventDefault();
-			jQuery(this).parents(".cr-reviews-ajax-comments").attr("data-page", 0);
-			jQuery(this).parents(".cr-reviews-ajax-comments").find(".cr-ajax-reviews-list").empty();
 			if(jQuery(this).hasClass("cr-tag-selected")) {
 				jQuery(this).removeClass("cr-tag-selected");
 			} else {
 				jQuery(this).addClass("cr-tag-selected");
 			}
-			crShowMoreReviewsPrd( jQuery(this) );
+			if ( jQuery(this).parents(".cr-all-reviews-shortcode").length ) {
+				// tags filtering in the all reviews shortcode
+				cr_filter_all_reviews( jQuery(this) );
+			} else {
+				// tags filtering on a product page
+				jQuery(this).parents(".cr-reviews-ajax-comments").attr("data-page", 0);
+				jQuery(this).parents(".cr-reviews-ajax-comments").find(".cr-ajax-reviews-list").empty();
+				crShowMoreReviewsPrd( jQuery(this) );
+			}
 		} );
 		//open popup window with pictures
 		jQuery(".cr-comment-image-top img").on( "click", function(t) {
@@ -386,44 +368,18 @@
 		// show more ajax reviews in the all reviews block
 		jQuery('.cr-all-reviews-shortcode .cr-show-more-button').on("click", function (e) {
 			e.preventDefault();
-
-			let attributes = jQuery(this).parents(".cr-all-reviews-shortcode").data("attributes"),
-			cr_rating = jQuery("div.ivole-summaryBox.cr-all-reviews-ajax tr.ivole-histogramRow.ivole-histogramRow-s a.cr-histogram-a").attr("data-rating"),
-			cr_search = jQuery(".cr-ajax-search input").val(),
-			cr_sort = jQuery(this).parents(".cr-all-reviews-shortcode").find(".cr-ajax-reviews-sort").children("option:selected").val();
-
-			var cr_data = {
-				"action": "cr_show_more_all_reviews",
-				"attributes": attributes,
-				"rating": cr_rating,
-				"page": jQuery( this ).data( "page" ),
-				"search": cr_search,
-				"sort": cr_sort
-			};
-
-			cr_filter_all_reviews( cr_data, jQuery(this), true );
+			cr_filter_all_reviews( jQuery(this), true );
 		});
 		// filter ajax reviews in the all reviews block
 		jQuery(".cr-all-reviews-shortcode.cr-all-reviews-no-pagination").on("click", "a.cr-histogram-a, .cr-seeAllReviews", function(t){
 			t.preventDefault();
-			var cr_rating = jQuery(this).data("rating");
-			var attributes = jQuery(this).parents(".cr-all-reviews-shortcode").data("attributes");
-			var cr_search = jQuery(".cr-ajax-search input").val();
-			let cr_sort = jQuery(this).parents(".cr-all-reviews-shortcode").find(".cr-ajax-reviews-sort").children("option:selected").val();
-			var cr_data = {
-				"action": "cr_show_more_all_reviews",
-				"attributes": attributes,
-				"page": 0,
-				"rating": cr_rating,
-				"search": cr_search,
-				"sort": cr_sort
-			};
+			let cr_rating = jQuery(this).data("rating");
 			jQuery("div.ivole-summaryBox tr.ivole-histogramRow.ivole-histogramRow-s").removeClass("ivole-histogramRow-s");
-			if( cr_rating > 0 ) {
+			if ( cr_rating > 0 ) {
 				jQuery(this).closest("tr.ivole-histogramRow").addClass("ivole-histogramRow-s");
 			}
-
-			cr_filter_all_reviews( cr_data, jQuery(this) );
+			jQuery(this).parents(".cr-all-reviews-shortcode").find(".cr-review-tags-filter .cr-tag-selected").removeClass("cr-tag-selected");
+			cr_filter_all_reviews( jQuery(this) );
 		});
 
 		// show more ajax reviews in the grid
@@ -1376,8 +1332,29 @@
 		};
 	}
 
-	function cr_filter_all_reviews( cr_data, refElement, show_more = false ) {
+	function cr_filter_all_reviews( refElement, show_more = false ) {
+		let attributes = refElement.parents(".cr-all-reviews-shortcode").data("attributes"),
+		cr_rating = refElement.parents(".cr-all-reviews-shortcode").find(".ivole-summaryBox .ivole-histogramRow.ivole-histogramRow-s .cr-histogram-a").attr("data-rating"),
+		cr_search = refElement.parents(".cr-all-reviews-shortcode").find(".cr-ajax-search input").val(),
+		cr_sort = refElement.children("option:selected").val();
+		let cr_tags = [];
+		refElement.parents(".cr-all-reviews-shortcode").find(".cr-review-tags-filter .cr-tags-filter.cr-tag-selected").each(
+			function() {
+				cr_tags.push( jQuery(this).attr("data-crtagid") );
+			}
+		);
+		let cr_data = {
+			"action": "cr_show_more_all_reviews",
+			"attributes": attributes,
+			"rating": cr_rating,
+			"page": 0,
+			"search": cr_search,
+			"sort": cr_sort,
+			"tags": cr_tags
+		};
+		//
 		if( show_more ) {
+			cr_data.page = refElement.data( "page" );
 			// click on 'show more' button or filters by rating in the summary box
 			jQuery(".cr-search-no-reviews").hide();
 			jQuery('.cr-show-more-button').hide();
@@ -1417,6 +1394,7 @@
 			refElement.closest(".cr-all-reviews-shortcode").find(".ivole-summaryBox").addClass("cr-summaryBar-updating");
 			refElement.closest(".cr-all-reviews-shortcode").find(".cr-seeAllReviews").addClass("cr-seeAll-updating");
 			refElement.closest(".cr-all-reviews-shortcode").find(".cr-ajax-reviews-sort").addClass("cr-sort-updating");
+			refElement.closest(".cr-all-reviews-shortcode").find(".cr-review-tags-filter").addClass("cr-tags-updating");
 			jQuery.post(
 				{
 					url: cr_ajax_object.ajax_url,
@@ -1427,6 +1405,7 @@
 						jQuery(this).closest(".cr-all-reviews-shortcode").find(".ivole-summaryBox").removeClass("cr-summaryBar-updating");
 						jQuery(this).closest(".cr-all-reviews-shortcode").find(".cr-seeAllReviews").removeClass("cr-seeAll-updating");
 						jQuery(this).closest(".cr-all-reviews-shortcode").find(".cr-ajax-reviews-sort").removeClass("cr-sort-updating");
+						jQuery(this).closest(".cr-all-reviews-shortcode").find(".cr-review-tags-filter").removeClass("cr-tags-updating");
 						if(response.html !== ""){
 							jQuery(this).closest(".cr-all-reviews-shortcode").find(".commentlist").empty();
 							jQuery(this).closest(".cr-all-reviews-shortcode").find(".commentlist").append(response.html);

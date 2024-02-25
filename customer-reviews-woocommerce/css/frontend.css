@@ -962,7 +962,8 @@ div.ivole-summaryBox.cr-summaryBox-ajax.cr-summaryBar-updating,
 div.ivole-summaryBox.cr-all-reviews-ajax.cr-summaryBar-updating,
 div.ivole-summaryBox.cr-summaryBar-updating,
 .cr-count-row .cr-seeAll-updating,
-.cr-ajax-reviews-sort.cr-sort-updating {
+.cr-ajax-reviews-sort.cr-sort-updating,
+.cr-review-tags-filter.cr-tags-updating {
 	opacity: 0.5;
 	pointer-events: none;
 }
@@ -1239,18 +1240,18 @@ span.cr-tag {
 	text-align: center;
 	white-space: nowrap;
 	vertical-align: middle;
-	border-radius: .8em;
+	border-radius: 0.7em;
 	border: 1px solid #c3c6d1;
 	transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
-div.cr-review-tags-filter span.cr-tag {
+.cr-review-tags-filter span.cr-tag {
 	font-size: 1em;
-	border-radius: 1em;
+	border-radius: 0.7em;
 	margin-right: 5px;
 	margin-bottom: 7px;
 }
-div.cr-review-tags-filter span.cr-tag:hover {
-	background-color: #c3c6d1;
+.cr-review-tags-filter span.cr-tag:hover {
+	background-color: #e4e6eb;
 	cursor: pointer;
 }
 div.cr-review-tags-filter {
