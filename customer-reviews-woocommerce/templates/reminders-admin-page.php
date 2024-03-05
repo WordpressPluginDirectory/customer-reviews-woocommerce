@@ -30,7 +30,7 @@
 
     <form id="reminders-form" method="get">
         <?php $list_table->search_box( __( 'Search Reminders', 'customer-reviews-woocommerce' ), 'reminders' ); ?>
-        <input type="hidden" name="page" value="ivole-reviews-reminders" />
+        <input type="hidden" name="page" value="cr-reviews-reminders" />
         <input type="hidden" name="_total" value="<?php echo esc_attr( $list_table->get_pagination_arg( 'total_items' ) ); ?>" />
         <input type="hidden" name="_per_page" value="<?php echo esc_attr( $list_table->get_pagination_arg( 'per_page' ) ); ?>" />
         <input type="hidden" name="_page" value="<?php echo esc_attr( $list_table->get_pagination_arg( 'page' ) ); ?>" />

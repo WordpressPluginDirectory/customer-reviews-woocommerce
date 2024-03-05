@@ -14,6 +14,7 @@ if (! class_exists('CR_All_Reviews')) :
 		private $crsearch = 'crsearch';
 		private $search = '';
 		private $tags = array();
+		private $default_per_page = 10;
 
 		public function __construct() {
 			$this->register_shortcode();
@@ -37,7 +38,7 @@ if (! class_exists('CR_All_Reviews')) :
 			$defaults = array(
 				'sort' => 'desc',
 				'sort_by' => 'date',
-				'per_page' => 10,
+				'per_page' => $this->default_per_page,
 				'number' => -1,
 				'show_summary_bar' => 'true',
 				'show_pictures' => 'false',
@@ -146,8 +147,21 @@ if (! class_exists('CR_All_Reviews')) :
 		}
 
 		public function get_reviews() {
-
 			$comments = array();
+
+			// tags
+			$reviews_by_tags = '';
+			if ( 0 < count( $this->tags ) ) {
+				$tags_objects = get_objects_in_term( $this->tags, 'cr_tag' );
+				if (
+					$tags_objects &&
+					! is_wp_error( $tags_objects ) &&
+					is_array( $tags_objects ) &&
+					0 < count( $tags_objects )
+				) {
+					$reviews_by_tags = $tags_objects;
+				}
+			}
 
 			$number = $this->shortcode_atts['number'] == -1 ? null : intval( $this->shortcode_atts['number'] );
 			if( 0 < $number || null === $number ) {
@@ -194,19 +208,9 @@ if (! class_exists('CR_All_Reviews')) :
 				// search
 				$args['search'] = $this->search;
 
-				// tags
-				$reviews_by_tags_shop = '';
-				if ( 0 < count( $this->tags ) ) {
-					$reviews_by_tags = get_objects_in_term( $this->tags, 'cr_tag' );
-					if (
-						$reviews_by_tags &&
-						! is_wp_error( $reviews_by_tags ) &&
-						is_array( $reviews_by_tags ) &&
-						0 < count( $reviews_by_tags )
-					) {
-						$args['comment__in'] = $reviews_by_tags;
-						$reviews_by_tags_shop = $reviews_by_tags;
-					}
+				// tags product reviews
+				if ( $reviews_by_tags ) {
+					$args['comment__in'] = $reviews_by_tags;
 				}
 
 				if ( ! $this->shortcode_atts['inactive_products'] ) {
@@ -335,8 +339,9 @@ if (! class_exists('CR_All_Reviews')) :
 						if( !$this->shortcode_atts['show_replies'] ) {
 							$args['meta_key'] = 'rating';
 						}
-						if ( $reviews_by_tags_shop ) {
-							$args['comment__in'] = $reviews_by_tags_shop;
+						// tags shop reviews
+						if ( $reviews_by_tags ) {
+							$args['comment__in'] = $reviews_by_tags;
 						}
 						if( get_query_var( $this->ivrating ) ) {
 							$rating = intval( get_query_var( $this->ivrating ) );
@@ -427,7 +432,10 @@ if (! class_exists('CR_All_Reviews')) :
 			}
 
 			//include review replies after application of filters
-			if( ( get_query_var( $this->ivrating ) || get_query_var( $this->crsearch ) ) && $this->shortcode_atts['show_replies'] ) {
+			if (
+				( get_query_var( $this->ivrating ) || $this->search || $this->tags ) &&
+				$this->shortcode_atts['show_replies']
+			) {
 				$comments = $this->include_review_replies( $comments );
 			}
 
@@ -435,51 +443,17 @@ if (! class_exists('CR_All_Reviews')) :
 		}
 
 		public function display_reviews() {
-			global $paged;
-
-			if ( get_query_var( 'paged' ) ) {
-				$paged = get_query_var( 'paged' );
-			} elseif ( get_query_var( 'page' ) ) {
-				$paged = get_query_var( 'page' );
-			} else { $paged = 1; }
-			$page = $paged ? $paged : 1;
-
+			$page = 1;
 			$per_page = $this->shortcode_atts['per_page'];
 
 			if( 0  == $per_page ) {
-				$per_page = 10;
-			}
-
-			if( get_query_var( $this->crsearch ) ) {
-				$search_val = strval( get_query_var( $this->crsearch ) );
-				if( 0 < mb_strlen( $search_val ) ) {
-					$this->search = $search_val;
-				}
+				$per_page = $this->default_per_page;
 			}
 
 			$rating = 0;
 			$all_rating_comments = 0;
 
-			if ( 0 == $this->shortcode_atts['show_more'] ) {
-				$shortcode_classes = 'cr-all-reviews-shortcode';
-				if ( get_query_var( $this->ivrating ) ) {
-					$rating = intval( get_query_var( $this->ivrating ) );
-					if ( $rating > 0 && $rating <= 5 ) {
-						$all_rating_comments = $this->count_ratings( 0 );
-					} else {
-						$rating = 0;
-					}
-				}
-			} else {
-				$shortcode_classes = 'cr-all-reviews-shortcode cr-all-reviews-no-pagination';
-			}
-
-			$base_url = preg_replace( '~(\?|&)crsearch=[^&]*~', '$1', get_pagenum_link() );
-
-			$return = '<div id="cr_all_reviews_shortcode" class="' .
-				$shortcode_classes .
-				'" data-attributes="' . wc_esc_json( wp_json_encode( $this->shortcode_atts ) ) . '" data-baseurl="' .
-				esc_attr( $base_url ) . '">';
+			$return = '<div class="cr-all-reviews-shortcode" data-attributes="' . wc_esc_json( wp_json_encode( $this->shortcode_atts ) ) . '">';
 
 			// add credits
 			if ('yes' !== get_option('ivole_reviews_nobranding', 'yes')) {
@@ -538,28 +512,14 @@ if (! class_exists('CR_All_Reviews')) :
 			if( 'initials' === $this->shortcode_atts['avatars'] ) {
 				remove_filter( 'get_avatar', array( 'CR_Reviews_Grid', 'cr_get_avatar' ) );
 			}
+			$return .= '<span class="cr-pagination-review-spinner"></span>';
 			$return .= '</ol>';
 
 			if ( $this->shortcode_atts['show_more'] == 0 ) {
-				$big = 999999999; // need an unlikely integer
 				$pages = ceil( $top_comments_count / $per_page );
-				$args = array(
-					'base' => str_replace($big, '%#%', esc_url(get_pagenum_link($big))),
-					'format' => '?paged=%#%',
-					'total' => $pages,
-					'current' => $page,
-					'show_all' => false,
-					'end_size' => 1,
-					'mid_size' => 2,
-					'prev_next' => true,
-					'prev_text' => __('&laquo;'),
-					'next_text' => __('&raquo;'),
-					'type' => 'plain'
-				);
-
 				// echo the pagination
 				$return .= '<div class="cr-all-reviews-pagination">';
-				$return .= paginate_links($args);
+				$return .= self::cr_paginate_links($page, $pages);
 				$return .= '</div>';
 			} else {
 				if( $this->shortcode_atts['show_more'] < $top_comments_count ) {
@@ -584,7 +544,7 @@ if (! class_exists('CR_All_Reviews')) :
 				$attributes = $_POST['attributes'];
 			}
 			//search
-			if( !empty( trim( $_POST['search'] ) ) ) {
+			if ( isset( $_POST['search'] ) && ! empty( trim( $_POST['search'] ) ) ) {
 				$this->search = sanitize_text_field( trim( $_POST['search'] ) );
 			}
 			$this->fill_attributes($attributes);
@@ -619,7 +579,32 @@ if (! class_exists('CR_All_Reviews')) :
 
 			$page = intval( $_POST['page'] ) + 1;
 			$html = "";
+			$pagination_required = false;
+			$pagination = "";
 			$comments = $this->get_reviews();
+
+			$top_comments_count = array_reduce( $comments, function( $carry, $item ) {
+				if( property_exists( $item, 'comment_parent' ) && 0 == $item->comment_parent ) {
+					$carry++;
+				}
+				return $carry;
+			}, 0 );
+
+			$per_page = $this->shortcode_atts['show_more'];
+			if ( 0 >= $per_page ) {
+				if ( 0 < $this->shortcode_atts['per_page'] ) {
+					$per_page = $this->shortcode_atts['per_page'];
+				} else {
+					$per_page = $this->default_per_page;
+				}
+				$pagination_required = true;
+			}
+
+			$count_pages = ceil( $top_comments_count / $per_page );
+
+			if ( $pagination_required ) {
+				$pagination = self::cr_paginate_links( $page, $count_pages );
+			}
 
 			$hide_avatars = 'hidden' === $this->shortcode_atts['avatars'] ? true : false;
 
@@ -629,7 +614,7 @@ if (! class_exists('CR_All_Reviews')) :
 			$html .= wp_list_comments( apply_filters( 'ivole_product_review_list_args', array(
 				'callback' => array( 'CR_Reviews', 'callback_comments' ),
 				'page'  => $page,
-				'per_page' => $this->shortcode_atts['show_more'],
+				'per_page' => $per_page,
 				'reverse_top_level' => false,
 				'echo' => false,
 				'cr_show_products' => $this->shortcode_atts['show_products'],
@@ -639,14 +624,6 @@ if (! class_exists('CR_All_Reviews')) :
 				remove_filter( 'get_avatar', array( 'CR_Reviews_Grid', 'cr_get_avatar' ) );
 			}
 
-			$top_comments_count = array_reduce( $comments, function( $carry, $item ) {
-				if( property_exists( $item, 'comment_parent' ) && 0 == $item->comment_parent ) {
-					$carry++;
-				}
-				return $carry;
-			}, 0 );
-
-			$count_pages = ceil( $top_comments_count / $this->shortcode_atts['show_more'] );
 			$last_page = false;
 			if( $count_pages <= $page ) {
 				$last_page = true;
@@ -656,8 +633,16 @@ if (! class_exists('CR_All_Reviews')) :
 				'page' => $page,
 				'html' => $html,
 				'last_page' => $last_page,
-				'show_more_label' => sprintf( __( 'Show more reviews (%d)', 'customer-reviews-woocommerce' ), $top_comments_count - $page * $this->shortcode_atts['show_more'] ),
-				'count_row' => self::get_count_wording( $top_comments_count, $page, $this->shortcode_atts['show_more'], 0, $rating, $all )
+				'show_more_label' => sprintf( __( 'Show more reviews (%d)', 'customer-reviews-woocommerce' ), $top_comments_count - $page * $per_page ),
+				'count_row' => self::get_count_wording(
+					$top_comments_count,
+					$page,
+					$per_page,
+					$pagination_required,
+					$rating,
+					$all
+				),
+				'pagination' => $pagination
 			) );
 		}
 
@@ -1112,18 +1097,16 @@ if (! class_exists('CR_All_Reviews')) :
 
 			$output = '<div class="cr-count-row">';
 			$output .=  '<div class="cr-count-row-count">' . $count_wording . '</div>';
-			if ( 0 < $this->shortcode_atts['show_more'] ) {
-				$output .=  '<div class="cr-ajax-reviews-sort-div">';
-				$output .=   '<select name="cr_ajax_reviews_sort" class="cr-ajax-reviews-sort" data-nonce="' . wp_create_nonce( 'cr_product_reviews_sort' ) . '">';
-				$output .=    '<option value="recent"' . ( $sort_helpful ? '' : ' selected="selected"' ) . '>';
-				$output .=     esc_html__( 'Most Recent', 'customer-reviews-woocommerce' );
-				$output .=    '</option>';
-				$output .=    '<option value="helpful"' . ( $sort_helpful ? ' selected="selected"' : '' ) . '>';
-				$output .=     esc_html__( 'Most Helpful', 'customer-reviews-woocommerce' );
-				$output .=    '</option>';
-				$output .=   '</select>';
-				$output .=  '</div>';
-			}
+			$output .=  '<div class="cr-ajax-reviews-sort-div">';
+			$output .=   '<select name="cr_ajax_reviews_sort" class="cr-ajax-reviews-sort" data-nonce="' . wp_create_nonce( 'cr_product_reviews_sort' ) . '">';
+			$output .=    '<option value="recent"' . ( $sort_helpful ? '' : ' selected="selected"' ) . '>';
+			$output .=     esc_html__( 'Most Recent', 'customer-reviews-woocommerce' );
+			$output .=    '</option>';
+			$output .=    '<option value="helpful"' . ( $sort_helpful ? ' selected="selected"' : '' ) . '>';
+			$output .=     esc_html__( 'Most Helpful', 'customer-reviews-woocommerce' );
+			$output .=    '</option>';
+			$output .=   '</select>';
+			$output .=  '</div>';
 			$output .= '</div>';
 			return $output;
 		}
@@ -1466,6 +1449,58 @@ if (! class_exists('CR_All_Reviews')) :
 				$return['message'] = 'Error: no image to delete.';
 			}
 			wp_send_json( $return );
+		}
+
+		public static function cr_paginate_links( $current, $total ) {
+			if ( $total < 2 ) {
+				return '';
+			}
+
+			$page_links = array();
+			$mid_size = 1;
+			$end_size = 1;
+			$dots = false;
+
+			if ( $current && 1 < $current ) {
+				$page_links[] = sprintf(
+					'<span class="prev cr-page-numbers cr-page-numbers-a" data-page="%d">%s</span>',
+					$current - 2,
+					'&laquo;'
+				);
+			}
+
+			for ( $n = 1; $n <= $total; $n++ ) {
+				if ( $n == $current ) :
+					$page_links[] = sprintf(
+						'<span class="cr-page-numbers current">%s</span>',
+						number_format_i18n( $n )
+					);
+					$dots = true;
+				else :
+					if ( $n <= $end_size || ( $current && $n >= $current - $mid_size && $n <= $current + $mid_size ) || $n > $total - $end_size ) :
+						$page_links[] = sprintf(
+							'<span class="cr-page-numbers cr-page-numbers-a" data-page="%d">%s</span>',
+							$n - 1,
+							number_format_i18n( $n )
+						);
+						$dots = true;
+					elseif ( $dots ) :
+						$page_links[] = '<span class="cr-page-numbers dots">' . __( '&hellip;' ) . '</span>';
+						$dots = false;
+					endif;
+				endif;
+			}
+
+			if ( $current && $current < $total ) {
+				$page_links[] = sprintf(
+					'<span class="next cr-page-numbers cr-page-numbers-a" data-page="%d">%s</span>',
+					$current,
+					'&raquo;'
+				);
+			}
+
+			$r = implode( "\n", $page_links );
+			return $r;
 		}
 
 	}

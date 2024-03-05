@@ -78,13 +78,6 @@ if ( ! class_exists( 'CR_Manual' ) ) :
 							'action'    => "view ivole-order ivole-order-cr ivole-o-" . $order_id,
 						);
 					} else {
-						// $whatsapp_class = '';
-						// if ( 'yes' !== $verified_reviews ) {
-						// 	$whatsapp_class = 'cr-whatsapp-act';
-						// 	if ( ! $this->is_phone_exists( $order ) ) {
-						// 		$whatsapp_class .= ' cr-no-phone';
-						// 	}
-						// }
 						$whatsapp_class = 'cr-whatsapp-act';
 						if ( 'yes' === $verified_reviews ) {
 							$whatsapp_class .= ' cr-whatsapp-api';
@@ -194,6 +187,7 @@ if ( ! class_exists( 'CR_Manual' ) ) :
 				$schedule = $this->get_schedule( $order );
 
 				$delay_channel = CR_Sender::get_sending_delay();
+				$delay_channel = 'email';
 				if ( 'wa' === $delay_channel[1] ) {
 					$wa = new CR_Wtsap( $order_id );
 					$result = $wa->send_message( $order_id, $schedule );

@@ -24,7 +24,7 @@ class CR_Reminders_Admin_Menu {
 		 * @since 3.5
 		 */
 		public function __construct() {
-		$this->menu_slug = 'ivole-reviews-reminders';
+		$this->menu_slug = 'cr-reviews-reminders';
 
 		add_action( 'admin_menu', array( $this, 'register_reminders_menu' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'include_scripts' ) );

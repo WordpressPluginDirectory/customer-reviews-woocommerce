@@ -266,8 +266,8 @@ if ( ! class_exists( 'CR_Local_Forms' ) ) :
 			$name_check = $wpdb->get_var( $wpdb->prepare( "SHOW TABLES LIKE %s", $table_name ) );
 			if ( $name_check !== $table_name ) {
 				// check if the database converted the table name to lowercase
-				$table_name = strtolower( $table_name );
-				if ( $name_check !== $table_name ) {
+				$table_name_l = strtolower( $table_name );
+				if ( $name_check !== $table_name_l ) {
 					if ( true !== $wpdb->query(
 							"CREATE TABLE `$table_name` (
 								`formId` varchar(190),

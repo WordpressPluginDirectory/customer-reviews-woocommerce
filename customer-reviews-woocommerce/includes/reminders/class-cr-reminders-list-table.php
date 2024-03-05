@@ -337,7 +337,7 @@ class CR_Reminders_List_Table extends WP_List_Table {
 	 */
 	public function column_actions( $reminder ) {
 		$out = '';
-		$url = admin_url( 'admin.php?page=ivole-reviews-reminders' );
+		$url = admin_url( 'admin.php?page=cr-reviews-reminders' );
 
 		$cancel_url = wp_nonce_url(
 			add_query_arg(

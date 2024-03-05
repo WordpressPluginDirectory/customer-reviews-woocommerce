@@ -860,6 +860,7 @@ div.ivole-summaryBox {
 	border: 0px;
 	width: 100%;
 	max-width: 320px;
+	min-width: auto;
 	margin: 0 auto;
 }
 #ivole-histogramTable .ivole-histogramRow {
@@ -1147,6 +1148,10 @@ div.ivole-summaryBox.cr-summaryBar-updating,
 	display: inline;
 	border-radius: 3px;
 }
+.cr-all-reviews-shortcode .commentlist.cr-pagination-load {
+	opacity: 0.5;
+	pointer-events: none;
+}
 #reviews.cr-reviews-ajax-reviews #comments.cr-reviews-ajax-comments .cr-ajax-reviews-list .comment_container .comment-text,
 .cr-all-reviews-shortcode ol.commentlist li .comment-text {
 	margin: 0 0 0 70px;
@@ -1168,7 +1173,7 @@ div.ivole-summaryBox.cr-summaryBar-updating,
 	text-align: left;
 }
 .cr-all-reviews-shortcode ol.commentlist li .comment-text .meta {
-	font-size: .83em;
+	font-size: 16px;
 }
 .cr-all-reviews-shortcode ol.commentlist li .comment-text .meta time {
 	font-style: normal;
@@ -1231,30 +1236,32 @@ div.ivole-summaryBox.cr-summaryBar-updating,
 	margin: 0 0 0 10px;
 	color: #4D5D64;
 }
-span.cr-tag {
+.cr-tag {
 	color: #3d3d3d;
 	background-color: #EEEFF2;
 	display: inline-block;
 	padding: .2em .4em;
-	font-size: 0.8em;
+	font-size: 12px;
 	text-align: center;
 	white-space: nowrap;
 	vertical-align: middle;
 	border-radius: 0.7em;
 	border: 1px solid #c3c6d1;
+	border-color: #31856C;
 	transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
-.cr-review-tags-filter span.cr-tag {
-	font-size: 1em;
+.cr-review-tags-filter .cr-tag {
+	font-size: 14px;
 	border-radius: 0.7em;
 	margin-right: 5px;
 	margin-bottom: 7px;
+	border-color: #D0D0D0;
 }
 .cr-review-tags-filter span.cr-tag:hover {
-	background-color: #e4e6eb;
+	border-color: #31856C;
 	cursor: pointer;
 }
-div.cr-review-tags-filter {
+.cr-review-tags-filter {
 	padding-top: 5px;
 	padding-left: 0px;
 	padding-right: 0px;
@@ -1262,10 +1269,9 @@ div.cr-review-tags-filter {
 	pointer-events: auto;
 	opacity: 1;
 }
-div.cr-review-tags-filter span.cr-tag.cr-tag-selected {
-	border-color: #989db0;
-	background-color: #989db0;
-	color: #ffffff;
+.cr-review-tags-filter span.cr-tag.cr-tag-selected {
+	border-color: #31856C;
+	background-color: #D3D3D3;
 }
 div.cr-review-tags-filter.cr-review-tags-filter-disabled {
 	pointer-events: none;
@@ -1357,6 +1363,7 @@ p.ivole-verified-badge span.ivole-review-country-text, p.ivole-verified-badge sp
 	margin: 0;
 	padding: 0 0 1.5em 0;
 	display: block;
+	position: relative;
 }
 .cr-all-reviews-shortcode ol.commentlist li,
 #reviews.cr-reviews-ajax-reviews #comments.cr-reviews-ajax-comments .cr-ajax-reviews-list li {
@@ -1694,6 +1701,7 @@ img.ivole-verified-badge-ext-icon {
 	height: 1.1em;
 	line-height: 1.1em;
 	float: none;
+	margin: 0;
 }
 .cr-onsite-questions .cr-onsite-question {
 	display: block;
@@ -1763,7 +1771,9 @@ img.ivole-verified-badge-ext-icon {
 	background-color: transparent;
 	color: #0E252C;
 }
-.cr-show-more-review-spinner, .cr-show-more .cr-show-more-spinner {
+.cr-show-more-review-spinner,
+.cr-show-more .cr-show-more-spinner,
+.cr-all-reviews-shortcode .commentlist.cr-pagination-load .cr-pagination-review-spinner {
 	display: block;
 	margin: 20px auto;
 	background: url(../img/spinner-2x.gif) no-repeat;
@@ -1771,8 +1781,16 @@ img.ivole-verified-badge-ext-icon {
 	width: 20px;
 	height: 20px;
 }
+.cr-all-reviews-shortcode .commentlist.cr-pagination-load .cr-pagination-review-spinner {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	margin: auto;
+}
 .cr-all-reviews-shortcode.cr-all-reviews-new-review .cr-show-more-review-spinner,
-.cr-reviews-grid.cr-reviews-grid-new-review .cr-show-more-review-spinner {
+.cr-reviews-grid.cr-reviews-grid-new-review .cr-show-more-review-spinner,
+.cr-all-reviews-shortcode .commentlist .cr-pagination-review-spinner {
 	display: none;
 }
 .cr-show-more-review-spinner-cnt {
@@ -3620,6 +3638,23 @@ img.ivole-verified-badge-ext-icon {
 .cr-qna-separator {
 	display: inline;
 	margin: 0 6px;
+}
+.cr-all-reviews-pagination {
+	text-align: center;
+	font-size: 15px;
+}
+.cr-all-reviews-pagination.cr-pagination-load {
+	pointer-events: none;
+}
+.cr-all-reviews-pagination .cr-page-numbers-a {
+	cursor: pointer;
+}
+.cr-all-reviews-pagination .cr-page-numbers-a.next,
+.cr-all-reviews-pagination .cr-page-numbers-a.prev {
+	text-decoration: none;
+}
+.cr-all-reviews-pagination .cr-page-numbers.current {
+	font-weight: bold;
 }
 @media all and (max-width: 700px) {
 	#reviews.cr-reviews-ajax-reviews div.cr-ajax-reviews-cus-images-modal div.cr-ajax-reviews-slide-main-flex {

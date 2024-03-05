@@ -259,14 +259,12 @@
 		) );
 		// clear search field
 		jQuery(".cr-ajax-search .cr-clear-input").on("click", function () {
-			if( jQuery(this).parents(".cr-all-reviews-shortcode:not(.cr-all-reviews-no-pagination)").length ) {
-				// clear search in paginated version of the All Reviews block / shortcode
-				window.location.href = encodeURI(window.location.href.split('?')[0] );
-			} else {
-				// clear search in other cases
-				jQuery(this).prev("input").val("");
-				jQuery(this).parents(".cr-ajax-search").find(".cr-clear-input").hide();
-				jQuery(this).parents(".cr-ajax-search").find("button").trigger("click");
+			jQuery(this).prev("input").val("");
+			jQuery(this).parents(".cr-ajax-search").find(".cr-clear-input").hide();
+			jQuery(this).parents(".cr-ajax-search").find("button").trigger("click");
+			//
+			if( jQuery(this).parents(".cr-reviews-ajax-reviews").length ) {
+				// clear search in the case of product pages
 				jQuery(this).parents(".cr-reviews-ajax-comments").attr("data-page", 0);
 				jQuery(this).parents(".cr-reviews-ajax-reviews").find(".cr-ajax-reviews-list").empty();
 				crShowMoreReviewsPrd( jQuery(this) );
@@ -277,13 +275,9 @@
 			e.preventDefault();
 
 			//search in the all reviews block
-			if( jQuery(this).parents(".cr-all-reviews-shortcode.cr-all-reviews-no-pagination").length ){
+			if( jQuery(this).parents(".cr-all-reviews-shortcode").length ){
 				// search in ajax version of the All Reviews block / shortcode
 				cr_filter_all_reviews( jQuery(this) );
-			} else if( jQuery(this).parents(".cr-all-reviews-shortcode").length ) {
-				// search in paginated version of the All Reviews block / shortcode
-				let cr_search = jQuery(this).parents(".cr-all-reviews-shortcode").find(".cr-ajax-search input").val();
-				window.location.href = encodeURI(jQuery(this).parents(".cr-all-reviews-shortcode").data("baseurl") + "?crsearch=" + cr_search );
 			} else {
 				jQuery(this).parents(".cr-reviews-ajax-comments").attr("data-page", 0);
 				jQuery(this).parents(".cr-reviews-ajax-comments").find(".cr-ajax-reviews-list").empty();
@@ -370,8 +364,12 @@
 			e.preventDefault();
 			cr_filter_all_reviews( jQuery(this), true );
 		});
+		jQuery('.cr-all-reviews-shortcode').on("click", ".cr-page-numbers-a", function (e) {
+			e.preventDefault();
+			cr_filter_all_reviews( jQuery(this), true );
+		});
 		// filter ajax reviews in the all reviews block
-		jQuery(".cr-all-reviews-shortcode.cr-all-reviews-no-pagination").on("click", "a.cr-histogram-a, .cr-seeAllReviews", function(t){
+		jQuery(".cr-all-reviews-shortcode").on("click", "a.cr-histogram-a, .cr-seeAllReviews", function(t){
 			t.preventDefault();
 			let cr_rating = jQuery(this).data("rating");
 			jQuery("div.ivole-summaryBox tr.ivole-histogramRow.ivole-histogramRow-s").removeClass("ivole-histogramRow-s");
@@ -1336,7 +1334,7 @@
 		let attributes = refElement.parents(".cr-all-reviews-shortcode").data("attributes"),
 		cr_rating = refElement.parents(".cr-all-reviews-shortcode").find(".ivole-summaryBox .ivole-histogramRow.ivole-histogramRow-s .cr-histogram-a").attr("data-rating"),
 		cr_search = refElement.parents(".cr-all-reviews-shortcode").find(".cr-ajax-search input").val(),
-		cr_sort = refElement.children("option:selected").val();
+		cr_sort = refElement.parents(".cr-all-reviews-shortcode").find(".cr-ajax-reviews-sort").children("option:selected").val();
 		let cr_tags = [];
 		refElement.parents(".cr-all-reviews-shortcode").find(".cr-review-tags-filter .cr-tags-filter.cr-tag-selected").each(
 			function() {
@@ -1355,10 +1353,17 @@
 		//
 		if( show_more ) {
 			cr_data.page = refElement.data( "page" );
-			// click on 'show more' button or filters by rating in the summary box
+			// click on 'show more' button
 			jQuery(".cr-search-no-reviews").hide();
 			jQuery('.cr-show-more-button').hide();
-			refElement.closest( ".cr-all-reviews-shortcode" ).find( ".cr-show-more-review-spinner" ).show();
+
+			// dim the list of comments when dealing with the pagination
+			if ( refElement.hasClass( "cr-page-numbers-a" ) ) {
+				refElement.closest( ".cr-all-reviews-shortcode" ).find( ".commentlist" ).addClass( "cr-pagination-load" );
+				refElement.closest( ".cr-all-reviews-shortcode" ).find( ".cr-all-reviews-pagination" ).addClass( "cr-pagination-load" );
+			} else {
+				refElement.closest( ".cr-all-reviews-shortcode" ).find( ".cr-show-more-review-spinner" ).show();
+			}
 
 			jQuery.post(
 				{
@@ -1366,21 +1371,31 @@
 					data: cr_data,
 					context: refElement,
 					success: function(response) {
-						jQuery( this ).closest( ".cr-all-reviews-shortcode" ).find( ".cr-show-more-review-spinner" ).hide();
+						let shcode = jQuery(this).closest( ".cr-all-reviews-shortcode" );
+						shcode.find( ".cr-show-more-review-spinner" ).hide();
 						if( response.html !== "" ) {
-							jQuery( this ).closest( ".cr-all-reviews-shortcode" ).find(".commentlist").append(response.html);
-							if( ! response.last_page ) {
-								jQuery(".cr-all-reviews-shortcode .cr-show-more-button").text( response.show_more_label );
-								jQuery("#cr-show-more-all-reviews").show();
+							if ( jQuery(this).hasClass( "cr-page-numbers-a" ) ) {
+								// shcode.find(".commentlist").empty();
+								shcode.find(".commentlist").find("*").not(".cr-pagination-review-spinner").remove();
 							}
-							jQuery("#cr-show-more-all-reviews").data( "page", response.page );
-							jQuery(".cr-all-reviews-shortcode .cr-count-row .cr-count-row-count").html( response.count_row );
+							shcode.find(".commentlist").prepend(response.html);
+							if( ! response.last_page ) {
+								shcode.find(".cr-show-more-button").text( response.show_more_label );
+								shcode.find(".cr-show-more-button").show();
+							}
+							shcode.find(".cr-show-more-button").data( "page", response.page );
+							shcode.find(".cr-count-row .cr-count-row-count").html( response.count_row );
+							if ( response.pagination !== "" ) {
+								shcode.find(".cr-all-reviews-pagination").html(response.pagination);
+							}
 						} else {
-							jQuery( "#cr-show-more-all-reviews" ).hide();
+							shcode.find(".cr-show-more-button").hide();
 						}
 						if( response.html == "" && response.page === 1 ){
-							jQuery( this ).closest( ".cr-all-reviews-shortcode" ).find( ".cr-search-no-reviews" ).show();
+							shcode.find( ".cr-search-no-reviews" ).show();
 						}
+						shcode.find( ".commentlist" ).removeClass( "cr-pagination-load" );
+						shcode.find( ".cr-all-reviews-pagination" ).removeClass( "cr-pagination-load" );
 					},
 					dataType: "json"
 				}
@@ -1395,30 +1410,34 @@
 			refElement.closest(".cr-all-reviews-shortcode").find(".cr-seeAllReviews").addClass("cr-seeAll-updating");
 			refElement.closest(".cr-all-reviews-shortcode").find(".cr-ajax-reviews-sort").addClass("cr-sort-updating");
 			refElement.closest(".cr-all-reviews-shortcode").find(".cr-review-tags-filter").addClass("cr-tags-updating");
+			refElement.closest(".cr-all-reviews-shortcode").find(".cr-all-reviews-pagination").hide();
 			jQuery.post(
 				{
 					url: cr_ajax_object.ajax_url,
 					data: cr_data,
 					context: refElement,
 					success: function(response) {
-						jQuery(this).closest(".cr-all-reviews-shortcode").find( ".cr-show-more-review-spinner" ).hide();
-						jQuery(this).closest(".cr-all-reviews-shortcode").find(".ivole-summaryBox").removeClass("cr-summaryBar-updating");
-						jQuery(this).closest(".cr-all-reviews-shortcode").find(".cr-seeAllReviews").removeClass("cr-seeAll-updating");
-						jQuery(this).closest(".cr-all-reviews-shortcode").find(".cr-ajax-reviews-sort").removeClass("cr-sort-updating");
-						jQuery(this).closest(".cr-all-reviews-shortcode").find(".cr-review-tags-filter").removeClass("cr-tags-updating");
+						let shcode = jQuery(this).closest( ".cr-all-reviews-shortcode" );
+						shcode.find( ".cr-show-more-review-spinner" ).hide();
+						shcode.find(".ivole-summaryBox").removeClass("cr-summaryBar-updating");
+						shcode.find(".cr-seeAllReviews").removeClass("cr-seeAll-updating");
+						shcode.find(".cr-ajax-reviews-sort").removeClass("cr-sort-updating");
+						shcode.find(".cr-review-tags-filter").removeClass("cr-tags-updating");
 						if(response.html !== ""){
-							jQuery(this).closest(".cr-all-reviews-shortcode").find(".commentlist").empty();
-							jQuery(this).closest(".cr-all-reviews-shortcode").find(".commentlist").append(response.html);
-							jQuery(this).closest(".cr-all-reviews-shortcode").find(".commentlist").show();
-							jQuery(this).closest(".cr-all-reviews-shortcode").find(".cr-show-more-button").data("page",response.page);
+							shcode.find(".commentlist").empty();
+							shcode.find(".commentlist").append(response.html);
+							shcode.find(".commentlist").show();
+							shcode.find(".cr-show-more-button").data("page",response.page);
 							if( !response.last_page ){
-								jQuery(this).closest(".cr-all-reviews-shortcode").find(".cr-show-more-button").text( response.show_more_label );
-								jQuery(this).closest(".cr-all-reviews-shortcode").find(".cr-show-more-button").show();
+								shcode.find(".cr-show-more-button").text( response.show_more_label );
+								shcode.find(".cr-show-more-button").show();
 							}
 						} else {
-							jQuery(this).closest(".cr-all-reviews-shortcode").find(".cr-search-no-reviews").show();
+							shcode.find(".cr-search-no-reviews").show();
 						}
-						jQuery(this).closest(".cr-all-reviews-shortcode").find(".cr-count-row .cr-count-row-count").html( response.count_row );
+						shcode.find(".cr-count-row .cr-count-row-count").html( response.count_row );
+						shcode.find(".cr-all-reviews-pagination").html(response.pagination);
+						shcode.find(".cr-all-reviews-pagination").show();
 					},
 					dataType: "json"
 				}

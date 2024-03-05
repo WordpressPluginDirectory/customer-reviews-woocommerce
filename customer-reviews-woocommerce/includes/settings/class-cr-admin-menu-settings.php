@@ -534,7 +534,7 @@ if ( ! class_exists( 'CR_Settings_Admin_Menu' ) ):
 						switch( $_POST['type'] ) {
 							case 'review_reminder':
 								$e = new Ivole_Email();
-								$result = $e->trigger2( null, $email );
+								$result = $e->trigger2( null, $email, false );
 								break;
 							case 'qna_reply':
 								$qe = new CR_Qna_Email( $_POST['type'] );

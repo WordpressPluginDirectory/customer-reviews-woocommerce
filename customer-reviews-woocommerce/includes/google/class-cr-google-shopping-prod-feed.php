@@ -472,7 +472,7 @@ class CR_Google_Shopping_Prod_Feed {
 
 			$_product->woo_id = $product->get_id();
 			if( is_array( $identifiers ) && isset( $identifiers['pid'] ) ) {
-				$_product->id = CR_Google_Shopping_Prod_Feed::get_field( $identifiers['pid'], $product );
+				$_product->id = self::get_field( $identifiers['pid'], $product );
 				if( ! $_product->id ) {
 					$_product->id = $product->get_id();
 				}
@@ -562,9 +562,9 @@ class CR_Google_Shopping_Prod_Feed {
 			} else {
 				$meta__unit = 'meta__unit';
 			}
-			$unit = CR_Google_Shopping_Prod_Feed::get_field( $meta__unit, $product );
+			$unit = self::get_field( $meta__unit, $product );
 			if( $_product->parent_variable && ! $unit ) {
-				$unit = CR_Google_Shopping_Prod_Feed::get_field( $meta__unit, $_product->parent_variable );
+				$unit = self::get_field( $meta__unit, $_product->parent_variable );
 			}
 
 			// unit_pricing_measure
@@ -574,9 +574,9 @@ class CR_Google_Shopping_Prod_Feed {
 				$meta__unit_product = 'meta__unit_product';
 			}
 			$_product->unit_pricing_measure = '';
-			$unit_product = CR_Google_Shopping_Prod_Feed::get_field( $meta__unit_product, $product );
+			$unit_product = self::get_field( $meta__unit_product, $product );
 			if( $_product->parent_variable && ! $unit_product ) {
-				$unit_product = CR_Google_Shopping_Prod_Feed::get_field( $meta__unit_product, $_product->parent_variable );
+				$unit_product = self::get_field( $meta__unit_product, $_product->parent_variable );
 			}
 			if( !empty( $unit_product ) ) $_product->unit_pricing_measure = $unit_product . ' ' . $unit;
 
@@ -587,23 +587,23 @@ class CR_Google_Shopping_Prod_Feed {
 				$meta__unit_base = 'meta__unit_base';
 			}
 			$_product->unit_pricing_base_measure = '';
-			$unit_base = CR_Google_Shopping_Prod_Feed::get_field( $meta__unit_base, $product );
+			$unit_base = self::get_field( $meta__unit_base, $product );
 			if( $_product->parent_variable && ! $unit_base ) {
-				$unit_base = CR_Google_Shopping_Prod_Feed::get_field( $meta__unit_base, $_product->parent_variable );
+				$unit_base = self::get_field( $meta__unit_base, $_product->parent_variable );
 			}
 			if( !empty( $unit_base ) ) $_product->unit_pricing_base_measure = $unit_base . ' ' . $unit;
 
 			$_product->gtin = '';
 			if( is_array( $identifiers ) && isset( $identifiers['gtin'] ) ) {
-				$_product->gtin = CR_Google_Shopping_Prod_Feed::get_field( $identifiers['gtin'], $product );
+				$_product->gtin = self::get_field( $identifiers['gtin'], $product );
 			}
 			$_product->mpn = '';
 			if( is_array( $identifiers ) && isset( $identifiers['mpn'] ) ) {
-				$_product->mpn = CR_Google_Shopping_Prod_Feed::get_field( $identifiers['mpn'], $product );
+				$_product->mpn = self::get_field( $identifiers['mpn'], $product );
 			}
 			$_product->brand = '';
 			if( is_array( $identifiers ) && isset( $identifiers['brand'] ) ) {
-				$_product->brand = CR_Google_Shopping_Prod_Feed::get_field( $identifiers['brand'], $product );
+				$_product->brand = self::get_field( $identifiers['brand'], $product );
 				if( !$_product->brand ) {
 					$_product->brand = trim( get_option( 'ivole_google_brand_static', '' ) );
 				}
@@ -611,19 +611,19 @@ class CR_Google_Shopping_Prod_Feed {
 			//attributes
 			$_product->age_group = '';
 			if( is_array( $attributes ) && isset( $attributes['age_group'] ) ) {
-				$_product->age_group = CR_Google_Shopping_Prod_Feed::get_field( $attributes['age_group'], $product );
+				$_product->age_group = self::get_field( $attributes['age_group'], $product );
 			}
 			$_product->color = '';
 			if( is_array( $attributes ) && isset( $attributes['color'] ) ) {
-				$_product->color = CR_Google_Shopping_Prod_Feed::get_field( $attributes['color'], $product );
+				$_product->color = self::get_field( $attributes['color'], $product );
 			}
 			$_product->gender = '';
 			if( is_array( $attributes ) && isset( $attributes['gender'] ) ) {
-				$_product->gender = CR_Google_Shopping_Prod_Feed::get_field( $attributes['gender'], $product );
+				$_product->gender = self::get_field( $attributes['gender'], $product );
 			}
 			$_product->size = '';
 			if( is_array( $attributes ) && isset( $attributes['size'] ) ) {
-				$_product->size = CR_Google_Shopping_Prod_Feed::get_field( $attributes['size'], $product );
+				$_product->size = self::get_field( $attributes['size'], $product );
 				// if there are multiple sizes and they are separated by ', ', replace it with '/' as Google requires
 				$_product->size = str_replace( ', ', '/', $_product->size );
 				// the maximum length of the field should be 100 chars
@@ -631,17 +631,17 @@ class CR_Google_Shopping_Prod_Feed {
 			}
 			$_product->material = '';
 			if( is_array( $attributes ) && isset( $attributes['material'] ) ) {
-				$_product->material = CR_Google_Shopping_Prod_Feed::get_field( $attributes['material'], $product );
+				$_product->material = self::get_field( $attributes['material'], $product );
 			}
 			$_product->multipack = '';
 			if( is_array( $attributes ) && isset( $attributes['multipack'] ) ) {
-				$_product->multipack = CR_Google_Shopping_Prod_Feed::get_field( $attributes['multipack'], $product );
+				$_product->multipack = self::get_field( $attributes['multipack'], $product );
 			}
 			$_product->bundle = '';
 			if( is_array( $attributes ) && isset( $attributes['bundle'] ) ) {
-				$_product->bundle = CR_Google_Shopping_Prod_Feed::get_field( $attributes['bundle'], $product );
+				$_product->bundle = self::get_field( $attributes['bundle'], $product );
 			}
-			$_product->identifier_exists = CR_Google_Shopping_Prod_Feed::get_field( 'meta__cr_identifier_exists', $product );
+			$_product->identifier_exists = self::get_field( 'meta__cr_identifier_exists', $product );
 			$_product->product_type = '';
 			$_product->google_product_category = '';
 			$category_ids = $product->get_category_ids();
@@ -683,7 +683,7 @@ class CR_Google_Shopping_Prod_Feed {
 			$_product->item_group_id = '';
 			if( $_product->parent_variable ) {
 				if( is_array( $identifiers ) && isset( $identifiers['pid'] ) ) {
-					$_product->item_group_id = CR_Google_Shopping_Prod_Feed::get_field( $identifiers['pid'], $_product->parent_variable );
+					$_product->item_group_id = self::get_field( $identifiers['pid'], $_product->parent_variable );
 					if( ! $_product->item_group_id ) {
 						$_product->item_group_id = $_product->parent_variable->get_id();
 					}

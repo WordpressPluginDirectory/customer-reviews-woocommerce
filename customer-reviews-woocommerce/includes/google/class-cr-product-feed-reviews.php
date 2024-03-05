@@ -243,7 +243,7 @@ if ( ! class_exists( 'CR_Reviews_Product_Feed' ) ):
 			}, $product_attributes );
 
 			$meta_attributes = $wpdb->get_results(
-				"SELECT meta.meta_id, meta.meta_key, meta.meta_value
+				"SELECT meta.meta_id, meta.meta_key
 				FROM {$wpdb->postmeta} AS meta, {$wpdb->posts} AS posts
 				WHERE meta.post_id = posts.ID AND posts.post_type LIKE '%product%' AND (
 					meta.meta_key NOT LIKE '\_%'
@@ -252,32 +252,20 @@ if ( ! class_exists( 'CR_Reviews_Product_Feed' ) ):
 					OR meta.meta_key LIKE '\_yoast%'
 					OR meta.meta_key LIKE '\_alg_ean%'
 					OR meta.meta_key LIKE '\_wpsso_product%'
-					OR meta.meta_key = '_product_attributes'
 				)
-				GROUP BY meta.post_id, meta.meta_key",
+				GROUP BY meta.meta_key",
 				ARRAY_A
 			);
 
 			if ( is_array( $meta_attributes ) ) {
 				$product_attributes = array_reduce( $meta_attributes, function( $attributes, $meta_attribute ) {
-
-					// If the meta entry is _product_attributes, then consider each attribute spearately
-					if ( $meta_attribute['meta_key'] === '_product_attributes' ) {
-
-						$attrs = maybe_unserialize( $meta_attribute['meta_value'] );
-						if ( is_array( $attrs ) ) {
-
-							foreach ( $attrs as $attr_key => $attr ) {
-								$key = 'attribute_' . $attr_key;
-								$attributes[$key] = ucfirst( $attr['name'] );
-							}
-
-						}
-
+					// If the meta entry starts with attribute_, then consider it as an attribute
+					if ( 'attribute_' === substr( $meta_attribute['meta_key'], 0, 10 ) ) {
+						$key = $meta_attribute['meta_key'];
 					} else {
 						$key = 'meta_' . $meta_attribute['meta_key'];
-						$attributes[$key] = ucfirst( str_replace( '_', ' ', $meta_attribute['meta_key'] ) );
 					}
+					$attributes[$key] = ucfirst( str_replace( '_', ' ', $meta_attribute['meta_key'] ) );
 					return $attributes;
 				}, $product_attributes );
 			}

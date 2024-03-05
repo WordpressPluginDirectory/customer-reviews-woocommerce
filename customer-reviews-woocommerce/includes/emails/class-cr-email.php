@@ -160,9 +160,12 @@ class Ivole_Email {
 	/**
 	 * Trigger version 2.
 	 */
-	public function trigger2( $order_id, $to = null, $schedule = false ) {
+	public function trigger2( $order_id, $to, $schedule ) {
 		if ( ! Ivole::is_curl_installed() ) {
-			return array( 100, __( 'Error: cURL library is missing on the server.', 'customer-reviews-woocommerce' ) );
+			return array(
+				100,
+				__( 'Error: cURL library is missing on the server.', 'customer-reviews-woocommerce' )
+			);
 		}
 		$this->find['customer-first-name']  = '{customer_first_name}';
 		$this->find['customer-last-name']  = '{customer_last_name}';
