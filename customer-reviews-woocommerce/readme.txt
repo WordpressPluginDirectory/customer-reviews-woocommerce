@@ -4,7 +4,7 @@ Tags: woocommerce, review plugin, review reminder, customer reviews, review for 
 Requires at least: 4.5
 Tested up to: 6.4
 Requires PHP: 7.2
-Stable tag: 5.42.0
+Stable tag: 5.43.1
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl.html
 
@@ -229,6 +229,11 @@ If you would like to change how reviews are sorted on product pages, it is possi
 
 == Changelog ==
 
+= 5.43.1 =
+* Bug fix: a table for the reminders log was not created before sending a reminder
+= 5.43.0 =
+* New feature: log of review reminders sent by email
+* Bug fix: reviews prepended in the beginning of the list instead of at the end of the list in the [cusrev_all_reviews] shortcode
 = 5.42.0 =
 * Improvement: performance optimization for Google XML feeds settings pages
 * Improvement: removal of dependency on WordPress permalinks settings for the [cusrev_all_reviews] shortcode with pagination

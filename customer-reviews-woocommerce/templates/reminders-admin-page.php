@@ -1,5 +1,11 @@
 <div class="wrap">
-    <h1 class="wp-heading-inline"><?php _e( 'Scheduled Review Reminders', 'customer-reviews-woocommerce' ); ?></h1>
+    <?php
+    if ( 'sent' === $current_tab ) {
+      echo '<h1 class="wp-heading-inline">' . __( 'Sent Review Reminders', 'customer-reviews-woocommerce' ) . '</h1>';
+    } else {
+      echo '<h1 class="wp-heading-inline">' . __( 'Scheduled Review Reminders', 'customer-reviews-woocommerce' ) . '</h1>';
+    }
+    ?>
 
     <?php
     if ( isset( $_REQUEST['s'] ) && strlen( $_REQUEST['s'] ) ) {
@@ -11,10 +17,41 @@
         );
         echo '</span>';
     }
+
+    $rtabs = array(
+      'scheduled' => __( 'Scheduled', 'customer-reviews-woocommerce' ),
+      'sent' => __( 'Sent', 'customer-reviews-woocommerce' )
+    );
+
+    $page_url = add_query_arg(
+      array( 'page' => $this->menu_slug ),
+      admin_url( 'admin.php' )
+    );
     ?>
 
     <hr class="wp-header-end">
-    <p><?php esc_attr_e( 'A list of review reminders scheduled by the plugin to be sent in the future.', 'customer-reviews-woocommerce' ); ?></p>
+
+    <ul class="subsubsub">
+      <?php
+      $array_keys = array_keys( $rtabs );
+      $last = end( $array_keys );
+
+      foreach ( $rtabs as $tab => $label ) {
+          echo '<li><a href="' . $page_url . '&tab=' . $tab . '" class="' . ( $current_tab === $tab ? 'current' : '' ) . '">' . $label . '</a> ' . ( $last === $tab ? '' : '|' ) . ' </li>';
+      }
+      ?>
+    </ul>
+    <br class="clear" />
+
+    <p>
+      <?php
+      if ( 'sent' === $current_tab ) {
+        esc_attr_e( 'A list of review reminders sent by the plugin.', 'customer-reviews-woocommerce' );
+      } else {
+        esc_attr_e( 'A list of review reminders scheduled by the plugin to be sent in the future.', 'customer-reviews-woocommerce' );
+      }
+      ?>
+    </p>
 
     <?php
     if( 'cr' === get_option( 'ivole_scheduler_type', 'wp' ) ) {
@@ -30,7 +67,8 @@
 
     <form id="reminders-form" method="get">
         <?php $list_table->search_box( __( 'Search Reminders', 'customer-reviews-woocommerce' ), 'reminders' ); ?>
-        <input type="hidden" name="page" value="cr-reviews-reminders" />
+        <input type="hidden" name="page" value="<?php echo esc_attr( $this->menu_slug ); ?>" />
+        <input type="hidden" name="tab" value="<?php echo esc_attr( $current_tab ); ?>" />
         <input type="hidden" name="_total" value="<?php echo esc_attr( $list_table->get_pagination_arg( 'total_items' ) ); ?>" />
         <input type="hidden" name="_per_page" value="<?php echo esc_attr( $list_table->get_pagination_arg( 'per_page' ) ); ?>" />
         <input type="hidden" name="_page" value="<?php echo esc_attr( $list_table->get_pagination_arg( 'page' ) ); ?>" />
@@ -44,22 +82,26 @@
 
 	<script type="text/javascript">
 		jQuery(function($) {
-			var ivole_confirm_cancel = function() {
+			let cr_confirm_cancel = function() {
 				return confirm("<?php esc_attr_e( 'Are you sure you want to cancel the review reminder(s)?', 'customer-reviews-woocommerce' ); ?>");
 			};
 
-			var ivole_confirm_send = function() {
+			let cr_confirm_send = function() {
 				return confirm("<?php esc_attr_e( 'Are you sure you want to send the review reminder(s) now?', 'customer-reviews-woocommerce' ); ?>");
 			};
 
+			let cr_confirm_delete = function() {
+				return confirm("<?php esc_attr_e( 'Are you sure you want to delete selected log record(s)?', 'customer-reviews-woocommerce' ); ?>");
+			};
+
 			$('.action-link.cancel').on('click', function(event) {
-				if (!ivole_confirm_cancel()) {
+				if ( ! cr_confirm_cancel() ) {
 					event.preventDefault();
 				}
 			});
 
 			$('.action-link.send').on('click', function(event) {
-				if (!ivole_confirm_send()) {
+				if ( ! cr_confirm_send() ) {
 					event.preventDefault();
 				}
 			});
@@ -70,11 +112,15 @@
 
 				if (selected.length) {
 					if (action == 'cancel') {
-						if (!ivole_confirm_cancel()) {
+						if ( ! cr_confirm_cancel() ) {
 							event.preventDefault();
 						}
 					} else if (action == 'send') {
-						if (!ivole_confirm_send()) {
+						if ( ! cr_confirm_send() ) {
+							event.preventDefault();
+						}
+					} else if (action == 'delete') {
+						if ( ! cr_confirm_delete() ) {
 							event.preventDefault();
 						}
 					}

@@ -267,7 +267,7 @@ jQuery(document).ready(function($) {
 				} else if (response.code === 2) {
 					jQuery( '#post-' + response.order_id + ',#order-' + response.order_id ).find( '.ivole-review-reminder' ).text( CrManualStrings.error_code_2.replace( '%s', response.message ) );
 				} else {
-					jQuery( '#post-' + response.order_id + ',#order-' + response.order_id ).find( '.ivole-review-reminder' ).text( response.message );
+					jQuery( '#post-' + response.order_id + ',#order-' + response.order_id ).find( '.ivole-review-reminder' ).html( response.message );
 				}
 			}, 'json');
 		}

@@ -346,6 +346,10 @@ if ( ! class_exists( 'CR_Admin' ) ) :
 					} elseif ( version_compare( $version, '5.39.0', '<' ) ) {
 						add_action( 'admin_notices', array( $this, 'admin_notice_update8' ) );
 						$no_notices = false;
+					} elseif ( version_compare( $version, '5.43.1', '<' ) ) {
+						$log = new CR_Reminders_Log();
+						$log->check_create_table();
+						update_option( 'ivole_version', $this->ver );
 					} else {
 						update_option( 'ivole_version', $this->ver );
 					}

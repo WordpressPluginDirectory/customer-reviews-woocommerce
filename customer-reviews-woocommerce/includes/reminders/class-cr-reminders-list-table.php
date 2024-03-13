@@ -141,14 +141,14 @@ class CR_Reminders_List_Table extends WP_List_Table {
 	}
 
 	/**
-	 * Returns the amount of reminders displayed per page. Default 30.
+	 * Returns the amount of reminders displayed per page. Default 20.
 	 *
 	 * @since 3.5
 	 *
 	 * @return int
 	 */
 	public function get_per_page() {
-		$reminders_per_page = $this->get_items_per_page( 'reminders_per_page', 30 );
+		$reminders_per_page = $this->get_items_per_page( 'reminders_per_page', 20 );
 
 		return $reminders_per_page;
 	}

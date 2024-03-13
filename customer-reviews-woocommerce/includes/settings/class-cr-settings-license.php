@@ -49,6 +49,7 @@ if ( ! class_exists( 'CR_License_Settings' ) ):
 
 			$field_id = 'ivole_license_key';
 			if( !empty( $_POST ) && isset( $_POST[$field_id] ) ) {
+				$_POST[$field_id] = trim( $_POST[$field_id] );
 				$license = new CR_License();
 				$license->register_license( $_POST[$field_id] );
 			}

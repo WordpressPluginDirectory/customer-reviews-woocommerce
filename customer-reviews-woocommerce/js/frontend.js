@@ -1375,10 +1375,11 @@
 						shcode.find( ".cr-show-more-review-spinner" ).hide();
 						if( response.html !== "" ) {
 							if ( jQuery(this).hasClass( "cr-page-numbers-a" ) ) {
-								// shcode.find(".commentlist").empty();
 								shcode.find(".commentlist").find("*").not(".cr-pagination-review-spinner").remove();
+								shcode.find(".commentlist").prepend(response.html);
+							} else {
+								shcode.find(".commentlist").append(response.html);
 							}
-							shcode.find(".commentlist").prepend(response.html);
 							if( ! response.last_page ) {
 								shcode.find(".cr-show-more-button").text( response.show_more_label );
 								shcode.find(".cr-show-more-button").show();

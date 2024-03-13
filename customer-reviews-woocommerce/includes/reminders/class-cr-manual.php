@@ -188,12 +188,30 @@ if ( ! class_exists( 'CR_Manual' ) ) :
 
 				$delay_channel = CR_Sender::get_sending_delay();
 				$delay_channel = 'email';
+				$l_msg = '';
 				if ( 'wa' === $delay_channel[1] ) {
 					$wa = new CR_Wtsap( $order_id );
 					$result = $wa->send_message( $order_id, $schedule );
 				} else {
 					$e = new Ivole_Email( $order_id );
 					$result = $e->trigger2( $order_id, null, $schedule );
+					// logging
+					$log = new CR_Reminders_Log();
+					$l_result = $log->add(
+						$order_id,
+						'm',
+						'email',
+						$result
+					);
+					if (
+						is_array( $l_result ) &&
+						isset( $l_result['code'] ) &&
+						0 !== $l_result['code'] &&
+						isset( $l_result['text'] )
+					) {
+						$l_msg = ';<br>' . esc_html( $l_result['text'] );
+					}
+					// end of logging
 				}
 
 				//qTranslate integration
@@ -223,8 +241,8 @@ if ( ! class_exists( 'CR_Manual' ) ) :
 					}
 				}
 
-				if( is_array( $result ) && count( $result ) > 1 && 0 !== $result[0] ) {
-					wp_send_json( array( 'code' => $result[0], 'message' => $result[1], 'order_id' => $order_id ) );
+				if ( is_array( $result ) && count( $result ) > 1 && 0 !== $result[0] ) {
+					wp_send_json( array( 'code' => $result[0], 'message' => $result[1] . $l_msg, 'order_id' => $order_id ) );
 				} elseif (
 					0 === $result ||
 					( is_array( $result ) && count( $result ) > 1 && 0 === $result[0] )
@@ -243,25 +261,10 @@ if ( ! class_exists( 'CR_Manual' ) ) :
 					} else {
 						$msg = __( 'Successfully synced with CR Cron', 'customer-reviews-woocommerce' );
 					}
-					wp_send_json( array( 'code' => 0, 'message' => $msg, 'order_id' => $order_id ) );
-				} elseif( 1 === $result ) {
-					wp_send_json( array( 'code' => 1, 'message' => $msg, 'order_id' => $order_id ) );
-				} elseif( 3 === $result ) {
-					wp_send_json( array( 'code' => 3, 'message' => __( 'Error: maximum number of reminders per order is limited to one.', 'customer-reviews-woocommerce' ), 'order_id' => $order_id ) );
-				} elseif( 5 === $result ) {
-					wp_send_json( array( 'code' => 5, 'message' => __( 'Error: the order was placed by a customer who doesn\'t have a role for which review reminders are enabled.', 'customer-reviews-woocommerce' ), 'order_id' => $order_id ) );
-				} elseif( 6 === $result ) {
-					wp_send_json( array( 'code' => 6, 'message' => __( 'Error: could not save the secret key to DB. Please try again.', 'customer-reviews-woocommerce' ), 'order_id' => $order_id ) );
-				} elseif( 10 === $result ) {
-					wp_send_json( array( 'code' => 10, 'message' => __( 'Error: the customer\'s email is invalid.', 'customer-reviews-woocommerce' ), 'order_id' => $order_id ) );
-				} elseif( 11 === $result ) {
-					wp_send_json( array( 'code' => 11, 'message' => __( 'Error: reminders are disabled for guests.', 'customer-reviews-woocommerce' ), 'order_id' => $order_id ) );
-				} elseif( 13 === $result ) {
-					wp_send_json( array( 'code' => 13, 'message' => __( 'Error: "Email Subject" is empty. Please enter a string for the subject line of emails.', 'customer-reviews-woocommerce' ), 'order_id' => $order_id ) );
-				} elseif( 100 === $result ) {
-					wp_send_json( array( 'code' => 100, 'message' => __( 'Error: cURL library is missing on the server.', 'customer-reviews-woocommerce' ), 'order_id' => $order_id ) );
+					wp_send_json( array( 'code' => 0, 'message' => $msg . $l_msg, 'order_id' => $order_id ) );
+				} else {
+					wp_send_json( array( 'code' => 98, 'message' => 'Error code 98' . $l_msg, 'order_id' => $order_id ) );
 				}
-				wp_send_json( array( 'code' => 98, 'message' => $msg, 'order_id' => $order_id ) );
 			}
 		}
 

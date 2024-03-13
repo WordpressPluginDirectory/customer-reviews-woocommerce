@@ -200,6 +200,15 @@ if ( ! class_exists( 'CR_Sender' ) ) :
 			} else {
 				$e = new Ivole_Email( $order_id );
 				$result = $e->trigger2( $order_id, null, $schedule );
+				// logging
+				$log = new CR_Reminders_Log();
+				$l_result = $log->add(
+					$order_id,
+					'a',
+					'email',
+					$result
+				);
+				// end of logging
 			}
 
 			//qTranslate integration

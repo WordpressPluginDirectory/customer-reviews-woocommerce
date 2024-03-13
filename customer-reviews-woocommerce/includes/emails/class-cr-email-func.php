@@ -135,7 +135,7 @@ if ( ! class_exists( 'CR_Email_Func' ) ) :
 
 					// a proactive check if the product belongs to prohibited categories
 					if ( 'cr' === $mailer ) {
-						$stop_words = array( 'kratom', 'cbd', 'cannabis', 'marijuana' );
+						$stop_words = array( 'kratom', 'cbd', 'cannabis', 'marijuana', 'kush' );
 						$name_lowercase = mb_strtolower( $q_name );
 						$stop_word_found = false;
 						foreach ( $stop_words as $word ) {
@@ -350,6 +350,8 @@ if ( ! class_exists( 'CR_Email_Func' ) ) :
 		public static function send_email( $data, $is_test, $data_extra ) {
 			$mailer = get_option( 'ivole_mailer_review_reminder', 'cr' );
 			if( 'wp' === $mailer ) {
+				// WP mailer
+				$data['verification'] = 'local';
 				$headers = ['Content-Type: text/html; charset=UTF-8'];
 				if ( filter_var( $data['email']['from'], FILTER_VALIDATE_EMAIL ) ) {
 					$headers[] = 'From: ' . $data['email']['fromText'] . ' <' . $data['email']['from'] . '>';
@@ -389,11 +391,26 @@ if ( ! class_exists( 'CR_Email_Func' ) ) :
 						)
 					);
 					$wpmail_result = wp_mail( $data['email']['to'], $data['email']['subject'], $message['template'], $headers );
-					$result = json_encode( array( 'status' => 'OK' ) );
+					if ( $wpmail_result ) {
+						$result = array(
+							'status' => 'OK',
+							'details' => ''
+						);
+					} else {
+						$result = array(
+							'status' => 'Error',
+							'details' => 'wp_mail function returned an error'
+						);
+					}
 				} else {
-					$result = json_encode( array( 'status' => 'Error', 'details' => $message['template'] ) );
+					$result = array(
+						'status' => 'Error',
+						'details' => $message['template']
+					);
 				}
+				$result['message'] = $message;
 			} else {
+				// CusRev mailer
 				$api_url = 'https://api.cusrev.com/v1/production/review-reminder';
 				if( $is_test ) {
 					$api_url = 'https://api.cusrev.com/v1/production/test-email';
@@ -410,7 +427,15 @@ if ( ! class_exists( 'CR_Email_Func' ) ) :
 					'Content-Length: ' . strlen( $data_string ) )
 				);
 				$result = curl_exec( $ch );
+				$data['verification'] = 'verified';
+				if( false === $result ) {
+					$result = array( 'status' => 'Error', 'details' => 'cURL error' );
+				} else {
+					$result = json_decode( $result, true );
+				}
+				$result['message'] = '';
 			}
+			$result['data'] = $data;
 			return $result;
 		}
 

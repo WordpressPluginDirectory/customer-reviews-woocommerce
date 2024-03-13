@@ -164,7 +164,8 @@ class Ivole_Email {
 		if ( ! Ivole::is_curl_installed() ) {
 			return array(
 				100,
-				__( 'Error: cURL library is missing on the server.', 'customer-reviews-woocommerce' )
+				__( 'Error: cURL library is missing on the server.', 'customer-reviews-woocommerce' ),
+				array()
 			);
 		}
 		$this->find['customer-first-name']  = '{customer_first_name}';
@@ -198,7 +199,11 @@ class Ivole_Email {
 			$order = wc_get_order( $order_id );
 			if ( ! $order  ) {
 				// if no order exists with the provided $order_id, then we cannot send an email
-				return array( 15, sprintf( __( 'Error: the order %s does not exist anymore.', 'customer-reviews-woocommerce' ), $order_id ) );
+				return array(
+					15,
+					sprintf( __( 'Error: the order %s does not exist anymore.', 'customer-reviews-woocommerce' ), $order_id ),
+					array()
+				);
 			}
 
 			//check if Limit Number of Reviews option is used
@@ -207,7 +212,11 @@ class Ivole_Email {
 				$reviews = $order->get_meta( '_ivole_review_reminder', true );
 				if( $reviews >= 1 ) {
 					//if more than one, then we cannot send an email
-					return 3;
+					return array(
+						3,
+						__( 'Error: maximum number of reminders per order is limited to one.', 'customer-reviews-woocommerce' ),
+						array()
+					);
 				}
 			}
 			//check if registered customers option is used
@@ -281,7 +290,11 @@ class Ivole_Email {
 				}
 				$this->replace['list-products'] = $list_products;
 			} else {
-				return array( 17, 'Error: old WooCommerce version, please update WooCommerce to the latest version' );
+				return array(
+					17,
+					'Error: old WooCommerce version, please update WooCommerce to the latest version',
+					array()
+				);
 			}
 			if( isset( $user ) && !empty( $user ) ) {
 				// check customer roles if there is a restriction to which roles reminders should be sent
@@ -290,13 +303,21 @@ class Ivole_Email {
 					$intersection = array_intersect( $enabled_roles, $roles );
 					if( count( $intersection ) < 1 ){
 							//customer has no allowed roles
-							return 5;
+							return array(
+								5,
+								__( 'Error: the order was placed by a customer who doesn\'t have a role for which review reminders are enabled.', 'customer-reviews-woocommerce' ),
+								array()
+							);
 					}
 				}
 			} else {
 				// check if sending of review reminders is enabled for guests
 				if( ! $for_guests ) {
-					return 11;
+					return array(
+						11,
+						__( 'Error: reminders are disabled for guests.', 'customer-reviews-woocommerce' ),
+						array()
+					);
 				}
 			}
 			// check if BCC address needs to be added to email
@@ -308,12 +329,20 @@ class Ivole_Email {
 			}
 			// check if customer email is valid
 			if( !filter_var( $this->to, FILTER_VALIDATE_EMAIL ) ) {
-				return 10;
+				return array(
+					10,
+					__( 'Error: the customer\'s email is invalid.', 'customer-reviews-woocommerce' ),
+					array()
+				);
 			}
 			// check if email subject is not empty
 			$email_subject = $this->replace_variables( $this->subject );
 			if( 0 >= strlen( $email_subject ) ) {
-				return 13;
+				return array(
+					13,
+					__( 'Error: "Email Subject" is empty. Please enter a string for the subject line of emails.', 'customer-reviews-woocommerce' ),
+					array()
+				);
 			}
 
 			$message = $this->get_content();
@@ -326,7 +355,11 @@ class Ivole_Email {
 				$order->update_meta_data( 'ivole_secret_key', $secret_key );
 				if ( ! $order->save() ) {
 					// could not save the secret key to DB, so a customer will not be able to submit the review form
-					return 6;
+					return array(
+						6,
+						__( 'Error: could not save the secret key to DB. Please try again.', 'customer-reviews-woocommerce' ),
+						array()
+					);
 				}
 			}
 
@@ -417,7 +450,11 @@ class Ivole_Email {
 				$order->add_order_note(
 					__( 'CR: A review invitation cannot be sent because the order does not contain any products for which review reminders are enabled in the settings.', 'customer-reviews-woocommerce' ),
 				);
-				return array( 4, __( 'Error: the order does not contain any products for which review reminders are enabled in the settings.', 'customer-reviews-woocommerce' ) );
+				return array(
+					4,
+					__( 'Error: the order does not contain any products for which review reminders are enabled in the settings.', 'customer-reviews-woocommerce' ),
+					array()
+				);
 			}
 			$is_test = false;
 		} else {
@@ -441,7 +478,11 @@ class Ivole_Email {
 			// check if email subject is not empty
 			$email_subject = $this->replace_variables( $this->subject );
 			if( 0 >= strlen( $email_subject ) ) {
-				return 13;
+				return array(
+					13,
+					__( 'Error: "Email Subject" is empty. Please enter a string for the subject line of emails.', 'customer-reviews-woocommerce' ),
+					array()
+				);
 			}
 
 			$message = $this->get_content();
@@ -507,32 +548,31 @@ class Ivole_Email {
 			$data['licenseKey'] = $license;
 		}
 		$result = CR_Email_Func::send_email( $data, $is_test, $data_extra );
-		if( false === $result ) {
-			return array( 2, 'cURL error' );
-		}
-		//error_log( $result );
-		$result = json_decode( $result );
-		if( isset( $result->status ) && $result->status === 'OK' ) {
+
+		if( isset( $result['status'] ) && $result['status'] === 'OK' ) {
 			self::update_reminders_meta( $order_id, $schedule );
-			return 0;
-		} elseif( isset( $result->status ) && $result->status === 'Error' ) {
-			if( isset( $result->details ) && 0 === strcmp( 'Too many review invitations for a single order', $result->details ) ) {
-				//we shouldn't send one than more reminder per order because customers will be annoyed
-				return array( 7, __( 'Error: only one review invitation per order is allowed.', 'customer-reviews-woocommerce' ) . ' <a href="https://cusrev.freshdesk.com/support/solutions/articles/43000511299-error-only-one-review-invitation-per-order-is-allowed" target="_blank" rel="noopener noreferrer">' . __( 'View additional information', 'customer-reviews-woocommerce' ) . '</a>.' );
-			} elseif( isset( $result->details ) && 0 === strcmp( 'All products were reviewed by this customer', $result->details ) ) {
-				return array( 9, __( 'Error: the customer has already reviewed all products from this order.', 'customer-reviews-woocommerce' ) );
-			} elseif( isset( $result->details ) && ( 0 === strcmp( 'Unable to send reminder to specified email', $result->details ) || 0 === strcmp( 'Customer has unsubscribed from emails', $result->details ) ) ) {
-				return array( 12, __( 'Error: the customer has unsubscribed from emails.', 'customer-reviews-woocommerce' ) );
-			} elseif( isset( $result->details ) && 0 === strcmp( 'The customer already reviewed shop or products in the past', $result->details ) ) {
-				return array( 14, __( 'Error: the customer has already left a review for a different order in the past.', 'customer-reviews-woocommerce' ) );
-			} elseif( isset( $result->details ) ) {
-				return array( 16, $result->details );
+			return array(
+				0,
+				$result['status'],
+				$result
+			);
+		} elseif( isset( $result['status'] ) && $result['status'] === 'Error' ) {
+			if ( isset( $result['details'] ) ) {
+				$result['details'] = $this->map_error_desc( $result['details'] );
 			} else {
-				return 8;
+				$result['details'] = '';
 			}
+			return array(
+				16,
+				$result['details'],
+				$result
+			);
 		} else {
-			//error_log( print_r( $result, true) );
-			return 1;
+			return array(
+				1,
+				'',
+				$result
+			);
 		}
 	}
 
@@ -604,6 +644,23 @@ class Ivole_Email {
 				$order->update_meta_data( '_ivole_review_reminder', $new_count );
 				$order->save();
 			}
+		}
+	}
+
+	private function map_error_desc( $desc ) {
+		if ( 0 === strcmp( 'Too many review invitations for a single order', $desc ) ) {
+			return __( 'Error: only one review invitation per order is allowed.', 'customer-reviews-woocommerce' ) . ' <a href="https://cusrev.freshdesk.com/support/solutions/articles/43000511299-error-only-one-review-invitation-per-order-is-allowed" target="_blank" rel="noopener noreferrer">' . __( 'View additional information', 'customer-reviews-woocommerce' ) . '</a>.';
+		} elseif ( 0 === strcmp( 'All products were reviewed by this customer', $desc ) ) {
+			return __( 'Error: the customer has already reviewed all products from this order.', 'customer-reviews-woocommerce' );
+		} elseif (
+			0 === strcmp( 'Unable to send reminder to specified email', $desc ) ||
+			0 === strcmp( 'Customer has unsubscribed from emails', $desc )
+		) {
+			return __( 'Error: the customer has unsubscribed from emails.', 'customer-reviews-woocommerce' );
+		} elseif ( 0 === strcmp( 'The customer already reviewed shop or products in the past', $desc ) ) {
+			return __( 'Error: the customer has already left a review for a different order in the past.', 'customer-reviews-woocommerce' );
+		} else {
+			return $desc;
 		}
 	}
 
