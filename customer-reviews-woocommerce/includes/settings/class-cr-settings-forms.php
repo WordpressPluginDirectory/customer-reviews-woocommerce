@@ -10,19 +10,8 @@ if ( ! class_exists( 'CR_Forms_Settings' ) ) :
 
 	class CR_Forms_Settings {
 
-		/**
-		* @var CR_Settings_Admin_Menu The instance of the settings admin menu
-		*/
 		protected $settings_menu;
-
-		/**
-		* @var string The slug of this tab
-		*/
 		protected $tab;
-
-		/**
-		* @var array The fields for this tab
-		*/
 		protected $settings;
 		protected $current_section;
 		protected $templates;
@@ -62,6 +51,7 @@ if ( ! class_exists( 'CR_Forms_Settings' ) ) :
 			add_action( 'woocommerce_admin_field_cr_customer_attributes', array( $this, 'display_customer_attributes' ) );
 			add_action( 'woocommerce_admin_field_cr_rating_criteria', array( 'CR_Forms_Settings_Rating', 'display_rating_criteria' ) );
 			add_action( 'woocommerce_admin_field_cr_review_permissions', array( $this, 'display_review_permissions' ) );
+			add_action( 'woocommerce_admin_field_cr_text_w_links', array( $this, 'display_text_w_links' ) );
 
 			new CR_Forms_Settings_Rating();
 		}
@@ -134,6 +124,23 @@ if ( ! class_exists( 'CR_Forms_Settings' ) ) :
 				if ( ! empty( $_POST ) && isset( $_POST['ivole_review_permissions'] ) ) {
 					$rev_perm = strval( $_POST['ivole_review_permissions'] );
 					$ivole_review_forms[0]['rev_perm'] = $rev_perm;
+					$update_ivole_review_forms = true;
+				}
+				// save the terms and privacy checkbox
+				if ( ! empty( $_POST ) ) {
+					if (
+						isset( $_POST['ivole_onsite_form_checkbox'] ) &&
+						1 == $_POST['ivole_onsite_form_checkbox']
+					) {
+						$ivole_review_forms[0]['chbx'] = '1';
+					} else {
+						$ivole_review_forms[0]['chbx'] = '';
+					}
+					$update_ivole_review_forms = true;
+				}
+				// save the terms and privacy text
+				if ( ! empty( $_POST ) && isset( $_POST['ivole_onsite_form_checkbox_text'] ) ) {
+					$ivole_review_forms[0]['chbx_text'] = esc_html( $_POST['ivole_onsite_form_checkbox_text'] );
 					$update_ivole_review_forms = true;
 				}
 				//
@@ -290,6 +297,23 @@ if ( ! class_exists( 'CR_Forms_Settings' ) ) :
 					'id'       => 'ivole_captcha_secret_key',
 					'desc_tip' => true
 				),
+				37 => array(
+					'title'    => __( 'Terms and Privacy Checkbox', 'customer-reviews-woocommerce' ),
+					'type'     => 'checkbox',
+					'desc'     => self::get_default_form_onsite_checkbox_text(),
+					'default'  => 'no',
+					'id'       => 'ivole_onsite_form_checkbox',
+					'is_option' => false
+				),
+				38 => array(
+					'title'    => __( 'Terms and Privacy Checkbox Label', 'customer-reviews-woocommerce' ),
+					'type'     => 'cr_text_w_links',
+					'desc'     => __( 'Tailor the text to be shown alongside the Terms and Privacy checkbox. Incorporate links directing users to the Terms and Conditions and Privacy Policy pages on your website.', 'customer-reviews-woocommerce' ),
+					'default'  => 'I have read and agree to the Terms and Conditions and Privacy Policy.',
+					'id'       => 'ivole_onsite_form_checkbox_text',
+					'is_option' => false,
+					'desc_tip' => true
+				),
 				40 => array(
 					'type' => 'sectionend',
 					'id'   => 'cr_options_onsite_forms'
@@ -403,6 +427,15 @@ if ( ! class_exists( 'CR_Forms_Settings' ) ) :
 					'css'     => 'display:none;',
 					'autoload' => false
 				);
+			}
+
+			$form_settings = self::get_default_form_settings();
+			if ( $form_settings ) {
+				$this->settings[37]['value'] = self::get_onsite_form_checkbox( $form_settings );
+				$onsite_form_checkbox_text = self::get_onsite_form_checkbox_text( $form_settings );
+				if ( false !== $onsite_form_checkbox_text ) {
+					$this->settings[38]['value'] = $onsite_form_checkbox_text;
+				}
 			}
 
 			$this->settings = apply_filters( 'cr_settings_forms', $this->settings );
@@ -703,6 +736,64 @@ if ( ! class_exists( 'CR_Forms_Settings' ) ) :
 					</td>
 				</tr>
 			<?php
+		}
+
+		public function display_text_w_links( $value ) {
+			$tooltip_html = CR_Admin::ivole_wc_help_tip( $value['desc'] );
+			?>
+				<tr valign="top">
+					<th scope="row" class="titledesc">
+						<label for="<?php echo esc_attr( $value['id'] ); ?>"><?php echo esc_html( $value['title'] ); ?> <?php echo $tooltip_html; // WPCS: XSS ok. ?></label>
+					</th>
+					<td class="forminp forminp-<?php echo esc_attr( sanitize_title( $value['type'] ) ); ?> cr-text-w-links">
+						<?php
+							$quicktags_settings = array( 'buttons' => 'strong,link' );
+							wp_editor(
+								$value['value'],
+								$value['id'],
+								array(
+									'media_buttons' => false,
+									'tinymce'       => false,
+									'quicktags'     => $quicktags_settings,
+									'textarea_rows' => 2
+								)
+							);
+						?>
+					</td>
+				</tr>
+			<?php
+		}
+
+		public static function get_onsite_form_checkbox( $form_settings ) {
+			$checkbox = 'no';
+			if ( $form_settings ) {
+				if (
+					is_array( $form_settings ) &&
+					isset( $form_settings['chbx'] )
+				) {
+					$checkbox = ( $form_settings['chbx'] == 1 ) ? 'yes' : 'no';
+				}
+			}
+			return $checkbox;
+		}
+
+		public static function get_default_form_onsite_checkbox_text() {
+			return __( 'Add a checkbox for people to accept your Terms and Conditions, Privacy Policy, and any other legal agreements required in your jurisdiction before submitting a review via an on-site review form.', 'customer-reviews-woocommerce' );
+		}
+
+		public static function get_onsite_form_checkbox_text( $form_settings ) {
+			$checkbox_text = '';
+			if ( $form_settings ) {
+				if (
+					is_array( $form_settings ) &&
+					isset( $form_settings['chbx_text'] )
+				) {
+					$checkbox_text = $form_settings['chbx_text'];
+				} else {
+					$checkbox_text = false;
+				}
+			}
+			return $checkbox_text;
 		}
 
 	}

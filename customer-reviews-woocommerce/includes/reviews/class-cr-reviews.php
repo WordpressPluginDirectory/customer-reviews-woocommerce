@@ -69,6 +69,7 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 				// enhanced CusRev review template
 				add_action( 'cr_review_after_comment_text', array( $this, 'display_review_image' ), 10 );
 			}
+			add_action( 'comment_form_after_fields', array( $this, 'custom_fields_terms' ) );
 			if( self::is_captcha_enabled() ) {
 				if( ! is_user_logged_in() ) {
 					add_action( 'comment_form_after_fields', array( $this, 'custom_fields_captcha2' ) );
@@ -148,12 +149,32 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 				'" data-sitekey="' . $site_key . '"></div>';
 		}
 		public function display_captcha_cr() {
+			wp_enqueue_script( 'cr-recaptcha' );
 			$site_key = self::captcha_site_key();
 			echo '<div class="cr-review-form-captcha">';
 			echo '<div class="cr-recaptcha' . (CR_Qna::is_captcha_enabled() ? '' : ' g-recaptcha') .
-				'" data-sitekey="' . $site_key . '"></div>';
+				'" data-sitekey="' . $site_key . '" data-crcaptchaid="' . substr( str_shuffle( md5( microtime() ) ), 0, 5 ) . '"></div>';
 			echo '<div class="cr-review-form-field-error">' . __( '* Please confirm that you are not a robot', 'customer-reviews-woocommerce' ) . '</div>';
 			echo '</div>';
+		}
+		public function custom_fields_terms() {
+			$form_settings = CR_Forms_Settings::get_default_form_settings();
+			$cr_form_checkbox = ( 'yes' === CR_Forms_Settings::get_onsite_form_checkbox( $form_settings ) ) ? true : false;
+			$cr_form_checkbox_text = CR_Forms_Settings::get_onsite_form_checkbox_text( $form_settings );
+			if ( false === $cr_form_checkbox_text ) {
+				$cr_form_checkbox_text = CR_Forms_Settings::get_default_form_onsite_checkbox_text();
+			}
+			$cr_form_checkbox_text = wp_specialchars_decode( $cr_form_checkbox_text, ENT_QUOTES );
+			if ( $cr_form_checkbox ) :
+				?>
+					<div class="cr-review-form-terms">
+						<label>
+							<input type="checkbox" class="cr-review-form-checkbox" name="cr_review_form_checkbox" />
+							<span><?php echo $cr_form_checkbox_text; ?></span>
+						</label>
+					</div>
+				<?php
+			endif;
 		}
 		public function save_review_image( $comment_id ) {
 			if( isset( $_POST['cr-upload-images-ids'] ) && is_array( $_POST['cr-upload-images-ids'] ) ) {
@@ -391,6 +412,8 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 				wp_register_script( 'cr-recaptcha', 'https://www.google.com/recaptcha/api.js?hl=' . $this->lang, array(), null, true );
 				wp_enqueue_script( 'cr-recaptcha' );
 			}
+		} else {
+			wp_register_script( 'cr-recaptcha', 'https://www.google.com/recaptcha/api.js?hl=' . $this->lang, array(), null, true );
 		}
 	}
 	public function validate_captcha( $commentdata ) {

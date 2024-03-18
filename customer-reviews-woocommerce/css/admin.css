@@ -499,6 +499,9 @@ li.select2-results__option {
 	margin: 35px 0 0 0;
 	position: relative;
 }
+.ivole-new-settings .cr-text-w-links .wp-editor-wrap {
+	max-width: 675px;
+}
 .ivole-new-settings .cr-twocols-cont .cr-twocols-left {
 	margin-right: 5px;
 }

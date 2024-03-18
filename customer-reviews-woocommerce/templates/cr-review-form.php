@@ -60,7 +60,7 @@ if( $cr_current_user instanceof WP_User ) {
 			<span>
 			<?php _e( 'You must be logged in to post a review', 'customer-reviews-woocommerce' ); ?>
 			</span>
-			<a class="cr-review-form-continue" href="<?php echo esc_url( wp_login_url( apply_filters( 'the_permalink', get_the_permalink(), $cr_item_id ) ) ); ?>"><?php _e( 'Log In', 'customer-reviews-woocommerce' ); ?></a>
+			<a class="cr-review-form-continue" href="<?php echo esc_url( wp_login_url( apply_filters( 'the_permalink', get_the_permalink(), $cr_item_id ) ) ); ?>" rel="nofollow"><?php _e( 'Log In', 'customer-reviews-woocommerce' ); ?></a>
 		</div>
 
 	<?php elseif ( 'nobody' === $cr_form_permissions ) : ?>
@@ -160,6 +160,21 @@ if( $cr_current_user instanceof WP_User ) {
 			</div>
 		<?php
 			endif;
+		?>
+
+		<?php if ( $cr_form_checkbox ) : ?>
+			<div class="cr-review-form-terms">
+				<label>
+					<input type="checkbox" class="cr-review-form-checkbox" name="cr_review_form_checkbox" />
+					<span><?php echo $cr_form_checkbox_text; ?></span>
+				</label>
+				<div class="cr-review-form-field-error">
+					<?php _e( '* Please tick the checkbox to proceed', 'customer-reviews-woocommerce' ); ?>
+				</div>
+			</div>
+		<?php endif; ?>
+
+		<?php
 			do_action( 'cr_review_form_before_btns' );
 		?>
 

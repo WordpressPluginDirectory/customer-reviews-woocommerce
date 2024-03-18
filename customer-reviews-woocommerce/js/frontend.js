@@ -916,6 +916,7 @@
 			jQuery( this ).closest( ".cr-review-form-wrap" ).find( ".cr-onsite-question" ).removeClass( "cr-review-form-error" );
 			jQuery( this ).closest( ".cr-review-form-wrap" ).find( ".cr-form-item-media" ).removeClass( "cr-review-form-error" );
 			jQuery( this ).closest( ".cr-review-form-wrap" ).find( ".cr-review-form-captcha" ).removeClass( "cr-review-form-error" );
+			jQuery( this ).closest( ".cr-review-form-wrap" ).find( ".cr-review-form-terms" ).removeClass( "cr-review-form-error" );
 			if( cr_validate_review_form( jQuery( this ) ) ) {
 				// add custom onsite questions and ratings to the ajax call
 				let onsiteQuestions = {};
@@ -1007,6 +1008,14 @@
 					jQuery( this ).removeClass( "cr-review-form-error" );
 				}
 			} );
+
+			// validate the terms checkbox
+			if ( 0 < reviewForm.find( '.cr-review-form-terms' ).length ) {
+				if ( ! reviewForm.find( '.cr-review-form-terms .cr-review-form-checkbox' ).is(':checked') ) {
+					alert( 'Please tick the checkbox to proceed' );
+					validationResult = false;
+				}
+			}
 
 			if( ! validationResult ) {
 				t.preventDefault();
@@ -1505,10 +1514,36 @@
 				}
 			}
 		} );
+		// validate terms and conditions if available
+		if ( 0 < submitBtn.closest( ".cr-review-form-wrap" ).find( '.cr-review-form-terms' ).length ) {
+			if ( ! submitBtn.closest( ".cr-review-form-wrap" ).find( '.cr-review-form-terms .cr-review-form-checkbox' ).is(':checked') ) {
+				submitBtn.closest( ".cr-review-form-wrap" ).find( ".cr-review-form-terms" ).addClass( "cr-review-form-error" );
+				validationResult = false;
+			}
+		}
 		// validate captcha if available
 		if ( 0 < submitBtn.closest( ".cr-review-form-wrap" ).find( '.cr-review-form-captcha .cr-recaptcha' ).length ) {
 			if ( grecaptcha ) {
-				const captchaCheck = grecaptcha.getResponse();
+				let widgetId = 0;
+				// check if there are multiple captchas on a page
+				if ( 0 < jQuery( ".cr-review-form-captcha .cr-recaptcha" ).length ) {
+					jQuery( ".cr-review-form-captcha .cr-recaptcha" ).each(
+						function( index ) {
+							if (
+								submitBtn.closest( '.cr-review-form-wrap' ).find( '.cr-review-form-captcha .cr-recaptcha' ).data( 'crcaptchaid' ) === jQuery(this).data( 'crcaptchaid' )
+							) {
+								widgetId = index;
+							}
+						}
+					);
+				}
+				//
+				let captchaCheck = "";
+				if ( 0 < widgetId ) {
+					captchaCheck = grecaptcha.getResponse( widgetId );
+				} else {
+					captchaCheck = grecaptcha.getResponse();
+				}
 				if ( ! captchaCheck.length > 0 ) {
 					submitBtn.closest( ".cr-review-form-wrap" ).find( ".cr-review-form-captcha" ).addClass( "cr-review-form-error" );
 					validationResult = false;
@@ -1548,6 +1583,13 @@
 		refElement.closest( ".cr-review-form-wrap" ).find( ".cr-form-item-media .cr-upload-images-containers" ).remove();
 		refElement.closest( ".cr-review-form-wrap" ).find( ".cr-form-item-media .cr-form-item-media-preview" ).removeClass( "cr-form-visible" );
 		refElement.closest( ".cr-review-form-wrap" ).find( ".cr-form-item-media .cr-form-item-media-preview" ).parents( ".cr-form-item-subcontainer" ).removeClass( "cr-form-visible" );
+
+		// reset the terms and conditions checkbox
+		refElement.closest( ".cr-review-form-wrap" ).find( ".cr-review-form-terms .cr-review-form-checkbox" ).prop( 'checked', false );
+		refElement.closest( ".cr-review-form-wrap" ).find( ".cr-review-form-terms" ).removeClass( "cr-review-form-error" );
+
+		// reset recaptcha
+		refElement.closest( ".cr-review-form-wrap" ).find( ".cr-review-form-captcha" ).removeClass( "cr-review-form-error" );
 	}
 
 	function crDebounce(callback, wait) {

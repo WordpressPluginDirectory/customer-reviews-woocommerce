@@ -485,18 +485,22 @@ div.iv-comment-image img {
 .cr-onsite-questions .cr-onsite-question.cr-review-form-error .cr-review-form-field-error,
 .cr-all-reviews-shortcode .cr-review-form-comment.cr-review-form-error .cr-review-form-field-error,
 .cr-all-reviews-shortcode .cr-review-form-name.cr-review-form-error .cr-review-form-field-error,
+.cr-all-reviews-shortcode .cr-review-form-captcha.cr-review-form-error .cr-review-form-field-error,
 .cr-all-reviews-shortcode .cr-review-form-email.cr-review-form-error .cr-review-form-field-error,
 .cr-all-reviews-shortcode .cr-form-item-media.cr-review-form-error .cr-review-form-field-error,
+.cr-all-reviews-shortcode .cr-review-form-terms.cr-review-form-error .cr-review-form-field-error,
 .cr-ajax-reviews-review-form .cr-review-form-comment.cr-review-form-error .cr-review-form-field-error,
 .cr-ajax-reviews-review-form .cr-review-form-name.cr-review-form-error .cr-review-form-field-error,
 .cr-ajax-reviews-review-form .cr-review-form-email.cr-review-form-error .cr-review-form-field-error,
 .cr-ajax-reviews-review-form .cr-review-form-captcha.cr-review-form-error .cr-review-form-field-error,
 .cr-ajax-reviews-review-form .cr-form-item-media.cr-review-form-error .cr-review-form-field-error,
+.cr-ajax-reviews-review-form .cr-review-form-terms.cr-review-form-error .cr-review-form-field-error,
 .cr-reviews-grid .cr-review-form-comment.cr-review-form-error .cr-review-form-field-error,
 .cr-reviews-grid .cr-review-form-name.cr-review-form-error .cr-review-form-field-error,
 .cr-reviews-grid .cr-review-form-email.cr-review-form-error .cr-review-form-field-error,
 .cr-reviews-grid .cr-review-form-captcha.cr-review-form-error .cr-review-form-field-error,
-.cr-reviews-grid .cr-form-item-media.cr-review-form-error .cr-review-form-field-error {
+.cr-reviews-grid .cr-form-item-media.cr-review-form-error .cr-review-form-field-error,
+.cr-reviews-grid .cr-review-form-terms.cr-review-form-error .cr-review-form-field-error {
 	display: block;
 }
 .cr-all-reviews-shortcode .cr-review-form-comment,
@@ -551,6 +555,48 @@ div.iv-comment-image img {
 	max-width: 500px;
 	margin: 0 auto;
 	padding: 0 0 20px 0;
+}
+.cr-all-reviews-shortcode .cr-review-form-terms,
+.cr-ajax-reviews-review-form .cr-review-form-terms,
+.cr-reviews-grid .cr-review-form-terms {
+	max-width: 500px;
+	margin: 0 auto;
+	padding: 0 0 20px 0;
+	line-height: 1;
+}
+.cr-all-reviews-shortcode .cr-review-form-terms label,
+.cr-ajax-reviews-review-form .cr-review-form-terms label,
+.cr-reviews-grid .cr-review-form-terms label {
+	display: inline-block;
+	font-size: 14px;
+	font-weight: normal;
+	margin: 0;
+}
+.cr-all-reviews-shortcode .cr-review-form-terms .cr-review-form-checkbox,
+.cr-ajax-reviews-review-form .cr-review-form-terms .cr-review-form-checkbox,
+.cr-reviews-grid .cr-review-form-terms .cr-review-form-checkbox {
+	appearance: auto;
+	width: auto;
+	height: auto;
+	border: none;
+	display: inline-block;
+	vertical-align: middle;
+	margin: 0 5px 0 0;
+	accent-color: #4D5D64;
+}
+.cr-all-reviews-shortcode .cr-review-form-terms span,
+.cr-ajax-reviews-review-form .cr-review-form-terms span,
+.cr-reviews-grid .cr-review-form-terms span {
+	display: inline;
+	vertical-align: middle;
+	color: #0E252C;
+	line-height: 1.3;
+}
+.cr-all-reviews-shortcode .cr-review-form-terms .cr-review-form-checkbox::after,
+.cr-ajax-reviews-review-form .cr-review-form-terms .cr-review-form-checkbox::after,
+.cr-reviews-grid .cr-review-form-terms .cr-review-form-checkbox::after {
+	border: none;
+	content: normal;
 }
 .cr-all-reviews-shortcode .cr-review-form-ne,
 .cr-ajax-reviews-review-form .cr-review-form-ne,
@@ -653,9 +699,9 @@ div.iv-comment-image img {
 	display: flex;
 	gap: 10px;
 }
-.cr-all-reviews-shortcode .cr-review-form-buttons .cr-review-form-submit,
-.cr-ajax-reviews-review-form .cr-review-form-buttons .cr-review-form-submit,
-.cr-reviews-grid .cr-review-form-buttons .cr-review-form-submit {
+.cr-all-reviews-shortcode .cr-review-form-wrap .cr-review-form-buttons .cr-review-form-submit,
+.cr-ajax-reviews-review-form .cr-review-form-wrap .cr-review-form-buttons .cr-review-form-submit,
+.cr-reviews-grid .cr-review-form-wrap .cr-review-form-buttons .cr-review-form-submit {
 	display: flex;
 	background-color: #31856C;
 	color: #ffffff;
@@ -688,6 +734,7 @@ div.iv-comment-image img {
 .cr-all-reviews-shortcode .cr-review-form-submitting .cr-review-form-captcha,
 .cr-all-reviews-shortcode .cr-review-form-submitting .cr-onsite-question,
 .cr-all-reviews-shortcode .cr-review-form-submitting .cr-onsite-question-inp,
+.cr-all-reviews-shortcode .cr-review-form-submitting .cr-review-form-terms,
 .cr-ajax-reviews-review-form .cr-review-form-submitting .cr-review-form-buttons .cr-review-form-submit,
 .cr-ajax-reviews-review-form .cr-review-form-submitting .cr-review-form-buttons .cr-review-form-cancel,
 .cr-ajax-reviews-review-form .cr-review-form-submitting .cr-review-form-rating .cr-review-form-rating-inner,
@@ -697,6 +744,7 @@ div.iv-comment-image img {
 .cr-ajax-reviews-review-form .cr-review-form-submitting .cr-review-form-captcha,
 .cr-ajax-reviews-review-form .cr-review-form-submitting .cr-onsite-question,
 .cr-ajax-reviews-review-form .cr-review-form-submitting .cr-onsite-question-inp,
+.cr-ajax-reviews-review-form .cr-review-form-submitting .cr-review-form-terms,
 .cr-reviews-grid .cr-review-form-submitting .cr-review-form-buttons .cr-review-form-submit,
 .cr-reviews-grid .cr-review-form-submitting .cr-review-form-buttons .cr-review-form-cancel,
 .cr-reviews-grid .cr-review-form-submitting .cr-review-form-rating .cr-review-form-rating-inner,
@@ -705,7 +753,8 @@ div.iv-comment-image img {
 .cr-reviews-grid .cr-review-form-submitting .cr-review-form-ne .cr-review-form-txt,
 .cr-reviews-grid .cr-review-form-submitting .cr-review-form-captcha,
 .cr-reviews-grid .cr-review-form-submitting .cr-onsite-question,
-.cr-reviews-grid .cr-review-form-submitting .cr-onsite-question-inp {
+.cr-reviews-grid .cr-review-form-submitting .cr-onsite-question-inp,
+.cr-reviews-grid .cr-review-form-submitting .cr-review-form-terms, {
 	pointer-events: none;
 }
 .cr-all-reviews-shortcode .cr-review-form-buttons .cr-review-form-submit span,
@@ -729,9 +778,9 @@ div.iv-comment-image img {
 .cr-reviews-grid .cr-review-form-submitting .cr-review-form-buttons .cr-review-form-submit img {
 	display: block;
 }
-.cr-all-reviews-shortcode .cr-review-form-buttons .cr-review-form-cancel,
-.cr-ajax-reviews-review-form .cr-review-form-buttons .cr-review-form-cancel,
-.cr-reviews-grid .cr-review-form-buttons .cr-review-form-cancel {
+.cr-all-reviews-shortcode .cr-review-form-wrap .cr-review-form-buttons .cr-review-form-cancel,
+.cr-ajax-reviews-review-form .cr-review-form-wrap .cr-review-form-buttons .cr-review-form-cancel,
+.cr-reviews-grid .cr-review-form-wrap .cr-review-form-buttons .cr-review-form-cancel {
 	display: flex;
 	background-color: #ffffff;
 	color: #0E252C;
@@ -764,6 +813,7 @@ div.iv-comment-image img {
 .cr-all-reviews-shortcode .cr-review-form-res .cr-onsite-ratings,
 .cr-all-reviews-shortcode .cr-review-form-res .cr-onsite-question,
 .cr-all-reviews-shortcode .cr-review-form-res .cr-form-item-media,
+.cr-all-reviews-shortcode .cr-review-form-res .cr-review-form-terms,
 .cr-ajax-reviews-review-form .cr-review-form-res .cr-review-form-rating,
 .cr-ajax-reviews-review-form .cr-review-form-res .cr-review-form-comment,
 .cr-ajax-reviews-review-form .cr-review-form-res .cr-review-form-ne,
@@ -772,6 +822,7 @@ div.iv-comment-image img {
 .cr-ajax-reviews-review-form .cr-review-form-res .cr-onsite-ratings,
 .cr-ajax-reviews-review-form .cr-review-form-res .cr-onsite-question,
 .cr-ajax-reviews-review-form .cr-review-form-res .cr-form-item-media,
+.cr-ajax-reviews-review-form .cr-review-form-res .cr-review-form-terms,
 .cr-reviews-grid .cr-review-form-res .cr-review-form-rating,
 .cr-reviews-grid .cr-review-form-res .cr-review-form-comment,
 .cr-reviews-grid .cr-review-form-res .cr-review-form-ne,
@@ -779,7 +830,8 @@ div.iv-comment-image img {
 .cr-reviews-grid .cr-review-form-res .cr-review-form-buttons,
 .cr-reviews-grid .cr-review-form-res .cr-onsite-ratings,
 .cr-reviews-grid .cr-review-form-res .cr-onsite-question,
-.cr-reviews-grid .cr-review-form-res .cr-form-item-media {
+.cr-reviews-grid .cr-review-form-res .cr-form-item-media,
+.cr-reviews-grid .cr-review-form-res .cr-review-form-terms {
 	display: none;
 }
 .cr-all-reviews-shortcode .cr-review-form-result,
@@ -1374,7 +1426,9 @@ p.ivole-verified-badge span.ivole-review-country-text, p.ivole-verified-badge sp
 	padding: 0;
 }
 .cr-all-reviews-shortcode.cr-all-reviews-new-review ol.commentlist,
-.cr-reviews-grid.cr-reviews-grid-new-review .cr-reviews-grid-inner {
+.cr-reviews-grid.cr-reviews-grid-new-review .cr-reviews-grid-inner,
+.cr-all-reviews-shortcode.cr-all-reviews-new-review .cr-review-tags-filter,
+.cr-reviews-grid.cr-reviews-grid-new-review .cr-review-tags-filter {
 	display: none;
 }
 .cr-all-reviews-shortcode .ivole-review-country-icon,
@@ -2036,8 +2090,8 @@ img.ivole-verified-badge-ext-icon {
 	background: linear-gradient(to bottom,#e7eaf0,#d9dce1);
 	text-decoration: none;
 }
-.cr-all-reviews-shortcode .cr-all-reviews-add-review,
-.cr-reviews-grid .cr-all-reviews-add-review {
+.cr-all-reviews-shortcode .cr-summaryBox-wrap .cr-add-review-wrap .cr-all-reviews-add-review,
+.cr-reviews-grid .cr-summaryBox-wrap .cr-add-review-wrap .cr-all-reviews-add-review {
 	display: block;
 	background-color: #31856C;
 	color: #ffffff;
@@ -2049,8 +2103,8 @@ img.ivole-verified-badge-ext-icon {
 	padding: 10px 20px;
 	margin: 0;
 }
-.cr-all-reviews-shortcode .cr-all-reviews-add-review:hover,
-.cr-reviews-grid .cr-all-reviews-add-review:hover {
+.cr-all-reviews-shortcode .cr-summaryBox-wrap .cr-add-review-wrap .cr-all-reviews-add-review:hover,
+.cr-reviews-grid .cr-summaryBox-wrap .cr-add-review-wrap .cr-all-reviews-add-review:hover {
 	background-color: #276A56;
 	text-decoration: none;
 	cursor: pointer;
@@ -3438,8 +3492,8 @@ img.ivole-verified-badge-ext-icon {
 	display: none;
 }
 
-.cr-reviews-slider .slick-prev,
-.cr-reviews-slider .slick-next,
+.cr-reviews-slider .slick-arrow.slick-prev,
+.cr-reviews-slider .slick-arrow.slick-next,
 .cr-ajax-reviews-cus-images-modal .cr-reviews-slider.cr-ajax-reviews-cus-images-slider-nav .slick-prev,
 .cr-ajax-reviews-cus-images-modal .cr-reviews-slider.cr-ajax-reviews-cus-images-slider-nav .slick-next
 {

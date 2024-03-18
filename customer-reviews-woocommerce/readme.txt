@@ -4,7 +4,7 @@ Tags: woocommerce, review plugin, review reminder, customer reviews, review for 
 Requires at least: 4.5
 Tested up to: 6.4
 Requires PHP: 7.2
-Stable tag: 5.43.1
+Stable tag: 5.44.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl.html
 
@@ -32,7 +32,7 @@ https://www.youtube.com/watch?v=F_94E8zoXng
 
 * Automated or manual review reminder emails
 * Manual review reminders by WhatsApp with the 'click to chat' integration
-* Aggregated review forms to allow quick and easy reviewing
+* Aggregated and on-site review forms to allow quick and easy reviewing
 * Enhanced reviews, including ratings, images, voting and filtering options
 * Offer discounts in exchange for reviews
 * Integration with Google Shopping
@@ -83,6 +83,7 @@ Plus, benefit from:
 * Additional rating criteria on review forms to rate different features of products
 * Questions about customer attributes on review forms
 * Preventing spam by enabling reCAPTCHA for reviews
+* Displaying a terms and privacy checkbox that people need to tick before posting reviews
 * Showing reviews summary bar on product pages
 * Filtering reviews by rating
 * Enabling visitors to vote on reviews left by your customers
@@ -229,6 +230,10 @@ If you would like to change how reviews are sorted on product pages, it is possi
 
 == Changelog ==
 
+= 5.44.0 =
+* New feature: an option to add a terms and privacy checkbox to on-site review forms
+* Improvement: a nofollow attribute for login buttons on on-site review forms
+* Bug fix: incorrect order note messages about review reminders sent via CR cron
 = 5.43.1 =
 * Bug fix: a table for the reminders log was not created before sending a reminder
 = 5.43.0 =

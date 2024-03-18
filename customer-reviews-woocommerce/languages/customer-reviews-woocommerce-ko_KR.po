@@ -6,7 +6,7 @@ msgstr ""
 "(latest release)\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/customer-reviews-"
 "woocommerce\n"
-"POT-Creation-Date: 2024-03-13T01:12:32+00:00\n"
+"POT-Creation-Date: 2024-03-18T02:05:13+00:00\n"
 "PO-Revision-Date: 2018-10-07 17:11+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -66,7 +66,7 @@ msgstr ""
 
 #: includes/blocks/class-cr-all-reviews.php:492
 #: includes/blocks/class-cr-all-reviews.php:532
-#: templates/cr-ajax-product-reviews.php:126
+#: templates/cr-ajax-product-reviews.php:132
 msgid "Sorry, no reviews match your current selections"
 msgstr ""
 
@@ -75,13 +75,13 @@ msgstr ""
 #: includes/reviews/class-cr-ajax-reviews.php:309
 #: includes/reviews/class-cr-ajax-reviews.php:388
 #: includes/reviews/class-cr-ajax-reviews.php:460
-#: templates/cr-ajax-product-reviews.php:112
+#: templates/cr-ajax-product-reviews.php:118
 msgid "Show more reviews (%d)"
 msgstr ""
 
 #: includes/blocks/class-cr-all-reviews.php:942
 #: includes/blocks/class-cr-reviews-grid.php:906
-#: includes/reviews/class-cr-reviews.php:503
+#: includes/reviews/class-cr-reviews.php:526
 msgid "Based on %s review"
 msgid_plural "Based on %s reviews"
 msgstr[0] ""
@@ -90,8 +90,8 @@ msgstr[0] ""
 #: includes/blocks/class-cr-all-reviews.php:959
 #: includes/blocks/class-cr-reviews-grid.php:919
 #: includes/blocks/class-cr-reviews-grid.php:923
-#: includes/reviews/class-cr-reviews.php:518
-#: includes/reviews/class-cr-reviews.php:522
+#: includes/reviews/class-cr-reviews.php:541
+#: includes/reviews/class-cr-reviews.php:545
 msgid "5 star"
 msgstr "5 성급"
 
@@ -99,8 +99,8 @@ msgstr "5 성급"
 #: includes/blocks/class-cr-all-reviews.php:972
 #: includes/blocks/class-cr-reviews-grid.php:932
 #: includes/blocks/class-cr-reviews-grid.php:936
-#: includes/reviews/class-cr-reviews.php:529
-#: includes/reviews/class-cr-reviews.php:533
+#: includes/reviews/class-cr-reviews.php:552
+#: includes/reviews/class-cr-reviews.php:556
 msgid "4 star"
 msgstr "4 성급"
 
@@ -108,8 +108,8 @@ msgstr "4 성급"
 #: includes/blocks/class-cr-all-reviews.php:985
 #: includes/blocks/class-cr-reviews-grid.php:945
 #: includes/blocks/class-cr-reviews-grid.php:949
-#: includes/reviews/class-cr-reviews.php:540
-#: includes/reviews/class-cr-reviews.php:544
+#: includes/reviews/class-cr-reviews.php:563
+#: includes/reviews/class-cr-reviews.php:567
 msgid "3 star"
 msgstr "3 성급"
 
@@ -117,8 +117,8 @@ msgstr "3 성급"
 #: includes/blocks/class-cr-all-reviews.php:998
 #: includes/blocks/class-cr-reviews-grid.php:958
 #: includes/blocks/class-cr-reviews-grid.php:962
-#: includes/reviews/class-cr-reviews.php:551
-#: includes/reviews/class-cr-reviews.php:555
+#: includes/reviews/class-cr-reviews.php:574
+#: includes/reviews/class-cr-reviews.php:578
 msgid "2 star"
 msgstr "2 성급"
 
@@ -127,24 +127,24 @@ msgstr "2 성급"
 #: includes/blocks/class-cr-reviews-grid.php:971
 #: includes/blocks/class-cr-reviews-grid.php:975
 #: includes/reviews/class-cr-reviews-list-table.php:467
-#: includes/reviews/class-cr-reviews.php:562
-#: includes/reviews/class-cr-reviews.php:566
+#: includes/reviews/class-cr-reviews.php:585
+#: includes/reviews/class-cr-reviews.php:589
 msgid "1 star"
 msgstr "1 성급"
 
 #: includes/blocks/class-cr-all-reviews.php:1023
 #: includes/blocks/class-cr-reviews-grid.php:988
-#: includes/reviews/class-cr-reviews.php:1623 templates/cr-review-form.php:31
+#: includes/reviews/class-cr-reviews.php:1646 templates/cr-review-form.php:31
 msgid "Add a review"
 msgstr ""
 
 #: includes/blocks/class-cr-all-reviews.php:1103
-#: includes/reviews/class-cr-reviews.php:1552
+#: includes/reviews/class-cr-reviews.php:1575
 msgid "Most Recent"
 msgstr ""
 
 #: includes/blocks/class-cr-all-reviews.php:1106
-#: includes/reviews/class-cr-reviews.php:1556
+#: includes/reviews/class-cr-reviews.php:1579
 msgid "Most Helpful"
 msgstr ""
 
@@ -155,7 +155,7 @@ msgstr[0] ""
 
 #: includes/blocks/class-cr-all-reviews.php:1126
 #: includes/blocks/class-cr-reviews-grid.php:997
-#: includes/reviews/class-cr-reviews.php:578
+#: includes/reviews/class-cr-reviews.php:601
 msgid "See all %d review"
 msgid_plural "See all %d reviews"
 msgstr[0] ""
@@ -180,15 +180,15 @@ msgstr ""
 
 #: includes/blocks/class-cr-all-reviews.php:1178
 #: includes/reminders/class-cr-local-forms.php:196
-#: templates/cr-ajax-product-reviews.php:147
+#: templates/cr-ajax-product-reviews.php:153
 msgid "Add photos or video to your review"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1210
+#: includes/blocks/class-cr-all-reviews.php:1218
 msgid "Data validation error"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1211
+#: includes/blocks/class-cr-all-reviews.php:1219
 #: includes/qna/class-cr-admin-menu-qna.php:192
 #: includes/reminders/class-cr-manual.php:405
 #: includes/reviews/class-cr-admin-menu-reviews.php:238
@@ -196,62 +196,62 @@ msgstr ""
 msgid "OK"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1218
+#: includes/blocks/class-cr-all-reviews.php:1226
 #: templates/cr-review-form.php:70
 msgid "Currently, we are not accepting new reviews"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1242
+#: includes/blocks/class-cr-all-reviews.php:1250
 #: templates/cr-review-form.php:61
 msgid "You must be logged in to post a review"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1272
+#: includes/blocks/class-cr-all-reviews.php:1280
 msgid ""
 "Only customers who have purchased this product may leave a review. Please "
 "use the same email address as in your order for this product."
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1296
+#: includes/blocks/class-cr-all-reviews.php:1304
 msgid "Your review could not be added"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1297
+#: includes/blocks/class-cr-all-reviews.php:1305
 #: includes/qna/class-cr-admin-menu-qna.php:191
 #: includes/reviews/class-cr-admin-menu-reviews.php:237
 msgid "Try again"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1298
+#: includes/blocks/class-cr-all-reviews.php:1306
 msgid "Your review has been successfully added"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1299
+#: includes/blocks/class-cr-all-reviews.php:1307
 msgid "Continue"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1326
+#: includes/blocks/class-cr-all-reviews.php:1334
 msgid ""
 "Error: no shop page configured in WooCommerce settings (WooCommerce > "
 "Settings > Products > Shop page)"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1328
+#: includes/blocks/class-cr-all-reviews.php:1336
 msgid "Error: no product with ID %d found"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1368
+#: includes/blocks/class-cr-all-reviews.php:1376
 #: includes/reminders/class-cr-local-forms-ajax.php:99
 #: includes/reminders/class-cr-local-forms.php:145
-#: includes/reviews/class-cr-reviews.php:366
+#: includes/reviews/class-cr-reviews.php:387
 msgid "The file cannot be uploaded because its size exceeds the limit of %d MB"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1377
+#: includes/blocks/class-cr-all-reviews.php:1385
 #: includes/reminders/class-cr-local-forms-ajax.php:108
 #: includes/reminders/class-cr-local-forms.php:146
-#: includes/reviews/class-cr-reviews.php:364
-#: includes/reviews/class-cr-reviews.php:1433
+#: includes/reviews/class-cr-reviews.php:385
+#: includes/reviews/class-cr-reviews.php:1456
 msgid ""
 "Error: accepted file types are PNG, JPG, JPEG, GIF, MP4, MPEG, OGG, WEBM, "
 "MOV, AVI"
@@ -279,10 +279,10 @@ msgstr ""
 #: includes/blocks/class-cr-reviews-slider.php:348
 #: includes/blocks/class-cr-reviews-slider.php:350
 #: includes/reviews/class-cr-reviews-list-table.php:628
-#: includes/reviews/class-cr-reviews.php:1116
-#: includes/reviews/class-cr-reviews.php:1118
-#: includes/reviews/class-cr-reviews.php:1174
-#: includes/reviews/class-cr-reviews.php:1176
+#: includes/reviews/class-cr-reviews.php:1139
+#: includes/reviews/class-cr-reviews.php:1141
+#: includes/reviews/class-cr-reviews.php:1197
+#: includes/reviews/class-cr-reviews.php:1199
 msgid "Verified review"
 msgstr ""
 
@@ -290,13 +290,13 @@ msgstr ""
 #: includes/blocks/class-cr-reviews-grid.php:342
 #: includes/blocks/class-cr-reviews-slider.php:344
 #: includes/blocks/class-cr-reviews-slider.php:351
-#: includes/reviews/class-cr-reviews.php:1127
-#: includes/reviews/class-cr-reviews.php:1185
+#: includes/reviews/class-cr-reviews.php:1150
+#: includes/reviews/class-cr-reviews.php:1208
 msgid "view original"
 msgstr ""
 
 #: includes/blocks/class-cr-reviews-grid.php:996
-#: includes/reviews/class-cr-reviews.php:577
+#: includes/reviews/class-cr-reviews.php:600
 msgid "Showing %1$d of %2$d review (%3$d star). "
 msgid_plural "Showing %1$d of %2$d reviews (%3$d star). "
 msgstr[0] ""
@@ -523,7 +523,7 @@ msgstr ""
 msgid "CR: a review reminder was not scheduled due to a bespoke filter."
 msgstr ""
 
-#: includes/emails/class-cr-sender.php:139
+#: includes/emails/class-cr-sender.php:142
 msgid ""
 "CR: a review reminder was scheduled via CR Cron. Please log in to your "
 "account on <a href=\"https://www.cusrev.com/login.html\" target=\"_blank\" "
@@ -531,30 +531,30 @@ msgid ""
 msgstr ""
 
 #. translators: please keep %s and %d as they are because the plugin will automatically replace them with the error description and code
-#: includes/emails/class-cr-sender.php:143
+#: includes/emails/class-cr-sender.php:146
 msgid ""
 "CR: a review reminder could not be scheduled via CR Cron. %s Error code: %d."
 msgstr ""
 
 #. translators: please keep %d as it is because the plugin will automatically replace it with the error code
-#: includes/emails/class-cr-sender.php:146
 #: includes/emails/class-cr-sender.php:149
+#: includes/emails/class-cr-sender.php:152
 msgid "CR: a review reminder could not be scheduled via CR Cron. Error %d."
 msgstr ""
 
-#: includes/emails/class-cr-sender.php:158
+#: includes/emails/class-cr-sender.php:161
 msgid "CR: a review reminder could not be scheduled."
 msgstr ""
 
-#: includes/emails/class-cr-sender.php:166
+#: includes/emails/class-cr-sender.php:169
 msgid "CR: a review reminder was successfully scheduled for %s."
 msgstr ""
 
-#: includes/emails/class-cr-sender.php:230
+#: includes/emails/class-cr-sender.php:233
 msgid "CR: a review reminder was cancelled because the order was refunded."
 msgstr ""
 
-#: includes/emails/class-cr-sender.php:238
+#: includes/emails/class-cr-sender.php:241
 msgid "CR: a review reminder was cancelled because the order was cancelled."
 msgstr ""
 
@@ -1326,7 +1326,7 @@ msgstr ""
 #: includes/reviews/class-cr-reviews-media-meta-box.php:120
 #: includes/settings/class-cr-admin-menu-settings.php:140
 #: includes/settings/class-cr-settings-forms-rating.php:104
-#: includes/settings/class-cr-settings-forms.php:501
+#: includes/settings/class-cr-settings-forms.php:534
 msgid "Yes"
 msgstr "네"
 
@@ -1343,7 +1343,7 @@ msgstr "네"
 #: includes/reviews/class-cr-reviews-media-meta-box.php:119
 #: includes/settings/class-cr-admin-menu-settings.php:141
 #: includes/settings/class-cr-settings-forms-rating.php:106
-#: includes/settings/class-cr-settings-forms.php:503
+#: includes/settings/class-cr-settings-forms.php:536
 msgid "No"
 msgstr "아니오"
 
@@ -1398,11 +1398,11 @@ msgstr ""
 #: includes/reviews/class-cr-reviews-list-table.php:986
 #: includes/reviews/class-cr-reviews-media-meta-box.php:53
 #: includes/reviews/class-cr-reviews-media-meta-box.php:95
-#: includes/reviews/class-cr-reviews.php:217
-#: includes/reviews/class-cr-reviews.php:233
-#: includes/reviews/class-cr-reviews.php:1264
-#: includes/reviews/class-cr-reviews.php:1334
-#: includes/reviews/class-cr-reviews.php:1365 templates/reviews-grid.php:52
+#: includes/reviews/class-cr-reviews.php:238
+#: includes/reviews/class-cr-reviews.php:254
+#: includes/reviews/class-cr-reviews.php:1287
+#: includes/reviews/class-cr-reviews.php:1357
+#: includes/reviews/class-cr-reviews.php:1388 templates/reviews-grid.php:52
 #: templates/reviews-grid.php:54
 msgid "Image #%1$d from "
 msgstr ""
@@ -1512,9 +1512,9 @@ msgstr ""
 #: includes/reviews/class-cr-admin-menu-reviews.php:235
 #: includes/settings/class-cr-settings-forms-rating.php:186
 #: includes/settings/class-cr-settings-forms-rating.php:213
-#: includes/settings/class-cr-settings-forms.php:599
-#: includes/settings/class-cr-settings-forms.php:626
-#: templates/cr-review-form.php:172
+#: includes/settings/class-cr-settings-forms.php:632
+#: includes/settings/class-cr-settings-forms.php:659
+#: templates/cr-review-form.php:187
 msgid "Cancel"
 msgstr ""
 
@@ -2288,7 +2288,7 @@ msgstr ""
 
 #: includes/reminders/class-cr-local-forms.php:174
 #: includes/reviews/class-cr-custom-questions.php:452
-#: includes/reviews/class-cr-reviews.php:1619
+#: includes/reviews/class-cr-reviews.php:1642
 #: includes/settings/class-cr-settings-forms-rating.php:64
 #: includes/settings/class-cr-settings-forms-rating.php:161
 #: blocks/build/reviews-grid/index.js:19 blocks/src/reviews-grid/edit.js:134
@@ -2311,7 +2311,7 @@ msgid ""
 msgstr ""
 
 #: includes/reminders/class-cr-local-forms.php:234
-#: templates/cr-review-form.php:168 templates/qna-tab.php:75
+#: templates/cr-review-form.php:183 templates/qna-tab.php:75
 #: templates/qna-tab.php:119
 msgid "Submit"
 msgstr ""
@@ -2594,7 +2594,7 @@ msgid "There are currently no sent review reminders"
 msgstr ""
 
 #: includes/reminders/class-cr-reminders-log-table.php:98
-#: includes/settings/class-cr-settings-forms.php:51
+#: includes/settings/class-cr-settings-forms.php:40
 msgid "Delete"
 msgstr ""
 
@@ -2603,8 +2603,8 @@ msgid "Order"
 msgstr ""
 
 #: includes/reminders/class-cr-reminders-log-table.php:109
-#: includes/settings/class-cr-settings-forms.php:465
-#: includes/settings/class-cr-settings-forms.php:579
+#: includes/settings/class-cr-settings-forms.php:498
+#: includes/settings/class-cr-settings-forms.php:612
 #: includes/settings/class-cr-settings-review-reminder.php:1027
 msgid "Type"
 msgstr ""
@@ -2906,7 +2906,7 @@ msgid ""
 msgstr ""
 
 #: includes/reviews/class-cr-reviews-list-table.php:941
-#: includes/reviews/class-cr-reviews.php:1199 templates/cr-review.php:120
+#: includes/reviews/class-cr-reviews.php:1222 templates/cr-review.php:120
 msgid "Featured Review"
 msgstr ""
 
@@ -2914,8 +2914,8 @@ msgstr ""
 #: includes/reviews/class-cr-reviews-list-table.php:1030
 #: includes/reviews/class-cr-reviews-media-meta-box.php:68
 #: includes/reviews/class-cr-reviews-media-meta-box.php:127
-#: includes/reviews/class-cr-reviews.php:252
-#: includes/reviews/class-cr-reviews.php:271
+#: includes/reviews/class-cr-reviews.php:273
+#: includes/reviews/class-cr-reviews.php:292
 msgid "Video #%1$d from %2$s"
 msgstr ""
 
@@ -2976,61 +2976,61 @@ msgstr ""
 msgid "Number"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews.php:128
-#: includes/reviews/class-cr-reviews.php:363
+#: includes/reviews/class-cr-reviews.php:129
+#: includes/reviews/class-cr-reviews.php:384
 msgid "Upload up to %d images or videos"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews.php:155
+#: includes/reviews/class-cr-reviews.php:157
 msgid "* Please confirm that you are not a robot"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews.php:163
+#: includes/reviews/class-cr-reviews.php:184
 msgid ""
 "Error: You tried to upload too many files. The maximum number of files that "
 "you can upload is %d."
 msgstr ""
 
-#: includes/reviews/class-cr-reviews.php:164
+#: includes/reviews/class-cr-reviews.php:185
 msgid "Go back to: %s"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews.php:365
+#: includes/reviews/class-cr-reviews.php:386
 msgid ""
 "Error: You tried to upload too many files. The maximum number of files that "
 "can be uploaded is %d."
 msgstr ""
 
-#: includes/reviews/class-cr-reviews.php:403
+#: includes/reviews/class-cr-reviews.php:426
 msgid "reCAPTCHA vertification failed and your review cannot be saved."
 msgstr ""
 
-#: includes/reviews/class-cr-reviews.php:403
+#: includes/reviews/class-cr-reviews.php:426
 msgid "Add Review Error"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews.php:1128
-#: includes/reviews/class-cr-reviews.php:1186
+#: includes/reviews/class-cr-reviews.php:1151
+#: includes/reviews/class-cr-reviews.php:1209
 msgid "External link"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews.php:1250
+#: includes/reviews/class-cr-reviews.php:1273
 msgid "Customer Images"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews.php:1415
+#: includes/reviews/class-cr-reviews.php:1438
 msgid "Error: please solve the CAPTCHA before uploading files"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews.php:1424
+#: includes/reviews/class-cr-reviews.php:1447
 msgid "Error: the file(s) is too large"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews.php:1560
+#: includes/reviews/class-cr-reviews.php:1583
 msgid "Highest Rating"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews.php:1563
+#: includes/reviews/class-cr-reviews.php:1586
 msgid "Lowest Rating"
 msgstr ""
 
@@ -3794,15 +3794,15 @@ msgstr ""
 
 #: includes/settings/class-cr-settings-forms-rating.php:68
 #: includes/settings/class-cr-settings-forms-rating.php:172
-#: includes/settings/class-cr-settings-forms.php:461
-#: includes/settings/class-cr-settings-forms.php:572
+#: includes/settings/class-cr-settings-forms.php:494
+#: includes/settings/class-cr-settings-forms.php:605
 msgid "Label"
 msgstr ""
 
 #: includes/settings/class-cr-settings-forms-rating.php:72
 #: includes/settings/class-cr-settings-forms-rating.php:179
-#: includes/settings/class-cr-settings-forms.php:469
-#: includes/settings/class-cr-settings-forms.php:592
+#: includes/settings/class-cr-settings-forms.php:502
+#: includes/settings/class-cr-settings-forms.php:625
 msgid "Required"
 msgstr ""
 
@@ -3824,8 +3824,8 @@ msgstr ""
 
 #: includes/settings/class-cr-settings-forms-rating.php:187
 #: includes/settings/class-cr-settings-forms-rating.php:214
-#: includes/settings/class-cr-settings-forms.php:600
-#: includes/settings/class-cr-settings-forms.php:627
+#: includes/settings/class-cr-settings-forms.php:633
+#: includes/settings/class-cr-settings-forms.php:660
 msgid "Confirm"
 msgstr ""
 
@@ -3833,66 +3833,66 @@ msgstr ""
 msgid "Would you like to delete this rating?"
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:48
+#: includes/settings/class-cr-settings-forms.php:37
 msgid "Move up"
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:49
+#: includes/settings/class-cr-settings-forms.php:38
 msgid "Move down"
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:50
+#: includes/settings/class-cr-settings-forms.php:39
 msgid "Edit"
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:53
+#: includes/settings/class-cr-settings-forms.php:42
 msgid "No questions added"
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:54
+#: includes/settings/class-cr-settings-forms.php:43
 msgid ""
 "A question to be displayed on an on-site review form. For example, 'How old "
 "are you?'."
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:55
+#: includes/settings/class-cr-settings-forms.php:44
 msgid ""
 "A label to be displayed on a review next to a customer's answer to a "
 "question. For example, 'Age'."
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:56
+#: includes/settings/class-cr-settings-forms.php:45
 msgid "A type of question defines what kind of answers a customer can submit."
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:57
+#: includes/settings/class-cr-settings-forms.php:46
 msgid "This field can be used to require customers to answer a question."
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:70
+#: includes/settings/class-cr-settings-forms.php:60
 msgid "Review Forms"
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:154
+#: includes/settings/class-cr-settings-forms.php:161
 msgid "'Form Header' field cannot be empty"
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:161
+#: includes/settings/class-cr-settings-forms.php:168
 msgid "'Form Body' field cannot be empty"
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:164
+#: includes/settings/class-cr-settings-forms.php:171
 msgid "'Form Body' field cannot be longer than 1024 characters"
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:198
+#: includes/settings/class-cr-settings-forms.php:205
 msgid ""
 "On-site product review forms are displayed on your website. If reviews are "
 "enabled, WooCommerce displays them on product pages. However, on-site review "
 "forms can also be displayed using <a href=\"%s\">shortcodes</a> or blocks."
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:200
+#: includes/settings/class-cr-settings-forms.php:207
 msgid ""
 "An aggregated review form is a review form that supports collection of "
 "reviews for multiple products at the same time. The plugin will "
@@ -3901,7 +3901,7 @@ msgid ""
 "href=\"%s\">this page</a> of our Helpdesk."
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:203
+#: includes/settings/class-cr-settings-forms.php:210
 #: includes/settings/class-cr-settings-review-reminder.php:440
 msgid ""
 "Adjust template of the aggregated review forms that will be created and sent "
@@ -3911,7 +3911,7 @@ msgid ""
 "b> the settings below."
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:205
+#: includes/settings/class-cr-settings-forms.php:212
 #: includes/settings/class-cr-settings-review-reminder.php:445
 msgid ""
 "Adjust template of the aggregated review forms that will be created and sent "
@@ -3919,7 +3919,7 @@ msgid ""
 "after saving settings."
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:210
+#: includes/settings/class-cr-settings-forms.php:217
 msgid ""
 "Enable attachment of pictures and videos on aggregated review forms. "
 "Uploaded media files are initially stored on Amazon S3 and automatically "
@@ -3929,7 +3929,7 @@ msgid ""
 "settings for on-site review forms."
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:212
+#: includes/settings/class-cr-settings-forms.php:219
 msgid ""
 "Enable attachment of pictures and videos on local aggregated review forms. "
 "This option applies only to aggregated review forms. If you would like to "
@@ -3937,15 +3937,15 @@ msgid ""
 "pages, please do it in the settings for on-site review forms."
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:217
+#: includes/settings/class-cr-settings-forms.php:224
 msgid "On-site Product Review Form"
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:223
+#: includes/settings/class-cr-settings-forms.php:230
 msgid "Rating Criteria"
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:224
+#: includes/settings/class-cr-settings-forms.php:231
 msgid ""
 "Set up additional rating criteria for on-site review forms. Use the "
 "additional criteria to let your customers rate various features of products. "
@@ -3953,11 +3953,11 @@ msgid ""
 "rate features like comfort, value for money, and style."
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:229
+#: includes/settings/class-cr-settings-forms.php:236
 msgid "Questions"
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:230
+#: includes/settings/class-cr-settings-forms.php:237
 msgid ""
 "Set up additional questions for on-site review forms. Use the additional "
 "questions to get more information from your customers beyond star ratings "
@@ -3965,224 +3965,246 @@ msgid ""
 "want to ask customers about their skin type."
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:235
+#: includes/settings/class-cr-settings-forms.php:242
 msgid "Attach Images/Videos"
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:236
+#: includes/settings/class-cr-settings-forms.php:243
 msgid ""
 "Enable attachment of images and videos to reviews left on WooCommerce "
 "product pages."
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:242
+#: includes/settings/class-cr-settings-forms.php:249
 msgid "Quantity of Media Files"
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:243
+#: includes/settings/class-cr-settings-forms.php:250
 msgid ""
 "Specify the maximum number of images and videos that can be uploaded for a "
 "single review. This setting applies only to reviews submitted on single "
 "product pages."
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:250
+#: includes/settings/class-cr-settings-forms.php:257
 msgid "Maximum Size of Media File"
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:251
+#: includes/settings/class-cr-settings-forms.php:258
 msgid ""
 "Specify the maximum size (in MB) of an image or a video that can be uploaded "
 "with a review. This setting applies only to reviews submitted on single "
 "product pages."
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:258
+#: includes/settings/class-cr-settings-forms.php:265
 msgid "Review Permissions"
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:259
+#: includes/settings/class-cr-settings-forms.php:266
 msgid ""
 "Specify review permissions for on-site review forms. This setting applies to "
 "review forms on single product pages when CusRev visual style is enabled and "
 "to review forms added via shortcodes."
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:264
+#: includes/settings/class-cr-settings-forms.php:271
 msgid "Nobody can submit reviews"
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:265
+#: includes/settings/class-cr-settings-forms.php:272
 msgid "Reviewers must be registered and logged in"
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:266
+#: includes/settings/class-cr-settings-forms.php:273
 msgid "Reviewers must be verified owners"
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:267
+#: includes/settings/class-cr-settings-forms.php:274
 msgid "Anyone can submit reviews"
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:271
+#: includes/settings/class-cr-settings-forms.php:278
 msgid "reCAPTCHA V2 for Reviews"
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:272
+#: includes/settings/class-cr-settings-forms.php:279
 msgid ""
 "Enable reCAPTCHA to eliminate fake reviews. You must enter Site Key and "
 "Secret Key in the fields below if you want to use reCAPTCHA. You will "
 "receive Site Key and Secret Key after registration at reCAPTCHA website."
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:278
+#: includes/settings/class-cr-settings-forms.php:285
 msgid "reCAPTCHA V2 Site Key"
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:280
+#: includes/settings/class-cr-settings-forms.php:287
 msgid ""
 "If you want to use reCAPTCHA V2, insert here Site Key that you will receive "
 "after registration at reCAPTCHA website."
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:286
+#: includes/settings/class-cr-settings-forms.php:293
 msgid "reCAPTCHA V2 Secret Key"
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:288
+#: includes/settings/class-cr-settings-forms.php:295
 msgid ""
 "If you want to use reCAPTCHA V2, insert here Secret Key that you will "
 "receive after registration at reCAPTCHA website."
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:298
+#: includes/settings/class-cr-settings-forms.php:301
+msgid "Terms and Privacy Checkbox"
+msgstr ""
+
+#: includes/settings/class-cr-settings-forms.php:309
+msgid "Terms and Privacy Checkbox Label"
+msgstr ""
+
+#: includes/settings/class-cr-settings-forms.php:311
+msgid ""
+"Tailor the text to be shown alongside the Terms and Privacy checkbox. "
+"Incorporate links directing users to the Terms and Conditions and Privacy "
+"Policy pages on your website."
+msgstr ""
+
+#: includes/settings/class-cr-settings-forms.php:322
 msgid "Aggregated Review Form"
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:304
+#: includes/settings/class-cr-settings-forms.php:328
 msgid "Form Header"
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:306
+#: includes/settings/class-cr-settings-forms.php:330
 msgid "Header of the review form that will be sent to customers."
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:314
+#: includes/settings/class-cr-settings-forms.php:338
 msgid "Form Body"
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:316
+#: includes/settings/class-cr-settings-forms.php:340
 msgid "Body of the review form that will be sent to customers."
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:325
+#: includes/settings/class-cr-settings-forms.php:349
 msgid "Shop Rating"
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:329
+#: includes/settings/class-cr-settings-forms.php:353
 msgid ""
 "Enable this option if you would like to include a separate question for a "
 "general shop review in addition to questions for product reviews."
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:333
+#: includes/settings/class-cr-settings-forms.php:357
 msgid "Comment Required"
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:337
+#: includes/settings/class-cr-settings-forms.php:361
 msgid ""
 "Enable this option if you would like to make it mandatory for your customers "
 "to write something in their review. This option applies only to aggregated "
 "review forms."
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:341
+#: includes/settings/class-cr-settings-forms.php:365
 msgid "Attach Media"
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:349
+#: includes/settings/class-cr-settings-forms.php:373
 msgid "Form Color 1"
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:353
+#: includes/settings/class-cr-settings-forms.php:377
 msgid "Background color for heading of the form and product names."
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:358
+#: includes/settings/class-cr-settings-forms.php:382
 msgid "Form Color 2"
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:362
+#: includes/settings/class-cr-settings-forms.php:386
 msgid "Text color for product names."
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:367
+#: includes/settings/class-cr-settings-forms.php:391
 msgid "Form Color 3"
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:371
+#: includes/settings/class-cr-settings-forms.php:395
 msgid "Color of control elements (buttons, rating bars)."
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:384
+#: includes/settings/class-cr-settings-forms.php:408
 msgid "Rating Bar"
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:388
+#: includes/settings/class-cr-settings-forms.php:412
 msgid "Visual style of rating bars on review forms."
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:390
+#: includes/settings/class-cr-settings-forms.php:414
 msgid "Smiley and frowny faces"
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:391
+#: includes/settings/class-cr-settings-forms.php:415
 #: blocks/build/reviews-grid/index.js:19 blocks/src/reviews-grid/edit.js:234
 #: js/blocks.js:767
 msgid "Stars"
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:397
+#: includes/settings/class-cr-settings-forms.php:421
 msgid "Geolocation"
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:401
+#: includes/settings/class-cr-settings-forms.php:425
 msgid ""
 "Enable geolocation on aggregated review forms. Customers will have an option "
 "to indicate where they are from. For example, \"England, United Kingdom\"."
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:402
+#: includes/settings/class-cr-settings-forms.php:426
 msgid "Automatic geolocation on review forms."
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:444
+#: includes/settings/class-cr-settings-forms.php:477
 msgid "Add Question"
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:457
-#: includes/settings/class-cr-settings-forms.php:561
+#: includes/settings/class-cr-settings-forms.php:490
+#: includes/settings/class-cr-settings-forms.php:594
 msgid "Question"
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:552
+#: includes/settings/class-cr-settings-forms.php:585
 msgid "Add a Question"
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:564
+#: includes/settings/class-cr-settings-forms.php:597
 msgid "E.g., What is your skin type?"
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:567
+#: includes/settings/class-cr-settings-forms.php:600
 msgid "* Question cannot be blank"
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:575
+#: includes/settings/class-cr-settings-forms.php:608
 msgid "E.g., Skin type"
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:622
+#: includes/settings/class-cr-settings-forms.php:655
 msgid "Would you like to delete this question?"
+msgstr ""
+
+#: includes/settings/class-cr-settings-forms.php:781
+msgid ""
+"Add a checkbox for people to accept your Terms and Conditions, Privacy "
+"Policy, and any other legal agreements required in your jurisdiction before "
+"submitting a review via an on-site review form."
 msgstr ""
 
 #: includes/settings/class-cr-settings-license.php:38
@@ -5878,7 +5900,8 @@ msgstr ""
 msgid "Search reviews"
 msgstr ""
 
-#: templates/cr-ajax-product-reviews.php:128
+#: templates/cr-ajax-product-reviews.php:134
+#: templates/cr-single-product-reviews.php:74
 msgid "There are no reviews yet"
 msgstr ""
 
@@ -5933,6 +5956,10 @@ msgstr ""
 
 #: templates/cr-review-form.php:110
 msgid "* Email is required"
+msgstr ""
+
+#: templates/cr-review-form.php:172
+msgid "* Please tick the checkbox to proceed"
 msgstr ""
 
 #: templates/cr-review.php:63

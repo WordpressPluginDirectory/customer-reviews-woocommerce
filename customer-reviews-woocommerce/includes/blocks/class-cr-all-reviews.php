@@ -1186,6 +1186,12 @@ if (! class_exists('CR_All_Reviews')) :
 				}
 			}
 			$cr_form_permissions = CR_Forms_Settings::get_default_review_permissions();
+			$form_settings = CR_Forms_Settings::get_default_form_settings();
+			$cr_form_checkbox = ( 'yes' === CR_Forms_Settings::get_onsite_form_checkbox( $form_settings ) ) ? true : false;
+			$cr_form_checkbox_text = CR_Forms_Settings::get_onsite_form_checkbox_text( $form_settings );
+			if ( false === $cr_form_checkbox_text ) {
+				$cr_form_checkbox_text = CR_Forms_Settings::get_default_form_onsite_checkbox_text();
+			}
 			ob_start();
 			wc_get_template(
 				'cr-review-form.php',
@@ -1196,7 +1202,9 @@ if (! class_exists('CR_All_Reviews')) :
 					'cr_form_media_enabled' => $media_upload,
 					'cr_form_item_media_array' => $cr_form_item_media_array,
 					'cr_form_item_media_desc' => $cr_form_item_media_desc,
-					'cr_form_permissions' => $cr_form_permissions
+					'cr_form_permissions' => $cr_form_permissions,
+					'cr_form_checkbox' => $cr_form_checkbox,
+					'cr_form_checkbox_text' => wp_specialchars_decode( $cr_form_checkbox_text, ENT_QUOTES )
 				),
 				'customer-reviews-woocommerce',
 				dirname( dirname( dirname( __FILE__ ) ) ) . '/templates/'

@@ -135,7 +135,10 @@ if ( ! class_exists( 'CR_Sender' ) ) :
 					$order->get_meta( '_ivole_cr_cron', true )
 				) {
 					$sender_result = $this->sender_action( $order_id, true );
-					if( 0 === $sender_result ) {
+					if (
+						0 === $sender_result ||
+						( is_array( $sender_result ) && 0 < count( $sender_result ) && 0 == $sender_result[0] )
+					) {
 						$order->add_order_note( __( 'CR: a review reminder was scheduled via CR Cron. Please log in to your account on <a href="https://www.cusrev.com/login.html" target="_blank" rel="noopener noreferrer">CR website</a> to view and manage the reminders.', 'customer-reviews-woocommerce' ) );
 					} else {
 						if( is_array( $sender_result ) && count( $sender_result ) > 1 ) {
