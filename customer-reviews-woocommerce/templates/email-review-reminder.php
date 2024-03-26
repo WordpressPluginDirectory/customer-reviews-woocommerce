@@ -88,5 +88,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 				</tr>
 			</table>
 		</div>
+		<?php echo $cr_email_pixel; ?>
 	</body>
 </html>

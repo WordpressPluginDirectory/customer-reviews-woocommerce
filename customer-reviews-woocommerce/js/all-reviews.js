@@ -38,10 +38,6 @@
 				tt.find( "video" ).prop( "controls", true );
 				tt.find( ".cr-comment-videoicon" ).hide();
 				tt.find( "video" ).get(0).play();
-				tt.css({
-					"top": "50%",
-					"margin-top": function() { return -$(this).outerHeight() / 2; }
-				});
 			}
 			return false;
 		});

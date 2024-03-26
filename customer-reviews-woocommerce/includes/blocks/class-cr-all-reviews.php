@@ -716,7 +716,7 @@ if (! class_exists('CR_All_Reviews')) :
 					}
 				}
 
-				wp_register_style( 'ivole-frontend-css', plugins_url( '/css/frontend.css', dirname( dirname( __FILE__ ) ) ), array(), $assets_version, 'all' );
+				wp_register_style( 'ivole-frontend-css', plugins_url( '/css/frontend.css', dirname( dirname( __FILE__ ) ) ), array( 'dashicons' ), $assets_version, 'all' );
 				wp_register_script( 'cr-frontend-js', plugins_url( '/js/frontend.js', dirname( dirname( __FILE__) ) ), array( 'jquery' ), $assets_version, true );
 				wp_register_script( 'cr-colcade', plugins_url( '/js/colcade.js', dirname( dirname( __FILE__) ) ), array(), $assets_version, true );
 				wp_enqueue_style( 'ivole-frontend-css' );

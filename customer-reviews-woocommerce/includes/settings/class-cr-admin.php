@@ -350,6 +350,10 @@ if ( ! class_exists( 'CR_Admin' ) ) :
 						$log = new CR_Reminders_Log();
 						$log->check_create_table();
 						update_option( 'ivole_version', $this->ver );
+					} elseif ( version_compare( $version, '5.45.0', '<' ) ) {
+						$log = new CR_Reminders_Log();
+						$log->check_create_table();
+						update_option( 'ivole_version', $this->ver );
 					} else {
 						update_option( 'ivole_version', $this->ver );
 					}

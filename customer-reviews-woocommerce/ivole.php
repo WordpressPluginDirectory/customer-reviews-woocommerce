@@ -3,14 +3,14 @@
 Plugin Name: Customer Reviews for WooCommerce
 Description: Customer Reviews for WooCommerce plugin helps you get more customer reviews for your shop by sending automated reminders and coupons.
 Plugin URI: https://wordpress.org/plugins/customer-reviews-woocommerce/
-Version: 5.44.0
+Version: 5.45.0
 Author: CusRev
 Author URI: https://www.cusrev.com/business/
 Text Domain: customer-reviews-woocommerce
 Domain Path: /languages
 Requires at least: 4.5
 WC requires at least: 3.6
-WC tested up to: 8.6
+WC tested up to: 8.7
 License: GPLv3
 
 Customer Reviews for WooCommerce is free software: you can redistribute it and/or modify
@@ -83,10 +83,19 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	add_action( 'after_setup_theme', 'cr_setup_theme', 2 );
 
 	function cr_setup_theme() {
-		if( 1 === preg_match( '~' . CR_Local_Forms::FORMS_SLUG . '/(?P<form>[\w]{13})|' . CR_Local_Forms::FORMS_SLUG . '/(?P<form>' . CR_Local_Forms::TEST_FORM . ')/?$~iJ', $_SERVER['REQUEST_URI'], $matches ) ) {
-			if( isset( $matches['form'] ) ) {
+		if (
+			1 === preg_match( '~' . CR_Local_Forms::FORMS_SLUG . '/(?P<form>[\w]{13})/?(\?r=[\w]{16})?$|' . CR_Local_Forms::FORMS_SLUG . '/(?P<form>' . CR_Local_Forms::TEST_FORM . ')/?(\?r=[\w]{16})?$~iJ', $_SERVER['REQUEST_URI'], $matches )
+		) {
+			if ( isset( $matches['form'] ) ) {
 				$cr_local_forms = new CR_Local_Forms( $matches['form'] );
 				$cr_local_forms->output();
+				exit();
+			}
+		} elseif (
+			1 === preg_match( '~' . CR_Local_Forms::PIXEL_SLUG . '/(?P<pixel>[\w]{16}).png|' . CR_Local_Forms::PIXEL_SLUG . '/(?P<pixel>' . CR_Local_Forms::TEST_FORM . ').png/?$~iJ', $_SERVER['REQUEST_URI'], $matches )
+		) {
+			if ( isset( $matches['pixel'] ) ) {
+				CR_Local_Forms::render_pixel( $matches['pixel'] );
 				exit();
 			}
 		}

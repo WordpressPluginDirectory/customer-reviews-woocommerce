@@ -371,7 +371,7 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 					wp_enqueue_script( 'photoswipe-ui-default' );
 					wp_enqueue_style( 'photoswipe-default-skin' );
 				}
-				wp_register_style( 'ivole-frontend-css', plugins_url( '/css/frontend.css', dirname( dirname( __FILE__ ) ) ), array(), $assets_version, 'all' );
+				wp_register_style( 'ivole-frontend-css', plugins_url( '/css/frontend.css', dirname( dirname( __FILE__ ) ) ), array( 'dashicons' ), $assets_version, 'all' );
 				wp_register_script( 'cr-frontend-js', plugins_url( '/js/frontend.js', dirname( dirname( __FILE__ ) ) ), array( 'jquery' ), $assets_version, true );
 				wp_enqueue_style( 'ivole-frontend-css' );
 				wp_localize_script(

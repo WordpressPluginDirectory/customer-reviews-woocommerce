@@ -4,7 +4,7 @@ Tags: woocommerce, review plugin, review reminder, customer reviews, review for 
 Requires at least: 4.5
 Tested up to: 6.4
 Requires PHP: 7.2
-Stable tag: 5.44.0
+Stable tag: 5.45.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl.html
 
@@ -67,6 +67,7 @@ Plus, benefit from:
 * A built-in testing tool to ensure emails look beautiful before sending
 * Reminders in different languages via “qTranslate X”, “Polylang”, "TranslatePress" and “WPML” plugin integration
 * Support for custom WooCommerce order statuses
+* Tracking when customers open emails with review invitations
 
 === 💸 Boost Sales – With Extra Features ===
 
@@ -230,6 +231,9 @@ If you would like to change how reviews are sorted on product pages, it is possi
 
 == Changelog ==
 
+= 5.45.0 =
+* New feature: an option to track if customers open emails with review invitations sent by a WordPress Mailer
+* Bug fix: video reviews did not display correctly on screens with a landscape orientation
 = 5.44.0 =
 * New feature: an option to add a terms and privacy checkbox to on-site review forms
 * Improvement: a nofollow attribute for login buttons on on-site review forms

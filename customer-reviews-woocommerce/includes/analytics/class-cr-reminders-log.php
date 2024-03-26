@@ -25,6 +25,7 @@ class CR_Reminders_Log {
 				if ( true !== $wpdb->query(
 						"CREATE TABLE `$table_name` (
 							`id` bigint unsigned NOT NULL AUTO_INCREMENT,
+							`extId` varchar(16) DEFAULT NULL,
 							`orderId` varchar(190) DEFAULT NULL,
 							`customerEmail` varchar(1024) DEFAULT NULL,
 							`customerName` varchar(1024) DEFAULT NULL,
@@ -40,6 +41,7 @@ class CR_Reminders_Log {
 							`language` varchar(10) DEFAULT NULL,
 							`reminder` json DEFAULT NULL,
 							PRIMARY KEY (`id`),
+							KEY `extId_index` (`extId`),
 							KEY `orderId_index` (`orderId`),
 							KEY `customerEmail_index` (`customerEmail`),
 							KEY `dateCreated_index` (`dateCreated`),
@@ -49,6 +51,7 @@ class CR_Reminders_Log {
 					if( true !== $wpdb->query(
 							"CREATE TABLE `$table_name` (
 								`id` bigint unsigned NOT NULL AUTO_INCREMENT,
+								`extId` varchar(16) DEFAULT NULL,
 								`orderId` varchar(190) DEFAULT NULL,
 								`customerEmail` varchar(1024) DEFAULT NULL,
 								`customerName` varchar(1024) DEFAULT NULL,
@@ -64,6 +67,7 @@ class CR_Reminders_Log {
 								`language` varchar(10) DEFAULT NULL,
 								`reminder` text DEFAULT NULL,
 								PRIMARY KEY (`id`),
+								KEY `extId_index` (`extId`),
 								KEY `orderId_index` (`orderId`),
 								KEY `customerEmail_index` (`customerEmail`),
 								KEY `dateCreated_index` (`dateCreated`),
@@ -76,6 +80,13 @@ class CR_Reminders_Log {
 				$table_name = $name_check;
 			}
 		}
+		// add 'extId' column if it doesn't exist
+		if( ! $wpdb->get_var( $wpdb->prepare( "SHOW COLUMNS FROM `$table_name` LIKE %s", 'extId' ) ) ) {
+			if ( $wpdb->query( "ALTER TABLE `$table_name` ADD `extId` varchar(16) DEFAULT NULL AFTER `id`;" ) ) {
+				$wpdb->query( "ALTER TABLE `$table_name` ADD INDEX `extId_index` (`extId`);" );
+			}
+		}
+		//
 		$this->logs_tbl_name = $table_name;
 		return 0;
 	}
@@ -91,6 +102,7 @@ class CR_Reminders_Log {
 			$dateSent = gmdate('Y-m-d H:i:s');
 			$language = '';
 			$reminder = array();
+			$extId = NULL;
 			if (
 				isset( $result[2] ) &&
 				isset( $result[2]['data'] )
@@ -112,6 +124,12 @@ class CR_Reminders_Log {
 					$language = $data['language'];
 				}
 			}
+			if (
+				isset( $result[2] ) &&
+				isset( $result[2]['email_id'] )
+			) {
+				$extId = $result[2]['email_id'];
+			}
 			if ( isset( $result[0] ) ) {
 				if ( 0 === $result[0] ) {
 					$status = 'sent';
@@ -122,6 +140,7 @@ class CR_Reminders_Log {
 			}
 
 			$insert = array(
+				'extId' => $extId,
 				'orderId' => $order_id,
 				'customerEmail' => $customerEmail,
 				'customerName' => $customerName,
@@ -146,7 +165,7 @@ class CR_Reminders_Log {
 		}
 	}
 
-	public function get( $start, $per_page, $orderby, $order, $search ) {
+	public function get( $start, $per_page, $orderby, $order, $search, $status ) {
 		$order = strtoupper( $order );
 		$order = ( $order === 'DESC' ) ? $order : 'ASC';
 
@@ -165,14 +184,39 @@ class CR_Reminders_Log {
 				break;
 		}
 
+		switch ($status) {
+			case 'rmd_error':
+				$status = 'error';
+				break;
+			case 'rmd_sent':
+				$status = 'sent';
+				break;
+			case 'rmd_opened':
+				$status = 'rmd_opened';
+				break;
+			default:
+				$status = '';
+				break;
+		}
+
 		global $wpdb;
 		$table_name = $wpdb->prefix . self::LOGS_TABLE;
 		if ( $search ) {
-			$select_q = "SELECT * FROM `$table_name` WHERE `customerName` LIKE '%$search%' OR `customerEmail` LIKE '%$search%' OR `orderId` LIKE '%$search%' ORDER BY `$orderby` $order LIMIT $start, $per_page";
-			$select_t = "SELECT COUNT(*) FROM `$table_name` WHERE `customerName` LIKE '%$search%' OR `customerEmail` LIKE '%$search%' OR `orderId` LIKE '%$search%' ORDER BY `$orderby` $order";
+			if ( $status ) {
+				$select_q = "SELECT * FROM `$table_name` WHERE `status` = '$status' AND ( `customerName` LIKE '%$search%' OR `customerEmail` LIKE '%$search%' OR `orderId` LIKE '%$search%' ) ORDER BY `$orderby` $order LIMIT $start, $per_page";
+				$select_t = "SELECT COUNT(*) FROM `$table_name` WHERE `status` = '$status' AND ( `customerName` LIKE '%$search%' OR `customerEmail` LIKE '%$search%' OR `orderId` LIKE '%$search%' ) ORDER BY `$orderby` $order";
+			} else {
+				$select_q = "SELECT * FROM `$table_name` WHERE `customerName` LIKE '%$search%' OR `customerEmail` LIKE '%$search%' OR `orderId` LIKE '%$search%' ORDER BY `$orderby` $order LIMIT $start, $per_page";
+				$select_t = "SELECT COUNT(*) FROM `$table_name` WHERE `customerName` LIKE '%$search%' OR `customerEmail` LIKE '%$search%' OR `orderId` LIKE '%$search%' ORDER BY `$orderby` $order";
+			}
 		} else {
-			$select_q = "SELECT * FROM `$table_name` ORDER BY `$orderby` $order LIMIT $start, $per_page";
-			$select_t = "SELECT COUNT(*) FROM `$table_name` ORDER BY `$orderby` $order";
+			if ( $status ) {
+				$select_q = "SELECT * FROM `$table_name` WHERE `status` = '$status' ORDER BY `$orderby` $order LIMIT $start, $per_page";
+				$select_t = "SELECT COUNT(*) FROM `$table_name` WHERE `status` = '$status' ORDER BY `$orderby` $order";
+			} else {
+				$select_q = "SELECT * FROM `$table_name` ORDER BY `$orderby` $order LIMIT $start, $per_page";
+				$select_t = "SELECT COUNT(*) FROM `$table_name` ORDER BY `$orderby` $order";
+			}
 		}
 		$records = $wpdb->get_results(
 			$select_q,
@@ -184,7 +228,7 @@ class CR_Reminders_Log {
 			$total = 0;
 		}
 
-		if( is_array( $records )  ) {
+		if ( is_array( $records ) ) {
 			return array(
 				'records' => $records,
 				'total' => intval( $total )
@@ -202,6 +246,61 @@ class CR_Reminders_Log {
 		$table_name = $wpdb->prefix . self::LOGS_TABLE;
 		$ids = implode( ',', array_map( 'absint', $reminders ) );
 		$wpdb->query( "DELETE FROM `$table_name` WHERE id IN($ids)" );
+	}
+
+	public function email_opened( $extId ) {
+		global $wpdb;
+		if ( 0 === $this->check_create_table() ) {
+			$extId = sanitize_text_field( $extId );
+
+			// get the current status of the reminder
+			$records = $wpdb->get_results(
+				"SELECT * FROM `$this->logs_tbl_name` WHERE `extId` = '$extId';",
+				ARRAY_A
+			);
+
+			if ( is_array( $records ) && 0 < count( $records ) ) {
+				if ( in_array( $records[0]['status'], array( 'sent', 'error' ) )  ) {
+					// update 'status' and 'dateEmailOpened' columns
+					$update_result = $wpdb->update(
+						$this->logs_tbl_name,
+						array(
+							'status' => 'rmd_opened',
+							'dateEmailOpened' => gmdate('Y-m-d H:i:s')
+						),
+						array( 'extId' => $extId )
+					);
+				} else {
+					// update 'dateEmailOpened' column only because a form has already been opened or a review has been posted
+					$update_result = $wpdb->update(
+						$this->logs_tbl_name,
+						array(
+							'dateEmailOpened' => gmdate('Y-m-d H:i:s')
+						),
+						array( 'extId' => $extId )
+					);
+				}
+			}
+		}
+	}
+
+	public static function count_reminders( $search ) {
+		global $wpdb;
+		$table_name = $wpdb->prefix . self::LOGS_TABLE;
+		if ( $search ) {
+			$select = "SELECT status, COUNT(*) AS total FROM `$table_name` WHERE `customerName` LIKE '%$search%' OR `customerEmail` LIKE '%$search%' OR `orderId` LIKE '%$search%' GROUP BY `status`";
+		} else {
+			$select = "SELECT status, COUNT(*) AS total FROM `$table_name` GROUP BY `status`";
+		}
+		$totals = $wpdb->get_results(
+			$select,
+			ARRAY_A
+		);
+		if ( is_array( $totals ) ) {
+			return $totals;
+		} else {
+			return array();
+		}
 	}
 }
 

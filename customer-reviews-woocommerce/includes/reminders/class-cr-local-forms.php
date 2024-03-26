@@ -27,6 +27,8 @@ if ( ! class_exists( 'CR_Local_Forms' ) ) :
 		const FORMS_TABLE = 'cr_local_forms';
 		const FORMS_SLUG = 'cusrev';
 		const TEST_FORM = 'test';
+		const PIXEL_SLUG = 'cusrev/pix';
+		const PIXEL_DIV = '<div style="line-height:0;"><img src="%s" style="padding:0;margin:0;height:1px;width:1px;line-height:0;"/></div>';
 
 		public function __construct( $id ) {
 			$this->form_id = $id;
@@ -352,7 +354,7 @@ if ( ! class_exists( 'CR_Local_Forms' ) ) :
 			// insert data
 			$res = $wpdb->replace( $table_name, $insert_args );
 			if( false !== $res ) {
-				return array( 'code' => 0, 'text' => get_home_url() . '/' . self::FORMS_SLUG . '/' . $formId );
+				return array( 'code' => 0, 'text' => get_home_url() . '/' . self::FORMS_SLUG . '/' . $formId . '/' );
 			} else {
 				return array( 'code' => 2, 'text' => 'Form \'' . $formId . '\' could not be saved to the table \'' . $table_name . '\'. Error: ' . $wpdb->last_error );
 			}
@@ -384,6 +386,16 @@ if ( ! class_exists( 'CR_Local_Forms' ) ) :
 				property_exists( $template, 'language' ) ? $template->language : 'EN', // language
 				$template // extra
 			);
+		}
+
+		public static function render_pixel( $pixel ) {
+			$log = new CR_Reminders_Log();
+			$log->email_opened( $pixel );
+			header("Content-type: image/png");
+			// needed to avoid cache time on browser side
+			header("Cache-Control: private, no-cache, no-cache=Set-Cookie, proxy-revalidate");
+			header("Pragma: no-cache");
+			echo base64_decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAAtJREFUGFdjYAACAAAFAAGq1chRAAAAAElFTkSuQmCC');
 		}
 
 	}

@@ -62,7 +62,7 @@ if ( ! class_exists( 'CR_Checkout' ) ) :
 		public function cr_checkout_style() {
 			if( is_checkout() ) {
 				$assets_version = Ivole::CR_VERSION;
-				wp_register_style( 'ivole-frontend-css', plugins_url( '/css/frontend.css', dirname( dirname( __FILE__ ) ) ), array(), $assets_version, 'all' );
+				wp_register_style( 'ivole-frontend-css', plugins_url( '/css/frontend.css', dirname( dirname( __FILE__ ) ) ), array( 'dashicons' ), $assets_version, 'all' );
 				wp_enqueue_style( 'ivole-frontend-css' );
 			}
 		}

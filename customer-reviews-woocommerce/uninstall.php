@@ -159,7 +159,8 @@ $cr_uninstall_options = array(
 	'ivole_verified_live_mode',
 	'ivole_verified_links',
 	'ivole_review_forms',
-	'ivole_wa_message'
+	'ivole_wa_message',
+	'ivole_track_reminder_open'
 );
 
 foreach ( $cr_uninstall_options as $uninstall_option ) {
@@ -169,5 +170,7 @@ foreach ( $cr_uninstall_options as $uninstall_option ) {
 global $wpdb;
 $forms_table = $wpdb->prefix . 'cr_local_forms';
 $wpdb->query( "DROP TABLE IF EXISTS `$forms_table`;" );
+$reminders_table = $wpdb->prefix . 'cr_reminders_log';
+$wpdb->query( "DROP TABLE IF EXISTS `$reminders_table`;" );
 
 wp_cache_flush();
