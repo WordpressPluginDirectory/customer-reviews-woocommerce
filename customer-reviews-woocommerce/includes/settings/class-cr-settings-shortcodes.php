@@ -176,15 +176,8 @@ if ( ! class_exists( 'CR_Shortcodes_Settings' ) ):
 			'<ul>' .
 			'<li>' . sprintf( __( '%1$s parameter accepts a comma-separated list of product IDs or %2$s. If product IDs are provided, the block will display Q & A linked to the corresponding products. If the parameter is equal to %3$s, the block will display Q & A for all products in the store.', 'customer-reviews-woocommerce' ), '<code>products</code>', '<code>"all"</code>', '<code>"all"</code>' ) . '</li>' .
 			'<li>' . sprintf( __( '%1$s parameter accepts a comma-separated list of non-product pages (e.g., regular WordPress pages or posts) or %2$s. If non-product page IDs are provided, the block will display Q & A linked to the corresponding non-product pages. If the parameter is equal to %3$s, the block will display Q & A for all non-product pages in the store.', 'customer-reviews-woocommerce' ), '<code>shop</code>', '<code>"all"</code>', '<code>"all"</code>' ) . '</li>' .
-			'</ul>' . '<br>' .
-
-			'<p class="cr-admin-shortcodes-large"><code>[cusrev_reviews]</code></p>' .
-			'<p>' . __( 'Use this shortcode to display reviews at different locations on product pages. This shortcode works ONLY on WooCommerce single product pages. Here are the default parameters of the shortcode:', 'customer-reviews-woocommerce' ) . '</p>' .
-			'<p class="cr-admin-shortcodes"><code>[cusrev_reviews comment_file="/comments.php"]</code></p>' .
-			'<p class="cr-admin-shortcodes"><b>' . __( 'Parameters:', 'customer-reviews-woocommerce' ) . '</b></p>' .
-			'<ul>' .
-			'<li>' . sprintf( __( '%1$s is an optional argument. If you have a custom comment template file, you should specify it here.', 'customer-reviews-woocommerce' ), '<code>comment_file</code>' ) . '</li>' .
 			'</ul>';
+
 			$shortcodes_desc = apply_filters( 'cr_settings_shortcodes_desc', $shortcodes_desc );
 			?>
 			<tr valign="top">

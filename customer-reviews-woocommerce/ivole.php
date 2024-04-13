@@ -3,7 +3,7 @@
 Plugin Name: Customer Reviews for WooCommerce
 Description: Customer Reviews for WooCommerce plugin helps you get more customer reviews for your shop by sending automated reminders and coupons.
 Plugin URI: https://wordpress.org/plugins/customer-reviews-woocommerce/
-Version: 5.45.0
+Version: 5.47.0
 Author: CusRev
 Author URI: https://www.cusrev.com/business/
 Text Domain: customer-reviews-woocommerce
@@ -47,52 +47,56 @@ require_once( 'class-ivole.php' );
 require_once( __DIR__ . '/includes/misc/class-cr-qtranslate.php' );
 require_once( __DIR__ . '/includes/misc/class-cr-wpml.php' );
 require_once( __DIR__ . '/includes/trust-badge/class-cr-verified-reviews.php' );
+require_once( __DIR__ . '/includes/misc/class-cr-checkout.php' );
 
 /**
  * Check if WooCommerce is active
 **/
 $cr_activated_plugins = (array) get_site_option( 'active_sitewide_plugins', array() );
-if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ||
- 	( is_multisite() && isset( $cr_activated_plugins['woocommerce/woocommerce.php'] ) ) ) {
-	add_action('init', 'ivole_init', 9);
+if (
+	in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ||
+	( is_multisite() && isset( $cr_activated_plugins['woocommerce/woocommerce.php'] ) )
+) {
+	add_action( 'init', 'cusrev_init', 9 );
+	add_action( 'plugins_loaded', 'cr_plugins_loaded' );
+	add_action( 'woocommerce_blocks_loaded', 'cr_woocommerce_blocks_loaded' );
+	add_action( 'after_setup_theme', 'cr_setup_theme', 2 );
 
-	function ivole_init() {
+	function cusrev_init() {
 		load_plugin_textdomain( 'customer-reviews-woocommerce', FALSE, basename( dirname( __FILE__ ) ) . '/languages' );
 
 		if ( "" == ivole_get_site_url() ) {
 			ivole_set_duplicate_site_url_lock();
 		}
 
-		$ivole = new Ivole();
+		$cusrev = new Ivole();
 	}
-
-	add_action( 'plugins_loaded', 'cr_plugins_loaded', 1 );
-	add_action( 'plugins_loaded', 'cr_plugins_loaded_imp_exp' );
 
 	function cr_plugins_loaded() {
 		$cr_qtranslate = new CR_QTranslate();
-	}
-
-	function cr_plugins_loaded_imp_exp() {
 		if( is_admin() || wp_doing_cron() ) {
 			CR_Reviews_Importer::init_background_importer();
 			CR_Reviews_Exporter::init_background_exporter();
 		}
 	}
 
-	add_action( 'after_setup_theme', 'cr_setup_theme', 2 );
+	function cr_woocommerce_blocks_loaded() {
+		$cr_checkout = new CR_Checkout();
+	}
 
 	function cr_setup_theme() {
 		if (
-			1 === preg_match( '~' . CR_Local_Forms::FORMS_SLUG . '/(?P<form>[\w]{13})/?(\?r=[\w]{16})?$|' . CR_Local_Forms::FORMS_SLUG . '/(?P<form>' . CR_Local_Forms::TEST_FORM . ')/?(\?r=[\w]{16})?$~iJ', $_SERVER['REQUEST_URI'], $matches )
+			1 === preg_match( '~' . CR_Local_Forms::FORMS_SLUG . '/(?P<form>[\w]{13})/?\?.*r=(?P<email>[\w]{16})|' . CR_Local_Forms::FORMS_SLUG . '/(?P<form>' . CR_Local_Forms::TEST_FORM . ')/?\?.*r=(?P<email>[\w]{16})~iJ', $_SERVER['REQUEST_URI'], $matches ) ||
+			1 === preg_match( '~' . CR_Local_Forms::FORMS_SLUG . '/(?P<form>[\w]{13})/?|' . CR_Local_Forms::FORMS_SLUG . '/(?P<form>' . CR_Local_Forms::TEST_FORM . ')/?~iJ', $_SERVER['REQUEST_URI'], $matches )
 		) {
 			if ( isset( $matches['form'] ) ) {
-				$cr_local_forms = new CR_Local_Forms( $matches['form'] );
+				$ext_id = isset( $matches['email'] ) ? $matches['email'] : '';
+				$cr_local_forms = new CR_Local_Forms( $matches['form'], $ext_id );
 				$cr_local_forms->output();
 				exit();
 			}
 		} elseif (
-			1 === preg_match( '~' . CR_Local_Forms::PIXEL_SLUG . '/(?P<pixel>[\w]{16}).png|' . CR_Local_Forms::PIXEL_SLUG . '/(?P<pixel>' . CR_Local_Forms::TEST_FORM . ').png/?$~iJ', $_SERVER['REQUEST_URI'], $matches )
+			1 === preg_match( '~' . CR_Local_Forms::PIXEL_SLUG . '/(?P<pixel>[\w]{16}).png|' . CR_Local_Forms::PIXEL_SLUG . '/(?P<pixel>' . CR_Local_Forms::TEST_FORM . ').png~iJ', $_SERVER['REQUEST_URI'], $matches )
 		) {
 			if ( isset( $matches['pixel'] ) ) {
 				CR_Local_Forms::render_pixel( $matches['pixel'] );

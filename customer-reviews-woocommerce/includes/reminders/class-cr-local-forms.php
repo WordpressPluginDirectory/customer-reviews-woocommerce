@@ -30,7 +30,7 @@ if ( ! class_exists( 'CR_Local_Forms' ) ) :
 		const PIXEL_SLUG = 'cusrev/pix';
 		const PIXEL_DIV = '<div style="line-height:0;"><img src="%s" style="padding:0;margin:0;height:1px;width:1px;line-height:0;"/></div>';
 
-		public function __construct( $id ) {
+		public function __construct( $id, $email_id ) {
 			$this->form_id = $id;
 
 			global $wpdb;
@@ -76,6 +76,9 @@ if ( ! class_exists( 'CR_Local_Forms' ) ) :
 						'items' => $db_items
 					), array( 'formId' => $this->form_id ) );
 				}
+				// log a view of the form
+				$log = new CR_Reminders_Log();
+				$log->form_opened( $email_id );
 			} else {
 				$this->form_id = 0;
 			}

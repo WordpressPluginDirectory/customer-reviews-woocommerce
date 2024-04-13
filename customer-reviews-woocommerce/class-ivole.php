@@ -58,7 +58,6 @@ require_once( __DIR__ . '/includes/google/class-cr-product-feed-identifiers.php'
 require_once( __DIR__ . '/includes/google/class-cr-product-feed-attributes.php' );
 require_once( __DIR__ . '/includes/google/class-cr-product-feed-reviews.php' );
 require_once( __DIR__ . '/includes/google/class-cr-product-fields.php' );
-require_once( __DIR__ . '/includes/misc/class-cr-checkout.php' );
 require_once( __DIR__ . '/includes/misc/class-cr-admin-menu-diagnostics.php' );
 require_once( __DIR__ . '/includes/import-export/class-cr-reviews-importer.php' );
 require_once( __DIR__ . '/includes/import-export/class-cr-admin-menu-import.php' );
@@ -77,7 +76,7 @@ require_once( __DIR__ . '/includes/qna/class-cr-qna-email.php' );
 require_once( __DIR__ . '/includes/analytics/class-cr-reminders-log.php' );
 
 class Ivole {
-	const CR_VERSION = '5.45.0';
+	const CR_VERSION = '5.47.0';
 
 	public function __construct() {
 		if( function_exists( 'wc' ) ) {
@@ -88,7 +87,6 @@ class Ivole {
 			$cr_endpoint_replies = new CR_Endpoint_Replies();
 			$cr_referrals = new CR_Referrals();
 			$cr_structured_data = new CR_StructuredData();
-			$cr_checkout = new CR_Checkout();
 			$cr_product_fields = new CR_Product_Fields();
 			$cr_ajax_reviews = new CR_Ajax_Reviews();
 			$cr_tags = new CR_Tags();
@@ -99,12 +97,10 @@ class Ivole {
 			new CR_Local_Forms_Ajax();
 			new CR_Reviews_Notifications();
 
-			// if( 'yes' === get_option( 'ivole_reviews_shortcode', 'no' ) ) {
-				$cr_all_reviews = new CR_All_Reviews();
-				$cr_reviews_grid = new CR_Reviews_Grid();
-				$cr_reviews_slider = new CR_Reviews_Slider();
-				$cr_qna_shortcode = new CR_Qna_Shortcode( $cr_qna );
-			// }
+			$cr_all_reviews = new CR_All_Reviews();
+			$cr_reviews_grid = new CR_Reviews_Grid();
+			$cr_reviews_slider = new CR_Reviews_Slider();
+			$cr_qna_shortcode = new CR_Qna_Shortcode( $cr_qna );
 
 			if ( is_admin() ) {
 				$reviews_admin_menu = new Ivole_Reviews_Admin_Menu();

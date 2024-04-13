@@ -175,7 +175,7 @@ if ( ! class_exists( 'CR_Custom_Questions' ) ) :
 						case 'comment':
 						case 'number':
 						case 'text':
-							if( isset( $this->questions[$i]->value ) ) {
+							if( isset( $this->questions[$i]->value ) && $this->questions[$i]->value ) {
 								if ( 2 === $f ) {
 									// slider layout
 									$output .= '<div class="cr-sldr-custom-question">';

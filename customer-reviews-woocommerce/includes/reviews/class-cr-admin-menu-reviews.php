@@ -433,8 +433,7 @@ if ( ! class_exists( 'Ivole_Reviews_Admin_Menu' ) ):
 				wp_die( $comment_id->get_error_message() );
 			}
 
-			//error_log( print_r( $_POST, true ) );
-			//send a copy of the reply to CR if a checkbox was enabled
+			// send a copy of the reply to CR if a checkbox was enabled
 			if( isset( $_POST['ivole_replyto_cr'] ) && 'yes' === $_POST['ivole_replyto_cr'] ) {
 				$cr_reply = new CR_Replies( $comment_id );
 			}

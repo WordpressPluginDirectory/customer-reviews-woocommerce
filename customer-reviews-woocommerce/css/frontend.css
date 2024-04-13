@@ -106,6 +106,14 @@ div.iv-comment-image img {
 	line-height: 0;
 	cursor: pointer;
 }
+.cr-comment-videos .cr-comment-video.cr-comment-video-modal .cr-comment-video-close .cr-close-button-svg {
+	display: block;
+	width: 18px;
+	height: 18px;
+}
+.cr-comment-videos .cr-comment-video.cr-comment-video-modal .cr-comment-video-close .cr-close-button-svg-p {
+	fill: #ffffff;
+}
 .cr-comment-videos .cr-comment-video .cr-video-cont {
 	display: flex;
 	position: relative;

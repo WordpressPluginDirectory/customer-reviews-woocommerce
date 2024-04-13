@@ -28,8 +28,22 @@ if ( ! class_exists( 'CR_Checkout' ) ) :
 					$wpml_current_language = apply_filters( 'wpml_current_language', NULL );
 					$this->consent_text = apply_filters( 'wpml_translate_single_string', $this->consent_text, 'ivole', 'ivole_customer_consent_text', $wpml_current_language );
 				}
+				//
+				if ( function_exists( '__experimental_woocommerce_blocks_register_checkout_field' ) ) {
+					__experimental_woocommerce_blocks_register_checkout_field(
+						array(
+							'id'            => 'cusrev/checkout-consent',
+							'label'         => $this->consent_text,
+							'optionalLabel' => $this->consent_text,
+							'location'      => 'additional',
+							'type'          => 'checkbox',
+						)
+					);
+				}
+				//
 				add_action( 'woocommerce_checkout_terms_and_conditions', array( $this, 'display_cr_checkbox' ), 40 );
-				add_action('woocommerce_checkout_update_order_meta', array( $this, 'cr_checkbox_meta' ) );
+				add_action( 'woocommerce_checkout_update_order_meta', array( $this, 'cr_checkbox_meta' ) );
+				add_action( 'woocommerce_store_api_checkout_order_processed', array( $this, 'cr_api_checkbox_meta' ) );
 				add_action( 'wp_enqueue_scripts', array( $this, 'cr_checkout_style' ) );
 				add_filter( 'kco_additional_checkboxes', array( $this, 'klarna_cr_checkbox' ) );
 				add_action( 'kco_wc_payment_complete', array( $this, 'klarna_cr_payment_complete' ) );
@@ -62,8 +76,8 @@ if ( ! class_exists( 'CR_Checkout' ) ) :
 		public function cr_checkout_style() {
 			if( is_checkout() ) {
 				$assets_version = Ivole::CR_VERSION;
-				wp_register_style( 'ivole-frontend-css', plugins_url( '/css/frontend.css', dirname( dirname( __FILE__ ) ) ), array( 'dashicons' ), $assets_version, 'all' );
-				wp_enqueue_style( 'ivole-frontend-css' );
+				wp_register_style( 'cr-frontend-css', plugins_url( '/css/frontend.css', dirname( dirname( __FILE__ ) ) ), array(), $assets_version, 'all' );
+				wp_enqueue_style( 'cr-frontend-css' );
 			}
 		}
 
@@ -112,6 +126,24 @@ if ( ! class_exists( 'CR_Checkout' ) ) :
 						}
 					}
 				}
+			}
+		}
+
+		public function cr_api_checkbox_meta( $order ) {
+			if ( $order instanceof \WC_Order ) {
+				$consent = 'no';
+				$extra_fields = $order->get_meta( '_additional_fields' );
+				if (
+					is_array( $extra_fields ) &&
+					isset( $extra_fields['cusrev/checkout-consent'] ) &&
+					$extra_fields['cusrev/checkout-consent']
+				) {
+					$consent = 'yes';
+					unset( $extra_fields['cusrev/checkout-consent'] );
+					$order->update_meta_data( '_additional_fields', $extra_fields );
+				}
+				$order->update_meta_data( '_ivole_cr_consent', $consent );
+				$order->save();
 			}
 		}
 	}

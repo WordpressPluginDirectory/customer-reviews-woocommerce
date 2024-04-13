@@ -43,15 +43,13 @@
     </ul>
     <br class="clear" />
 
-    <p>
-      <?php
-      if ( 'sent' === $current_tab ) {
-        esc_attr_e( 'A list of review reminders sent by the plugin.', 'customer-reviews-woocommerce' );
-      } else {
-        esc_attr_e( 'A list of review reminders scheduled by the plugin to be sent in the future.', 'customer-reviews-woocommerce' );
-      }
-      ?>
-    </p>
+    <div
+      id="cr_reminders_top_charts"
+      data-nonce="<?php echo wp_create_nonce( 'cr-reminders-top-row' ); ?>"
+      data-tab="<?php echo esc_attr( $current_tab ); ?>"
+      style="display:flex;margin:1em 0;"
+      >
+    </div>
 
     <?php
     if( 'cr' === get_option( 'ivole_scheduler_type', 'wp' ) ) {

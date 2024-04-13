@@ -194,6 +194,9 @@ class CR_Reminders_Log {
 			case 'rmd_opened':
 				$status = 'rmd_opened';
 				break;
+			case 'frm_opened':
+				$status = 'frm_opened';
+				break;
 			default:
 				$status = '';
 				break;
@@ -270,15 +273,6 @@ class CR_Reminders_Log {
 						),
 						array( 'extId' => $extId )
 					);
-				} else {
-					// update 'dateEmailOpened' column only because a form has already been opened or a review has been posted
-					$update_result = $wpdb->update(
-						$this->logs_tbl_name,
-						array(
-							'dateEmailOpened' => gmdate('Y-m-d H:i:s')
-						),
-						array( 'extId' => $extId )
-					);
 				}
 			}
 		}
@@ -302,6 +296,35 @@ class CR_Reminders_Log {
 			return array();
 		}
 	}
+
+	public function form_opened( $extId ) {
+		global $wpdb;
+		if ( 0 === $this->check_create_table() ) {
+			$extId = sanitize_text_field( $extId );
+			if ( $extId ) {
+				// get the current status of the reminder
+				$records = $wpdb->get_results(
+					"SELECT * FROM `$this->logs_tbl_name` WHERE `extId` = '$extId';",
+					ARRAY_A
+				);
+
+				if ( is_array( $records ) && 0 < count( $records ) ) {
+					if ( in_array( $records[0]['status'], array( 'sent', 'error', 'rmd_opened' ) )  ) {
+						// update 'status' and 'dateFormOpened' columns
+						$update_result = $wpdb->update(
+							$this->logs_tbl_name,
+							array(
+								'status' => 'frm_opened',
+								'dateFormOpened' => gmdate('Y-m-d H:i:s')
+							),
+							array( 'extId' => $extId )
+						);
+					}
+				}
+			}
+		}
+	}
+
 }
 
 endif;

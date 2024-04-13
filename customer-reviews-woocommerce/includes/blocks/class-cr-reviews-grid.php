@@ -700,8 +700,8 @@ if ( ! class_exists( 'CR_Reviews_Grid' ) ) {
 			global $current_screen;
 			$assets_version = Ivole::CR_VERSION;
 
-			wp_register_style( 'ivole-frontend-css', plugins_url( '/css/frontend.css', dirname( dirname( __FILE__ ) ) ), array( 'dashicons' ), $assets_version, 'all' );
-			wp_enqueue_style( 'ivole-frontend-css' );
+			wp_register_style( 'cr-frontend-css', plugins_url( '/css/frontend.css', dirname( dirname( __FILE__ ) ) ), array(), $assets_version, 'all' );
+			wp_enqueue_style( 'cr-frontend-css' );
 
 			wp_register_style( 'cr-badges-css', plugins_url( '/css/badges.css', dirname( dirname( __FILE__ ) ) ), array(), $assets_version, 'all' );
 

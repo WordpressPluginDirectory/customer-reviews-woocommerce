@@ -474,6 +474,9 @@ if ( ! class_exists( 'CR_Review_Discount_Settings' ) ):
 			if ( empty( $term ) ) {
 				wp_die();
 			}
+			if ( ! current_user_can( 'manage_options' ) ) {
+				wp_die();
+			}
 
 			$data_store = WC_Data_Store::load( 'coupon' );
 			$all = $wpdb->get_results(
@@ -505,6 +508,14 @@ if ( ! class_exists( 'CR_Review_Discount_Settings' ) ):
 		*/
 		public function send_test_email() {
 			global $q_config;
+
+			if ( ! check_ajax_referer( 'cr-send-test-email', 'nonce', false ) ) {
+				wp_send_json( array( 'code' => 96, 'message' => __( 'Error: nonce expired, please reload the page and try again', 'customer-reviews-woocommerce' ) ) );
+			}
+
+			if ( ! current_user_can( 'manage_options' ) ) {
+				wp_send_json( array( 'code' => 80, 'message' => __( 'Error: no authorization to send test emails', 'customer-reviews-woocommerce' ) ) );
+			}
 
 			$email = strval( $_POST['email'] );
 			$media_count = intval( $_POST['media_count'] );

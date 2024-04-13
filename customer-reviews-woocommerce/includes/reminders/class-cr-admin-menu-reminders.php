@@ -24,11 +24,12 @@ class CR_Reminders_Admin_Menu {
 		 * @since 3.5
 		 */
 		public function __construct() {
-		$this->menu_slug = 'cr-reviews-reminders';
+			$this->menu_slug = 'cr-reviews-reminders';
 
-		add_action( 'admin_menu', array( $this, 'register_reminders_menu' ) );
-		add_action( 'admin_enqueue_scripts', array( $this, 'include_scripts' ) );
-		add_filter( 'set-screen-option', array( $this, 'save_screen_options' ), 10, 3 );
+			add_action( 'admin_menu', array( $this, 'register_reminders_menu' ) );
+			add_action( 'admin_enqueue_scripts', array( $this, 'include_scripts' ) );
+			add_filter( 'set-screen-option', array( $this, 'save_screen_options' ), 10, 3 );
+			add_action( 'wp_ajax_cr_get_reminders_top_row_stats', array( $this, 'get_reminders_top_row_stats' ) );
 		}
 
 		/**
@@ -172,7 +173,10 @@ class CR_Reminders_Admin_Menu {
 
 	public function include_scripts() {
 		if ( isset( $_REQUEST['page'] ) && $_REQUEST['page'] === $this->menu_slug ) {
+			$asset_file = include( plugin_dir_path( dirname( dirname( __FILE__ ) ) ) . '/admin/build/index.asset.php' );
 			wp_enqueue_script( 'jquery' );
+			wp_enqueue_style( 'cr-admin-charts', plugins_url( '/admin/build/index.css', dirname( dirname( __FILE__ ) ) ), array(),  Ivole::CR_VERSION );
+			wp_enqueue_script( 'cr-admin-charts', plugins_url( '/admin/build/index.js' , dirname( dirname( __FILE__ ) ) ), $asset_file['dependencies'], Ivole::CR_VERSION, true );
 		}
 	}
 
@@ -192,6 +196,109 @@ class CR_Reminders_Admin_Menu {
 			}
 		}
 		return $value;
+	}
+
+	public function get_reminders_top_row_stats() {
+		check_ajax_referer( 'cr-reminders-top-row', 'cr_nonce' );
+
+		if ( ! current_user_can( 'manage_woocommerce' ) ) {
+			die( '-2' );
+		}
+
+		// count scheduled review reminders by channels
+		$out_channels = array(
+			'email' => (object) array(
+				'label' => 'Email',
+				'count' => 0,
+				'part' => 0,
+				'class' => 'chartColor1'
+			),
+			'wa' => (object) array(
+				'label' => 'WhatsApp',
+				'count' => 0,
+				'part' => 0,
+				'class' => 'chartColor2'
+			)
+		);
+		$crons = _get_cron_array();
+		foreach ( $crons as $timestamp => $hooks ) {
+			if ( isset( $hooks['ivole_send_reminder'] ) && $timestamp > 1 ) {
+				foreach ( $hooks['ivole_send_reminder'] as $hash => $event ) {
+					$ch = 'email';
+					if ( isset( $out_channels[$ch] ) ) {
+						$out_channels[$ch]->count++;
+					}
+				}
+			}
+		}
+
+		// count total scheduled review reminders
+		$total_scheduled = 0;
+		foreach ( $out_channels as $channel ) {
+			$total_scheduled += $channel->count;
+		}
+
+		// calculate percentage of different channels
+		if ( 0 < $total_scheduled ) {
+			foreach ( $out_channels as $channel ) {
+				$channel->part = round( $channel->count / $total_scheduled * 100 );
+				$channel->count = number_format_i18n( $channel->count );
+			}
+		}
+
+		// count sent review reminders
+		$total_sent = 0;
+		$sent_statuses = array(
+			'rmd_opened' => (object) array(
+				'label' => __( 'Reminder opened', 'customer-reviews-woocommerce' ),
+				'count' => 0,
+				'part' => 0,
+				'class' => 'chartColor1'
+			),
+			'frm_opened' => (object) array(
+				'label' => __( 'Form opened', 'customer-reviews-woocommerce' ),
+				'count' => 0,
+				'part' => 0,
+				'class' => 'chartColor2'
+			)
+		);
+		$sent = CR_Reminders_Log::count_reminders( '' );
+		foreach ( $sent as $row ) {
+			switch ( $row['status'] ) {
+				case 'error':
+				case 'sent':
+					$total_sent += $row['total'];
+					break;
+				case 'rmd_opened':
+					$sent_statuses[$row['status']]->count += $row['total'];
+					$total_sent += $row['total'];
+					break;
+				case 'frm_opened':
+					$sent_statuses[$row['status']]->count = $row['total'];
+					$sent_statuses['rmd_opened']->count += $row['total'];
+					$total_sent += $row['total'];
+					break;
+				default:
+					break;
+			}
+		}
+
+		// calculate percentage of different statuses
+		if ( 0 < $total_sent ) {
+			foreach ( $sent_statuses as $status ) {
+				$status->part = round( $status->count / $total_sent * 100 );
+				$status->count = number_format_i18n( $status->count );
+			}
+		}
+
+		wp_send_json(
+			array(
+				'scheduled' => number_format_i18n( $total_scheduled, 0 ),
+				'channels' => array_values( $out_channels ),
+				'sent' => $total_sent,
+				'statuses' => array_values( $sent_statuses )
+			)
+		);
 	}
 
 }

@@ -6,7 +6,7 @@ msgstr ""
 "(latest release)\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/customer-reviews-"
 "woocommerce\n"
-"POT-Creation-Date: 2024-03-18T02:05:13+00:00\n"
+"POT-Creation-Date: 2024-04-12T21:59:06+00:00\n"
 "PO-Revision-Date: 2018-12-10 00:51+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -39,27 +39,27 @@ msgstr ""
 msgid "https://www.cusrev.com/business/"
 msgstr ""
 
-#: class-ivole.php:165
+#: class-ivole.php:161
 msgid "View CusRev documentation"
 msgstr ""
 
-#: class-ivole.php:165
+#: class-ivole.php:161
 msgid "Docs"
 msgstr ""
 
-#: class-ivole.php:166
+#: class-ivole.php:162
 msgid "Visit community forums"
 msgstr ""
 
-#: class-ivole.php:166
+#: class-ivole.php:162
 msgid "Community support"
 msgstr ""
 
-#: class-ivole.php:176
+#: class-ivole.php:172
 msgid "View Customer Reviews settings"
 msgstr ""
 
-#: class-ivole.php:176 includes/settings/class-cr-admin-menu-settings.php:67
+#: class-ivole.php:172 includes/settings/class-cr-admin-menu-settings.php:67
 #: includes/settings/class-cr-admin-menu-settings.php:68
 msgid "Settings"
 msgstr ""
@@ -184,7 +184,7 @@ msgid "0 of 0 reviews"
 msgstr ""
 
 #: includes/blocks/class-cr-all-reviews.php:1178
-#: includes/reminders/class-cr-local-forms.php:196
+#: includes/reminders/class-cr-local-forms.php:201
 #: templates/cr-ajax-product-reviews.php:153
 msgid "Add photos or video to your review"
 msgstr ""
@@ -247,14 +247,14 @@ msgstr ""
 
 #: includes/blocks/class-cr-all-reviews.php:1376
 #: includes/reminders/class-cr-local-forms-ajax.php:99
-#: includes/reminders/class-cr-local-forms.php:145
+#: includes/reminders/class-cr-local-forms.php:150
 #: includes/reviews/class-cr-reviews.php:387
 msgid "The file cannot be uploaded because its size exceeds the limit of %d MB"
 msgstr ""
 
 #: includes/blocks/class-cr-all-reviews.php:1385
 #: includes/reminders/class-cr-local-forms-ajax.php:108
-#: includes/reminders/class-cr-local-forms.php:146
+#: includes/reminders/class-cr-local-forms.php:151
 #: includes/reviews/class-cr-reviews.php:385
 #: includes/reviews/class-cr-reviews.php:1456
 msgid ""
@@ -269,7 +269,7 @@ msgstr ""
 
 #: includes/blocks/class-cr-reviews-grid.php:328
 #: includes/blocks/class-cr-reviews-slider.php:337
-#: includes/reviews/class-cr-admin-menu-reviews.php:609
+#: includes/reviews/class-cr-admin-menu-reviews.php:608
 #: includes/reviews/class-cr-reviews-list-table.php:1155
 #: templates/cr-review.php:105
 msgid "Verified owner"
@@ -331,7 +331,7 @@ msgstr ""
 #: includes/emails/class-cr-wtsap.php:413
 #: includes/emails/class-cr-wtsap.php:674
 #: includes/emails/class-cr-wtsap.php:691
-#: includes/reminders/class-cr-local-forms.php:365
+#: includes/reminders/class-cr-local-forms.php:370
 msgid "Jane"
 msgstr ""
 
@@ -342,7 +342,7 @@ msgstr ""
 #: includes/emails/class-cr-wtsap.php:414
 #: includes/emails/class-cr-wtsap.php:675
 #: includes/emails/class-cr-wtsap.php:692
-#: includes/reminders/class-cr-local-forms.php:366
+#: includes/reminders/class-cr-local-forms.php:371
 msgid "Doe"
 msgstr ""
 
@@ -358,7 +358,7 @@ msgstr ""
 #: includes/emails/class-cr-wtsap.php:420
 #: includes/emails/class-cr-wtsap.php:435
 #: includes/emails/class-cr-wtsap.php:701
-#: includes/reminders/class-cr-local-forms.php:373
+#: includes/reminders/class-cr-local-forms.php:378
 msgid "Item 1 Test"
 msgstr ""
 
@@ -368,7 +368,7 @@ msgstr ""
 #: includes/emails/class-cr-wtsap.php:421
 #: includes/emails/class-cr-wtsap.php:440
 #: includes/emails/class-cr-wtsap.php:706
-#: includes/reminders/class-cr-local-forms.php:378
+#: includes/reminders/class-cr-local-forms.php:383
 msgid "Item 2 Test"
 msgstr ""
 
@@ -657,7 +657,7 @@ msgid "Select a field"
 msgstr ""
 
 #: includes/google/class-cr-google-shopping-feed.php:369
-#: includes/reminders/class-cr-local-forms.php:212
+#: includes/reminders/class-cr-local-forms.php:217
 msgid "Anonymous"
 msgstr ""
 
@@ -1169,7 +1169,7 @@ msgid ""
 msgstr ""
 
 #: includes/google/class-cr-product-feed-status.php:146
-#: includes/reminders/class-cr-reminders-log-table.php:112
+#: includes/reminders/class-cr-reminders-log-table.php:92
 msgid "Status"
 msgstr ""
 
@@ -1333,7 +1333,7 @@ msgstr ""
 #: includes/qna/class-cr-admin-menu-qna.php:187
 #: includes/reminders/class-cr-manual.php:388
 #: includes/reminders/class-cr-manual.php:411
-#: includes/reminders/class-cr-reminders-log-table.php:231
+#: includes/reminders/class-cr-reminders-log-table.php:217
 #: includes/reviews/class-cr-admin-menu-reviews.php:233
 #: includes/reviews/class-cr-admin-menu-reviews.php:242
 #: includes/reviews/class-cr-reviews-media-meta-box.php:93
@@ -1784,6 +1784,7 @@ msgstr ""
 #: includes/settings/class-cr-admin-menu-settings.php:518
 #: includes/settings/class-cr-admin-menu-settings.php:577
 #: includes/settings/class-cr-admin-menu-settings.php:645
+#: includes/settings/class-cr-settings-review-discount.php:513
 msgid "Error: nonce expired, please reload the page and try again"
 msgstr ""
 
@@ -2106,7 +2107,7 @@ msgstr ""
 
 #: includes/qna/class-cr-qna-list-table.php:371
 #: includes/reminders/class-cr-reminders-list-table.php:198
-#: includes/reminders/class-cr-reminders-log-table.php:108
+#: includes/reminders/class-cr-reminders-log-table.php:88
 #: includes/reviews/class-cr-reviews-list-table.php:432
 msgid "Customer"
 msgstr ""
@@ -2268,40 +2269,48 @@ msgstr ""
 msgid "Search Q & A"
 msgstr ""
 
-#: includes/reminders/class-cr-admin-menu-reminders.php:49
 #: includes/reminders/class-cr-admin-menu-reminders.php:50
+#: includes/reminders/class-cr-admin-menu-reminders.php:51
 msgid "Reminders"
 msgstr ""
 
-#: includes/reminders/class-cr-local-forms.php:133
+#: includes/reminders/class-cr-admin-menu-reminders.php:253
+msgid "Reminder opened"
+msgstr ""
+
+#: includes/reminders/class-cr-admin-menu-reminders.php:259
+msgid "Form opened"
+msgstr ""
+
+#: includes/reminders/class-cr-local-forms.php:138
 msgid "* Required"
 msgstr ""
 
-#: includes/reminders/class-cr-local-forms.php:135
+#: includes/reminders/class-cr-local-forms.php:140
 msgid "Thank you for submitting a review!"
 msgstr ""
 
-#: includes/reminders/class-cr-local-forms.php:136
+#: includes/reminders/class-cr-local-forms.php:141
 msgid "Your response has been recorded."
 msgstr ""
 
-#: includes/reminders/class-cr-local-forms.php:137
+#: includes/reminders/class-cr-local-forms.php:142
 msgid "Edit your review"
 msgstr ""
 
-#: includes/reminders/class-cr-local-forms.php:162
+#: includes/reminders/class-cr-local-forms.php:167
 msgid "Comment"
 msgstr ""
 
-#: includes/reminders/class-cr-local-forms.php:163
+#: includes/reminders/class-cr-local-forms.php:168
 msgid "Your comment"
 msgstr ""
 
-#: includes/reminders/class-cr-local-forms.php:168
+#: includes/reminders/class-cr-local-forms.php:173
 msgid "Rate website, customer service and delivery"
 msgstr ""
 
-#: includes/reminders/class-cr-local-forms.php:174
+#: includes/reminders/class-cr-local-forms.php:179
 #: includes/reviews/class-cr-custom-questions.php:452
 #: includes/reviews/class-cr-reviews.php:1642
 #: includes/settings/class-cr-settings-forms-rating.php:64
@@ -2311,31 +2320,31 @@ msgstr ""
 msgid "Rating"
 msgstr ""
 
-#: includes/reminders/class-cr-local-forms.php:195
+#: includes/reminders/class-cr-local-forms.php:200
 msgid "Upload Photos/Video"
 msgstr ""
 
-#: includes/reminders/class-cr-local-forms.php:211
+#: includes/reminders/class-cr-local-forms.php:216
 msgid "Display name"
 msgstr ""
 
-#: includes/reminders/class-cr-local-forms.php:233
+#: includes/reminders/class-cr-local-forms.php:238
 msgid ""
 "By submitting your review, you agree to the <a href=\"%s\" target=\"_blank\" "
 "rel=\"noopener noreferrer\">terms and conditions</a>."
 msgstr ""
 
-#: includes/reminders/class-cr-local-forms.php:234
+#: includes/reminders/class-cr-local-forms.php:239
 #: templates/cr-review-form.php:183 templates/qna-tab.php:75
 #: templates/qna-tab.php:119
 msgid "Submit"
 msgstr ""
 
-#: includes/reminders/class-cr-local-forms.php:252
+#: includes/reminders/class-cr-local-forms.php:257
 msgid "This form was created by %1$s using %2$s plugin."
 msgstr ""
 
-#: includes/reminders/class-cr-local-forms.php:254
+#: includes/reminders/class-cr-local-forms.php:259
 msgid "This form was created by %1$s."
 msgstr ""
 
@@ -2477,7 +2486,7 @@ msgstr ""
 
 #: includes/reminders/class-cr-manual.php:378
 #: includes/settings/class-cr-settings-emails.php:111
-#: includes/settings/class-cr-settings-review-reminder.php:1070
+#: includes/settings/class-cr-settings-review-reminder.php:1084
 #: templates/cr-review-form.php:106
 msgid "Email"
 msgstr ""
@@ -2566,7 +2575,7 @@ msgstr ""
 
 #. translators: please keep '%1$s' and '%2$s' as is
 #: includes/reminders/class-cr-reminders-list-table.php:167
-#: includes/reminders/class-cr-reminders-log-table.php:90
+#: includes/reminders/class-cr-reminders-log-table.php:70
 msgid ""
 "Please log in to your account on %1$sCusRev website%2$s to view and manage "
 "the reminders."
@@ -2586,7 +2595,8 @@ msgid "Order Number"
 msgstr ""
 
 #: includes/reminders/class-cr-reminders-list-table.php:199
-#: templates/reminders-admin-page.php:22
+#: templates/reminders-admin-page.php:22 admin/build/index.js:1
+#: admin/src/Reminders.jsx:32
 msgid "Scheduled"
 msgstr ""
 
@@ -2595,65 +2605,109 @@ msgid "Actions"
 msgstr ""
 
 #: includes/reminders/class-cr-reminders-list-table.php:286
-#: includes/reminders/class-cr-reminders-log-table.php:173
+#: includes/reminders/class-cr-reminders-log-table.php:153
 msgid "Select reminder"
 msgstr ""
 
 #. translators: please keep '%1$s' and '%2$s' as is
-#: includes/reminders/class-cr-reminders-log-table.php:87
+#: includes/reminders/class-cr-reminders-log-table.php:67
 msgid ""
 "The plugin is configured to use CR Cron for sending review reminders "
 "(%1$s'Reminders Scheduler' setting%2$s)."
 msgstr ""
 
-#: includes/reminders/class-cr-reminders-log-table.php:92
+#: includes/reminders/class-cr-reminders-log-table.php:72
 msgid "There are currently no sent review reminders"
 msgstr ""
 
-#: includes/reminders/class-cr-reminders-log-table.php:98
+#: includes/reminders/class-cr-reminders-log-table.php:78
 #: includes/settings/class-cr-settings-forms.php:40
 msgid "Delete"
 msgstr ""
 
-#: includes/reminders/class-cr-reminders-log-table.php:107
+#: includes/reminders/class-cr-reminders-log-table.php:87
 msgid "Order"
 msgstr ""
 
-#: includes/reminders/class-cr-reminders-log-table.php:109
+#: includes/reminders/class-cr-reminders-log-table.php:89
 #: includes/settings/class-cr-settings-forms.php:498
 #: includes/settings/class-cr-settings-forms.php:612
-#: includes/settings/class-cr-settings-review-reminder.php:1027
+#: includes/settings/class-cr-settings-review-reminder.php:1042
 msgid "Type"
 msgstr ""
 
-#: includes/reminders/class-cr-reminders-log-table.php:110
+#: includes/reminders/class-cr-reminders-log-table.php:90
 msgid "Verification"
 msgstr ""
 
-#: includes/reminders/class-cr-reminders-log-table.php:111
-#: includes/reminders/class-cr-reminders-log-table.php:216
-#: templates/reminders-admin-page.php:23
+#: includes/reminders/class-cr-reminders-log-table.php:91
+#: includes/reminders/class-cr-reminders-log-table.php:196
+#: templates/reminders-admin-page.php:23 admin/build/index.js:1
+#: admin/src/Reminders.jsx:44
 msgid "Sent"
 msgstr ""
 
-#: includes/reminders/class-cr-reminders-log-table.php:113
-#: includes/settings/class-cr-settings-review-reminder.php:405
-#: includes/settings/class-cr-settings-review-reminder.php:411
+#: includes/reminders/class-cr-reminders-log-table.php:93
+#: includes/settings/class-cr-settings-review-reminder.php:420
+#: includes/settings/class-cr-settings-review-reminder.php:426
 msgid "Language"
 msgstr ""
 
-#: includes/reminders/class-cr-reminders-log-table.php:196
+#: includes/reminders/class-cr-reminders-log-table.php:176
 msgid "Manual"
 msgstr ""
 
-#: includes/reminders/class-cr-reminders-log-table.php:199
+#: includes/reminders/class-cr-reminders-log-table.php:179
 msgid "Automatic"
 msgstr ""
 
-#: includes/reminders/class-cr-reminders-log-table.php:219
+#: includes/reminders/class-cr-reminders-log-table.php:199
 #: templates/qna-tab.php:95 templates/qna-tab.php:139
 msgid "Error"
 msgstr ""
+
+#: includes/reminders/class-cr-reminders-log-table.php:202
+msgid "Reminder Opened"
+msgstr ""
+
+#: includes/reminders/class-cr-reminders-log-table.php:205
+msgid "Form Opened"
+msgstr ""
+
+#: includes/reminders/class-cr-reminders-log-table.php:234
+msgctxt "reminders"
+msgid "All <span class=\"count\">(%s)</span>"
+msgid_plural "All <span class=\"count\">(%s)</span>"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/reminders/class-cr-reminders-log-table.php:240
+msgctxt "reminders"
+msgid "Error <span class=\"count\">(%s)</span>"
+msgid_plural "Error <span class=\"count\">(%s)</span>"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/reminders/class-cr-reminders-log-table.php:246
+msgctxt "reminders"
+msgid "Sent <span class=\"count\">(%s)</span>"
+msgid_plural "Sent <span class=\"count\">(%s)</span>"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/reminders/class-cr-reminders-log-table.php:252
+msgctxt "reminders"
+msgid "Reminder Opened <span class=\"count\">(%s)</span>"
+msgid_plural "Reminder Opened <span class=\"count\">(%s)</span>"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/reminders/class-cr-reminders-log-table.php:258
+msgctxt "reminders"
+msgid "Form Opened <span class=\"count\">(%s)</span>"
+msgid_plural "Form Opened <span class=\"count\">(%s)</span>"
+msgstr[0] ""
+msgstr[1] ""
 
 #: includes/reviews/class-cr-admin-menu-reviews.php:241
 msgid "Would you like to remove verification from this review?"
@@ -2684,26 +2738,26 @@ msgid ""
 "secret token for additional security when communicating with CusRev service."
 msgstr ""
 
-#: includes/reviews/class-cr-admin-menu-reviews.php:490
+#: includes/reviews/class-cr-admin-menu-reviews.php:489
 msgid "Author Type"
 msgstr ""
 
-#: includes/reviews/class-cr-admin-menu-reviews.php:505
+#: includes/reviews/class-cr-admin-menu-reviews.php:504
 msgid "Customer Reviews (CR)"
 msgstr ""
 
-#: includes/reviews/class-cr-admin-menu-reviews.php:518
+#: includes/reviews/class-cr-admin-menu-reviews.php:517
 msgid "Answers to Custom Questions"
 msgstr ""
 
-#: includes/reviews/class-cr-admin-menu-reviews.php:542
-#: includes/reviews/class-cr-admin-menu-reviews.php:544
-#: includes/reviews/class-cr-admin-menu-reviews.php:551
-#: includes/reviews/class-cr-admin-menu-reviews.php:553
-#: includes/reviews/class-cr-admin-menu-reviews.php:560
-#: includes/reviews/class-cr-admin-menu-reviews.php:562
-#: includes/reviews/class-cr-admin-menu-reviews.php:569
-#: includes/reviews/class-cr-admin-menu-reviews.php:571
+#: includes/reviews/class-cr-admin-menu-reviews.php:541
+#: includes/reviews/class-cr-admin-menu-reviews.php:543
+#: includes/reviews/class-cr-admin-menu-reviews.php:550
+#: includes/reviews/class-cr-admin-menu-reviews.php:552
+#: includes/reviews/class-cr-admin-menu-reviews.php:559
+#: includes/reviews/class-cr-admin-menu-reviews.php:561
+#: includes/reviews/class-cr-admin-menu-reviews.php:568
+#: includes/reviews/class-cr-admin-menu-reviews.php:570
 #: includes/reviews/class-cr-reviews-list-table.php:842
 #: includes/reviews/class-cr-reviews-list-table.php:844
 #: includes/reviews/class-cr-reviews-list-table.php:859
@@ -2715,12 +2769,12 @@ msgstr ""
 msgid "CusRev portal"
 msgstr ""
 
-#: includes/reviews/class-cr-admin-menu-reviews.php:546
+#: includes/reviews/class-cr-admin-menu-reviews.php:545
 #: includes/reviews/class-cr-reviews-list-table.php:849
 msgid "A verified copy of this reply was published on %s"
 msgstr ""
 
-#: includes/reviews/class-cr-admin-menu-reviews.php:555
+#: includes/reviews/class-cr-admin-menu-reviews.php:554
 #: includes/reviews/class-cr-reviews-list-table.php:866
 msgid ""
 "This reply was originally posted on %s. If this copy of the reply is edited, "
@@ -2728,14 +2782,14 @@ msgid ""
 "original reply on CusRev portal."
 msgstr ""
 
-#: includes/reviews/class-cr-admin-menu-reviews.php:564
+#: includes/reviews/class-cr-admin-menu-reviews.php:563
 #: includes/reviews/class-cr-reviews-list-table.php:883
 msgid ""
 "This reply was originally posted on %s. This copy of the reply was modified "
 "and might be different from the original published on CusRev portal."
 msgstr ""
 
-#: includes/reviews/class-cr-admin-menu-reviews.php:573
+#: includes/reviews/class-cr-admin-menu-reviews.php:572
 #: includes/reviews/class-cr-reviews-list-table.php:900
 msgid ""
 "A verified copy published on %s could not be updated because it is not the "
@@ -2743,38 +2797,38 @@ msgid ""
 "reply."
 msgstr ""
 
-#: includes/reviews/class-cr-admin-menu-reviews.php:576
+#: includes/reviews/class-cr-admin-menu-reviews.php:575
 #: includes/reviews/class-cr-reviews-list-table.php:906
 msgid "Reply could not be published to CusRev portal. Error "
 msgstr ""
 
-#: includes/reviews/class-cr-admin-menu-reviews.php:597
+#: includes/reviews/class-cr-admin-menu-reviews.php:596
 #: includes/reviews/class-cr-reviews-list-table.php:1158
 #: templates/cr-review.php:108 templates/reviews-grid.php:90
 #: templates/reviews-slider.php:48
 msgid "Reviewer"
 msgstr ""
 
-#: includes/reviews/class-cr-admin-menu-reviews.php:616
-#: includes/reviews/class-cr-admin-menu-reviews.php:625
+#: includes/reviews/class-cr-admin-menu-reviews.php:615
+#: includes/reviews/class-cr-admin-menu-reviews.php:624
 #: includes/reviews/class-cr-reviews-list-table.php:1141
 #: templates/cr-review.php:93
 msgid "Store manager"
 msgstr ""
 
-#: includes/reviews/class-cr-admin-menu-reviews.php:649
+#: includes/reviews/class-cr-admin-menu-reviews.php:648
 msgid ""
 "This reply was originally posted on CusRev portal. This copy of the reply "
 "was modified and might be different from the original reply published on "
 "CusRev portal."
 msgstr ""
 
-#: includes/reviews/class-cr-admin-menu-reviews.php:661
+#: includes/reviews/class-cr-admin-menu-reviews.php:660
 #: includes/reviews/class-cr-reviews-list-table.php:750
 msgid "Feature"
 msgstr ""
 
-#: includes/reviews/class-cr-admin-menu-reviews.php:667
+#: includes/reviews/class-cr-admin-menu-reviews.php:666
 #: includes/reviews/class-cr-reviews-list-table.php:752
 msgid "Unfeature"
 msgstr ""
@@ -3257,7 +3311,7 @@ msgstr ""
 
 #: includes/settings/class-cr-settings-discount-tiers.php:72
 #: includes/settings/class-cr-settings-email-template.php:498
-#: includes/settings/class-cr-settings-review-discount.php:697
+#: includes/settings/class-cr-settings-review-discount.php:708
 msgid "Photos/videos uploaded"
 msgstr ""
 
@@ -3456,7 +3510,7 @@ msgstr ""
 #: includes/settings/class-cr-settings-review-discount.php:41
 #: includes/settings/class-cr-settings-review-discount.php:74
 #: includes/settings/class-cr-settings-review-discount.php:80
-#: includes/settings/class-cr-settings-review-discount.php:601
+#: includes/settings/class-cr-settings-review-discount.php:612
 msgid "Review for Discount"
 msgstr ""
 
@@ -3682,7 +3736,7 @@ msgid "Email Color 2"
 msgstr ""
 
 #: includes/settings/class-cr-settings-email-template.php:501
-#: includes/settings/class-cr-settings-review-discount.php:700
+#: includes/settings/class-cr-settings-review-discount.php:711
 msgid ""
 "Simulate sending of different coupons depending on how many photos/videos a "
 "customer attached to their review. This field can be changed without saving "
@@ -3920,7 +3974,7 @@ msgid ""
 msgstr ""
 
 #: includes/settings/class-cr-settings-forms.php:210
-#: includes/settings/class-cr-settings-review-reminder.php:440
+#: includes/settings/class-cr-settings-review-reminder.php:455
 msgid ""
 "Adjust template of the aggregated review forms that will be created and sent "
 "to customers by CusRev. Modifications will be applied to the next review "
@@ -3930,7 +3984,7 @@ msgid ""
 msgstr ""
 
 #: includes/settings/class-cr-settings-forms.php:212
-#: includes/settings/class-cr-settings-review-reminder.php:445
+#: includes/settings/class-cr-settings-review-reminder.php:460
 msgid ""
 "Adjust template of the aggregated review forms that will be created and sent "
 "to customers. Modifications will be applied to the next review form created "
@@ -4366,7 +4420,7 @@ msgid ""
 msgstr ""
 
 #: includes/settings/class-cr-settings-review-discount.php:82
-#: includes/settings/class-cr-settings-review-discount.php:575
+#: includes/settings/class-cr-settings-review-discount.php:586
 msgid ""
 "Enable generation of discount coupons for customers who provide reviews."
 msgstr ""
@@ -4386,7 +4440,7 @@ msgid "Reply-To Address"
 msgstr ""
 
 #: includes/settings/class-cr-settings-review-discount.php:124
-#: includes/settings/class-cr-settings-review-reminder.php:428
+#: includes/settings/class-cr-settings-review-reminder.php:443
 msgid "Email Template"
 msgstr ""
 
@@ -4446,28 +4500,33 @@ msgstr ""
 msgid "Manually Published"
 msgstr ""
 
-#: includes/settings/class-cr-settings-review-discount.php:574
+#: includes/settings/class-cr-settings-review-discount.php:517
+msgid "Error: no authorization to send test emails"
+msgstr ""
+
+#: includes/settings/class-cr-settings-review-discount.php:585
 msgid "Enable"
 msgstr ""
 
-#: includes/settings/class-cr-settings-review-discount.php:578
-#: includes/settings/class-cr-settings-review-reminder.php:941
+#: includes/settings/class-cr-settings-review-discount.php:589
+#: includes/settings/class-cr-settings-review-reminder.php:956
+#: admin/build/index.js:1 admin/src/Reminders.jsx:35
 msgid "Channel"
 msgstr ""
 
-#: includes/settings/class-cr-settings-review-discount.php:579
+#: includes/settings/class-cr-settings-review-discount.php:590
 msgid ""
 "A channel for sending discount coupons to customers. For example, by email."
 msgstr ""
 
 #. translators: %d is a special symbol that will be replaced with the count of uploaded media files
-#: includes/settings/class-cr-settings-review-discount.php:781
+#: includes/settings/class-cr-settings-review-discount.php:792
 msgid ""
 "Coupons are not enabled in any of the discount tiers for reviews with %d "
 "uploaded media file(s)"
 msgstr ""
 
-#: includes/settings/class-cr-settings-review-discount.php:787
+#: includes/settings/class-cr-settings-review-discount.php:798
 msgid "Please re-save settings and try again"
 msgstr ""
 
@@ -5040,102 +5099,114 @@ msgid ""
 "generated by this plugin."
 msgstr ""
 
-#: includes/settings/class-cr-settings-review-reminder.php:413
+#: includes/settings/class-cr-settings-review-reminder.php:405
+msgid "Track Opens"
+msgstr ""
+
+#: includes/settings/class-cr-settings-review-reminder.php:407
+msgid ""
+"Enable this checkbox to discover when customers open emails with review "
+"invitations by embedding an invisible pixel into email templates and "
+"tracking when it is downloaded. The tracking status will be displayed on the "
+"<a href=\"%s\">Reminders</a> page."
+msgstr ""
+
+#: includes/settings/class-cr-settings-review-reminder.php:428
 msgid "Choose one of the available languages."
 msgstr ""
 
-#: includes/settings/class-cr-settings-review-reminder.php:430
+#: includes/settings/class-cr-settings-review-reminder.php:445
 msgid ""
 "The email template of review reminders can be configured on the <a "
 "href=\"%s\">Emails</a> tab."
 msgstr ""
 
-#: includes/settings/class-cr-settings-review-reminder.php:450
+#: includes/settings/class-cr-settings-review-reminder.php:465
 msgid "Customer Consent"
 msgstr ""
 
-#: includes/settings/class-cr-settings-review-reminder.php:451
+#: includes/settings/class-cr-settings-review-reminder.php:466
 msgid ""
 "If this option is enabled, customers will be asked to tick a checkbox on the "
 "checkout page to indicate that they would like to receive an invitation to "
 "review their order."
 msgstr ""
 
-#: includes/settings/class-cr-settings-review-reminder.php:458
+#: includes/settings/class-cr-settings-review-reminder.php:473
 msgid "Review Form Template"
 msgstr ""
 
-#: includes/settings/class-cr-settings-review-reminder.php:460
+#: includes/settings/class-cr-settings-review-reminder.php:475
 msgid ""
 "The review form template for review reminders can be configured on the <a "
 "href=\"%s\">Forms</a> tab."
 msgstr ""
 
-#: includes/settings/class-cr-settings-review-reminder.php:510
+#: includes/settings/class-cr-settings-review-reminder.php:525
 msgid ""
 "Before you can send emails via CusRev (AWS SES) mailer, it is necessary to "
 "verify that you own the email address. If you have not verified an email "
 "address yet, click on the Verify button to start the verification process."
 msgstr ""
 
-#: includes/settings/class-cr-settings-review-reminder.php:515
+#: includes/settings/class-cr-settings-review-reminder.php:530
 msgid "Email verification"
 msgstr ""
 
-#: includes/settings/class-cr-settings-review-reminder.php:530
+#: includes/settings/class-cr-settings-review-reminder.php:545
 msgid ""
 "DKIM stands for DomainKeys Identified Mail. DKIM-signed messages help "
 "receiving mail servers validate that a message was not forged or altered in "
 "transit. Enabling DKIM reduces the risk that your emails could go to SPAM."
 msgstr ""
 
-#: includes/settings/class-cr-settings-review-reminder.php:535
+#: includes/settings/class-cr-settings-review-reminder.php:550
 msgid "DKIM signature"
 msgstr ""
 
-#: includes/settings/class-cr-settings-review-reminder.php:548
+#: includes/settings/class-cr-settings-review-reminder.php:563
 msgid "DNS Records"
 msgstr ""
 
-#: includes/settings/class-cr-settings-review-reminder.php:550
+#: includes/settings/class-cr-settings-review-reminder.php:565
 msgid ""
 "DNS records are used for DKIM authentication. Publish CNAME records from the "
 "table below to your domain’s DNS provider to enable DKIM signature for "
 "emails sent by CusRev mailer."
 msgstr ""
 
-#: includes/settings/class-cr-settings-review-reminder.php:868
+#: includes/settings/class-cr-settings-review-reminder.php:883
 msgid ""
 "<strong>CR Cron could not be enabled because no license key was entered. A "
 "license key (free or pro) is required to use CR Cron.</strong>"
 msgstr ""
 
-#: includes/settings/class-cr-settings-review-reminder.php:937
+#: includes/settings/class-cr-settings-review-reminder.php:952
 msgid "Delay (Days)"
 msgstr ""
 
-#: includes/settings/class-cr-settings-review-reminder.php:938
+#: includes/settings/class-cr-settings-review-reminder.php:953
 msgid ""
 "If automatic review reminders are enabled, review invitations will be sent N "
 "days after order status is changed to the value specified in the field "
 "below. N is a sending delay (in days) that needs to be defined here."
 msgstr ""
 
-#: includes/settings/class-cr-settings-review-reminder.php:942
+#: includes/settings/class-cr-settings-review-reminder.php:957
 msgid ""
 "A channel for sending review invitations to customers. For example, by email."
 msgstr ""
 
-#: includes/settings/class-cr-settings-review-reminder.php:964
+#: includes/settings/class-cr-settings-review-reminder.php:979
 msgid "Review reminder"
 msgstr ""
 
-#: includes/settings/class-cr-settings-review-reminder.php:1030
+#: includes/settings/class-cr-settings-review-reminder.php:1045
 #: templates/cr-review-form.php:97
 msgid "Name"
 msgstr ""
 
-#: includes/settings/class-cr-settings-review-reminder.php:1033
+#: includes/settings/class-cr-settings-review-reminder.php:1048
 msgid "Value"
 msgstr ""
 
@@ -5172,7 +5243,6 @@ msgstr ""
 #: includes/settings/class-cr-settings-shortcodes.php:115
 #: includes/settings/class-cr-settings-shortcodes.php:146
 #: includes/settings/class-cr-settings-shortcodes.php:175
-#: includes/settings/class-cr-settings-shortcodes.php:184
 msgid "Parameters:"
 msgstr ""
 
@@ -5483,19 +5553,6 @@ msgid ""
 "provided, the block will display Q & A linked to the corresponding non-"
 "product pages. If the parameter is equal to %3$s, the block will display Q & "
 "A for all non-product pages in the store."
-msgstr ""
-
-#: includes/settings/class-cr-settings-shortcodes.php:182
-msgid ""
-"Use this shortcode to display reviews at different locations on product "
-"pages. This shortcode works ONLY on WooCommerce single product pages. Here "
-"are the default parameters of the shortcode:"
-msgstr ""
-
-#: includes/settings/class-cr-settings-shortcodes.php:186
-msgid ""
-"%1$s is an optional argument. If you have a custom comment template file, "
-"you should specify it here."
 msgstr ""
 
 #: includes/settings/class-cr-settings-trust-badges.php:45
@@ -5878,7 +5935,7 @@ msgstr ""
 msgid "Age Restriction setting update error #99."
 msgstr ""
 
-#: ivole.php:153
+#: ivole.php:166
 msgid ""
 "It looks like this site has moved or is a duplicate site. %1$sCustomer "
 "Reviews for WooCommerce%2$s has disabled sending automatic review reminder "
@@ -5886,11 +5943,11 @@ msgid ""
 "environment."
 msgstr ""
 
-#: ivole.php:155
+#: ivole.php:168
 msgid "Hide this message (but don't enable automatic review reminders)"
 msgstr ""
 
-#: ivole.php:156
+#: ivole.php:169
 msgid "Enable automatic review reminders"
 msgstr ""
 
@@ -6093,28 +6150,19 @@ msgstr ""
 msgid "Scheduled Review Reminders"
 msgstr ""
 
-#: templates/reminders-admin-page.php:49
-msgid "A list of review reminders sent by the plugin."
-msgstr ""
-
-#: templates/reminders-admin-page.php:51
-msgid ""
-"A list of review reminders scheduled by the plugin to be sent in the future."
-msgstr ""
-
-#: templates/reminders-admin-page.php:69
+#: templates/reminders-admin-page.php:67
 msgid "Search Reminders"
 msgstr ""
 
-#: templates/reminders-admin-page.php:86
+#: templates/reminders-admin-page.php:84
 msgid "Are you sure you want to cancel the review reminder(s)?"
 msgstr ""
 
-#: templates/reminders-admin-page.php:90
+#: templates/reminders-admin-page.php:88
 msgid "Are you sure you want to send the review reminder(s) now?"
 msgstr ""
 
-#: templates/reminders-admin-page.php:94
+#: templates/reminders-admin-page.php:92
 msgid "Are you sure you want to delete selected log record(s)?"
 msgstr ""
 
@@ -6130,6 +6178,14 @@ msgstr ""
 
 #: templates/reviews-slider.php:74
 msgid "Show Less"
+msgstr ""
+
+#: admin/build/index.js:1 admin/src/Reminders.jsx:34
+msgid "Review invitations to be sent"
+msgstr ""
+
+#: admin/build/index.js:1 admin/src/Reminders.jsx:46
+msgid "Review invitations have been sent"
 msgstr ""
 
 #. translators: %d is the count of selected tags.

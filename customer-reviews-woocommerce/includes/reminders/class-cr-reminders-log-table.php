@@ -26,7 +26,7 @@ if ( ! class_exists( 'CR_Reminders_Log_Table' ) ) :
 
 			$search = ( isset( $_REQUEST['s'] ) ) ? trim( $_REQUEST['s'] ) : '';
 			$status = isset( $_REQUEST['status'] ) ? $_REQUEST['status'] : 'rmd_all';
-			if ( ! in_array( $status, array( 'rmd_all', 'rmd_error', 'rmd_sent', 'rmd_opened' ) ) ) {
+			if ( ! in_array( $status, array( 'rmd_all', 'rmd_error', 'rmd_sent', 'rmd_opened', 'frm_opened' ) ) ) {
 				$status = 'rmd_all';
 			}
 
@@ -201,6 +201,9 @@ if ( ! class_exists( 'CR_Reminders_Log_Table' ) ) :
 				case 'rmd_opened':
 					$col_status = __( 'Reminder Opened', 'customer-reviews-woocommerce' );
 					break;
+				case 'frm_opened':
+					$col_status = __( 'Form Opened', 'customer-reviews-woocommerce' );
+					break;
 				default:
 					break;
 			}
@@ -251,6 +254,12 @@ if ( ! class_exists( 'CR_Reminders_Log_Table' ) ) :
 					'Reminder Opened <span class="count">(%s)</span>',
 					'reminders',
 					'customer-reviews-woocommerce'
+				),
+				'frm_opened' => _nx_noop(
+					'Form Opened <span class="count">(%s)</span>',
+					'Form Opened <span class="count">(%s)</span>',
+					'reminders',
+					'customer-reviews-woocommerce'
 				)
 			);
 
@@ -286,6 +295,7 @@ if ( ! class_exists( 'CR_Reminders_Log_Table' ) ) :
 				'rmd_error' => 0,
 				'rmd_sent' => 0,
 				'rmd_opened' => 0,
+				'frm_opened' => 0,
 				'rmd_all' => 0
 			);
 
@@ -303,6 +313,10 @@ if ( ! class_exists( 'CR_Reminders_Log_Table' ) ) :
 						break;
 					case 'rmd_opened':
 						$reminders_count['rmd_opened'] = $row['total'];
+						$reminders_count['rmd_all'] += $row['total'];
+						break;
+					case 'frm_opened':
+						$reminders_count['frm_opened'] = $row['total'];
 						$reminders_count['rmd_all'] += $row['total'];
 						break;
 					default:

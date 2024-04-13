@@ -1075,9 +1075,8 @@ if ( ! class_exists( 'CR_Review_Reminder_Settings' ) ):
 			<?php
 		}
 
-		public static function output_channels( $selected_channel ) {
-			$output = '';
-			$available_channels = apply_filters(
+		public static function get_output_channels() {
+			return apply_filters(
 				'cr_available_channels',
 				array(
 					array(
@@ -1086,6 +1085,11 @@ if ( ! class_exists( 'CR_Review_Reminder_Settings' ) ):
 					)
 				)
 			);
+		}
+
+		public static function output_channels( $selected_channel ) {
+			$output = '';
+			$available_channels = self::get_output_channels();
 			foreach( $available_channels as $channel ) {
 				if ( $channel['id'] === $selected_channel ) {
 					$selected = ' selected';

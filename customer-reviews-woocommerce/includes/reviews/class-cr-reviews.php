@@ -271,7 +271,7 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 						$output .= '"></video>';
 						$output .= '<img class="cr-comment-videoicon" src="' . plugin_dir_url( dirname( dirname( __FILE__ ) ) ) . 'img/video.svg" ';
 						$output .= 'alt="' . sprintf( __( 'Video #%1$d from %2$s', 'customer-reviews-woocommerce' ), $k, $comment->comment_author ) . '">';
-						$output .= '<button class="cr-comment-video-close"><span class="dashicons dashicons-no"></span></button>';
+						$output .= '<button class="cr-comment-video-close">' . self::get_close_button_svg() . '</button>';
 						$output .= '</div></div>';
 						$k++;
 					}
@@ -290,7 +290,7 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 							$temp_comment_content .= '"></video>';
 							$temp_comment_content .= '<img class="cr-comment-videoicon" src="' . plugin_dir_url( dirname( dirname( __FILE__ ) ) ) . 'img/video.svg" ';
 							$temp_comment_content .= 'alt="' . sprintf( __( 'Video #%1$d from %2$s', 'customer-reviews-woocommerce' ), $k, $comment->comment_author ) . '">';
-							$temp_comment_content .= '<button class="cr-comment-video-close"><span class="dashicons dashicons-no"></span></button>';
+							$temp_comment_content .= '<button class="cr-comment-video-close">' . self::get_close_button_svg() . '</button>';
 							$temp_comment_content .= '</div></div>';
 							$k++;
 						}
@@ -371,9 +371,9 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 					wp_enqueue_script( 'photoswipe-ui-default' );
 					wp_enqueue_style( 'photoswipe-default-skin' );
 				}
-				wp_register_style( 'ivole-frontend-css', plugins_url( '/css/frontend.css', dirname( dirname( __FILE__ ) ) ), array( 'dashicons' ), $assets_version, 'all' );
+				wp_register_style( 'cr-frontend-css', plugins_url( '/css/frontend.css', dirname( dirname( __FILE__ ) ) ), array(), $assets_version, 'all' );
 				wp_register_script( 'cr-frontend-js', plugins_url( '/js/frontend.js', dirname( dirname( __FILE__ ) ) ), array( 'jquery' ), $assets_version, true );
-				wp_enqueue_style( 'ivole-frontend-css' );
+				wp_enqueue_style( 'cr-frontend-css' );
 				wp_localize_script(
 					'cr-frontend-js',
 					'cr_ajax_object',
@@ -1647,6 +1647,10 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 			</button>
 		</div>
 		<?php
+	}
+
+	public static function get_close_button_svg() {
+		return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="cr-close-button-svg"><rect x="0" fill="none" width="18" height="18"/><g><path class="cr-close-button-svg-p" d="M12.12 10l3.53 3.53-2.12 2.12L10 12.12l-3.54 3.54-2.12-2.12L7.88 10 4.34 6.46l2.12-2.12L10 7.88l3.54-3.53 2.12 2.12z"/></g></svg>';
 	}
 }
 
