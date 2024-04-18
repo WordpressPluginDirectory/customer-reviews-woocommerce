@@ -49,6 +49,10 @@
 			"type": "boolean",
 			"default": false
 		},
+		"add_review": {
+			"type": "boolean",
+			"default": false
+		},
 		"sort_by": {
 			"type": "string",
 			"default": "date",
@@ -68,6 +72,10 @@
 			"default": []
 		},
 		"product_tags": {
+			"type": "array",
+			"default": []
+		},
+		"tag_ids": {
 			"type": "array",
 			"default": []
 		},
@@ -98,5 +106,5 @@
 	},
 	"textdomain": "customer-reviews-woocommerce",
 	"editorScript": "file:./index.js",
-	"editorStyle": "file:./index.css"
+	"editorStyle": "file:./style-index.css"
 }

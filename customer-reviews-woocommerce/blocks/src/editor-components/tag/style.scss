@@ -1,18 +1,28 @@
-.woocommerce-tag {
+$gap: 16px;
+$gap-small: 12px;
+$gap-smaller: 8px;
+$gap-smallest: 4px;
+$studio-white: #fff;
+$gray-900: #1e1e1e;
+$gray-700: #757575;
+$gray-200: #e0e0e0;
+$gray-100: #f0f0f0;
+
+.cr-tag-a {
 	display: inline-flex;
 	margin: 1px 4px 1px 0;
 	overflow: hidden;
 	vertical-align: middle;
 
-	.woocommerce-tag__text,
-	.woocommerce-tag__remove {
+	.cr-tag__text,
+	.cr-tag__remove {
 		display: inline-block;
 		line-height: 24px;
 		background: $gray-100;
 		transition: all 0.2s cubic-bezier(0.4, 1, 0.4, 1);
 	}
 
-	.woocommerce-tag__text {
+	.cr-tag__text {
 		align-self: center;
 		padding: 0 $gap-smaller;
 		border-radius: 12px;
@@ -22,12 +32,12 @@
 		text-overflow: ellipsis;
 	}
 
-	&.has-remove .woocommerce-tag__text {
+	&.has-remove .cr-tag__text {
 		padding: 0 $gap-smallest 0 $gap-smaller;
 		border-radius: 12px 0 0 12px;
 	}
 
-	.woocommerce-tag__remove {
+	.cr-tag__remove {
 		cursor: pointer;
 		height: inherit;
 		padding: 0 2px;

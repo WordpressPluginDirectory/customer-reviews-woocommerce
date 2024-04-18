@@ -10,6 +10,8 @@ import { decodeEntities } from '@wordpress/html-entities';
 import PropTypes from 'prop-types';
 import { withInstanceId } from '@wordpress/compose';
 
+import './style.scss';
+
 /**
  * This component can be used to show an item styled as a "tag", optionally with an `X` + "remove"
  * or with a popover that is shown on click.
@@ -42,10 +44,10 @@ const Tag = ( {
 		return null;
 	}
 	label = decodeEntities( label );
-	const classes = classnames( 'woocommerce-tag', className, {
+	const classes = classnames( 'cr-tag-a', className, {
 		'has-remove': !! remove,
 	} );
-	const labelId = `woocommerce-tag__label-${ instanceId }`;
+	const labelId = `cr-tag__label-${ instanceId }`;
 	const labelTextNode = (
 		<Fragment>
 			<span className="screen-reader-text">{ screenReaderLabel }</span>
@@ -57,14 +59,14 @@ const Tag = ( {
 		<span className={ classes }>
 			{ popoverContents ? (
 				<Button
-					className="woocommerce-tag__text"
+					className="cr-tag__text"
 					id={ labelId }
 					onClick={ () => setIsVisible( true ) }
 				>
 					{ labelTextNode }
 				</Button>
 			) : (
-				<span className="woocommerce-tag__text" id={ labelId }>
+				<span className="cr-tag__text" id={ labelId }>
 					{ labelTextNode }
 				</span>
 			) }
@@ -75,10 +77,10 @@ const Tag = ( {
 			) }
 			{ remove && (
 				<Button
-					className="woocommerce-tag__remove"
+					className="cr-tag__remove"
 					onClick={ remove( id ) }
 					label={ sprintf(
-						__( 'Remove %s', 'woocommerce-admin' ),
+						__( 'Remove %s', 'customer-reviews-woocommerce' ),
 						label
 					) }
 					aria-describedby={ labelId }

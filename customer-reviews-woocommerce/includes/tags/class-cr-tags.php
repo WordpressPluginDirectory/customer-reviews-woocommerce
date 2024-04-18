@@ -48,7 +48,7 @@ if ( ! class_exists( 'CR_Tags' ) ) :
 				'show_in_menu'          => false,
 				'show_in_nav_menus'     => false,
 				'show_admin_column'     => true,
-				'show_in_rest'          => false,
+				'show_in_rest'          => true,
 				'publicly_queryable'    => false,
 				'query_var'             => true
 			));

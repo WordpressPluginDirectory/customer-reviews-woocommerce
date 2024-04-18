@@ -24,7 +24,7 @@ if ( ! class_exists( 'CR_Reminders_Log_Table' ) ) :
 		public function prepare_items() {
 			global $search, $status;
 
-			$search = ( isset( $_REQUEST['s'] ) ) ? trim( $_REQUEST['s'] ) : '';
+			$search = ( isset( $_REQUEST['s'] ) ) ? trim( esc_html( wp_unslash( $_REQUEST['s'] ) ) ) : '';
 			$status = isset( $_REQUEST['status'] ) ? $_REQUEST['status'] : 'rmd_all';
 			if ( ! in_array( $status, array( 'rmd_all', 'rmd_error', 'rmd_sent', 'rmd_opened', 'frm_opened' ) ) ) {
 				$status = 'rmd_all';

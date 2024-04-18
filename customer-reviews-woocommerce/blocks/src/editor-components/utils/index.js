@@ -117,6 +117,28 @@ export const getProductTags = ( { selected = [], search } ) => {
 	);
 };
 
+const getReviewTagsRequests = ( { selected = [], search } ) => {
+	const requests = [
+		addQueryArgs( `wp/v2/cr_tag`, {
+			orderby: 'name',
+			order: 'asc',
+			search,
+		} ),
+	];
+
+	return requests;
+};
+
+export const getReviewTags = ( { selected = [], search } ) => {
+	const requests = getReviewTagsRequests( { selected, search } );
+
+	return Promise.all( requests.map( ( path ) => apiFetch( { path } ) ) ).then(
+		( data ) => {
+			return uniqBy( flatten( data ), 'id' );
+		}
+	);
+};
+
 /**
  * Given a JS error or a fetch response error, parse and format it so it can be displayed to the user.
  *

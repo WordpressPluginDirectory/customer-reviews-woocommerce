@@ -1,28 +1,20 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 2,
-	"name": "cusrev/reviews-grid",
+	"name": "cusrev/reviews-slider",
 	"version": "1.0.0",
-	"title": "Reviews Grid",
+	"title": "Reviews Slider",
 	"category": "widgets",
-	"icon": "screenoptions",
-	"description": "Display a grid with product and store reviews using a masonry layout.",
+	"icon": "slides",
+	"description": "Display a slider with product and store reviews.",
 	"attributes": {
 		"count": {
 			"type": "number",
 			"default": 3
 		},
-		"count_shop_reviews": {
+		"slides_to_show": {
 			"type": "number",
-			"default": 1
-		},
-		"show_more": {
-			"type": "number",
-			"default": 0
-		},
-		"min_chars": {
-			"type": "number",
-			"default": 0
+			"default": 3
 		},
 		"show_products": {
 			"type": "boolean",
@@ -32,31 +24,18 @@
 			"type": "boolean",
 			"default": true
 		},
-		"shop_reviews": {
-			"type": "boolean",
-			"default": false
+		"min_chars": {
+			"type": "number",
+			"default": 0
 		},
-		"inactive_products": {
-			"type": "boolean",
-			"default": false
-		},
-		"avatars": {
-			"type": "string",
-			"default": "initials",
-			"enum": [ "initials", "standard", "false" ]
-		},
-		"show_summary_bar": {
-			"type": "boolean",
-			"default": false
-		},
-		"add_review": {
-			"type": "boolean",
-			"default": false
+		"max_chars": {
+			"type": "number",
+			"default": 0
 		},
 		"sort_by": {
 			"type": "string",
 			"default": "date",
-			"enum": [ "date", "rating", "media" ]
+			"enum": [ "date", "rating" ]
 		},
 		"sort": {
 			"type": "string",
@@ -72,10 +51,6 @@
 			"default": []
 		},
 		"product_tags": {
-			"type": "array",
-			"default": []
-		},
-		"tag_ids": {
 			"type": "array",
 			"default": []
 		},
@@ -102,6 +77,35 @@
 		"color_stars": {
 			"type": "string",
 			"default": "#FFD707"
+		},
+		"shop_reviews": {
+			"type": "boolean",
+			"default": false
+		},
+		"count_shop_reviews": {
+			"type": "number",
+			"default": 1
+		},
+		"inactive_products": {
+			"type": "boolean",
+			"default": false
+		},
+		"autoplay": {
+			"type": "boolean",
+			"default": false
+		},
+		"avatars": {
+			"type": "string",
+			"default": "initials",
+			"enum": [ "initials", "standard", "false" ]
+		},
+		"show_dots": {
+			"type": "boolean",
+			"default": true
+		},
+		"tag_ids": {
+			"type": "array",
+			"default": []
 		}
 	},
 	"textdomain": "customer-reviews-woocommerce",

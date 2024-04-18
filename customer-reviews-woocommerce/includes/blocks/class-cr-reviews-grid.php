@@ -122,7 +122,7 @@ if ( ! class_exists( 'CR_Reviews_Grid' ) ) {
 			}
 
 			$post_ids = $attributes['products'];
-			//add products if product tags are selected
+			// add products if product tags are selected
 			if( !empty( $attributes['product_tags'] ) ) {
 				$tagged_products = CR_Reviews_Slider::cr_products_by_tags( $attributes['product_tags'] );
 				$post_ids = array_merge( $post_ids, $tagged_products );
@@ -145,12 +145,48 @@ if ( ! class_exists( 'CR_Reviews_Grid' ) ) {
 				);
 			}
 
+			$comment_in = array();
+			// tag names in the shortcode scenario
+			if ( isset( $attributes['tags'] ) && $attributes['tags'] ) {
+				$tags = array();
+				foreach ( $attributes['tags'] as $tag_name ) {
+					if ( $tag_name ) {
+						$tag = get_term_by( 'name', $tag_name, 'cr_tag' );
+						if ( $tag && $tag instanceof WP_Term ) {
+							$tags[] = $tag->term_id;
+						}
+					}
+				}
+				if ( $tags ) {
+					$comment_in = get_objects_in_term( $tags, 'cr_tag' );
+					if ( ! is_wp_error( $comment_in ) && $comment_in ) {
+						$comment_in = array_map( 'intval', $comment_in );
+					} else {
+						$comment_in = array();
+					}
+				}
+			}
+			// tag ids in the block scenario
+			if (
+				! $comment_in &&
+				isset( $attributes['tag_ids'] ) &&
+				$attributes['tag_ids']
+			) {
+				$comment_in = get_objects_in_term( $attributes['tag_ids'], 'cr_tag' );
+				if ( ! is_wp_error( $comment_in ) && $comment_in ) {
+					$comment_in = array_map( 'intval', $comment_in );
+				} else {
+					$comment_in = array();
+				}
+			}
+
 			$args = array(
 				'status'      => 'approve',
 				'post_type'   => 'product',
 				'meta_key'    => 'rating',
 				'orderby'     => $order_by,
 				'post__in'    => $post_ids,
+				'comment__in' => $comment_in,
 				'comment__not_in' => $comment__not_in
 			);
 
@@ -243,6 +279,7 @@ if ( ! class_exists( 'CR_Reviews_Grid' ) ) {
 						'post_id'			=> $shop_page_id,
 						'meta_key'    => 'rating',
 						'orderby'     => $order_by,
+						'comment__in' => $comment_in,
 						'comment__not_in' => $comment__not_in
 					);
 
@@ -419,6 +456,7 @@ if ( ! class_exists( 'CR_Reviews_Grid' ) ) {
 					'show_more' => 0,
 					'count_total' => 0,
 					'product_tags' => [],
+					'tags' => [],
 					'min_chars' => 0,
 					'show_summary_bar' => 'false',
 					'add_review' => 'false',
@@ -474,6 +512,13 @@ if ( ! class_exists( 'CR_Reviews_Grid' ) ) {
 			 		! is_array( $attributes['product_tags'] )
 				) {
 					$attributes['product_tags'] = array_filter( array_map( 'trim', explode( ',', $attributes['product_tags'] ) ) );
+				}
+
+				if(
+					! empty( $attributes['tags'] ) &&
+			 		! is_array( $attributes['tags'] )
+				) {
+					$attributes['tags'] = array_filter( array_map( 'trim', explode( ',', $attributes['tags'] ) ) );
 				}
 
 				if ( 'true' === $attributes['add_review'] ) {
@@ -654,33 +699,6 @@ if ( ! class_exists( 'CR_Reviews_Grid' ) ) {
 
 		public static function cr_register_blocks_script() {
 			wp_register_script(
-				'cr-blocks',
-				plugins_url( 'js/blocks.js', dirname( dirname( __FILE__ ) ) ),
-				array( 'wp-element', 'wp-i18n', 'wp-data', 'wp-blocks', 'wp-components', 'lodash', 'ivole-wc-components' ),
-				false,
-				true
-			);
-			wp_register_script(
-				'ivole-wc-components',
-				plugins_url( 'js/wc-components.js', dirname( dirname( __FILE__ ) ) ),
-				array(
-					'wp-components',
-					'wp-data',
-					'wp-element',
-					'wp-hooks',
-					'wp-i18n',
-					'wp-keycodes'
-				),
-				Ivole::CR_VERSION,
-				true
-			);
-			wp_register_style(
-				'ivole-wc-components',
-				plugins_url( 'css/wc-components.css', dirname( dirname( __FILE__ ) ) ),
-				array(),
-				Ivole::CR_VERSION
-			);
-			wp_register_script(
 				'cr-frontend-js',
 				plugins_url('/js/frontend.js', dirname( dirname( __FILE__ ) ) ),
 				array(),
@@ -704,10 +722,6 @@ if ( ! class_exists( 'CR_Reviews_Grid' ) ) {
 			wp_enqueue_style( 'cr-frontend-css' );
 
 			wp_register_style( 'cr-badges-css', plugins_url( '/css/badges.css', dirname( dirname( __FILE__ ) ) ), array(), $assets_version, 'all' );
-
-			if ( ( $current_screen instanceof WP_Screen ) && $current_screen->is_block_editor() ) {
-				wp_enqueue_script( 'cr-blocks' );
-			}
 
 			wp_localize_script(
 				'cr-frontend-js',
@@ -806,6 +820,15 @@ if ( ! class_exists( 'CR_Reviews_Grid' ) ) {
 						if( !in_array( $val, $allowed ) ) $val = 'initials';
 						break;
 					case 'product_tags':
+						$new_val = array();
+						if ( is_array( $val ) && count( $val ) ) {
+							foreach( $val as $item ) {
+								$new_val[] = strval( $item );
+							}
+							$val = $new_val;
+						}
+						break;
+					case 'tags':
 						$new_val = array();
 						if ( is_array( $val ) && count( $val ) ) {
 							foreach( $val as $item ) {
@@ -1059,6 +1082,10 @@ if ( ! class_exists( 'CR_Reviews_Grid' ) ) {
 					if( 1 < count( $words ) ) {
 						$initials .= mb_substr( $words[1], 0, 1 );
 					}
+					$initials = mb_strtoupper( $initials );
+					if ( ! $alt ) {
+						$alt = $initials;
+					}
 
 					$svg_template = '
 						<svg width="%d" height="%d" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -1073,7 +1100,7 @@ if ( ! class_exists( 'CR_Reviews_Grid' ) ) {
 						</svg>
 					';
 
-					$svg = sprintf( $svg_template, $size, $size, $size, $size, $size/2, mb_strtoupper( $initials ) );
+					$svg = sprintf( $svg_template, $size, $size, $size, $size, $size/2, $initials );
 
 					$avatar = sprintf( '<img alt="%s" src="%s" width="%d" height="%d" class="%s"><div class="cr-avatar-check">%s</div>', $alt, 'data:image/svg+xml;base64,' . base64_encode( $svg ), $size, $size, 'avatar', $svg_avatar_check );
 				}

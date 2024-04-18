@@ -4,7 +4,7 @@ Tags: woocommerce, review plugin, review reminder, customer reviews, review for 
 Requires at least: 4.5
 Tested up to: 6.5
 Requires PHP: 7.2
-Stable tag: 5.47.0
+Stable tag: 5.48.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl.html
 
@@ -231,6 +231,10 @@ If you would like to change how reviews are sorted on product pages, it is possi
 
 == Changelog ==
 
+= 5.48.0 =
+* New feature: a review tags parameter can be used in shortcodes and blocks to filter reviews by tags
+* Improvement: a fallback alt text for the initials avatars used with the basic WooCommerce user interface
+* Bug fix: vulnerability in reflected cross-site scripting
 = 5.47.0 =
 * Improvement: cards with additional statistics about review reminders scheduled with WP Cron
 * Improvement: hide empty answers to additional review questions configured as optional

@@ -76,7 +76,7 @@ require_once( __DIR__ . '/includes/qna/class-cr-qna-email.php' );
 require_once( __DIR__ . '/includes/analytics/class-cr-reminders-log.php' );
 
 class Ivole {
-	const CR_VERSION = '5.47.0';
+	const CR_VERSION = '5.48.0';
 
 	public function __construct() {
 		if( function_exists( 'wc' ) ) {

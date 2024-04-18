@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-04-12T21:59:06+00:00\n"
+"POT-Creation-Date: 2024-04-17T00:46:17+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 "X-Domain: customer-reviews-woocommerce\n"
@@ -60,14 +60,14 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:492
-#: includes/blocks/class-cr-all-reviews.php:532
+#: includes/blocks/class-cr-all-reviews.php:522
+#: includes/blocks/class-cr-all-reviews.php:562
 #: templates/cr-ajax-product-reviews.php:132
 msgid "Sorry, no reviews match your current selections"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:527
-#: includes/blocks/class-cr-all-reviews.php:636
+#: includes/blocks/class-cr-all-reviews.php:557
+#: includes/blocks/class-cr-all-reviews.php:666
 #: includes/reviews/class-cr-ajax-reviews.php:309
 #: includes/reviews/class-cr-ajax-reviews.php:388
 #: includes/reviews/class-cr-ajax-reviews.php:460
@@ -75,122 +75,122 @@ msgstr ""
 msgid "Show more reviews (%d)"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:942
-#: includes/blocks/class-cr-reviews-grid.php:906
+#: includes/blocks/class-cr-all-reviews.php:996
+#: includes/blocks/class-cr-reviews-grid.php:929
 #: includes/reviews/class-cr-reviews.php:526
 msgid "Based on %s review"
 msgid_plural "Based on %s reviews"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/blocks/class-cr-all-reviews.php:955
-#: includes/blocks/class-cr-all-reviews.php:959
-#: includes/blocks/class-cr-reviews-grid.php:919
-#: includes/blocks/class-cr-reviews-grid.php:923
+#: includes/blocks/class-cr-all-reviews.php:1009
+#: includes/blocks/class-cr-all-reviews.php:1013
+#: includes/blocks/class-cr-reviews-grid.php:942
+#: includes/blocks/class-cr-reviews-grid.php:946
 #: includes/reviews/class-cr-reviews.php:541
 #: includes/reviews/class-cr-reviews.php:545
 msgid "5 star"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:968
-#: includes/blocks/class-cr-all-reviews.php:972
-#: includes/blocks/class-cr-reviews-grid.php:932
-#: includes/blocks/class-cr-reviews-grid.php:936
+#: includes/blocks/class-cr-all-reviews.php:1022
+#: includes/blocks/class-cr-all-reviews.php:1026
+#: includes/blocks/class-cr-reviews-grid.php:955
+#: includes/blocks/class-cr-reviews-grid.php:959
 #: includes/reviews/class-cr-reviews.php:552
 #: includes/reviews/class-cr-reviews.php:556
 msgid "4 star"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:981
-#: includes/blocks/class-cr-all-reviews.php:985
-#: includes/blocks/class-cr-reviews-grid.php:945
-#: includes/blocks/class-cr-reviews-grid.php:949
+#: includes/blocks/class-cr-all-reviews.php:1035
+#: includes/blocks/class-cr-all-reviews.php:1039
+#: includes/blocks/class-cr-reviews-grid.php:968
+#: includes/blocks/class-cr-reviews-grid.php:972
 #: includes/reviews/class-cr-reviews.php:563
 #: includes/reviews/class-cr-reviews.php:567
 msgid "3 star"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:994
-#: includes/blocks/class-cr-all-reviews.php:998
-#: includes/blocks/class-cr-reviews-grid.php:958
-#: includes/blocks/class-cr-reviews-grid.php:962
+#: includes/blocks/class-cr-all-reviews.php:1048
+#: includes/blocks/class-cr-all-reviews.php:1052
+#: includes/blocks/class-cr-reviews-grid.php:981
+#: includes/blocks/class-cr-reviews-grid.php:985
 #: includes/reviews/class-cr-reviews.php:574
 #: includes/reviews/class-cr-reviews.php:578
 msgid "2 star"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1007
-#: includes/blocks/class-cr-all-reviews.php:1011
-#: includes/blocks/class-cr-reviews-grid.php:971
-#: includes/blocks/class-cr-reviews-grid.php:975
+#: includes/blocks/class-cr-all-reviews.php:1061
+#: includes/blocks/class-cr-all-reviews.php:1065
+#: includes/blocks/class-cr-reviews-grid.php:994
+#: includes/blocks/class-cr-reviews-grid.php:998
 #: includes/reviews/class-cr-reviews-list-table.php:467
 #: includes/reviews/class-cr-reviews.php:585
 #: includes/reviews/class-cr-reviews.php:589
 msgid "1 star"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1023
-#: includes/blocks/class-cr-reviews-grid.php:988
+#: includes/blocks/class-cr-all-reviews.php:1077
+#: includes/blocks/class-cr-reviews-grid.php:1011
 #: includes/reviews/class-cr-reviews.php:1646
 #: templates/cr-review-form.php:31
 msgid "Add a review"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1103
+#: includes/blocks/class-cr-all-reviews.php:1157
 #: includes/reviews/class-cr-reviews.php:1575
 msgid "Most Recent"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1106
+#: includes/blocks/class-cr-all-reviews.php:1160
 #: includes/reviews/class-cr-reviews.php:1579
 msgid "Most Helpful"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1120
+#: includes/blocks/class-cr-all-reviews.php:1174
 msgid "%d star"
 msgid_plural "%d stars"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/blocks/class-cr-all-reviews.php:1126
-#: includes/blocks/class-cr-reviews-grid.php:997
+#: includes/blocks/class-cr-all-reviews.php:1180
+#: includes/blocks/class-cr-reviews-grid.php:1020
 #: includes/reviews/class-cr-reviews.php:601
 msgid "See all %d review"
 msgid_plural "See all %d reviews"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/blocks/class-cr-all-reviews.php:1144
+#: includes/blocks/class-cr-all-reviews.php:1198
 msgid "%d-%d of %d review (%s). %s"
 msgid_plural "%d-%d of %d reviews (%s). %s"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/blocks/class-cr-all-reviews.php:1153
+#: includes/blocks/class-cr-all-reviews.php:1207
 msgid "%d-%d of %d review"
 msgid_plural "%d-%d of %d reviews"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/blocks/class-cr-all-reviews.php:1162
+#: includes/blocks/class-cr-all-reviews.php:1216
 msgid "0 of 0 reviews (%s). %s"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1167
+#: includes/blocks/class-cr-all-reviews.php:1221
 msgid "0 of 0 reviews"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1178
+#: includes/blocks/class-cr-all-reviews.php:1232
 #: includes/reminders/class-cr-local-forms.php:201
 #: templates/cr-ajax-product-reviews.php:153
 msgid "Add photos or video to your review"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1218
+#: includes/blocks/class-cr-all-reviews.php:1272
 msgid "Data validation error"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1219
+#: includes/blocks/class-cr-all-reviews.php:1273
 #: includes/qna/class-cr-admin-menu-qna.php:192
 #: includes/reminders/class-cr-manual.php:405
 #: includes/reviews/class-cr-admin-menu-reviews.php:238
@@ -199,54 +199,54 @@ msgstr ""
 msgid "OK"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1226
+#: includes/blocks/class-cr-all-reviews.php:1280
 #: templates/cr-review-form.php:70
 msgid "Currently, we are not accepting new reviews"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1250
+#: includes/blocks/class-cr-all-reviews.php:1304
 #: templates/cr-review-form.php:61
 msgid "You must be logged in to post a review"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1280
+#: includes/blocks/class-cr-all-reviews.php:1334
 msgid "Only customers who have purchased this product may leave a review. Please use the same email address as in your order for this product."
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1304
+#: includes/blocks/class-cr-all-reviews.php:1358
 msgid "Your review could not be added"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1305
+#: includes/blocks/class-cr-all-reviews.php:1359
 #: includes/qna/class-cr-admin-menu-qna.php:191
 #: includes/reviews/class-cr-admin-menu-reviews.php:237
 msgid "Try again"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1306
+#: includes/blocks/class-cr-all-reviews.php:1360
 msgid "Your review has been successfully added"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1307
+#: includes/blocks/class-cr-all-reviews.php:1361
 msgid "Continue"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1334
+#: includes/blocks/class-cr-all-reviews.php:1388
 msgid "Error: no shop page configured in WooCommerce settings (WooCommerce > Settings > Products > Shop page)"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1336
+#: includes/blocks/class-cr-all-reviews.php:1390
 msgid "Error: no product with ID %d found"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1376
+#: includes/blocks/class-cr-all-reviews.php:1430
 #: includes/reminders/class-cr-local-forms-ajax.php:99
 #: includes/reminders/class-cr-local-forms.php:150
 #: includes/reviews/class-cr-reviews.php:387
 msgid "The file cannot be uploaded because its size exceeds the limit of %d MB"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1385
+#: includes/blocks/class-cr-all-reviews.php:1439
 #: includes/reminders/class-cr-local-forms-ajax.php:108
 #: includes/reminders/class-cr-local-forms.php:151
 #: includes/reviews/class-cr-reviews.php:385
@@ -254,27 +254,27 @@ msgstr ""
 msgid "Error: accepted file types are PNG, JPG, JPEG, GIF, MP4, MPEG, OGG, WEBM, MOV, AVI"
 msgstr ""
 
-#: includes/blocks/class-cr-reviews-grid.php:317
-#: includes/blocks/class-cr-reviews-slider.php:323
+#: includes/blocks/class-cr-reviews-grid.php:354
+#: includes/blocks/class-cr-reviews-slider.php:243
 msgid "No reviews to show"
 msgstr ""
 
-#: includes/blocks/class-cr-reviews-grid.php:328
-#: includes/blocks/class-cr-reviews-slider.php:337
+#: includes/blocks/class-cr-reviews-grid.php:365
+#: includes/blocks/class-cr-reviews-slider.php:257
 #: includes/reviews/class-cr-admin-menu-reviews.php:608
 #: includes/reviews/class-cr-reviews-list-table.php:1155
 #: templates/cr-review.php:105
 msgid "Verified owner"
 msgstr ""
 
-#: includes/blocks/class-cr-reviews-grid.php:332
-#: includes/blocks/class-cr-reviews-grid.php:334
-#: includes/blocks/class-cr-reviews-grid.php:339
-#: includes/blocks/class-cr-reviews-grid.php:341
-#: includes/blocks/class-cr-reviews-slider.php:341
-#: includes/blocks/class-cr-reviews-slider.php:343
-#: includes/blocks/class-cr-reviews-slider.php:348
-#: includes/blocks/class-cr-reviews-slider.php:350
+#: includes/blocks/class-cr-reviews-grid.php:369
+#: includes/blocks/class-cr-reviews-grid.php:371
+#: includes/blocks/class-cr-reviews-grid.php:376
+#: includes/blocks/class-cr-reviews-grid.php:378
+#: includes/blocks/class-cr-reviews-slider.php:261
+#: includes/blocks/class-cr-reviews-slider.php:263
+#: includes/blocks/class-cr-reviews-slider.php:268
+#: includes/blocks/class-cr-reviews-slider.php:270
 #: includes/reviews/class-cr-reviews-list-table.php:628
 #: includes/reviews/class-cr-reviews.php:1139
 #: includes/reviews/class-cr-reviews.php:1141
@@ -283,16 +283,16 @@ msgstr ""
 msgid "Verified review"
 msgstr ""
 
-#: includes/blocks/class-cr-reviews-grid.php:335
-#: includes/blocks/class-cr-reviews-grid.php:342
-#: includes/blocks/class-cr-reviews-slider.php:344
-#: includes/blocks/class-cr-reviews-slider.php:351
+#: includes/blocks/class-cr-reviews-grid.php:372
+#: includes/blocks/class-cr-reviews-grid.php:379
+#: includes/blocks/class-cr-reviews-slider.php:264
+#: includes/blocks/class-cr-reviews-slider.php:271
 #: includes/reviews/class-cr-reviews.php:1150
 #: includes/reviews/class-cr-reviews.php:1208
 msgid "view original"
 msgstr ""
 
-#: includes/blocks/class-cr-reviews-grid.php:996
+#: includes/blocks/class-cr-reviews-grid.php:1019
 #: includes/reviews/class-cr-reviews.php:600
 msgid "Showing %1$d of %2$d review (%3$d star). "
 msgid_plural "Showing %1$d of %2$d reviews (%3$d star). "
@@ -769,10 +769,10 @@ msgid "Exclude out-of-stock products from both XML Product and XML Product Revie
 msgstr ""
 
 #: includes/google/class-cr-product-feed-categories.php:153
-#: blocks/build/reviews-grid/index.js:19
-#: blocks/src/reviews-grid/edit.js:154
-#: js/blocks.js:108
-#: js/blocks.js:630
+#: blocks/build/reviews-grid/index.js:12
+#: blocks/build/reviews-slider/index.js:12
+#: blocks/src/reviews-grid/edit.js:161
+#: blocks/src/reviews-slider/edit.js:168
 msgid "Product Categories"
 msgstr ""
 
@@ -2063,9 +2063,10 @@ msgstr ""
 #: includes/reviews/class-cr-reviews.php:1642
 #: includes/settings/class-cr-settings-forms-rating.php:64
 #: includes/settings/class-cr-settings-forms-rating.php:161
-#: blocks/build/reviews-grid/index.js:19
-#: blocks/src/reviews-grid/edit.js:134
-#: js/blocks.js:588
+#: blocks/build/reviews-grid/index.js:12
+#: blocks/build/reviews-slider/index.js:12
+#: blocks/src/reviews-grid/edit.js:141
+#: blocks/src/reviews-slider/edit.js:149
 msgid "Rating"
 msgstr ""
 
@@ -2599,7 +2600,13 @@ msgstr ""
 
 #: includes/reviews/class-cr-reviews-list-table.php:434
 #: includes/tags/class-cr-admin-menu-tags.php:62
-#: js/blocks.js:289
+#: blocks/build/reviews-grid/index.js:11
+#: blocks/build/reviews-grid/index.js:12
+#: blocks/build/reviews-slider/index.js:11
+#: blocks/build/reviews-slider/index.js:12
+#: blocks/src/editor-components/review-tag-control/index.js:106
+#: blocks/src/reviews-grid/edit.js:198
+#: blocks/src/reviews-slider/edit.js:205
 msgid "Tags"
 msgstr ""
 
@@ -3761,9 +3768,10 @@ msgid "Smiley and frowny faces"
 msgstr ""
 
 #: includes/settings/class-cr-settings-forms.php:415
-#: blocks/build/reviews-grid/index.js:19
-#: blocks/src/reviews-grid/edit.js:234
-#: js/blocks.js:767
+#: blocks/build/reviews-grid/index.js:12
+#: blocks/build/reviews-slider/index.js:12
+#: blocks/src/reviews-grid/edit.js:253
+#: blocks/src/reviews-slider/edit.js:260
 msgid "Stars"
 msgstr ""
 
@@ -4128,16 +4136,18 @@ msgid "Replace the standard ‘verified owner’ label that WooCommerce adds to 
 msgstr ""
 
 #: includes/settings/class-cr-settings-review-extensions.php:163
-#: blocks/build/reviews-grid/index.js:19
-#: blocks/src/reviews-grid/edit.js:122
-#: js/blocks.js:550
+#: blocks/build/reviews-grid/index.js:12
+#: blocks/build/reviews-slider/index.js:12
+#: blocks/src/reviews-grid/edit.js:129
+#: blocks/src/reviews-slider/edit.js:137
 msgid "Standard"
 msgstr ""
 
 #: includes/settings/class-cr-settings-review-extensions.php:164
-#: blocks/build/reviews-grid/index.js:19
-#: blocks/src/reviews-grid/edit.js:121
-#: js/blocks.js:546
+#: blocks/build/reviews-grid/index.js:12
+#: blocks/build/reviews-slider/index.js:12
+#: blocks/src/reviews-grid/edit.js:128
+#: blocks/src/reviews-slider/edit.js:136
 msgid "Initials"
 msgstr ""
 
@@ -4616,9 +4626,9 @@ msgid "Use this shortcode to display a list of all reviews on any page or post. 
 msgstr ""
 
 #: includes/settings/class-cr-settings-shortcodes.php:88
-#: includes/settings/class-cr-settings-shortcodes.php:115
-#: includes/settings/class-cr-settings-shortcodes.php:146
-#: includes/settings/class-cr-settings-shortcodes.php:175
+#: includes/settings/class-cr-settings-shortcodes.php:116
+#: includes/settings/class-cr-settings-shortcodes.php:148
+#: includes/settings/class-cr-settings-shortcodes.php:180
 msgid "Parameters:"
 msgstr ""
 
@@ -4639,7 +4649,7 @@ msgid "%1$s argument defines the total number of product reviews to show. If you
 msgstr ""
 
 #: includes/settings/class-cr-settings-shortcodes.php:94
-#: includes/settings/class-cr-settings-shortcodes.php:137
+#: includes/settings/class-cr-settings-shortcodes.php:139
 msgid "%1$s argument accepts %2$s or %3$s and specifies if a summary bar should be shown on top of the reviews."
 msgstr ""
 
@@ -4652,176 +4662,190 @@ msgid "%1$s argument accepts a comma-separated list of product categories IDs. U
 msgstr ""
 
 #: includes/settings/class-cr-settings-shortcodes.php:97
-#: includes/settings/class-cr-settings-shortcodes.php:123
-#: includes/settings/class-cr-settings-shortcodes.php:155
+#: includes/settings/class-cr-settings-shortcodes.php:124
+#: includes/settings/class-cr-settings-shortcodes.php:157
 msgid "%1$s argument accepts a comma-separated list of product tags. Use this argument to show reviews from products associated with specific tags only."
 msgstr ""
 
 #: includes/settings/class-cr-settings-shortcodes.php:98
-#: includes/settings/class-cr-settings-shortcodes.php:124
-#: includes/settings/class-cr-settings-shortcodes.php:156
-msgid "%1$s parameter accepts %2$s or a comma-separated list of product IDs. Use this parameter to show reviews of the current product only or reviews corresponding to product IDs from the comma-separated list. If you provide an empty list of product IDs like %3$s, the shortcode will display reviews of all products."
+#: includes/settings/class-cr-settings-shortcodes.php:125
+#: includes/settings/class-cr-settings-shortcodes.php:158
+msgid "%1$s argument accepts a comma-separated list of review tags. Use this argument to show reviews associated with specific tags only."
 msgstr ""
 
 #: includes/settings/class-cr-settings-shortcodes.php:99
-#: includes/settings/class-cr-settings-shortcodes.php:131
-#: includes/settings/class-cr-settings-shortcodes.php:161
-msgid "%1$s argument accepts %2$s or %3$s and specifies if general shop reviews will be shown."
+#: includes/settings/class-cr-settings-shortcodes.php:126
+#: includes/settings/class-cr-settings-shortcodes.php:159
+msgid "%1$s parameter accepts %2$s or a comma-separated list of product IDs. Use this parameter to show reviews of the current product only or reviews corresponding to product IDs from the comma-separated list. If you provide an empty list of product IDs like %3$s, the shortcode will display reviews of all products."
 msgstr ""
 
 #: includes/settings/class-cr-settings-shortcodes.php:100
-msgid "%1$s argument defines the total number of shop reviews to show. If you set %2$s to %3$s, then all shop reviews will be shown."
+#: includes/settings/class-cr-settings-shortcodes.php:133
+#: includes/settings/class-cr-settings-shortcodes.php:166
+msgid "%1$s argument accepts %2$s or %3$s and specifies if general shop reviews will be shown."
 msgstr ""
 
 #: includes/settings/class-cr-settings-shortcodes.php:101
-#: includes/settings/class-cr-settings-shortcodes.php:133
-#: includes/settings/class-cr-settings-shortcodes.php:163
-msgid "%1$s argument accepts %2$s or %3$s and specifies if reviews corresponding to unpublished products will be shown."
+msgid "%1$s argument defines the total number of shop reviews to show. If you set %2$s to %3$s, then all shop reviews will be shown."
 msgstr ""
 
 #: includes/settings/class-cr-settings-shortcodes.php:102
-msgid "%1$s argument accepts %2$s or %3$s and specifies if replies to reviews will be shown."
+#: includes/settings/class-cr-settings-shortcodes.php:135
+#: includes/settings/class-cr-settings-shortcodes.php:168
+msgid "%1$s argument accepts %2$s or %3$s and specifies if reviews corresponding to unpublished products will be shown."
 msgstr ""
 
 #: includes/settings/class-cr-settings-shortcodes.php:103
-msgid "%1$s argument defines the number of additional reviews to display after a user presses the 'Show more' button. If this argument is %2$s, then 'Show more' button will be hidden and the standard WordPress pagination will be used."
+msgid "%1$s argument accepts %2$s or %3$s and specifies if replies to reviews will be shown."
 msgstr ""
 
 #: includes/settings/class-cr-settings-shortcodes.php:104
-#: includes/settings/class-cr-settings-shortcodes.php:136
-#: includes/settings/class-cr-settings-shortcodes.php:167
-msgid "%1$s argument defines the minimum number of characters that a review must have to be displayed. If this argument is %2$s, then all reviews (including rating-only reviews) will be displayed."
+msgid "%1$s argument defines the number of additional reviews to display after a user presses the 'Show more' button. If this argument is %2$s, then 'Show more' button will be hidden and the standard WordPress pagination will be used."
 msgstr ""
 
 #: includes/settings/class-cr-settings-shortcodes.php:105
-#: includes/settings/class-cr-settings-shortcodes.php:134
-#: includes/settings/class-cr-settings-shortcodes.php:165
-msgid "%1$s argument accepts %2$s, %3$s or %4$s and defines how avatars of customers will be displayed on reviews."
+#: includes/settings/class-cr-settings-shortcodes.php:138
+#: includes/settings/class-cr-settings-shortcodes.php:172
+msgid "%1$s argument defines the minimum number of characters that a review must have to be displayed. If this argument is %2$s, then all reviews (including rating-only reviews) will be displayed."
 msgstr ""
 
 #: includes/settings/class-cr-settings-shortcodes.php:106
-msgid "%1$s parameter accepts %2$s or %3$s. Use it to display reviews written by anyone or only the current WordPress user."
+#: includes/settings/class-cr-settings-shortcodes.php:136
+#: includes/settings/class-cr-settings-shortcodes.php:170
+msgid "%1$s argument accepts %2$s, %3$s or %4$s and defines how avatars of customers will be displayed on reviews."
 msgstr ""
 
 #: includes/settings/class-cr-settings-shortcodes.php:107
-#: includes/settings/class-cr-settings-shortcodes.php:138
+msgid "%1$s parameter accepts %2$s or %3$s. Use it to display reviews written by anyone or only the current WordPress user."
+msgstr ""
+
+#: includes/settings/class-cr-settings-shortcodes.php:108
+#: includes/settings/class-cr-settings-shortcodes.php:140
 msgid "%1$s parameter accepts %2$s, %3$s or a product ID. Use it to display a form to write a new review. If the shortcode is placed on a page of a product and the parameter is set to %2$s, the review form will correspond to that product. If the shortocode is placed on a non-product page and the parameter is set to %2$s, the review form will collect shop reviews. If the parameter is set to a product ID, the review form will correspond to a product with that ID."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:111
+#: includes/settings/class-cr-settings-shortcodes.php:112
 msgid "Use this shortcode to display a grid of reviews on any page or post. Here are the default parameters of the shortcode:"
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:117
+#: includes/settings/class-cr-settings-shortcodes.php:118
 msgid "%1$s argument defines the number of product reviews to show. It is recommended to keep it between %2$s and %3$s."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:118
-#: includes/settings/class-cr-settings-shortcodes.php:150
+#: includes/settings/class-cr-settings-shortcodes.php:119
+#: includes/settings/class-cr-settings-shortcodes.php:152
 msgid "%1$s argument accepts %2$s or %3$s and defines if pictures and names of products corresponding to the review will be shown below the review."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:119
-#: includes/settings/class-cr-settings-shortcodes.php:151
+#: includes/settings/class-cr-settings-shortcodes.php:120
+#: includes/settings/class-cr-settings-shortcodes.php:153
 msgid "%1$s argument accepts %2$s or %3$s and defines if product names will include links to product pages."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:120
+#: includes/settings/class-cr-settings-shortcodes.php:121
 msgid "%1$s argument accepts %2$s to sort reviews by date, %3$s to sort reviews by rating, and %4$s to sort reviews by the number of attached images."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:121
-#: includes/settings/class-cr-settings-shortcodes.php:153
+#: includes/settings/class-cr-settings-shortcodes.php:122
+#: includes/settings/class-cr-settings-shortcodes.php:155
 msgid "%1$s argument defines how reviews are sorted. Possible values are %2$s, %3$s and %4$s."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:122
-#: includes/settings/class-cr-settings-shortcodes.php:154
+#: includes/settings/class-cr-settings-shortcodes.php:123
+#: includes/settings/class-cr-settings-shortcodes.php:156
 msgid "%1$s argument accepts a comma-separated list of product categories IDs to show only reviews corresponding to specified categories of products."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:125
+#: includes/settings/class-cr-settings-shortcodes.php:127
 msgid "%1$s argument is a hex color code of the external border around the grid of reviews."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:126
-#: includes/settings/class-cr-settings-shortcodes.php:157
+#: includes/settings/class-cr-settings-shortcodes.php:128
+#: includes/settings/class-cr-settings-shortcodes.php:161
 msgid "%1$s argument is a hex color code of the border around review cards."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:127
+#: includes/settings/class-cr-settings-shortcodes.php:129
 msgid "%1$s argument is a hex color code of the external background of the grid."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:128
-#: includes/settings/class-cr-settings-shortcodes.php:158
+#: includes/settings/class-cr-settings-shortcodes.php:130
+#: includes/settings/class-cr-settings-shortcodes.php:163
 msgid "%1$s argument is a hex color code of the background of review cards."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:129
-#: includes/settings/class-cr-settings-shortcodes.php:159
+#: includes/settings/class-cr-settings-shortcodes.php:131
+#: includes/settings/class-cr-settings-shortcodes.php:164
 msgid "%1$s argument is a hex color code of the background color of product areas on review cards."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:130
-#: includes/settings/class-cr-settings-shortcodes.php:160
+#: includes/settings/class-cr-settings-shortcodes.php:132
+#: includes/settings/class-cr-settings-shortcodes.php:165
 msgid "%1$s argument is a hex color code of rating stars on review cards."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:132
-#: includes/settings/class-cr-settings-shortcodes.php:162
+#: includes/settings/class-cr-settings-shortcodes.php:134
+#: includes/settings/class-cr-settings-shortcodes.php:167
 msgid "%1$s argument defines the total number of shop reviews to show. It is recommended to keep it between %2$s and %3$s."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:135
+#: includes/settings/class-cr-settings-shortcodes.php:137
 msgid "%1$s argument defines the number of additional reviews to display after a user presses the 'Show more' button. If this argument is %2$s, then 'Show more' button will be hidden."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:140
+#: includes/settings/class-cr-settings-shortcodes.php:142
 msgid "%1$s shortcode is also available as <strong>Reviews Grid</strong> block in the new WordPress Gutenberg page editor (blocks require WordPress 5.0 or newer)."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:143
+#: includes/settings/class-cr-settings-shortcodes.php:145
 msgid "Use this shortcode to display a slider with reviews on any page or post. Here are the default parameters of the shortcode:"
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:148
+#: includes/settings/class-cr-settings-shortcodes.php:150
 msgid "%1$s argument defines the number of product reviews to show. It is recommended to keep it between %2$s and %3$s. If you do not want to show product reviews, set it to %4$s and enable shop reviews (see the parameters below)."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:149
+#: includes/settings/class-cr-settings-shortcodes.php:151
 msgid "%1$s argument defines the number of slides to show. It is recommended to keep it between %2$s and %3$s."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:152
+#: includes/settings/class-cr-settings-shortcodes.php:154
 msgid "%1$s argument accepts %2$s to sort reviews by date and %3$s to sort reviews by rating."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:164
+#: includes/settings/class-cr-settings-shortcodes.php:160
+msgid "%1$s argument is a hex color code of the external border around the slider."
+msgstr ""
+
+#: includes/settings/class-cr-settings-shortcodes.php:162
+msgid "%1$s argument is a hex color code of the external background of the slider."
+msgstr ""
+
+#: includes/settings/class-cr-settings-shortcodes.php:169
 msgid "%1$s argument accepts %2$s or %3$s and defines if the slider will slide automatically."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:166
+#: includes/settings/class-cr-settings-shortcodes.php:171
 msgid "%1$s argument limits the number of characters that are displayed by default for each review. A 'Show More' button will be added to display the remaining content for reviews that exceed this limit. If you do not want to limit the number of characters to display, set this argument to %2$s."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:168
+#: includes/settings/class-cr-settings-shortcodes.php:173
 msgid "%1$s argument accepts %2$s or %3$s and specifies if dot indicators will be shown."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:170
+#: includes/settings/class-cr-settings-shortcodes.php:175
 msgid "%1$s shortcode is also available as <strong>Reviews Slider</strong> block in the new WordPress Gutenberg page editor (blocks require WordPress 5.0 or newer)."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:173
+#: includes/settings/class-cr-settings-shortcodes.php:178
 msgid "Use this shortcode to display a block with Questions and Answers on any page or post. Here are the default parameters of the shortcode:"
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:177
+#: includes/settings/class-cr-settings-shortcodes.php:182
 msgid "%1$s parameter accepts a comma-separated list of product IDs or %2$s. If product IDs are provided, the block will display Q & A linked to the corresponding products. If the parameter is equal to %3$s, the block will display Q & A for all products in the store."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:178
+#: includes/settings/class-cr-settings-shortcodes.php:183
 msgid "%1$s parameter accepts a comma-separated list of non-product pages (e.g., regular WordPress pages or posts) or %2$s. If non-product page IDs are provided, the block will display Q & A linked to the corresponding non-product pages. If the parameter is equal to %3$s, the block will display Q & A for all non-product pages in the store."
 msgstr ""
 
@@ -5403,8 +5427,8 @@ msgid "%s ago"
 msgstr ""
 
 #: templates/reviews-slider.php:73
-#: blocks/build/reviews-grid/index.js:19
-#: blocks/src/reviews-grid/edit.js:75
+#: blocks/build/reviews-grid/index.js:12
+#: blocks/src/reviews-grid/edit.js:77
 msgid "Show More"
 msgstr ""
 
@@ -5422,174 +5446,347 @@ msgstr ""
 msgid "Review invitations have been sent"
 msgstr ""
 
+#: blocks/build/reviews-grid/index.js:1
+#: blocks/build/reviews-slider/index.js:1
+#: blocks/src/editor-components/tag/index.js:83
+msgid "Remove %s"
+msgstr ""
+
+#: blocks/build/reviews-grid/index.js:1
+#: blocks/build/reviews-slider/index.js:1
+#: blocks/src/editor-components/search-list-control/index.js:32
+msgid "Clear all selected items"
+msgstr ""
+
+#: blocks/build/reviews-grid/index.js:1
+#: blocks/build/reviews-slider/index.js:1
+#: blocks/src/editor-components/search-list-control/index.js:33
+msgid "No items found."
+msgstr ""
+
+#: blocks/build/reviews-grid/index.js:1
+#: blocks/build/reviews-slider/index.js:1
+#: blocks/src/editor-components/search-list-control/index.js:34
+msgid "No results for %s"
+msgstr ""
+
+#: blocks/build/reviews-grid/index.js:1
+#: blocks/build/reviews-slider/index.js:1
+#: blocks/src/editor-components/search-list-control/index.js:35
+msgid "Search for items"
+msgstr ""
+
+#. translators: Number of items selected from list.
+#: blocks/build/reviews-grid/index.js:2
+#: blocks/build/reviews-slider/index.js:2
+#: blocks/src/editor-components/search-list-control/index.js:39
+msgid "%d item selected"
+msgid_plural "%d items selected"
+msgstr[0] ""
+msgstr[1] ""
+
+#: blocks/build/reviews-grid/index.js:2
+#: blocks/build/reviews-slider/index.js:2
+#: blocks/src/editor-components/search-list-control/index.js:47
+msgid "Search results updated."
+msgstr ""
+
+#: blocks/build/reviews-grid/index.js:2
+#: blocks/build/reviews-slider/index.js:2
+#: blocks/src/editor-components/search-list-control/index.js:211
+msgid "Clear all"
+msgstr ""
+
+#. translators: %1$d is the count of products, %2$s is the name of the tag.
+#: blocks/build/reviews-grid/index.js:11
+#: blocks/build/reviews-slider/index.js:11
+#: blocks/src/editor-components/review-tag-control/index.js:102
+msgid "Clear all tags"
+msgstr ""
+
+#: blocks/build/reviews-grid/index.js:11
+#: blocks/build/reviews-slider/index.js:11
+#: blocks/src/editor-components/review-tag-control/index.js:107
+msgid "Your reviews don't have any tags"
+msgstr ""
+
+#: blocks/build/reviews-grid/index.js:11
+#: blocks/build/reviews-slider/index.js:11
+#: blocks/src/editor-components/review-tag-control/index.js:111
+msgid "Search for tags"
+msgstr ""
+
 #. translators: %d is the count of selected tags.
-#: blocks/build/reviews-grid/index.js:19
-#: blocks/src/reviews-grid/edit.js:55
+#: blocks/build/reviews-grid/index.js:12
+#: blocks/build/reviews-slider/index.js:12
+#: blocks/src/editor-components/review-tag-control/index.js:118
+msgid "%d tag selected"
+msgid_plural "%d tags selected"
+msgstr[0] ""
+msgstr[1] ""
+
+#: blocks/build/reviews-grid/index.js:12
+#: blocks/build/reviews-slider/index.js:12
+#: blocks/src/editor-components/review-tag-control/index.js:126
+msgid "Tag search results updated."
+msgstr ""
+
+#: blocks/build/reviews-grid/index.js:12
+#: blocks/build/reviews-slider/index.js:12
+#: blocks/src/editor-components/review-tag-control/index.js:154
+msgid "Display reviews matching"
+msgstr ""
+
+#: blocks/build/reviews-grid/index.js:12
+#: blocks/build/reviews-slider/index.js:12
+#: blocks/src/editor-components/review-tag-control/index.js:158
+msgid "Pick at least two tags to use this setting."
+msgstr ""
+
+#: blocks/build/reviews-grid/index.js:12
+#: blocks/build/reviews-slider/index.js:12
+#: blocks/src/editor-components/review-tag-control/index.js:166
+msgid "Any selected tags"
+msgstr ""
+
+#: blocks/build/reviews-grid/index.js:12
+#: blocks/build/reviews-slider/index.js:12
+#: blocks/src/editor-components/review-tag-control/index.js:173
+msgid "All selected tags"
+msgstr ""
+
+#: blocks/build/reviews-grid/index.js:12
+#: blocks/src/reviews-grid/edit.js:57
 msgid "Review Grid Settings"
 msgstr ""
 
-#: blocks/build/reviews-grid/index.js:19
-#: blocks/src/reviews-grid/edit.js:57
-#: js/blocks.js:412
+#: blocks/build/reviews-grid/index.js:12
+#: blocks/build/reviews-slider/index.js:12
+#: blocks/src/reviews-grid/edit.js:59
+#: blocks/src/reviews-slider/edit.js:58
 msgid "Number of Reviews"
 msgstr ""
 
-#: blocks/build/reviews-grid/index.js:19
-#: blocks/src/reviews-grid/edit.js:66
-#: js/blocks.js:440
+#: blocks/build/reviews-grid/index.js:12
+#: blocks/build/reviews-slider/index.js:12
+#: blocks/src/reviews-grid/edit.js:68
+#: blocks/src/reviews-slider/edit.js:67
 msgid "Number of Shop Reviews"
 msgstr ""
 
-#: blocks/build/reviews-grid/index.js:19
-#: blocks/src/reviews-grid/edit.js:84
-#: js/blocks.js:468
+#: blocks/build/reviews-grid/index.js:12
+#: blocks/build/reviews-slider/index.js:12
+#: blocks/src/reviews-grid/edit.js:86
+#: blocks/src/reviews-slider/edit.js:94
 msgid "Minimum Number of Characters in a Review (0 = Display All Reviews)"
 msgstr ""
 
-#: blocks/build/reviews-grid/index.js:19
-#: blocks/src/reviews-grid/edit.js:93
-#: js/blocks.js:482
+#: blocks/build/reviews-grid/index.js:12
+#: blocks/build/reviews-slider/index.js:12
+#: blocks/src/reviews-grid/edit.js:95
+#: blocks/src/reviews-slider/edit.js:103
 msgid "Show Products"
 msgstr ""
 
-#: blocks/build/reviews-grid/index.js:19
-#: blocks/src/reviews-grid/edit.js:98
-#: js/blocks.js:494
+#: blocks/build/reviews-grid/index.js:12
+#: blocks/build/reviews-slider/index.js:12
+#: blocks/src/reviews-grid/edit.js:100
+#: blocks/src/reviews-slider/edit.js:108
 msgid "Product Links"
 msgstr ""
 
-#: blocks/build/reviews-grid/index.js:19
-#: blocks/src/reviews-grid/edit.js:103
-#: js/blocks.js:506
+#: blocks/build/reviews-grid/index.js:12
+#: blocks/build/reviews-slider/index.js:12
+#: blocks/src/reviews-grid/edit.js:105
+#: blocks/src/reviews-slider/edit.js:113
 msgid "Shop Reviews"
 msgstr ""
 
-#: blocks/build/reviews-grid/index.js:19
-#: blocks/src/reviews-grid/edit.js:108
-#: js/blocks.js:518
+#: blocks/build/reviews-grid/index.js:12
+#: blocks/build/reviews-slider/index.js:12
+#: blocks/src/reviews-grid/edit.js:110
+#: blocks/src/reviews-slider/edit.js:118
 msgid "Inactive Products"
 msgstr ""
 
-#: blocks/build/reviews-grid/index.js:19
-#: blocks/src/reviews-grid/edit.js:113
+#: blocks/build/reviews-grid/index.js:12
+#: blocks/src/reviews-grid/edit.js:115
 msgid "Show Rating Bars"
 msgstr ""
 
-#: blocks/build/reviews-grid/index.js:19
-#: blocks/src/reviews-grid/edit.js:118
-#: js/blocks.js:542
+#: blocks/build/reviews-grid/index.js:12
+#: blocks/src/reviews-grid/edit.js:120
+msgid "Add Review"
+msgstr ""
+
+#: blocks/build/reviews-grid/index.js:12
+#: blocks/build/reviews-slider/index.js:12
+#: blocks/src/reviews-grid/edit.js:125
+#: blocks/src/reviews-slider/edit.js:133
 msgid "Avatars"
 msgstr ""
 
-#: blocks/build/reviews-grid/index.js:19
-#: blocks/src/reviews-grid/edit.js:123
-#: js/blocks.js:554
+#: blocks/build/reviews-grid/index.js:12
+#: blocks/build/reviews-slider/index.js:12
+#: blocks/src/reviews-grid/edit.js:130
+#: blocks/src/reviews-slider/edit.js:138
 msgid "No avatars"
 msgstr ""
 
-#: blocks/build/reviews-grid/index.js:19
-#: blocks/src/reviews-grid/edit.js:130
-#: js/blocks.js:580
+#: blocks/build/reviews-grid/index.js:12
+#: blocks/build/reviews-slider/index.js:12
+#: blocks/src/reviews-grid/edit.js:137
+#: blocks/src/reviews-slider/edit.js:145
 msgid "Sort By"
 msgstr ""
 
-#: blocks/build/reviews-grid/index.js:19
-#: blocks/src/reviews-grid/edit.js:133
-#: js/blocks.js:584
+#: blocks/build/reviews-grid/index.js:12
+#: blocks/build/reviews-slider/index.js:12
+#: blocks/src/reviews-grid/edit.js:140
+#: blocks/src/reviews-slider/edit.js:148
 msgid "Date"
 msgstr ""
 
-#: blocks/build/reviews-grid/index.js:19
-#: blocks/src/reviews-grid/edit.js:135
+#: blocks/build/reviews-grid/index.js:12
+#: blocks/src/reviews-grid/edit.js:142
 msgid "Media"
 msgstr ""
 
-#: blocks/build/reviews-grid/index.js:19
-#: blocks/src/reviews-grid/edit.js:142
-#: js/blocks.js:602
+#: blocks/build/reviews-grid/index.js:12
+#: blocks/build/reviews-slider/index.js:12
+#: blocks/src/reviews-grid/edit.js:149
+#: blocks/src/reviews-slider/edit.js:156
 msgid "Sort Order"
 msgstr ""
 
-#: blocks/build/reviews-grid/index.js:19
-#: blocks/src/reviews-grid/edit.js:145
-#: js/blocks.js:606
+#: blocks/build/reviews-grid/index.js:12
+#: blocks/build/reviews-slider/index.js:12
+#: blocks/src/reviews-grid/edit.js:152
+#: blocks/src/reviews-slider/edit.js:159
 msgid "Ascending"
 msgstr ""
 
-#: blocks/build/reviews-grid/index.js:19
-#: blocks/src/reviews-grid/edit.js:146
-#: js/blocks.js:610
+#: blocks/build/reviews-grid/index.js:12
+#: blocks/build/reviews-slider/index.js:12
+#: blocks/src/reviews-grid/edit.js:153
+#: blocks/src/reviews-slider/edit.js:160
 msgid "Descending"
 msgstr ""
 
-#: blocks/build/reviews-grid/index.js:19
-#: blocks/src/reviews-grid/edit.js:147
-#: js/blocks.js:614
+#: blocks/build/reviews-grid/index.js:12
+#: blocks/build/reviews-slider/index.js:12
+#: blocks/src/reviews-grid/edit.js:154
+#: blocks/src/reviews-slider/edit.js:161
 msgid "Random"
 msgstr ""
 
-#: blocks/build/reviews-grid/index.js:19
-#: blocks/src/reviews-grid/edit.js:156
-#: js/blocks.js:637
+#: blocks/build/reviews-grid/index.js:12
+#: blocks/build/reviews-slider/index.js:12
+#: blocks/src/reviews-grid/edit.js:163
+#: blocks/src/reviews-slider/edit.js:170
 msgid "Select which product categories to show reviews for."
 msgstr ""
 
-#: blocks/build/reviews-grid/index.js:19
-#: blocks/src/reviews-grid/edit.js:167
-#: js/blocks.js:660
+#: blocks/build/reviews-grid/index.js:12
+#: blocks/build/reviews-slider/index.js:12
+#: blocks/src/reviews-grid/edit.js:174
+#: blocks/src/reviews-slider/edit.js:181
 msgid "Products"
 msgstr ""
 
-#: blocks/build/reviews-grid/index.js:19
-#: blocks/src/reviews-grid/edit.js:169
-#: js/blocks.js:667
+#: blocks/build/reviews-grid/index.js:12
+#: blocks/build/reviews-slider/index.js:12
+#: blocks/src/reviews-grid/edit.js:176
+#: blocks/src/reviews-slider/edit.js:183
 msgid "Select which products to show reviews for."
 msgstr ""
 
-#: blocks/build/reviews-grid/index.js:19
-#: blocks/src/reviews-grid/edit.js:179
-#: js/blocks.js:690
+#: blocks/build/reviews-grid/index.js:12
+#: blocks/build/reviews-slider/index.js:12
+#: blocks/src/reviews-grid/edit.js:186
+#: blocks/src/reviews-slider/edit.js:193
 msgid "Product Tags"
 msgstr ""
 
-#: blocks/build/reviews-grid/index.js:19
-#: blocks/src/reviews-grid/edit.js:181
-#: js/blocks.js:697
+#: blocks/build/reviews-grid/index.js:12
+#: blocks/build/reviews-slider/index.js:12
+#: blocks/src/reviews-grid/edit.js:188
+#: blocks/src/reviews-slider/edit.js:195
 msgid "Select which product tags to show reviews for."
 msgstr ""
 
-#: blocks/build/reviews-grid/index.js:19
-#: blocks/src/reviews-grid/edit.js:191
-#: js/blocks.js:720
+#: blocks/build/reviews-grid/index.js:12
+#: blocks/build/reviews-slider/index.js:12
+#: blocks/src/reviews-grid/edit.js:200
+#: blocks/src/reviews-slider/edit.js:207
+msgid "Select which tags to show reviews for."
+msgstr ""
+
+#: blocks/build/reviews-grid/index.js:12
+#: blocks/build/reviews-slider/index.js:12
+#: blocks/src/reviews-grid/edit.js:210
+#: blocks/src/reviews-slider/edit.js:217
 msgid "Colors"
 msgstr ""
 
-#: blocks/build/reviews-grid/index.js:19
-#: blocks/src/reviews-grid/edit.js:194
+#: blocks/build/reviews-grid/index.js:12
+#: blocks/build/reviews-slider/index.js:12
+#: blocks/src/reviews-grid/edit.js:213
+#: blocks/src/reviews-slider/edit.js:220
 msgid "External Border"
 msgstr ""
 
-#: blocks/build/reviews-grid/index.js:19
-#: blocks/src/reviews-grid/edit.js:202
-#: js/blocks.js:728
+#: blocks/build/reviews-grid/index.js:12
+#: blocks/build/reviews-slider/index.js:12
+#: blocks/src/reviews-grid/edit.js:221
+#: blocks/src/reviews-slider/edit.js:228
 msgid "Review Card Border"
 msgstr ""
 
-#: blocks/build/reviews-grid/index.js:19
-#: blocks/src/reviews-grid/edit.js:210
+#: blocks/build/reviews-grid/index.js:12
+#: blocks/build/reviews-slider/index.js:12
+#: blocks/src/reviews-grid/edit.js:229
+#: blocks/src/reviews-slider/edit.js:236
 msgid "Background"
 msgstr ""
 
-#: blocks/build/reviews-grid/index.js:19
-#: blocks/src/reviews-grid/edit.js:218
-#: js/blocks.js:741
+#: blocks/build/reviews-grid/index.js:12
+#: blocks/build/reviews-slider/index.js:12
+#: blocks/src/reviews-grid/edit.js:237
+#: blocks/src/reviews-slider/edit.js:244
 msgid "Review Card Background"
 msgstr ""
 
-#: blocks/build/reviews-grid/index.js:19
-#: blocks/src/reviews-grid/edit.js:226
-#: js/blocks.js:754
+#: blocks/build/reviews-grid/index.js:12
+#: blocks/build/reviews-slider/index.js:12
+#: blocks/src/reviews-grid/edit.js:245
+#: blocks/src/reviews-slider/edit.js:252
 msgid "Product Area Background"
+msgstr ""
+
+#: blocks/build/reviews-slider/index.js:12
+#: blocks/src/reviews-slider/edit.js:56
+msgid "Reviews Slider Settings"
+msgstr ""
+
+#: blocks/build/reviews-slider/index.js:12
+#: blocks/src/reviews-slider/edit.js:76
+msgid "Number of Slides to Show"
+msgstr ""
+
+#: blocks/build/reviews-slider/index.js:12
+#: blocks/src/reviews-slider/edit.js:85
+msgid "Maximum Number of Characters to Display (0 = Unlimited)"
+msgstr ""
+
+#: blocks/build/reviews-slider/index.js:12
+#: blocks/src/reviews-slider/edit.js:123
+msgid "Autoplay"
+msgstr ""
+
+#: blocks/build/reviews-slider/index.js:12
+#: blocks/src/reviews-slider/edit.js:128
+msgid "Show Dots"
 msgstr ""
 
 #: blocks/build/trust-badge/index.js:1
@@ -5662,104 +5859,6 @@ msgstr ""
 msgid "Set a custom background color for the badge"
 msgstr ""
 
-#: js/blocks.js:84
-msgid "%s, has %d product"
-msgid_plural "%s, has %d products"
-msgstr[0] ""
-msgstr[1] ""
-
-#: js/blocks.js:107
-msgid "Clear all product categories"
-msgstr ""
-
-#: js/blocks.js:109
-msgid "Your store doesn't have any product categories."
-msgstr ""
-
-#: js/blocks.js:113
-msgid "Search for product categories"
-msgstr ""
-
-#: js/blocks.js:119
-msgid "%d category selected"
-msgid_plural "%d categories selected"
-msgstr[0] ""
-msgstr[1] ""
-
-#: js/blocks.js:128
-msgid "Category search results updated."
-msgstr ""
-
-#: js/blocks.js:157
-msgid "Display products matching"
-msgstr ""
-
-#: js/blocks.js:158
-msgid "Pick at least two categories to use this setting."
-msgstr ""
-
-#: js/blocks.js:163
-msgid "Any selected categories"
-msgstr ""
-
-#: js/blocks.js:167
-msgid "All selected categories"
-msgstr ""
-
-#: js/blocks.js:288
-msgid "Clear all tags"
-msgstr ""
-
-#: js/blocks.js:290
-msgid "Your store doesn't have any product tags."
-msgstr ""
-
-#: js/blocks.js:294
-msgid "Search for tags to display"
-msgstr ""
-
-#: js/blocks.js:300
-msgid "%d tag selected"
-msgid_plural "%d tags selected"
-msgstr[0] ""
-msgstr[1] ""
-
-#: js/blocks.js:309
-msgid "Tag search results updated."
-msgstr ""
-
-#: js/blocks.js:349
-msgid "Reviews Slider"
-msgstr ""
-
-#: js/blocks.js:351
-msgid "Block showing a slider with WooCommerce product reviews."
-msgstr ""
-
-#: js/blocks.js:390
-msgid "You need to enable \"Reviews Shortcodes\" checkbox in Reviews > Settings > Review Extensions"
-msgstr ""
-
-#: js/blocks.js:406
-msgid "Reviews Slider Settings"
-msgstr ""
-
-#: js/blocks.js:426
-msgid "Number of Slides to Show"
-msgstr ""
-
-#: js/blocks.js:454
-msgid "Maximum Number of Characters to Display (0 = Unlimited)"
-msgstr ""
-
-#: js/blocks.js:530
-msgid "Autoplay"
-msgstr ""
-
-#: js/blocks.js:568
-msgid "Show Dots"
-msgstr ""
-
 #: blocks/build/reviews-grid/block.json
 #: blocks/src/reviews-grid/block.json
 msgctxt "block title"
@@ -5770,6 +5869,18 @@ msgstr ""
 #: blocks/src/reviews-grid/block.json
 msgctxt "block description"
 msgid "Display a grid with product and store reviews using a masonry layout."
+msgstr ""
+
+#: blocks/build/reviews-slider/block.json
+#: blocks/src/reviews-slider/block.json
+msgctxt "block title"
+msgid "Reviews Slider"
+msgstr ""
+
+#: blocks/build/reviews-slider/block.json
+#: blocks/src/reviews-slider/block.json
+msgctxt "block description"
+msgid "Display a slider with product and store reviews."
 msgstr ""
 
 #: blocks/build/trust-badge/block.json

@@ -37,15 +37,14 @@ export default function Edit( { attributes, setAttributes } ) {
 
 	useEffect( () => {
 		//init after render
+		let blockLoaded = false;
 		let blockLoadedInterval = setInterval( function() {
-			if( jQuery(".cr-reviews-grid-inner.cr-colcade-loaded").length ) {
+			if (jQuery(".cr-reviews-slider").length) {
+				blockLoaded = true;
+				jQuery(".cr-reviews-slider").each(function () {
+					if(!jQuery(this).hasClass("slick-initialized")) jQuery(this).slick();
+				});
 				clearInterval( blockLoadedInterval );
-			} else {
-				if( jQuery(".cr-reviews-grid-inner").length ) {
-					if (typeof crResizeAllGridItems === "function") {
-						crResizeAllGridItems();
-					}
-				}
 			}
 		}, 3000 );
 		return () => clearInterval( blockLoadedInterval );
@@ -54,7 +53,7 @@ export default function Edit( { attributes, setAttributes } ) {
 	return (
 		<div { ...useBlockProps() }>
 			<InspectorControls key="setting">
-				<PanelBody title={ __( 'Review Grid Settings', 'customer-reviews-woocommerce' ) } initialOpen={ true }>
+				<PanelBody title={ __( 'Reviews Slider Settings', 'customer-reviews-woocommerce' ) } initialOpen={ true }>
 					<RangeControl
 						label={ __( 'Number of Reviews', 'customer-reviews-woocommerce' ) }
 						value={ attributes.count }
@@ -74,12 +73,21 @@ export default function Edit( { attributes, setAttributes } ) {
 						}
 					/>
 					<RangeControl
-						label={ __( 'Show More', 'customer-reviews-woocommerce' ) }
-						value={ attributes.show_more }
+						label={ __( 'Number of Slides to Show', 'customer-reviews-woocommerce' ) }
+						value={ attributes.slides_to_show }
+						min={ 1 }
+						max={ 6 }
+						onChange={ ( newSlides_to_show ) =>
+							setAttributes( { slides_to_show: newSlides_to_show } )
+						}
+					/>
+					<RangeControl
+						label={ __( 'Maximum Number of Characters to Display (0 = Unlimited)', 'customer-reviews-woocommerce' ) }
+						value={ attributes.max_chars }
 						min={ 0 }
-						max={ 10 }
-						onChange={ ( newShow_more ) =>
-							setAttributes( { show_more: newShow_more } )
+						max={ 9999 }
+						onChange={ ( newMax_chars ) =>
+							setAttributes( { max_chars: newMax_chars } )
 						}
 					/>
 					<RangeControl
@@ -112,14 +120,14 @@ export default function Edit( { attributes, setAttributes } ) {
 						onChange={ () => setAttributes( { inactive_products: ! attributes.inactive_products } ) }
 					/>
 					<ToggleControl
-						label={ __( 'Show Rating Bars', 'customer-reviews-woocommerce' ) }
-						checked={ attributes.show_summary_bar }
-						onChange={ () => setAttributes( { show_summary_bar: ! attributes.show_summary_bar } ) }
+						label={ __( 'Autoplay', 'customer-reviews-woocommerce' ) }
+						checked={ attributes.autoplay }
+						onChange={ () => setAttributes( { autoplay: ! attributes.autoplay } ) }
 					/>
 					<ToggleControl
-						label={ __( 'Add Review', 'customer-reviews-woocommerce' ) }
-						checked={ attributes.add_review }
-						onChange={ () => setAttributes( { add_review: ! attributes.add_review } ) }
+						label={ __( 'Show Dots', 'customer-reviews-woocommerce' ) }
+						checked={ attributes.show_dots }
+						onChange={ () => setAttributes( { show_dots: ! attributes.show_dots } ) }
 					/>
 					<SelectControl
 						label={ __( 'Avatars', 'customer-reviews-woocommerce' ) }
@@ -138,8 +146,7 @@ export default function Edit( { attributes, setAttributes } ) {
 						value={ attributes.sort_by }
 						options={ [
 							{ label: __( 'Date', 'customer-reviews-woocommerce' ), value: 'date' },
-							{ label: __( 'Rating', 'customer-reviews-woocommerce' ), value: 'rating' },
-							{ label: __( 'Media', 'customer-reviews-woocommerce' ), value: 'media' }
+							{ label: __( 'Rating', 'customer-reviews-woocommerce' ), value: 'rating' }
 						] }
 						onChange={ ( newSort_by ) =>
 							setAttributes( { sort_by: newSort_by } )

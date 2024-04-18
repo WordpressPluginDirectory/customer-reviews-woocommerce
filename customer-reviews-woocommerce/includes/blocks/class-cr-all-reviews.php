@@ -50,6 +50,7 @@ if (! class_exists('CR_All_Reviews')) :
 				'inactive_products' => 'false',
 				'show_replies' => 'false',
 				'product_tags' => [],
+				'tags' => [],
 				'show_more' => 5,
 				'min_chars' => 0,
 				'avatars' => 'initials',
@@ -94,6 +95,10 @@ if (! class_exists('CR_All_Reviews')) :
 				$attributes['product_tags'] = array_filter( array_map( 'trim', explode( ',', $attributes['product_tags'] ) ) );
 				$tagged_products = CR_Reviews_Slider::cr_products_by_tags( $attributes['product_tags'] );
 				$attributes['products'] = array_merge( $attributes['products'], $tagged_products );
+			}
+
+			if ( ! empty( $attributes['tags'] ) && ! is_array( $attributes['tags'] ) ) {
+				$attributes['tags'] = array_filter( array_map( 'trim', explode( ',', $attributes['tags'] ) ) );
 			}
 
 			$this->shortcode_atts = shortcode_atts( $defaults, $attributes );
@@ -150,6 +155,7 @@ if (! class_exists('CR_All_Reviews')) :
 			$comments = array();
 
 			// tags
+			$comment_in = array();
 			$reviews_by_tags = '';
 			if ( 0 < count( $this->tags ) ) {
 				$tags_objects = get_objects_in_term( $this->tags, 'cr_tag' );
@@ -208,10 +214,33 @@ if (! class_exists('CR_All_Reviews')) :
 				// search
 				$args['search'] = $this->search;
 
-				// tags product reviews
-				if ( $reviews_by_tags ) {
-					$args['comment__in'] = $reviews_by_tags;
+				// tags passed in the shortcode parameters
+				if ( isset( $this->shortcode_atts['tags'] ) && $this->shortcode_atts['tags'] ) {
+					$tags = array();
+					foreach ( $this->shortcode_atts['tags'] as $tag_name ) {
+						if ( $tag_name ) {
+							$tag = get_term_by( 'name', $tag_name, 'cr_tag' );
+							if ( $tag && $tag instanceof WP_Term ) {
+								$tags[] = $tag->term_id;
+							}
+						}
+					}
+					if ( $tags ) {
+						$comment_in = get_objects_in_term( $tags, 'cr_tag' );
+						if ( ! is_wp_error( $comment_in ) && $comment_in ) {
+							$comment_in = array_map( 'intval', $comment_in );
+						} else {
+							$comment_in = array();
+						}
+					}
 				}
+
+				// filter by tags product reviews via UI
+				if ( $reviews_by_tags ) {
+					$comment_in = array_merge( $comment_in, $reviews_by_tags );
+				}
+
+				$args['comment__in'] = $comment_in;
 
 				if ( ! $this->shortcode_atts['inactive_products'] ) {
 					$args['post_status'] = 'publish';
@@ -321,9 +350,10 @@ if (! class_exists('CR_All_Reviews')) :
 							'status'      => 'approve',
 							'post__in'     => CR_Reviews_List_Table::get_shop_page(),
 							'search'	  => $this->search,
-							'orderby'     => 'comment_date_gmt',
-							'order'       => $this->shortcode_atts['sort'],
-							'type__not_in' => 'cr_qna'
+							'orderby'      => 'comment_date_gmt',
+							'order'        => $this->shortcode_atts['sort'],
+							'type__not_in' => 'cr_qna',
+							'comment__in'  => $comment_in
 						);
 						// filter by the current user if 'users' parameter was provided in the shortcode
 						if ( 'current' === $this->shortcode_atts['users'] ) {
@@ -733,16 +763,39 @@ if (! class_exists('CR_All_Reviews')) :
 		}
 
 		private function count_ratings( $rating ) {
+			// tags passed in the shortcode parameters
+			$comment_in = array();
+			if ( isset( $this->shortcode_atts['tags'] ) && $this->shortcode_atts['tags'] ) {
+				$tags = array();
+				foreach ( $this->shortcode_atts['tags'] as $tag_name ) {
+					if ( $tag_name ) {
+						$tag = get_term_by( 'name', $tag_name, 'cr_tag' );
+						if ( $tag && $tag instanceof WP_Term ) {
+							$tags[] = $tag->term_id;
+						}
+					}
+				}
+				if ( $tags ) {
+					$comment_in = get_objects_in_term( $tags, 'cr_tag' );
+					if ( ! is_wp_error( $comment_in ) && $comment_in ) {
+						$comment_in = array_map( 'intval', $comment_in );
+					} else {
+						$comment_in = array();
+					}
+				}
+			}
+			//
 			$number = $this->shortcode_atts['number'] == -1 ? null : intval( $this->shortcode_atts['number'] );
 			if( 0 < $number || null === $number ) {
 				$args = array(
-					'number'      => $number,
-					'post_type'   => 'product' ,
-					'status' => 'approve',
-					'parent' => 0,
-					'count' => true,
-					'post__in' => $this->shortcode_atts['products'],
-					'type__not_in' => 'cr_qna'
+					'number'       => $number,
+					'post_type'    => 'product' ,
+					'status'       => 'approve',
+					'parent'       => 0,
+					'count'        => true,
+					'post__in'     => $this->shortcode_atts['products'],
+					'type__not_in' => 'cr_qna',
+					'comment__in'   => $comment_in
 				);
 				// filter by the current user if 'users' parameter was provided in the shortcode
 				if ( 'current' === $this->shortcode_atts['users'] ) {
@@ -807,7 +860,8 @@ if (! class_exists('CR_All_Reviews')) :
 						'post__in'     => CR_Reviews_List_Table::get_shop_page(),
 						'meta_key'    => 'rating',
 						'count'       => true,
-						'type__not_in' => 'cr_qna'
+						'type__not_in' => 'cr_qna',
+						'comment__in'   => $comment_in
 					);
 					// filter by the current user if 'users' parameter was provided in the shortcode
 					if ( 'current' === $this->shortcode_atts['users'] ) {

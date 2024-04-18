@@ -35,129 +35,12 @@ if ( ! class_exists( 'CR_Reviews_Slider' ) ) {
 		*/
 		public function register_block() {
 			if ( function_exists( 'register_block_type' ) ) {
-				register_block_type( 'ivole/cusrev-reviews-slider', array(
-					'editor_script' => 'ivole-wc-components',
-
-					'editor_style'  => 'ivole-wc-components',
-
-					'attributes' => array(
-						'count' => array(
-							'type' => 'number',
-							'default' => 3,
-							'minimum' => 1,
-							'maximum' => 6
-						),
-						'slides_to_show' => array(
-							'type' => 'number',
-							'default' => 3,
-							'minimum' => 1,
-							'maximum' => 10
-						),
-						'show_products' => array(
-							'type' => 'boolean',
-							'default' => true
-						),
-						'product_links' => array(
-							'type' => 'boolean',
-							'default' => true
-						),
-						'sort_by' => array(
-							'type' => 'string',
-							'enum' => array( 'date', 'rating' ),
-							'default' => 'date'
-						),
-						'sort' => array(
-							'type' => 'string',
-							'enum' => array( 'ASC', 'DESC', 'RAND' ),
-							'default' => 'DESC'
-						),
-						'categories' => array(
-							'type' => 'array',
-							'default' => array(),
-							'items' => array(
-								'type' => 'integer',
-								'minimum' => 1
-							)
-						),
-						'products' => array(
-							'type' => 'array',
-							'default' => array(),
-							'items' => array(
-								'type' => 'integer',
-								'minimum' => 1
-							)
-						),
-						'product_tags' => array(
-							'type' => 'array',
-							'default' => array(),
-							'items' => array(
-								'type' => 'string',
-								'minimum' => 1
-							)
-						),
-						'color_ex_brdr' => array(
-							'type' => 'string',
-							'default' => '#ebebeb'
-						),
-						'color_brdr' => array(
-							'type' => 'string',
-							'default' => '#ebebeb'
-						),
-						'color_bcrd' => array(
-							'type' => 'string',
-							'default' => '#fbfbfb'
-						),
-						'color_pr_bcrd' => array(
-							'type' => 'string',
-							'default' => '#f2f2f2'
-						),
-						'color_stars' => array(
-							'type' => 'string',
-							'default' => '#6bba70'
-						),
-						'shop_reviews' => array(
-							'type' => 'boolean',
-							'default' => false
-						),
-						'count_shop_reviews' => array(
-							'type' => 'number',
-							'default' => 1,
-							'minimum' => 0,
-							'maximum' => 3
-						),
-						'inactive_products' => array(
-							'type' => 'boolean',
-							'default' => false
-						),
-						'autoplay' => array(
-							'type' => 'boolean',
-							'default' => false
-						),
-						'avatars' => array(
-							'type' => 'string',
-							'enum' => array( 'initials', 'standard', 'false' ),
-							'default' => 'initials'
-						),
-						'show_dots' => array(
-							'type' => 'boolean',
-							'default' => true
-						),
-						'max_chars' => array(
-							'type' => 'number',
-							'default' => 0,
-							'minimum' => 0,
-							'maximum' => 9999
-						),
-						'min_chars' => array(
-							'type' => 'number',
-							'default' => 0,
-							'minimum' => 0,
-							'maximum' => 9999
-						),
-					),
-
-					'render_callback' => array( $this, 'render_reviews_slider' )
-				));
+				register_block_type(
+					dirname( dirname( dirname( __FILE__ ) ) ) . '/blocks/build/reviews-slider',
+					array(
+						'render_callback' => array( $this, 'render_reviews_slider' )
+					)
+				);
 			}
 		}
 
@@ -207,12 +90,48 @@ if ( ! class_exists( 'CR_Reviews_Slider' ) ) {
 				$post_ids = array(-1);
 			}
 
+			$comment_in = array();
+			// tag names in the shortcode scenario
+			if ( isset( $attributes['tags'] ) && $attributes['tags'] ) {
+				$tags = array();
+				foreach ( $attributes['tags'] as $tag_name ) {
+					if ( $tag_name ) {
+						$tag = get_term_by( 'name', $tag_name, 'cr_tag' );
+						if ( $tag && $tag instanceof WP_Term ) {
+							$tags[] = $tag->term_id;
+						}
+					}
+				}
+				if ( $tags ) {
+					$comment_in = get_objects_in_term( $tags, 'cr_tag' );
+					if ( ! is_wp_error( $comment_in ) && $comment_in ) {
+						$comment_in = array_map( 'intval', $comment_in );
+					} else {
+						$comment_in = array();
+					}
+				}
+			}
+			// tag ids in the block scenario
+			if (
+				! $comment_in &&
+				isset( $attributes['tag_ids'] ) &&
+				$attributes['tag_ids']
+			) {
+				$comment_in = get_objects_in_term( $attributes['tag_ids'], 'cr_tag' );
+				if ( ! is_wp_error( $comment_in ) && $comment_in ) {
+					$comment_in = array_map( 'intval', $comment_in );
+				} else {
+					$comment_in = array();
+				}
+			}
+
 			$args = array(
 				'status'      => 'approve',
 				'post_type'   => 'product',
 				'meta_key'    => 'rating',
 				'orderby'     => $order_by,
-				'post__in'    => $post_ids
+				'post__in'    => $post_ids,
+				'comment__in' => $comment_in
 			);
 
 			if( !$inactive_products ) {
@@ -270,7 +189,8 @@ if ( ! class_exists( 'CR_Reviews_Slider' ) ) {
 						'post_status' => 'publish',
 						'post__in'    => CR_Reviews_List_Table::get_shop_page(),
 						'meta_key'    => 'rating',
-						'orderby'     => $order_by
+						'orderby'     => $order_by,
+						'comment__in' => $comment_in
 					);
 					if ( function_exists( 'pll_current_language' ) ) {
 						// Polylang compatibility
@@ -443,6 +363,7 @@ if ( ! class_exists( 'CR_Reviews_Slider' ) ) {
 					'avatars' => 'initials',
 					'max_chars' => 0,
 					'product_tags' => array(),
+					'tags' => array(),
 					'min_chars' => 0,
 					'show_dots' => true,
 				), $attributes, 'cusrev_reviews_slider' );
@@ -498,6 +419,10 @@ if ( ! class_exists( 'CR_Reviews_Slider' ) ) {
 
 				if( ! empty( $attributes['product_tags'] ) ) {
 					$attributes['product_tags'] = array_filter( array_map( 'trim', explode( ',', $attributes['product_tags'] ) ) );
+				}
+
+				if ( ! empty( $attributes['tags'] ) ) {
+					$attributes['tags'] = array_filter( array_map( 'trim', explode( ',', $attributes['tags'] ) ) );
 				}
 
 				return $this->render_reviews_slider( $attributes );

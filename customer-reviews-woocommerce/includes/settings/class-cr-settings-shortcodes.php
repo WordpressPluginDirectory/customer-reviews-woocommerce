@@ -84,7 +84,7 @@ if ( ! class_exists( 'CR_Shortcodes_Settings' ) ):
 			$shortcodes_desc = '<p class="cr-admin-shortcodes-large"><code>[cusrev_all_reviews]</code></p>' .
 			'<p>' .__( 'Use this shortcode to display a list of all reviews on any page or post. Here are the default parameters of the shortcode:', 'customer-reviews-woocommerce' ) . '</p>' .
 			'<p class="cr-admin-shortcodes"><code>[cusrev_all_reviews sort="DESC" sort_by="date" per_page="10" number="-1" show_summary_bar="true" ' .
-			'show_products="true" categories="" product_tags="" products="current" shop_reviews="true" number_shop_reviews="-1" inactive_products="false" show_replies="false" show_more="5" min_chars="0" avatars="initials" users="all" add_review="false"]</code></p>' .
+			'show_products="true" categories="" product_tags="" tags="" products="current" shop_reviews="true" number_shop_reviews="-1" inactive_products="false" show_replies="false" show_more="5" min_chars="0" avatars="initials" users="all" add_review="false"]</code></p>' .
 			'<p class="cr-admin-shortcodes"><b>' . __( 'Parameters:', 'customer-reviews-woocommerce' ) . '</b></p>' .
 			'<ul>' .
 			'<li>' . sprintf( __( '%1$s argument defines how reviews are sorted. Possible values are %2$s and %3$s.', 'customer-reviews-woocommerce' ), '<code>sort</code>', '<code>"ASC"</code>', '<code>"DESC"</code>' ) . '</li>' .
@@ -95,6 +95,7 @@ if ( ! class_exists( 'CR_Shortcodes_Settings' ) ):
 			'<li>' . sprintf( __( '%1$s argument accepts %2$s or %3$s and specifies if product names along with product thumbnails should be shown for each review.', 'customer-reviews-woocommerce' ), '<code>show_products</code>', '<code>"true"</code>', '<code>"false"</code>' ) . '</li>' .
 			'<li>' . sprintf( __( '%1$s argument accepts a comma-separated list of product categories IDs. Use this argument to show reviews only from particular categories of products.', 'customer-reviews-woocommerce' ), '<code>categories</code>' ) . '</li>' .
 			'<li>' . sprintf( __( '%1$s argument accepts a comma-separated list of product tags. Use this argument to show reviews from products associated with specific tags only.', 'customer-reviews-woocommerce' ), '<code>product_tags</code>' ) . '</li>' .
+			'<li>' . sprintf( __( '%1$s argument accepts a comma-separated list of review tags. Use this argument to show reviews associated with specific tags only.', 'customer-reviews-woocommerce' ), '<code>tags</code>' ) . '</li>' .
 			'<li>' . sprintf( __( '%1$s parameter accepts %2$s or a comma-separated list of product IDs. Use this parameter to show reviews of the current product only or reviews corresponding to product IDs from the comma-separated list. If you provide an empty list of product IDs like %3$s, the shortcode will display reviews of all products.', 'customer-reviews-woocommerce' ), '<code>products</code>', '<code>"current"</code>', '<code>""</code>' ) . '</li>' .
 			'<li>' . sprintf( __( '%1$s argument accepts %2$s or %3$s and specifies if general shop reviews will be shown.', 'customer-reviews-woocommerce' ), '<code>shop_reviews</code>', '<code>"true"</code>', '<code>"false"</code>' ) . '</li>' .
 			'<li>' . sprintf( __( '%1$s argument defines the total number of shop reviews to show. If you set %2$s to %3$s, then all shop reviews will be shown.', 'customer-reviews-woocommerce' ), '<code>number_shop_reviews</code>', '<code>number_shop_reviews</code>', '<code>"-1"</code>' ) . '</li>' .
@@ -109,7 +110,7 @@ if ( ! class_exists( 'CR_Shortcodes_Settings' ) ):
 
 			'<p class="cr-admin-shortcodes-large"><code>[cusrev_reviews_grid]</code></p>' .
 			'<p>' . __( 'Use this shortcode to display a grid of reviews on any page or post. Here are the default parameters of the shortcode:', 'customer-reviews-woocommerce' ) . '</p>' .
-			'<p class="cr-admin-shortcodes"><code>[cusrev_reviews_grid count="3" show_products="true" product_links="true" sort_by="date" sort="DESC" categories="" product_tags="" ' .
+			'<p class="cr-admin-shortcodes"><code>[cusrev_reviews_grid count="3" show_products="true" product_links="true" sort_by="date" sort="DESC" categories="" product_tags="" tags="" ' .
 			'products="current" color_ex_brdr="#ebebeb" color_brdr="#ebebeb" color_ex_bcrd="" color_bcrd="#ffffff" color_pr_bcrd="#f4f4f4" color_stars="#FFD707" ' .
 			'shop_reviews="false" count_shop_reviews="1" inactive_products="false" avatars="initials" show_more="0" min_chars="0" show_summary_bar="false" add_review="false"]</code></p>' .
 			'<p class="cr-admin-shortcodes"><b>' . __( 'Parameters:', 'customer-reviews-woocommerce' ) . '</b></p>' .
@@ -121,6 +122,7 @@ if ( ! class_exists( 'CR_Shortcodes_Settings' ) ):
 			'<li>' . sprintf( __( '%1$s argument defines how reviews are sorted. Possible values are %2$s, %3$s and %4$s.', 'customer-reviews-woocommerce' ), '<code>sort</code>', '<code>"ASC"</code>', '<code>"DESC"</code>', '<code>"RAND"</code>' ) . '</li>' .
 			'<li>' . sprintf( __( '%1$s argument accepts a comma-separated list of product categories IDs to show only reviews corresponding to specified categories of products.', 'customer-reviews-woocommerce' ), '<code>categories</code>' ) . '</li>' .
 			'<li>' . sprintf( __( '%1$s argument accepts a comma-separated list of product tags. Use this argument to show reviews from products associated with specific tags only.', 'customer-reviews-woocommerce' ), '<code>product_tags</code>' ) . '</li>' .
+			'<li>' . sprintf( __( '%1$s argument accepts a comma-separated list of review tags. Use this argument to show reviews associated with specific tags only.', 'customer-reviews-woocommerce' ), '<code>tags</code>' ) . '</li>' .
 			'<li>' . sprintf( __( '%1$s parameter accepts %2$s or a comma-separated list of product IDs. Use this parameter to show reviews of the current product only or reviews corresponding to product IDs from the comma-separated list. If you provide an empty list of product IDs like %3$s, the shortcode will display reviews of all products.', 'customer-reviews-woocommerce' ), '<code>products</code>', '<code>"current"</code>', '<code>""</code>' ) . '</li>' .
 			'<li>' . sprintf( __( '%1$s argument is a hex color code of the external border around the grid of reviews.', 'customer-reviews-woocommerce' ), '<code>color_ex_brdr</code>' ) . '</li>' .
 			'<li>' . sprintf( __( '%1$s argument is a hex color code of the border around review cards.', 'customer-reviews-woocommerce' ), '<code>color_brdr</code>' ) . '</li>' .
@@ -141,8 +143,8 @@ if ( ! class_exists( 'CR_Shortcodes_Settings' ) ):
 
 			'<p class="cr-admin-shortcodes-large"><code>[cusrev_reviews_slider]</code></p>' .
 			'<p>' . __( 'Use this shortcode to display a slider with reviews on any page or post. Here are the default parameters of the shortcode:', 'customer-reviews-woocommerce' ) . '</p>' .
-			'<p class="cr-admin-shortcodes"><code>[cusrev_reviews_slider count="5" slides_to_show="3" show_products="true" product_links="true" sort_by="date" sort="DESC" categories="" product_tags="" ' .
-			'products="current" color_brdr="#ebebeb" color_bcrd="#ffffff" color_pr_bcrd="#f4f4f4" color_stars="#FFD707" shop_reviews="false" count_shop_reviews="1" inactive_products="false" autoplay="false" avatars="initials" max_chars="0" min_chars="0" show_dots="true"]</code></p>' .
+			'<p class="cr-admin-shortcodes"><code>[cusrev_reviews_slider count="5" slides_to_show="3" show_products="true" product_links="true" sort_by="date" sort="DESC" categories="" product_tags="" tags="" ' .
+			'products="current" color_ex_brdr="#ebebeb" color_brdr="#ebebeb" color_ex_bcrd="" color_bcrd="#ffffff" color_pr_bcrd="#f4f4f4" color_stars="#FFD707" shop_reviews="false" count_shop_reviews="1" inactive_products="false" autoplay="false" avatars="initials" max_chars="0" min_chars="0" show_dots="true"]</code></p>' .
 			'<p class="cr-admin-shortcodes"><b>' . __( 'Parameters:', 'customer-reviews-woocommerce' ) . '</b></p>' .
 			'<ul>' .
 			'<li>' . sprintf( __( '%1$s argument defines the number of product reviews to show. It is recommended to keep it between %2$s and %3$s. If you do not want to show product reviews, set it to %4$s and enable shop reviews (see the parameters below).', 'customer-reviews-woocommerce' ), '<code>count</code>', '<code>"0"</code>', '<code>"5"</code>', '<code>"0"</code>' ) . '</li>' .
@@ -153,8 +155,11 @@ if ( ! class_exists( 'CR_Shortcodes_Settings' ) ):
 			'<li>' . sprintf( __( '%1$s argument defines how reviews are sorted. Possible values are %2$s, %3$s and %4$s.', 'customer-reviews-woocommerce' ), '<code>sort</code>', '<code>"ASC"</code>', '<code>"DESC"</code>', '<code>"RAND"</code>' ) . '</li>' .
 			'<li>' . sprintf( __( '%1$s argument accepts a comma-separated list of product categories IDs to show only reviews corresponding to specified categories of products.', 'customer-reviews-woocommerce' ), '<code>categories</code>' ) . '</li>' .
 			'<li>' . sprintf( __( '%1$s argument accepts a comma-separated list of product tags. Use this argument to show reviews from products associated with specific tags only.', 'customer-reviews-woocommerce' ), '<code>product_tags</code>' ) . '</li>' .
+			'<li>' . sprintf( __( '%1$s argument accepts a comma-separated list of review tags. Use this argument to show reviews associated with specific tags only.', 'customer-reviews-woocommerce' ), '<code>tags</code>' ) . '</li>' .
 			'<li>' . sprintf( __( '%1$s parameter accepts %2$s or a comma-separated list of product IDs. Use this parameter to show reviews of the current product only or reviews corresponding to product IDs from the comma-separated list. If you provide an empty list of product IDs like %3$s, the shortcode will display reviews of all products.', 'customer-reviews-woocommerce' ), '<code>products</code>', '<code>"current"</code>', '<code>""</code>' ) . '</li>' .
+			'<li>' . sprintf( __( '%1$s argument is a hex color code of the external border around the slider.', 'customer-reviews-woocommerce' ), '<code>color_ex_brdr</code>' ) . '</li>' .
 			'<li>' . sprintf( __( '%1$s argument is a hex color code of the border around review cards.', 'customer-reviews-woocommerce' ), '<code>color_brdr</code>' ) . '</li>' .
+			'<li>' . sprintf( __( '%1$s argument is a hex color code of the external background of the slider.', 'customer-reviews-woocommerce' ), '<code>color_ex_bcrd</code>' ) . '</li>' .
 			'<li>' . sprintf( __( '%1$s argument is a hex color code of the background of review cards.', 'customer-reviews-woocommerce' ), '<code>color_bcrd</code>' ) . '</li>' .
 			'<li>' . sprintf( __( '%1$s argument is a hex color code of the background color of product areas on review cards.', 'customer-reviews-woocommerce' ), '<code>color_pr_bcrd</code>' ) . '</li>' .
 			'<li>' . sprintf( __( '%1$s argument is a hex color code of rating stars on review cards.', 'customer-reviews-woocommerce' ), '<code>"color_stars"</code>' ) . '</li>' .

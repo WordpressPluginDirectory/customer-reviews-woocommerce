@@ -19,6 +19,7 @@ import { escapeRegExp, findIndex } from 'lodash';
 import NoticeOutlineIcon from 'gridicons/dist/notice-outline';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import './style.scss';
 
 /**
  * Internal dependencies
@@ -28,10 +29,10 @@ import SearchListItem from './item';
 import Tag from '../tag';
 
 const defaultMessages = {
-	clear: __( 'Clear all selected items', 'woocommerce-admin' ),
-	noItems: __( 'No items found.', 'woocommerce-admin' ),
-	noResults: __( 'No results for %s', 'woocommerce-admin' ),
-	search: __( 'Search for items', 'woocommerce-admin' ),
+	clear: __( 'Clear all selected items', 'customer-reviews-woocommerce' ),
+	noItems: __( 'No items found.', 'customer-reviews-woocommerce' ),
+	noResults: __( 'No results for %s', 'customer-reviews-woocommerce' ),
+	search: __( 'Search for items', 'customer-reviews-woocommerce' ),
 	selected: ( n ) =>
 		sprintf(
 			/* translators: Number of items selected from list. */
@@ -39,11 +40,11 @@ const defaultMessages = {
 				'%d item selected',
 				'%d items selected',
 				n,
-				'woocommerce-admin'
+				'customer-reviews-woocommerce'
 			),
 			n
 		),
-	updated: __( 'Search results updated.', 'woocommerce-admin' ),
+	updated: __( 'Search results updated.', 'customer-reviews-woocommerce' ),
 };
 
 /**
@@ -151,7 +152,7 @@ export const SearchListControl = ( props ) => {
 	const renderListSection = () => {
 		if ( isLoading ) {
 			return (
-				<div className="woocommerce-search-list__list is-loading">
+				<div className="cr-search-list__list is-loading">
 					<Spinner />
 				</div>
 			);
@@ -160,15 +161,15 @@ export const SearchListControl = ( props ) => {
 
 		if ( ! list.length ) {
 			return (
-				<div className="woocommerce-search-list__list is-not-found">
-					<span className="woocommerce-search-list__not-found-icon">
+				<div className="cr-search-list__list is-not-found">
+					<span className="cr-search-list__not-found-icon">
 						<NoticeOutlineIcon
 							role="img"
 							aria-hidden="true"
 							focusable="false"
 						/>
 					</span>
-					<span className="woocommerce-search-list__not-found-text">
+					<span className="cr-search-list__not-found-text">
 						{ searchValue
 							? // eslint-disable-next-line @wordpress/valid-sprintf
 							  sprintf( messages.noResults, searchValue )
@@ -179,7 +180,7 @@ export const SearchListControl = ( props ) => {
 		}
 
 		return (
-			<ul className="woocommerce-search-list__list">
+			<ul className="cr-search-list__list">
 				{ renderList( list ) }
 			</ul>
 		);
@@ -193,8 +194,8 @@ export const SearchListControl = ( props ) => {
 		const selectedCount = selected.length;
 
 		return (
-			<div className="woocommerce-search-list__selected">
-				<div className="woocommerce-search-list__selected-header">
+			<div className="cr-search-list__selected">
+				<div className="cr-search-list__selected-header">
 					<strong>{ messages.selected( selectedCount ) }</strong>
 					{ selectedCount > 0 ? (
 						<Button
@@ -207,7 +208,7 @@ export const SearchListControl = ( props ) => {
 							}
 							aria-label={ messages.clear }
 						>
-							{ __( 'Clear all', 'woocommerce-admin' ) }
+							{ __( 'Clear all', 'customer-reviews-woocommerce' ) }
 						</Button>
 					) : null }
 				</div>
@@ -230,13 +231,13 @@ export const SearchListControl = ( props ) => {
 
 	return (
 		<div
-			className={ classnames( 'woocommerce-search-list', className, {
+			className={ classnames( 'cr-search-list', className, {
 				'is-compact': isCompact,
 			} ) }
 		>
 			{ renderSelectedSection() }
 
-			<div className="woocommerce-search-list__search">
+			<div className="cr-search-list__search">
 				<TextControl
 					label={ messages.search }
 					type="search"
