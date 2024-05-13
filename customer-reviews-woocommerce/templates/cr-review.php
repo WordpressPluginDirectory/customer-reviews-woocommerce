@@ -50,7 +50,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<?php
 
 			$shop_manager = false;
-			if( isset( $comment->user_id ) ) {
+			if( isset( $comment->user_id ) && 0 < $comment->user_id ) {
 				if( user_can( $comment->user_id, 'manage_woocommerce' ) ) {
 					$shop_manager = true;
 				}

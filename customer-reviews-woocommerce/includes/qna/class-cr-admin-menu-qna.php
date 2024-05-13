@@ -172,11 +172,9 @@ if ( ! class_exists( 'CR_Qna_Admin_Menu' ) ):
 		}
 
 		public function include_scripts( $hook ) {
-			$assets_version = '4.42';
-
 			if ( isset( $_REQUEST['page'] ) && $_REQUEST['page'] === 'cr-qna' ) {
 				wp_enqueue_script( 'admin-comments' );
-				wp_register_script( 'cr-all-reviews', plugins_url( 'js/all-reviews.js', dirname( dirname( __FILE__ ) ) ), array( 'jquery' ), $assets_version );
+				wp_register_script( 'cr-all-reviews', plugins_url( 'js/all-reviews.js', dirname( dirname( __FILE__ ) ) ), array( 'jquery' ), Ivole::CR_VERSION );
 				wp_localize_script(
 					'cr-all-reviews',
 					'cr_ajax_object',
@@ -196,10 +194,10 @@ if ( ! class_exists( 'CR_Qna_Admin_Menu' ) ):
 				);
 				wp_enqueue_script( 'cr-all-reviews' );
 				wp_enqueue_script( 'cr_select2_admin_js', plugins_url( 'js/select2.min.js', dirname( dirname( __FILE__ ) ) ) );
-				wp_enqueue_style( 'ivole_trustbadges_admin_css', plugins_url( 'css/admin.css', dirname( dirname( __FILE__) ) ), array(), Ivole::CR_VERSION );
+				wp_enqueue_style( 'cr-admin-css', plugins_url( 'css/admin.css', dirname( dirname( __FILE__) ) ), array(), Ivole::CR_VERSION );
 			}
 			if( 'comment.php' === $hook ) {
-				wp_enqueue_style( 'ivole_trustbadges_admin_css', plugins_url('css/admin.css', dirname( dirname( __FILE__) ) ), array(), Ivole::CR_VERSION );
+				wp_enqueue_style( 'cr-admin-css', plugins_url('css/admin.css', dirname( dirname( __FILE__) ) ), array(), Ivole::CR_VERSION );
 			}
 		}
 

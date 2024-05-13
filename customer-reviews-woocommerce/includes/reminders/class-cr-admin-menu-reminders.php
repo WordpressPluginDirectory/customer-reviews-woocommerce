@@ -146,6 +146,15 @@ class CR_Reminders_Admin_Menu {
 	 * @since 3.5
 	 */
 	public function display_reminders_admin_page() {
+		// check if a page with reminder details needs to be displayed
+		if (
+			isset( $_GET['reminder'] ) &&
+			$_GET['reminder']
+		) {
+			$details = new CR_Reminders_Details( $_GET['reminder'], $this->menu_slug );
+			$details->display();
+		}
+		// check which tab is seleted
 		if ( isset( $_GET['tab'] ) ) {
 			$current_tab = $_GET['tab'];
 		} else {
@@ -177,10 +186,20 @@ class CR_Reminders_Admin_Menu {
 			wp_enqueue_script( 'jquery' );
 			wp_enqueue_style( 'cr-admin-charts', plugins_url( '/admin/build/index.css', dirname( dirname( __FILE__ ) ) ), array(),  Ivole::CR_VERSION );
 			wp_enqueue_script( 'cr-admin-charts', plugins_url( '/admin/build/index.js' , dirname( dirname( __FILE__ ) ) ), $asset_file['dependencies'], Ivole::CR_VERSION, true );
+			wp_enqueue_script( 'cr-tiptip', plugins_url( 'js/jquery.tipTip.minified.js' , dirname( dirname( __FILE__ ) ) ), array(), Ivole::CR_VERSION, false );
+			wp_enqueue_script( 'cr-admin-settings', plugins_url('js/admin-settings.js', dirname( dirname( __FILE__ ) ) ), array(), Ivole::CR_VERSION, false );
+			wp_enqueue_style( 'cr-admin-css', plugins_url('css/admin.css', dirname( dirname( __FILE__ ) ) ), array(), Ivole::CR_VERSION );
 		}
 	}
 
 	public function display_screen_options() {
+		// do not display screen options on a page with reminder details
+		if (
+			isset( $_GET['reminder'] ) &&
+			$_GET['reminder']
+		) {
+			return;
+		}
 		$args = array(
 			'label' => 'Reminders per page',
 			'default' => 20,

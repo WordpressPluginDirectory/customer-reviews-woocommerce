@@ -296,6 +296,16 @@ if ( ! class_exists( 'CR_Admin' ) ) :
 			return '<span class="woocommerce-help-tip" data-tip="' . $tip . '"></span>';
 		}
 
+		public static function cr_help_tip( $tip, $allow_html = false ) {
+			if ( $allow_html ) {
+				$tip = wc_sanitize_tooltip( $tip );
+			} else {
+				$tip = esc_attr( $tip );
+			}
+
+			return '<span class="cr-help-tip" data-tip="' . $tip . '"></span>';
+		}
+
 		public function check_notices() {
 			$no_notices = true;
 			if( 1 == get_option( 'ivole_activation_notice', 0 ) ) {

@@ -221,7 +221,7 @@ if ( ! class_exists( 'Ivole_Reviews_Admin_Menu' ) ):
 				wp_enqueue_script( 'photoswipe-ui-default', plugins_url( 'assets/js/photoswipe/photoswipe-ui-default.min.js', WC_PLUGIN_FILE ), array(), $assets_version );
 				wp_enqueue_style( 'photoswipe', plugins_url( 'assets/css/photoswipe/photoswipe.css', WC_PLUGIN_FILE ), array(), $assets_version );
 				wp_enqueue_style( 'photoswipe-default-skin', plugins_url( 'assets/css/photoswipe/default-skin/default-skin.css', WC_PLUGIN_FILE ), array(), $assets_version );
-				wp_enqueue_style( 'ivole_trustbadges_admin_css', plugins_url('css/admin.css', dirname( dirname( __FILE__ ) ) ), array(), $assets_version );
+				wp_enqueue_style( 'cr-admin-css', plugins_url('css/admin.css', dirname( dirname( __FILE__ ) ) ), array(), $assets_version );
 				wp_register_script( 'cr-all-reviews', plugins_url( 'js/all-reviews.js', dirname( dirname( __FILE__ ) ) ), array( 'jquery' ), $assets_version );
 				wp_localize_script(
 					'cr-all-reviews',

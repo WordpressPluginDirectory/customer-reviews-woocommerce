@@ -4,7 +4,7 @@ Tags: woocommerce, review plugin, review reminder, customer reviews, review for 
 Requires at least: 4.5
 Tested up to: 6.5
 Requires PHP: 7.2
-Stable tag: 5.48.0
+Stable tag: 5.49.1
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl.html
 
@@ -24,7 +24,7 @@ The **Customer Reviews for WooCommerce** plugin helps you increase engagement, b
 
 The plugin includes an optional integration with an external service to verify customer reviews. **CusRev** collects reviews from customers and verifies their authenticity.
 
-You can find information about **CusRev**'s [terms](https://www.cusrev.com/terms.html), [privacy](https://www.cusrev.com/privacy-policy), and [data protection](https://www.cusrev.com/data-protection) policies on [our website](https://www.cusrev.com/business/).
+You can find information about **CusRev**'s [terms](https://www.cusrev.com/terms.html) and [privacy policy](https://www.cusrev.com/privacy-policy) on [our website](https://www.cusrev.com/business/).
 
 https://www.youtube.com/watch?v=F_94E8zoXng
 
@@ -231,6 +231,13 @@ If you would like to change how reviews are sorted on product pages, it is possi
 
 == Changelog ==
 
+= 5.49.1 =
+* Bug fix: verified owner badge is displayed incorrectly on some website configurations
+= 5.49.0 =
+* Improvement: a new screen to view detailed information about sent review reminders
+= 5.48.1 =
+* Improvement: WPML compatibility for sites with multiple domains for translations
+* Bug fix: WPML translations for product names did not show on aggregated review forms
 = 5.48.0 =
 * New feature: a review tags parameter can be used in shortcodes and blocks to filter reviews by tags
 * Improvement: a fallback alt text for the initials avatars used with the basic WooCommerce user interface

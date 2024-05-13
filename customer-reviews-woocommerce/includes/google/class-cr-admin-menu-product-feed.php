@@ -140,7 +140,7 @@ if ( ! class_exists( 'CR_Product_Feed_Admin_Menu' ) ):
 		public function load_product_feed_css_js( $hook ) {
 			$reviews_screen_id = sanitize_title( __( 'Reviews', 'customer-reviews-woocommerce' ) . Ivole_Reviews_Admin_Menu::$screen_id_bubble );
 			if( $reviews_screen_id . '_page_cr-reviews-product-feed' === $hook ) {
-				wp_enqueue_style( 'ivole_trustbadges_admin_css', plugins_url('css/admin.css', dirname( dirname( __FILE__ ) ) ), array(), Ivole::CR_VERSION );
+				wp_enqueue_style( 'cr-admin-css', plugins_url('css/admin.css', dirname( dirname( __FILE__ ) ) ), array(), Ivole::CR_VERSION );
 				wp_enqueue_style( 'cr_select2_admin_css', plugins_url('css/select2.min.css', dirname( dirname( __FILE__ ) ) ) );
 				wp_enqueue_script( 'cr_select2_admin_js', plugins_url('js/select2.min.js', dirname( dirname( __FILE__ ) ) ) );
 				wp_register_script( 'ivole-admin-categories', plugins_url('js/admin-categories.js', dirname( dirname( __FILE__ ) ) ), array( 'jquery' ), false, false );

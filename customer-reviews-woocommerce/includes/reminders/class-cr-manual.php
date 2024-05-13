@@ -423,7 +423,7 @@ if ( ! class_exists( 'CR_Manual' ) ) :
 
 				wp_enqueue_script( 'cr-manual-review-reminder' );
 
-				wp_enqueue_style( 'ivole_trustbadges_admin_css', plugins_url('css/admin.css', dirname( dirname( __FILE__ ) ) ), array(), Ivole::CR_VERSION );
+				wp_enqueue_style( 'cr-admin-css', plugins_url('css/admin.css', dirname( dirname( __FILE__ ) ) ), array(), Ivole::CR_VERSION );
 			}
 		}
 

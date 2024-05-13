@@ -82,13 +82,12 @@ if ( ! class_exists( 'CR_Email_Func' ) ) :
 					}
 
 					// qTranslate integration
-					$ivole_language = get_option( 'ivole_language' );
-					if( function_exists( 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage' ) && $ivole_language === 'QQ' ) {
+					if ( function_exists( 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage' ) ) {
 						$q_name = qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage( $q_name );
 					}
 
 					// WPML integration
-					if ( has_filter( 'translate_object_id' ) && $ivole_language === 'WPML' ) {
+					if ( has_filter( 'translate_object_id' ) && ! function_exists( 'pll_get_post' ) ) {
 						$wpml_current_language = $order->get_meta( 'wpml_language', true );
 						$translated_product_id = apply_filters( 'translate_object_id', $item['product_id'], 'product', true, $wpml_current_language );
 						$q_name = get_the_title( $translated_product_id );
@@ -118,7 +117,7 @@ if ( ! class_exists( 'CR_Email_Func' ) ) :
 					}
 
 					// Polylang integration
-					if ( function_exists( 'pll_get_post' ) && function_exists( 'pll_default_language' ) && $ivole_language === 'WPML' ) {
+					if ( function_exists( 'pll_get_post' ) && function_exists( 'pll_default_language' ) ) {
 						$polylang_default_language = pll_default_language();
 						$default_product_id = pll_get_post( $item['product_id'], $polylang_default_language );
 						if( $default_product_id ) {

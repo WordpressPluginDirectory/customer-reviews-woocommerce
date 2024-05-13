@@ -16,6 +16,7 @@ require_once( __DIR__ . '/includes/reminders/class-cr-manual.php' );
 require_once( __DIR__ . '/includes/reminders/class-cr-admin-menu-reminders.php' );
 require_once( __DIR__ . '/includes/reminders/class-cr-reminders-list-table.php' );
 require_once( __DIR__ . '/includes/reminders/class-cr-reminders-log-table.php' );
+require_once( __DIR__ . '/includes/reminders/class-cr-reminders-details.php' );
 require_once( __DIR__ . '/includes/reminders/class-cr-local-forms.php' );
 require_once( __DIR__ . '/includes/reminders/class-cr-local-forms-ajax.php' );
 require_once( __DIR__ . '/includes/blocks/class-cr-all-reviews.php' );
@@ -76,7 +77,7 @@ require_once( __DIR__ . '/includes/qna/class-cr-qna-email.php' );
 require_once( __DIR__ . '/includes/analytics/class-cr-reminders-log.php' );
 
 class Ivole {
-	const CR_VERSION = '5.48.0';
+	const CR_VERSION = '5.49.1';
 
 	public function __construct() {
 		if( function_exists( 'wc' ) ) {
@@ -172,5 +173,71 @@ class Ivole {
 			'settings' => '<a href="' . admin_url( 'admin.php?page=cr-reviews-settings' ) . '" aria-label="' . esc_attr__( 'View Customer Reviews settings', 'customer-reviews-woocommerce' ) . '">' . esc_html__( 'Settings', 'customer-reviews-woocommerce' ) . '</a>',
 		);
 		return array_merge( $action_links, $actions );
+	}
+
+	public static function remove_class_filter( $hook_name, $class_name = '', $method_name = '', $priority = 10 ) {
+		global $wp_filter;
+
+		// Check that filter actually exists first
+		if ( ! isset( $wp_filter[ $hook_name ] ) ) return false;
+
+		/**
+		 * If filter config is an object, means we're using WordPress 4.7+ and the config is no longer
+		 * a simple array, rather it is an object that implements the ArrayAccess interface.
+		 *
+		 * To be backwards compatible, we set $callbacks equal to the correct array as a reference (so $wp_filter is updated)
+		 *
+		 * @see https://make.wordpress.org/core/2016/09/08/wp_hook-next-generation-actions-and-filters/
+		 */
+		if ( is_object( $wp_filter[ $hook_name ] ) && isset( $wp_filter[ $hook_name ]->callbacks ) ) {
+				// Create $fob object from filter hook, to use below
+				$fob = $wp_filter[ $hook_name ];
+				$callbacks = &$wp_filter[ $hook_name ]->callbacks;
+		} else {
+				$callbacks = &$wp_filter[ $hook_name ];
+		}
+
+		// Exit if there aren't any callbacks for specified priority
+		if ( ! isset( $callbacks[ $priority ] ) || empty( $callbacks[ $priority ] ) ) return FALSE;
+
+		// Loop through each filter for the specified priority, looking for our class & method
+		foreach( (array) $callbacks[ $priority ] as $filter_id => $filter ) {
+
+				// Filter should always be an array - array( $this, 'method' ), if not goto next
+				if ( ! isset( $filter[ 'function' ] ) || ! is_array( $filter[ 'function' ] ) ) continue;
+
+				// If first value in array is not an object, it can't be a class
+				if ( ! is_object( $filter[ 'function' ][ 0 ] ) ) continue;
+
+				// Method doesn't match the one we're looking for, goto next
+				if ( $filter[ 'function' ][ 1 ] !== $method_name ) continue;
+
+				// Method matched, now let's check the Class
+				if ( get_class( $filter[ 'function' ][ 0 ] ) === $class_name ) {
+
+						// WordPress 4.7+ use core remove_filter() since we found the class object
+						if( isset( $fob ) ){
+								// Handles removing filter, reseting callback priority keys mid-iteration, etc.
+								$fob->remove_filter( $hook_name, $filter['function'], $priority );
+						} else {
+								// Use legacy removal process (pre 4.7)
+								unset( $callbacks[ $priority ][ $filter_id ] );
+								// and if it was the only filter in that priority, unset that priority
+								if ( empty( $callbacks[ $priority ] ) ) {
+										unset( $callbacks[ $priority ] );
+								}
+								// and if the only filter for that hook, set the hook to an empty array
+								if ( empty( $callbacks ) ) {
+										$callbacks = array();
+								}
+								// Remove this filter from merged_filters, which specifies if filters have been sorted
+								unset( $GLOBALS['merged_filters'][ $hook_name ] );
+						}
+
+						return true;
+				}
+		}
+
+		return false;
 	}
 }

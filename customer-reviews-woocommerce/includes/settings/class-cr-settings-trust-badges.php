@@ -343,7 +343,7 @@ if ( ! class_exists( 'Ivole_Trust_Badges' ) ):
 		public function load_trustbadges_css( $hook ) {
 			$reviews_screen_id = sanitize_title( __( 'Reviews', 'customer-reviews-woocommerce' ) . Ivole_Reviews_Admin_Menu::$screen_id_bubble );
 			if( $reviews_screen_id . '_page_cr-reviews-settings' === $hook ) {
-				wp_enqueue_style( 'ivole_trustbadges_admin_css', plugins_url('css/admin.css', dirname( dirname( __FILE__ ) ) ), array(), Ivole::CR_VERSION );
+				wp_enqueue_style( 'cr-admin-css', plugins_url('css/admin.css', dirname( dirname( __FILE__ ) ) ), array(), Ivole::CR_VERSION );
 				wp_register_style( 'cr-badges-css', plugins_url( '/css/badges.css', dirname( dirname( __FILE__ ) ) ), array(), Ivole::CR_VERSION, 'all' );
 				wp_enqueue_style( 'cr-badges-css' );
 			}

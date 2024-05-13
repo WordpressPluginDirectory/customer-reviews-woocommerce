@@ -737,6 +737,14 @@
 			});
 		} );
 
+		jQuery('.cr-help-tip' ).tipTip( {
+			attribute: 'data-tip',
+			fadeIn: 50,
+			fadeOut: 50,
+			delay: 200,
+			keepAlive: false,
+		} );
+
 		function crDNSRecordsTableAdd( tokens, actv ) {
 			tokens.forEach ( token => {
 				let newRow = jQuery('.cr-dns-template-row').clone();

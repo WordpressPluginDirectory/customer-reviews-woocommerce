@@ -20,7 +20,7 @@ defined( 'ABSPATH' ) || exit;
 global $comment;
 $verified = wc_review_is_from_verified_owner( $comment->comment_ID );
 $shop_manager = false;
-if( isset( $comment->user_id ) ) {
+if( isset( $comment->user_id ) && 0 < $comment->user_id ) {
 	if( user_can( $comment->user_id, 'manage_woocommerce' ) ) {
 		$shop_manager = true;
 	}

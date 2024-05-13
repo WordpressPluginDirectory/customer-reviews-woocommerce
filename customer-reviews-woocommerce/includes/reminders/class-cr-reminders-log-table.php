@@ -12,7 +12,10 @@ if ( ! class_exists( 'CR_Reminders_Log_Table' ) ) :
 
 	class CR_Reminders_Log_Table extends WP_List_Table {
 
+		private $not_available_lbl = '';
+
 		public function __construct( $args = array() ) {
+			$this->not_available_lbl = __( 'Not available', 'customer-reviews-woocommerce' );
 			parent::__construct( array(
 				'plural'   => 'reminders',
 				'singular' => 'reminder',
@@ -90,7 +93,8 @@ if ( ! class_exists( 'CR_Reminders_Log_Table' ) ) :
 				'verification' => __( 'Verification', 'customer-reviews-woocommerce' ),
 				'sent'	=> __( 'Sent', 'customer-reviews-woocommerce' ),
 				'status'	=> __( 'Status', 'customer-reviews-woocommerce' ),
-				'language'	=> __( 'Language', 'customer-reviews-woocommerce' )
+				'language'	=> __( 'Language', 'customer-reviews-woocommerce' ),
+				'action'	=> ''
 			);
 		}
 
@@ -121,7 +125,7 @@ if ( ! class_exists( 'CR_Reminders_Log_Table' ) ) :
 			$this->screen->render_screen_reader_content( 'heading_list' );
 
 			?>
-			<table class="wp-list-table <?php echo implode( ' ', $this->get_table_classes() ); ?>">
+			<table class="wp-list-table cr-reminders-log-table <?php echo implode( ' ', $this->get_table_classes() ); ?>">
 				<thead>
 					<tr>
 						<?php $this->print_column_headers(); ?>
@@ -162,11 +166,15 @@ if ( ! class_exists( 'CR_Reminders_Log_Table' ) ) :
 		}
 
 		public function column_customer( $reminder ) {
-			?>
-			<strong><?php echo $reminder['customerName']; ?></strong>
-			<br>
-			<a href="<?php echo 'mailto:' . $reminder['customerEmail']; ?>"><?php echo $reminder['customerEmail']; ?></a>
-			<?php
+			if ( $reminder['customerName'] || $reminder['customerEmail'] ) :
+				?>
+				<strong><?php echo $reminder['customerName']; ?></strong>
+				<br>
+				<a href="<?php echo 'mailto:' . $reminder['customerEmail']; ?>"><?php echo $reminder['customerEmail']; ?></a>
+				<?php
+			else :
+				echo esc_html( $this->not_available_lbl );
+			endif;
 		}
 
 		public function column_type( $reminder ) {
@@ -190,40 +198,40 @@ if ( ! class_exists( 'CR_Reminders_Log_Table' ) ) :
 		}
 
 		public function column_status( $reminder ) {
-			$col_status = '';
-			switch ($reminder['status']) {
-				case 'sent':
-					$col_status = __( 'Sent', 'customer-reviews-woocommerce' );
-					break;
-				case 'error':
-					$col_status = __( 'Error', 'customer-reviews-woocommerce' );
-					break;
-				case 'rmd_opened':
-					$col_status = __( 'Reminder Opened', 'customer-reviews-woocommerce' );
-					break;
-				case 'frm_opened':
-					$col_status = __( 'Form Opened', 'customer-reviews-woocommerce' );
-					break;
-				default:
-					break;
-			}
-			echo esc_html( $col_status );
+			echo esc_html(
+				CR_Reminders_Log::get_status_description( $reminder['status'] )
+			);
 		}
 
 		public function column_verification( $reminder ) {
-			$verification = 'No';
-			switch ($reminder['verification']) {
-				case 'verified':
-					$verification = __( 'Yes', 'customer-reviews-woocommerce' );
-					break;
-				default:
-					break;
+			$col = CR_Reminders_Log::get_verification_description( $reminder['verification'] );
+			if ( $col ) {
+				echo esc_html( $col );
+			} else {
+				echo esc_html( $this->not_available_lbl );
 			}
-			echo esc_html( $verification );
 		}
 
 		public function column_language( $reminder ) {
-			echo esc_html( $reminder['language'] );
+			if ( $reminder['language'] ) {
+				echo esc_html( $reminder['language'] );
+			} else {
+				echo esc_html( $this->not_available_lbl );
+			}
+		}
+
+		public function column_action( $reminder ) {
+			$actions = '';
+			if ( isset( $reminder['id'] ) && $reminder['id'] ) {
+				$url = esc_url(
+					admin_url(
+						sprintf( 'admin.php?page=cr-reviews-reminders&reminder=%d', intval( $reminder['id'] ) )
+					)
+				);
+				$link = '<a href="' . $url . '" aria-label="' . esc_attr__( 'Show details' ) . '" title="' . esc_attr__( 'Show details' ) . '" class="button cr-col-actions-button"><span class="dashicons dashicons-arrow-right-alt"></span></a>';
+				$actions = '<div class="cr-col-actions">' . $link . '</div>';
+			}
+			return $actions;
 		}
 
 		protected function get_views() {
@@ -327,6 +335,7 @@ if ( ! class_exists( 'CR_Reminders_Log_Table' ) ) :
 			$count_object = (object) $reminders_count;
 			return $count_object;
 		}
+
 	}
 
 endif;

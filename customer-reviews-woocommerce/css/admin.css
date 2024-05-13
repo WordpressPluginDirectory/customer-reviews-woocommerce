@@ -1509,6 +1509,214 @@ li.select2-results__option {
 .cr-admin-settings-footer {
 	width: 700px;
 }
+.cr-reminders-log-table {
+	.column-action {
+		vertical-align: middle;
+		text-align: center;
+		width: 40px;
+	}
+	.cr-col-actions {
+		display: block;
+		width: fit-content;
+		.cr-col-actions-button {
+			min-height: 17px;
+			padding: 5px;
+			line-height: 17px;
+			width: 27px;
+			.dashicons {
+				font-size: 17px;
+				width: 17px;
+				height: 17px;
+				line-height: 17px;
+			}
+		}
+	}
+}
+.cr-reminder-details-nav-back-a {
+	display: block;
+	text-decoration: none;
+	width: fit-content;
+}
+.cr-reminder-details-nav-back {
+	font-size: 13px;
+	display: flex;
+	align-items: center;
+	gap: 5px;
+	.dashicons {
+		font-size: 13px;
+		width: 13px;
+		height: 13px;
+	}
+}
+.cr-reminder-details-cont {
+	display: flex;
+	column-gap: 20px;
+	flex-wrap: wrap;
+	.cr-reminder-details-cont-a {
+		flex-grow: 1;
+	}
+	.cr-reminder-details-cont-b {
+		flex-grow: 1;
+		.cr-reminder-details-subcont-b {
+			background: #fff;
+			.cr-reminder-details-line-h {
+				font-weight: 600;
+				line-height: 1.4;
+				margin-bottom: 0.1em;
+			}
+			.cr-help-tip {
+				margin: 0 0 0 9px;
+			}
+		}
+	}
+	.cr-reminder-details-line {
+		padding: 8px 10px;
+	}
+}
+.cr-reminder-details-subcont {
+	border: 1px solid #c3c4c7;
+	margin: 0 0 20px 0;
+	.cr-reminder-details-subcont-h {
+		font-size: 1.1em;
+		font-weight: 600;
+		padding: 9px;
+		line-height: 1.4em;
+		border-bottom: 1px solid #c3c4c7;
+		color: #2c3338;
+		background: #fff;
+	}
+	.cr-reminder-details-help {
+		width: 1em;
+	}
+	.cr-reminder-details-table {
+		background: #fff;
+		width: 100%;
+		border-spacing: 0;
+		tr:nth-child(2n) td {
+			background: #fcfcfc;
+		}
+		td {
+			font-size: 1em;
+			font-weight: 400;
+			color: #50575e;
+			padding: 8px 10px;
+		}
+		tr td:first-child {
+			width: 200px;
+		}
+	}
+}
+.cr-help-tip {
+	color: #666;
+	display: inline-block;
+	font-size: 1.1em;
+	font-style: normal;
+	height: 16px;
+	line-height: 16px;
+	position: relative;
+	vertical-align: middle;
+	width: 16px;
+}
+
+.cr-help-tip::after {
+	font-family: Dashicons;
+	speak: never;
+	font-weight: 400;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+	margin: 0;
+	text-indent: 0;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	content: "\f223";
+	cursor: help;
+}
+
+#tiptip_holder {
+	display: none;
+	z-index: 8675309;
+	position: absolute;
+	top: 0;
+	pointer-events: none;
+
+	/*rtl:ignore*/
+	left: 0;
+
+	&.tip_top {
+		padding-bottom: 5px;
+
+		#tiptip_arrow_inner {
+			margin-top: -7px;
+			margin-left: -6px;
+			border-top-color: #333;
+		}
+	}
+
+	&.tip_bottom {
+		padding-top: 5px;
+
+		#tiptip_arrow_inner {
+			margin-top: -5px;
+			margin-left: -6px;
+			border-bottom-color: #333;
+		}
+	}
+
+	&.tip_right {
+		padding-left: 5px;
+
+		#tiptip_arrow_inner {
+			margin-top: -6px;
+			margin-left: -5px;
+			border-right-color: #333;
+		}
+	}
+
+	&.tip_left {
+		padding-right: 5px;
+
+		#tiptip_arrow_inner {
+			margin-top: -6px;
+			margin-left: -7px;
+			border-left-color: #333;
+		}
+	}
+}
+
+#tiptip_content,
+.chart-tooltip,
+.wc_error_tip {
+	color: #fff;
+	font-size: 0.8em;
+	max-width: 150px;
+	background: #333;
+	text-align: center;
+	border-radius: 3px;
+	padding: 0.618em 1em;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+
+	code {
+		padding: 1px;
+		background: #888;
+	}
+}
+
+#tiptip_arrow,
+#tiptip_arrow_inner {
+	position: absolute;
+	border-color: transparent;
+	border-style: solid;
+	border-width: 6px;
+	height: 0;
+	width: 0;
+}
+
 @keyframes dashicons-spin {
 	0% {
 		transform: rotate( 0deg );

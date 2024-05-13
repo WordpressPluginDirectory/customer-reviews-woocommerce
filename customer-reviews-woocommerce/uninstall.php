@@ -71,7 +71,6 @@ $cr_uninstall_options = array(
 	'ivole_form_rating_bar',
 	'ivole_form_geolocation',
 	'ivole_limit_reminders',
-	'ivole_registered_customers',
 	'ivole_enable_for_role',
 	'ivole_enabled_roles',
 	'ivole_enable_for_guests',

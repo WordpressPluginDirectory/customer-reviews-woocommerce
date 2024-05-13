@@ -325,6 +325,88 @@ class CR_Reminders_Log {
 		}
 	}
 
+	public function get_details( $id ) {
+		global $wpdb;
+		$id = intval( $id );
+		if ( $id ) {
+			$table_name = $wpdb->prefix . self::LOGS_TABLE;
+			$record = $wpdb->get_row(
+				"SELECT * FROM `$table_name` WHERE `id` = '$id';",
+				ARRAY_A
+			);
+			if ( is_array( $record ) ) {
+				return $record;
+			}
+		}
+		return false;
+	}
+
+	public static function get_status_description( $status ) {
+		$description = '';
+		switch ($status) {
+			case 'sent':
+				$description = __( 'Sent', 'customer-reviews-woocommerce' );
+				break;
+			case 'error':
+				$description = __( 'Error', 'customer-reviews-woocommerce' );
+				break;
+			case 'rmd_opened':
+				$description = __( 'Reminder Opened', 'customer-reviews-woocommerce' );
+				break;
+			case 'frm_opened':
+				$description = __( 'Form Opened', 'customer-reviews-woocommerce' );
+				break;
+			default:
+				break;
+		}
+		return $description;
+	}
+
+	public static function get_verification_description( $verification ) {
+		$description = '';
+		switch ($verification) {
+			case 'verified':
+				$description = __( 'Yes', 'customer-reviews-woocommerce' );
+				break;
+			case 'local':
+				$description = __( 'No', 'customer-reviews-woocommerce' );
+				break;
+			default:
+				break;
+		}
+		return $description;
+	}
+
+	public static function get_channel_description( $channel ) {
+		$description = '';
+		switch ($channel) {
+			case 'email':
+				$description = __( 'Email', 'customer-reviews-woocommerce' );
+				break;
+			case 'wa':
+				$description = __( 'WhatsApp', 'customer-reviews-woocommerce' );
+				break;
+			default:
+				break;
+		}
+		return $description;
+	}
+
+	public static function get_type_description( $type ) {
+		$description = '';
+		switch ($type) {
+			case 'm':
+				$description = __( 'Manual', 'customer-reviews-woocommerce' );
+				break;
+			case 'a':
+				$description = __( 'Automatic', 'customer-reviews-woocommerce' );
+				break;
+			default:
+				break;
+		}
+		return $description;
+	}
+
 }
 
 endif;
