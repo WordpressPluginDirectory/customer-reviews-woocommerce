@@ -114,9 +114,7 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 			add_action( 'woocommerce_review_meta', array( $this, 'cusrev_review_meta' ), 9, 1 );
 			add_action( 'wp_footer', array( $this, 'cr_photoswipe' ) );
 			add_action( 'woocommerce_review_before_comment_text', array( $this, 'display_featured' ), 9 );
-			if( 'initials' === get_option( 'ivole_avatars', 'standard' ) ) {
-				add_action( 'woocommerce_before_single_product', array( $this, 'custom_avatars' ) );
-			}
+			add_action( 'woocommerce_before_single_product', array( $this, 'custom_avatars' ) );
 			add_filter( 'cr_review_form_before_comment', array( 'CR_Custom_Questions', 'review_form_questions' ) );
 			add_action( 'wp_insert_comment', array( 'CR_Custom_Questions', 'submit_onsite_questions' ) );
 			add_action( 'comment_post', array( $this, 'clear_trustbadge_cache' ), 10, 3 );
@@ -1541,7 +1539,9 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 	}
 
 	public function custom_avatars() {
-		add_filter( 'get_avatar', array( $this, 'get_avatar' ), 10, 5 );
+		if ( 'initials' === get_option( 'ivole_avatars', 'standard' ) ) {
+			add_filter( 'get_avatar', array( $this, 'get_avatar' ), 10, 5 );
+		}
 	}
 
 	public static function callback_comments( $comment, $args, $depth ) {
