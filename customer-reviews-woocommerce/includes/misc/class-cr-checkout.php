@@ -29,13 +29,13 @@ if ( ! class_exists( 'CR_Checkout' ) ) :
 					$this->consent_text = apply_filters( 'wpml_translate_single_string', $this->consent_text, 'ivole', 'ivole_customer_consent_text', $wpml_current_language );
 				}
 				//
-				if ( function_exists( '__experimental_woocommerce_blocks_register_checkout_field' ) ) {
-					__experimental_woocommerce_blocks_register_checkout_field(
+				if ( function_exists( 'woocommerce_register_additional_checkout_field' ) ) {
+					woocommerce_register_additional_checkout_field(
 						array(
 							'id'            => 'cusrev/checkout-consent',
 							'label'         => $this->consent_text,
 							'optionalLabel' => $this->consent_text,
-							'location'      => 'additional',
+							'location'      => 'order',
 							'type'          => 'checkbox',
 						)
 					);
