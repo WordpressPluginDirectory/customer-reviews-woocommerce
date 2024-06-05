@@ -118,6 +118,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 							<?php printf( _x( '%s ago', '%s = human-readable time difference', 'customer-reviews-woocommerce' ), human_time_diff( mysql2date( 'U', $review->comment_date, true ), current_time( 'timestamp' ) ) ); ?>
 						</div>
 					</div>
+					<?php
+					if ( $incentivized_label ) :
+						$coupon_code = get_comment_meta( $review->comment_ID, 'cr_coupon_code', true );
+						if ( $coupon_code ) :
+					?>
+						<div class="cr-incentivized-row">
+							<?php
+								$incentivized_badge_icon = '<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="cr-incentivized-svg"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 15l6 -6" /><circle cx="9.5" cy="9.5" r=".5" fill="currentColor" /><circle cx="14.5" cy="14.5" r=".5" fill="currentColor" /><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /></svg>';
+								$incentivized_badge_content = '<span class="cr-incentivized-icon">' . $incentivized_badge_icon . '</span>' . esc_html( $incentivized_label );
+								echo '<div class="cr-incentivized-badge">' . $incentivized_badge_content . '</div>';
+							?>
+						</div>
+					<?php
+						endif;
+					endif;
+					?>
 					<?php if ( $show_products && $product ):
 						if( 'publish' === $product->get_status() ):
 							?>

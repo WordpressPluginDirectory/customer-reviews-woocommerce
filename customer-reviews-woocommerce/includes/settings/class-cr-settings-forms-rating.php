@@ -51,7 +51,7 @@ if ( ! class_exists( 'CR_Forms_Settings_Rating' ) ) :
 							<?php _e( 'Add Rating', 'customer-reviews-woocommerce' ); ?>
 						</button>
 						<span>
-							<?php echo esc_html( 'The free version of the plugin supports up to 3 rating criteria' ); ?>
+							<?php echo esc_html_e( 'The free version of the plugin supports up to 3 rating criteria', 'customer-reviews-woocommerce' ); ?>
 						</span>
 					</div>
 					<input type="hidden" name="ivole_rating_criteria" id="ivole_rating_criteria" value="<?php echo esc_attr( json_encode( $rtn_crta ) ); ?>" />

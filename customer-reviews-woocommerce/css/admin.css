@@ -1347,6 +1347,10 @@ li.select2-results__option {
 	box-sizing: border-box;
 	vertical-align: top;
 }
+.ivole-new-settings table.form-table input[type=text].cr-admin-badge-label {
+	width: 100%;
+	max-width: 675px;
+}
 .ivole-new-settings table.form-table th {
 	position: relative;
 	padding-right: 24px;
@@ -1775,7 +1779,8 @@ li.select2-results__option {
 	}
 	.ivole-new-settings table.form-table input[type=text],
 	.ivole-new-settings table.form-table input[type=number],
-	.ivole-new-settings table.form-table select {
+	.ivole-new-settings table.form-table select,
+	.ivole-new-settings table.form-table input[type=text].cr-admin-badge-label {
 		width: 100%;
 	}
 }
@@ -1807,6 +1812,7 @@ li.select2-results__option {
 	.ivole-new-settings .cr-rtn-crta-table,
 	.ivole-new-settings .cr-snd-dlay-table,
 	.ivole-new-settings .cr-cus-atts-table,
+	.ivole-new-settings .cr-rev-disc-table,
 	.ivole-new-settings .cr-dns-table {
 		width: 100%;
 	}
@@ -1816,10 +1822,12 @@ li.select2-results__option {
 	.cr-dns-records-acc .cr-dns-table-cont,
 	.ivole-new-settings table.form-table input[type=text],
 	.ivole-new-settings table.form-table input[type=number],
-	.ivole-new-settings table.form-table select {
+	.ivole-new-settings table.form-table select,
+	.ivole-new-settings table.form-table input[type=text].cr-admin-badge-label {
 		width: 100%;
 	}
 	.ivole-new-settings .cr-snd-dlay-table thead th:first-child,
+	.ivole-new-settings .cr-rev-disc-table thead th:first-child,
 	.ivole-new-settings .cr-cus-atts-table thead tr th:last-child,
 	.ivole-new-settings .cr-rtn-crta-table thead tr th:last-child {
 		display: none;

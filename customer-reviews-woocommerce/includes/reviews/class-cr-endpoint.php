@@ -62,6 +62,7 @@ if ( ! class_exists( 'CR_Endpoint' ) ) :
 					$customer_last_name = '';
 					$customer_email = '';
 					$local_reviews_notif = array();
+					$reviews = array();
 
 					//check if registered customers option is used
 					$registered_customers = false;
@@ -137,9 +138,8 @@ if ( ! class_exists( 'CR_Endpoint' ) ) :
 							//WPML integration
 							//wc_get_page_id returns shop page ID in the default WPML site language
 							//If a review was submitted in a language different from the default one, it is necessary to get shop page ID for the non-default language
-							$ivole_language = get_option( 'ivole_language' );
 							$wpml_current_lang = '';
-							if ( has_filter( 'wpml_object_id' ) && $ivole_language === 'WPML' ) {
+							if ( has_filter( 'wpml_object_id' ) ) {
 								$wpml_order_language = $order->get_meta( 'wpml_language', true );
 								$shop_page_id = apply_filters( 'wpml_object_id', $shop_page_id, 'page', true, $wpml_order_language );
 								//switch the current WPML site language to the language of the order because
@@ -156,7 +156,7 @@ if ( ! class_exists( 'CR_Endpoint' ) ) :
 								}
 							}
 							// Polylang integration
-							if ( function_exists( 'pll_get_post' ) && function_exists( 'pll_get_post_language' ) && $ivole_language === 'WPML' ) {
+							if ( function_exists( 'pll_get_post' ) && function_exists( 'pll_get_post_language' ) ) {
 								$polylang_order_language = pll_get_post_language( $order_id );
 								if( $polylang_order_language ) {
 									$shop_page_id = pll_get_post( $shop_page_id, $polylang_order_language  );
@@ -223,7 +223,7 @@ if ( ! class_exists( 'CR_Endpoint' ) ) :
 									$review_id = wp_insert_comment( $commentdata );
 								}
 								if( $review_id ) {
-									//add_comment_meta( $review_id, 'rating', intval( $body2->order->shop_rating ), true );
+									$reviews[] = $review_id;
 									add_comment_meta( $review_id, $ivole_order, $order_id, true );
 									if( $country ) {
 										update_comment_meta( $review_id, 'ivole_country', $country );
@@ -262,7 +262,7 @@ if ( ! class_exists( 'CR_Endpoint' ) ) :
 								}
 							}
 							//WPML integration
-							if ( has_filter( 'wpml_object_id' ) && $ivole_language === 'WPML' ) {
+							if ( has_filter( 'wpml_object_id' ) ) {
 								do_action( 'wpml_switch_language', $wpml_current_lang );
 							}
 							//WPML integration
@@ -344,9 +344,8 @@ if ( ! class_exists( 'CR_Endpoint' ) ) :
 								//WPML integration
 								//The order contains product ID of the product in the default WPML site language
 								//If a review was submitted in a language different from the default one, it is necessary to get product ID for the non-default language
-								$ivole_language = get_option( 'ivole_language' );
 								$wpml_current_lang = '';
-								if ( has_filter( 'wpml_object_id' ) && $ivole_language === 'WPML' ) {
+								if ( has_filter( 'wpml_object_id' ) ) {
 									$wpml_order_language = $order->get_meta( 'wpml_language', true );
 									$order_item_product_id = apply_filters( 'wpml_object_id', $order_item_product_id, 'product', true, $wpml_order_language );
 									//switch the current WPML site language to the language of the order because
@@ -355,7 +354,7 @@ if ( ! class_exists( 'CR_Endpoint' ) ) :
 									do_action( 'wpml_switch_language', $wpml_order_language );
 								}
 								// Polylang integration
-								if ( function_exists( 'pll_get_post' ) && function_exists( 'pll_get_post_language' ) && $ivole_language === 'WPML' ) {
+								if ( function_exists( 'pll_get_post' ) && function_exists( 'pll_get_post_language' ) ) {
 									$polylang_order_language = pll_get_post_language( $order_id );
 									if( $polylang_order_language ) {
 										$order_item_product_id = pll_get_post( $order_item_product_id, $polylang_order_language  );
@@ -442,7 +441,7 @@ if ( ! class_exists( 'CR_Endpoint' ) ) :
 										$review_id = wp_insert_comment( $commentdata );
 									}
 									if( $review_id ) {
-										//add_comment_meta( $review_id, 'rating', intval( $body2->order->items[$i]->rating ), true );
+										$reviews[] = $review_id;
 										add_comment_meta( $review_id, $ivole_order, $order_id, true );
 										if( $country ) {
 											update_comment_meta( $review_id, 'ivole_country', $country );
@@ -498,7 +497,7 @@ if ( ! class_exists( 'CR_Endpoint' ) ) :
 									}
 								}
 								// WPML integration
-								if ( has_filter( 'wpml_object_id' ) && $ivole_language === 'WPML' ) {
+								if ( has_filter( 'wpml_object_id' ) ) {
 									do_action( 'wpml_switch_language', $wpml_current_lang );
 								}
 							}
@@ -599,6 +598,11 @@ if ( ! class_exists( 'CR_Endpoint' ) ) :
 									);
 								}
 
+								if ( 0 === $coupon_res[0] ) {
+									foreach( $reviews as $rvw_id ) {
+										update_comment_meta( $rvw_id, 'cr_coupon_code', $coupon_code );
+									}
+								}
 								$order->add_order_note( 'CR: ' . $coupon_res[1] );
 							}
 						}

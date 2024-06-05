@@ -21,6 +21,7 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 		private $reviews_voting = false;
 		protected $lang;
 		public static $onsite_q_types;
+		private $incentivized_badge = false;
 
 		const REVIEWS_META_IMG = 'ivole_review_image';
 		const REVIEWS_META_LCL_IMG = 'ivole_review_image2';
@@ -119,6 +120,10 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 			add_action( 'wp_insert_comment', array( 'CR_Custom_Questions', 'submit_onsite_questions' ) );
 			add_action( 'comment_post', array( $this, 'clear_trustbadge_cache' ), 10, 3 );
 			add_action( 'cr_review_form_rating', array( 'CR_Custom_Questions', 'review_form_rating' ) );
+			// standard WooCommerce review template
+			add_action( 'woocommerce_review_after_comment_text', array( $this, 'display_incentivized_badge' ), 8 );
+			// enhanced CusRev review template
+			add_action( 'cr_review_after_comment_text', array( $this, 'display_incentivized_badge' ), 8 );
 		}
 		public function custom_fields_attachment( $comment_form ) {
 			$post_id = get_the_ID();
@@ -1651,6 +1656,36 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 
 	public static function get_close_button_svg() {
 		return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="cr-close-button-svg"><rect x="0" fill="none" width="18" height="18"/><g><path class="cr-close-button-svg-p" d="M12.12 10l3.53 3.53-2.12 2.12L10 12.12l-3.54 3.54-2.12-2.12L7.88 10 4.34 6.46l2.12-2.12L10 7.88l3.54-3.53 2.12 2.12z"/></g></svg>';
+	}
+
+	public function display_incentivized_badge( $comment ) {
+		$display_badge = false;
+		// avoid checking the option in the database if it is not the first review on a page
+		if ( $this->incentivized_badge ) {
+			$display_badge = true;
+		} elseif ( false === $this->incentivized_badge ) {
+			$incentivized_setting = CR_Review_Discount_Settings::get_incentivized_badge_setting();
+			if (
+				$incentivized_setting &&
+				is_array( $incentivized_setting ) &&
+				isset( $incentivized_setting['bdg'] ) &&
+				isset( $incentivized_setting['lbl'] ) &&
+				'yes' === $incentivized_setting['bdg']
+			) {
+				$this->incentivized_badge = $incentivized_setting['lbl'];
+				$display_badge = true;
+			} else {
+				$this->incentivized_badge = '';
+			}
+		}
+		if ( $display_badge ) {
+			$coupon_code = get_comment_meta( $comment->comment_ID, 'cr_coupon_code', true );
+			if ( $coupon_code ) {
+				$incentivized_badge_icon = '<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="cr-incentivized-svg"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 15l6 -6" /><circle cx="9.5" cy="9.5" r=".5" fill="currentColor" /><circle cx="14.5" cy="14.5" r=".5" fill="currentColor" /><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /></svg>';
+				$incentivized_badge_content = '<span class="cr-incentivized-icon">' . $incentivized_badge_icon . '</span>' . esc_html( $this->incentivized_badge );
+				echo '<div class="cr-incentivized-badge">' . $incentivized_badge_content . '</div>';
+			}
+		}
 	}
 }
 

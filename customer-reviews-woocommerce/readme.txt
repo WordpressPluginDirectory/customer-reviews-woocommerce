@@ -4,7 +4,7 @@ Tags: woocommerce, review plugin, review reminder, customer reviews, review for 
 Requires at least: 4.5
 Tested up to: 6.5
 Requires PHP: 7.2
-Stable tag: 5.49.3
+Stable tag: 5.50.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl.html
 
@@ -140,6 +140,7 @@ Plus, benefit from:
 * Working out-of-the-box with a responsive email template with custom colors
 * A built-in testing tool to ensure emails look beautiful before sending
 * Emailing coupons in different languages via “qTranslate X”, “Polylang”, "TranslatePress" and “WPML” plugin integration
+* Displaying a badge next on reviews awarded with coupons to build trust between customers and your business
 
 === 🤔 Reassure Customers – With Questions & Answers ===
 
@@ -231,6 +232,10 @@ If you would like to change how reviews are sorted on product pages, it is possi
 
 == Changelog ==
 
+= 5.50.0 =
+* New feature: a badge to flag reviews that were incentivized with discount coupons
+* Bug fix: WPML could not detect the correct language for reviews submitted via self-hosted aggregated review forms
+* Bug fix: consent was missing for the new WooCommerce checkout block even when a customer provided consent
 = 5.49.3 =
 * Bug fix: replacement of the __experimental_woocommerce_blocks_register_checkout_field function to ensure compatibility with the latest WooCommerce update
 = 5.49.2 =

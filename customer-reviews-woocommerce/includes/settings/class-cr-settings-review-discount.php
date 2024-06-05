@@ -23,6 +23,7 @@ if ( ! class_exists( 'CR_Review_Discount_Settings' ) ):
 
 			add_action( 'woocommerce_admin_field_coupon_tiers_table', array( 'CR_Discount_Tiers', 'show_coupon_tiers_table' ) );
 			add_action( 'woocommerce_admin_field_cr_enable_review_discount', array( $this, 'display_review_discount' ) );
+			add_action( 'woocommerce_admin_field_cr_incentivized_badge', array( $this, 'display_incentivized_badge' ) );
 
 			// array_filter with one argument will filter empty values from the array
 			add_action( 'woocommerce_admin_settings_sanitize_option_ivole_coupon__product_ids', 'array_filter', 10, 1 );
@@ -50,6 +51,19 @@ if ( ! class_exists( 'CR_Review_Discount_Settings' ) ):
 
 		public function save() {
 			$this->init_settings();
+			if ( ! empty( $_POST ) ) {
+				$ivole_incentivized_badge = self::get_incentivized_badge_setting();
+				if (
+					isset( $_POST['ivole_incentivized_badge'] ) &&
+					1 == $_POST['ivole_incentivized_badge']
+				) {
+					$ivole_incentivized_badge['bdg'] = 'yes';
+				}
+				if ( isset( $_POST['ivole_incentivized_badge_lbl'] ) ) {
+					$ivole_incentivized_badge['lbl'] = esc_html( $_POST['ivole_incentivized_badge_lbl'] );
+				}
+				$_POST['ivole_incentivized_badge'] = $ivole_incentivized_badge;
+			}
 			WC_Admin_Settings::save_fields( $this->settings );
 		}
 
@@ -83,6 +97,16 @@ if ( ! class_exists( 'CR_Review_Discount_Settings' ) ):
 					'id'       => 'ivole_coupon_enable',
 					'desc_tip' => true,
 					'autoload' => false
+				),
+				array(
+					'title'    => __( 'Incentivized Review Badge', 'customer-reviews-woocommerce' ),
+					'type'     => 'cr_incentivized_badge',
+					'desc'     => __( 'Display a badge next to reviews for which customers received discount coupons. Disclosing incentivized reviews helps build trust between customers and your business. It can also be a legal requirement in some jurisdictions.', 'customer-reviews-woocommerce' ),
+					'id'       => 'ivole_incentivized_badge',
+					'id_label' => 'ivole_incentivized_badge_lbl',
+					'value'    => self::get_incentivized_badge_setting(),
+					'desc_tip' => false,
+					'class'    => 'cr-admin-badge-label'
 				)
 			);
 			// some options are available only when discounts are sent by email
@@ -798,6 +822,73 @@ if ( ! class_exists( 'CR_Review_Discount_Settings' ) ):
 					'message' => __( 'Please re-save settings and try again', 'customer-reviews-woocommerce' )
 				);
 			}
+		}
+
+		public function display_incentivized_badge( $field ) {
+			$description = __(
+				'Display a badge next to reviews for which customers received discount coupons. Disclosing incentivized reviews helps build trust between customers and your business. It can also be a legal requirement in some jurisdictions.',
+				'customer-reviews-woocommerce'
+			);
+			$tooltip_html = CR_Admin::ivole_wc_help_tip(
+				__( 'Customize label of the incentivized review badge', 'customer-reviews-woocommerce' )
+			);
+			$option_value = 'no';
+			$option_label = '';
+			if ( isset( $field['value'] ) && $field['value'] ) {
+				if ( isset( $field['value']['bdg'] ) && 'yes' === $field['value']['bdg'] ) {
+					$option_value = 'yes';
+				}
+				if ( isset( $field['value']['lbl'] ) && $field['value']['lbl'] ) {
+					$option_label = $field['value']['lbl'];
+				}
+			}
+			?>
+				<tr>
+					<th scope="row" class="titledesc">
+						<?php echo esc_html( $field['title'] ); ?>
+					</th>
+					<td class="forminp forminp-<?php echo esc_attr( sanitize_title( $field['type'] ) ); ?>">
+						<fieldset>
+							<legend class="screen-reader-text"><span><?php echo esc_html( $field['title'] ); ?></span></legend>
+							<label for="<?php echo esc_attr( $field['id'] ); ?>">
+								<input
+									name="<?php echo esc_attr( $field['id'] ); ?>"
+									id="<?php echo esc_attr( $field['id'] ); ?>"
+									type="checkbox"
+									class="<?php echo esc_attr( isset( $field['class'] ) ? $field['class'] : '' ); ?>"
+									value="1"
+									<?php checked( $option_value, 'yes' ); ?>
+								/> <?php echo $description; ?>
+							</label>
+						</fieldset>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row" class="titledesc">
+						<label for="<?php echo esc_attr( $field['id_label'] ); ?>">
+							<?php esc_html_e( 'Incentivized Badge Label', 'customer-reviews-woocommerce' ); ?> <?php echo $tooltip_html; // WPCS: XSS ok. ?>
+						</label>
+					</th>
+					<td class="forminp forminp-text">
+						<input
+							name="<?php echo esc_attr( $field['id_label'] ); ?>"
+							id="<?php echo esc_attr( $field['id_label'] ); ?>"
+							type="text"
+							style="<?php echo esc_attr( $field['css'] ); ?>"
+							value="<?php echo esc_attr( $option_label ); ?>"
+							class="<?php echo esc_attr( $field['class'] ); ?>"
+							/>
+					</td>
+				</tr>
+			<?php
+		}
+
+		public static function get_incentivized_badge_setting() {
+			$default_setting = array(
+				'bdg' => 'no',
+				'lbl' => __( 'Reviewer received an unconditional discount coupon on future purchases', 'customer-reviews-woocommerce' )
+			);
+			return get_option( 'ivole_incentivized_badge', $default_setting );
 		}
 
 	}

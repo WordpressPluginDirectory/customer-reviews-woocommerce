@@ -132,16 +132,18 @@ if ( ! class_exists( 'CR_Checkout' ) ) :
 		public function cr_api_checkbox_meta( $order ) {
 			if ( $order instanceof \WC_Order ) {
 				$consent = 'no';
-				$extra_fields = $order->get_meta( '_additional_fields' );
+
 				if (
-					is_array( $extra_fields ) &&
-					isset( $extra_fields['cusrev/checkout-consent'] ) &&
-					$extra_fields['cusrev/checkout-consent']
+					class_exists( 'Automattic\WooCommerce\Blocks\Package' ) &&
+					class_exists( 'Automattic\WooCommerce\Blocks\Domain\Services\CheckoutFields' )
 				) {
-					$consent = 'yes';
-					unset( $extra_fields['cusrev/checkout-consent'] );
-					$order->update_meta_data( '_additional_fields', $extra_fields );
+					$checkout_fields = Automattic\WooCommerce\Blocks\Package::container()->get( Automattic\WooCommerce\Blocks\Domain\Services\CheckoutFields::class );
+					$cr_consent_field = $checkout_fields->get_field_from_object( 'cusrev/checkout-consent', $order );
+					if ( $cr_consent_field ) {
+						$consent = 'yes';
+					}
 				}
+
 				$order->update_meta_data( '_ivole_cr_consent', $consent );
 				$order->save();
 			}

@@ -1355,6 +1355,26 @@ div.cr-review-tags-filter.cr-review-tags-filter-disabled {
 .cr-review-tags {
 	margin-bottom: 1em;
 }
+.cr-incentivized-badge {
+	display: flex;
+	column-gap: 4px;
+	align-items: center;
+	font-size: 10px;
+	line-height: 10px;
+	margin: 0 0 1em 0;
+}
+.cr-reviews-grid .cr-review-card .cr-incentivized-row .cr-incentivized-badge,
+.cr-reviews-slider .cr-review-card .cr-incentivized-row .cr-incentivized-badge {
+	margin: 0;
+}
+.cr-incentivized-badge .cr-incentivized-icon {
+	display: block;
+	height: 12px;
+}
+.cr-incentivized-badge .cr-incentivized-icon .cr-incentivized-svg {
+	width: 12px;
+	height: 12px;
+}
 .cr-all-reviews-shortcode ol.commentlist ul.children,
 #reviews.cr-reviews-ajax-reviews #comments.cr-reviews-ajax-comments .cr-ajax-reviews-list ul.children {
 	list-style: none outside;
@@ -3100,7 +3120,8 @@ img.ivole-verified-badge-ext-icon {
 	margin: 0 8px 0 0;
 }
 
-.cr-reviews-grid .cr-review-card .middle-row {
+.cr-reviews-grid .cr-review-card .middle-row,
+.cr-reviews-grid .cr-review-card .cr-incentivized-row {
 	padding: 16px;
 	background: #FCFCFC;
 	border: 1px solid #F9F9F9;
@@ -3113,7 +3134,8 @@ img.ivole-verified-badge-ext-icon {
 	font-size: 16px;
 	margin: 0 15px 15px 15px;
 }
-.cr-reviews-slider .cr-review-card .middle-row {
+.cr-reviews-slider .cr-review-card .middle-row,
+.cr-reviews-slider .cr-review-card .cr-incentivized-row {
 	padding: 16px;
 	background: #FCFCFC;
 	border: 1px solid #F9F9F9;
@@ -3126,6 +3148,9 @@ img.ivole-verified-badge-ext-icon {
 	font-size: 16px;
 	margin: 0 10px 15px 10px;
 	flex: 1;
+}
+.cr-reviews-slider .cr-review-card .cr-incentivized-row {
+	flex: 0;
 }
 
 .cr-reviews-grid .cr-review-card .top-row .review-thumbnail,

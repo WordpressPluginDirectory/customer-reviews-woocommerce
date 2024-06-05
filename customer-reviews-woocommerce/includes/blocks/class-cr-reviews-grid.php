@@ -411,6 +411,19 @@ if ( ! class_exists( 'CR_Reviews_Grid' ) ) {
 				else $summary_bar = $this->show_summary_table( $args );
 			}
 
+			// display incentivized badges
+			$incentivized_setting = CR_Review_Discount_Settings::get_incentivized_badge_setting();
+			$incentivized_label = '';
+			if (
+				$incentivized_setting &&
+				is_array( $incentivized_setting ) &&
+				isset( $incentivized_setting['bdg'] ) &&
+				isset( $incentivized_setting['lbl'] ) &&
+				'yes' === $incentivized_setting['bdg']
+			) {
+				$incentivized_label = $incentivized_setting['lbl'];
+			}
+
 			$template = wc_locate_template(
 				'reviews-grid.php',
 				'customer-reviews-woocommerce',
