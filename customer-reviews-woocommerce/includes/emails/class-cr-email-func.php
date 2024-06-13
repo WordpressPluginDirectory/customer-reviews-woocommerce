@@ -13,6 +13,7 @@ if ( ! class_exists( 'CR_Email_Func' ) ) :
 
 		const TEMPLATE_REVIEW_REMINDER = 'email-review-reminder.php';
 		const TEMPLATE_REVIEW_DISCOUNT = 'email-review-discount.php';
+		const CR_MESSAGE_ID = 'X-CR-Message-ID';
 
 		public static function get_order_items2( $order, $currency ) {
 			// read options
@@ -390,6 +391,7 @@ if ( ! class_exists( 'CR_Email_Func' ) ) :
 							'is_test' => $is_test
 						)
 					);
+					$headers[] = self::CR_MESSAGE_ID . ': ' . $message['email_id'];
 					$data['email']['subject'] = apply_filters(
 						'cr_local_review_reminder_subject',
 						$data['email']['subject'],
@@ -407,9 +409,14 @@ if ( ! class_exists( 'CR_Email_Func' ) ) :
 							'details' => ''
 						);
 					} else {
+						$details = 'wp_mail function returned an error';
+						$wpmail_error = CR_WPMail_Log::get_error( $message['email_id'] );
+						if ( $wpmail_error ) {
+							$details = esc_html( $details . ' [' . $wpmail_error .']' );
+						}
 						$result = array(
 							'status' => 'Error',
-							'details' => 'wp_mail function returned an error'
+							'details' => $details
 						);
 					}
 				} else {

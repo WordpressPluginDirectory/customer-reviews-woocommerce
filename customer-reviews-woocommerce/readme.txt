@@ -4,7 +4,7 @@ Tags: woocommerce, review plugin, review reminder, customer reviews, review for 
 Requires at least: 4.5
 Tested up to: 6.5
 Requires PHP: 7.2
-Stable tag: 5.50.0
+Stable tag: 5.51.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl.html
 
@@ -232,6 +232,11 @@ If you would like to change how reviews are sorted on product pages, it is possi
 
 == Changelog ==
 
+= 5.51.0 =
+* Improvement: visibility of detailed error information for reminders sent by the default WordPress mailer (wp_mail)
+* Bug fix: incentivized reviews badge setting could not be disabled
+= 5.50.1 =
+* Bug fix: consent checkbox was unnecessarily shown in additional details of orders created via the classic WooCommerce checkout
 = 5.50.0 =
 * New feature: a badge to flag reviews that were incentivized with discount coupons
 * Bug fix: WPML could not detect the correct language for reviews submitted via self-hosted aggregated review forms

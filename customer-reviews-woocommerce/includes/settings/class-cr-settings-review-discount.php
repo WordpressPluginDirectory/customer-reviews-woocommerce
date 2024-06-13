@@ -58,6 +58,8 @@ if ( ! class_exists( 'CR_Review_Discount_Settings' ) ):
 					1 == $_POST['ivole_incentivized_badge']
 				) {
 					$ivole_incentivized_badge['bdg'] = 'yes';
+				} else {
+					$ivole_incentivized_badge['bdg'] = 'no';
 				}
 				if ( isset( $_POST['ivole_incentivized_badge_lbl'] ) ) {
 					$ivole_incentivized_badge['lbl'] = esc_html( $_POST['ivole_incentivized_badge_lbl'] );

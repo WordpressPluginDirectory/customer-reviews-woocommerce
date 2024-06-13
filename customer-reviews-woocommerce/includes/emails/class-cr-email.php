@@ -414,7 +414,7 @@ class Ivole_Email {
 					'currency' => $order_currency,
 					'country' => $shipping_country,
 				 	'items' => CR_Email_Func::get_order_items2( $order, $order_currency ) ),
-				'callback' => array( //'url' => get_option( 'home' ) . '/wp-json/ivole/v1/review',
+				'callback' => array(
 					'url' => $callback_url,
 					'key' => $secret_key ),
 				'form' => array('header' => $this->replace_variables( $this->form_header ),

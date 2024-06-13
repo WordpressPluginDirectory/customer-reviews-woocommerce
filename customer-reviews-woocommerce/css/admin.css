@@ -1403,6 +1403,9 @@ li.select2-results__option {
 	margin-left: 10px;
 	margin-top: -4px;
 }
+.ivole-new-settings .cr-settings-download-button.disabled {
+	pointer-events: none;
+}
 .cr-dns-records-acc {
 	max-width: 700px;
 	display: none;

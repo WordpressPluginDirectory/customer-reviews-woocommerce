@@ -11,6 +11,7 @@ require_once( __DIR__ . '/includes/emails/class-cr-email-coupon.php' );
 require_once( __DIR__ . '/includes/emails/class-cr-phone-vldtr.php' );
 require_once( __DIR__ . '/includes/emails/class-cr-wtsap.php' );
 require_once( __DIR__ . '/includes/emails/class-cr-email-review-notification.php' );
+require_once( __DIR__ . '/includes/emails/class-cr-wpmail-log.php' );
 require_once('class-cr-referrals.php');
 require_once( __DIR__ . '/includes/reminders/class-cr-manual.php' );
 require_once( __DIR__ . '/includes/reminders/class-cr-admin-menu-reminders.php' );
@@ -77,7 +78,7 @@ require_once( __DIR__ . '/includes/qna/class-cr-qna-email.php' );
 require_once( __DIR__ . '/includes/analytics/class-cr-reminders-log.php' );
 
 class Ivole {
-	const CR_VERSION = '5.50.0';
+	const CR_VERSION = '5.51.0';
 
 	public function __construct() {
 		if( function_exists( 'wc' ) ) {
@@ -97,6 +98,7 @@ class Ivole {
 			new CR_XML_Feeds();
 			new CR_Local_Forms_Ajax();
 			new CR_Reviews_Notifications();
+			new CR_WPMail_Log();
 
 			$cr_all_reviews = new CR_All_Reviews();
 			$cr_reviews_grid = new CR_Reviews_Grid();
