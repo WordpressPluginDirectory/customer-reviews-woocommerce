@@ -48,12 +48,14 @@ if ( ! class_exists( 'CR_Reviews_Media_Meta_Box' ) ) :
 
 			if ( $pics_n > 0 ) {
 				for ( $i = 0; $i < $pics_n; $i++ ) {
-					echo '<div class="cr-comment-image">';
-					echo '<img src="' .
-					$pics[$i]['url'] . $cr_query . '" alt="' . sprintf( __( 'Image #%1$d from ', 'customer-reviews-woocommerce' ), $k_image ) .
-					$comment->comment_author . '">';
-					echo '</div>';
-					$k_image++;
+					if ( isset( $pics[$i]['url'] ) ) {
+						echo '<div class="cr-comment-image">';
+						echo '<img src="' .
+						$pics[$i]['url'] . $cr_query . '" alt="' . sprintf( __( 'Image #%1$d from ', 'customer-reviews-woocommerce' ), $k_image ) .
+						$comment->comment_author . '">';
+						echo '</div>';
+						$k_image++;
+					}
 				}
 			}
 

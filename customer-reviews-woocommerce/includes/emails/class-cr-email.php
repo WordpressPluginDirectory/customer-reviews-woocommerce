@@ -46,17 +46,7 @@ class Ivole_Email {
 		$this->review_button		= __( 'Review', 'customer-reviews-woocommerce' );
 
 		// fetch language - either from the plugin's option or from WordPress standard locale
-		if ( 'yes' !== get_option( 'ivole_verified_reviews', 'no' ) ) {
-			$wp_locale = get_locale();
-			$wp_lang = explode( '_', $wp_locale );
-			if( is_array( $wp_lang ) && 0 < count( $wp_lang ) ) {
-				$this->language = strtoupper( $wp_lang[0] );
-			} else {
-				$this->language = 'EN';
-			}
-		} else {
-			$this->language = get_option( 'ivole_language', 'EN' );
-		}
+		$this->language = self::fetch_language();
 
 		$this->find['site-title'] = '{site_title}';
 		$this->replace['site-title'] = self::get_blogname();
@@ -677,6 +667,75 @@ class Ivole_Email {
 			$email = $order->get_billing_email();
 		}
 		return $email;
+	}
+
+	public static function fetch_language() {
+		$language = 'EN';
+		if ( 'yes' !== get_option( 'ivole_verified_reviews', 'no' ) ) {
+			$wp_locale = get_locale();
+			$wp_lang = explode( '_', $wp_locale );
+			if( is_array( $wp_lang ) && 0 < count( $wp_lang ) ) {
+				$language = strtoupper( $wp_lang[0] );
+			} else {
+				$language = 'EN';
+			}
+		} else {
+			$language = get_option( 'ivole_language', 'EN' );
+		}
+		return $language;
+	}
+
+	public static function fetch_language_trnsl( $order_id, $order ) {
+		$lang = self::fetch_language();
+
+		// qTranslate integration
+		if( function_exists( 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage' ) ) {
+			if( 'QQ' === $lang ) {
+				global $q_config;
+				$lang = strtoupper( $q_config['language'] );
+			}
+		}
+
+		// WPML integration
+		if ( has_filter( 'wpml_translate_single_string' ) && defined( 'ICL_LANGUAGE_CODE' ) && ICL_LANGUAGE_CODE ) {
+			$wpml_current_language = apply_filters( 'wpml_current_language', NULL );
+			if ( $order ) {
+				$wpml_current_language = $order->get_meta( 'wpml_language', true );
+			}
+			if ( $wpml_current_language ) {
+				$lang = strtoupper( $wpml_current_language );
+			}
+		}
+
+		// Polylang integration
+		if( function_exists( 'pll_current_language' ) && function_exists( 'pll_get_post_language' ) && function_exists( 'pll_translate_string' ) ) {
+			$polylang_current_language = pll_current_language();
+			if( $order_id ) {
+				$polylang_current_language = pll_get_post_language( $order_id );
+			}
+			$lang = strtoupper( $polylang_current_language );
+		}
+
+		// TranslatePress integration
+		if( function_exists( 'trp_translate' ) ) {
+			$trp_order_language = '';
+			if ( $order ) {
+				$trp_order_language = $order->get_meta( 'trp_language', true );
+			}
+			if( $trp_order_language ) {
+				$lang = strtoupper( substr( $trp_order_language, 0, 2 ) );
+			}
+		}
+
+		// a safety check if some translation plugin removed language
+		if ( empty( $lang ) || 'WPML' === $lang ) {
+			$lang = 'EN';
+		}
+
+		// map language codes returned by translation plugins that include '-' like PT-PT
+		$lang = CR_Email_Func::cr_map_language( $lang );
+
+		return $lang;
 	}
 
 }

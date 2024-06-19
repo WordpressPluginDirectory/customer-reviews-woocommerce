@@ -236,12 +236,14 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 				$k = 1;
 				if( 0 < $pics_n ) {
 					for( $i = 0; $i < $pics_n; $i++ ) {
-						$output .= '<div class="iv-comment-image cr-comment-image-ext" data-reviewid="' . $comment->comment_ID . '">';
-						$output .= '<a href="' . $pics[$i]['url'] . $cr_query . '" class="cr-comment-a" rel="nofollow"><img src="' .
-						$pics[$i]['url'] . $cr_query . '" alt="' . sprintf( __( 'Image #%1$d from ', 'customer-reviews-woocommerce' ), $k ) .
-						$comment->comment_author . '" loading="lazy"></a>';
-						$output .= '</div>';
-						$k++;
+						if ( isset( $pics[$i]['url'] ) ) {
+							$output .= '<div class="iv-comment-image cr-comment-image-ext" data-reviewid="' . $comment->comment_ID . '">';
+							$output .= '<a href="' . $pics[$i]['url'] . $cr_query . '" class="cr-comment-a" rel="nofollow"><img src="' .
+							$pics[$i]['url'] . $cr_query . '" alt="' . sprintf( __( 'Image #%1$d from ', 'customer-reviews-woocommerce' ), $k ) .
+							$comment->comment_author . '" loading="lazy"></a>';
+							$output .= '</div>';
+							$k++;
+						}
 					}
 				}
 				if( 0 < $pics_local_n ) {
@@ -1257,7 +1259,9 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 			$pics_n = count( $pics );
 			$pics_local_n = count( $pics_local );
 			for( $i = 0; $i < $pics_n; $i ++) {
-				$pics_prepared[] = array( $pics[$i]['url'] . $cr_query, $comment, 0, 0 );
+				if ( isset( $pics[$i]['url'] ) ) {
+					$pics_prepared[] = array( $pics[$i]['url'] . $cr_query, $comment, 0, 0 );
+				}
 			}
 			for( $i = 0; $i < $pics_local_n; $i ++) {
 				$attachmentUrl = wp_get_attachment_image_url( $pics_local[$i], apply_filters( 'cr_topreviews_image_size', 'large' ) );

@@ -38,17 +38,7 @@ class CR_Email_Coupon {
 		$this->footer						= get_option( 'ivole_email_footer', '' );
 
 		// fetch language - either from the plugin's option or from WordPress standard locale
-		if ( 'yes' !== get_option( 'ivole_verified_reviews', 'no' ) ) {
-			$wp_locale = get_locale();
-			$wp_lang = explode( '_', $wp_locale );
-			if( is_array( $wp_lang ) && 0 < count( $wp_lang ) ) {
-				$this->language = strtoupper( $wp_lang[0] );
-			} else {
-				$this->language = 'EN';
-			}
-		} else {
-			$this->language = get_option( 'ivole_language', 'EN' );
-		}
+		$this->language = Ivole_Email::fetch_language();
 
 		$this->find['site-title'] = '{site_title}';
 		$this->find['customer-first-name']  = '{customer_first_name}';

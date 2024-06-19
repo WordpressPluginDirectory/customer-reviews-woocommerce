@@ -67,6 +67,7 @@ if ( ! class_exists( 'CR_Reminders_Details' ) ) :
 						$reminder_opened = $form_opened;
 					}
 				}
+				$reminder_status_code = $reminder['status'];
 				$reminder_status = CR_Reminders_Log::get_status_description( $reminder['status'] );
 				if ( 'error' === $reminder['status'] ) {
 					$reminder_info = json_decode( $reminder['reminder'] );

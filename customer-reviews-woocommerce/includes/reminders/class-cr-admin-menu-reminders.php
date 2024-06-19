@@ -101,11 +101,42 @@ class CR_Reminders_Admin_Menu {
 
 		$cancelled = 0;
 		$sent = 0;
+		$verification = '';
 		foreach ( $orders as $order_id ) {
 			switch ( $action ) {
 				case 'cancel':
 				case 'cancelreminder':
 					wp_clear_scheduled_hook( 'ivole_send_reminder', array( $order_id ) );
+					// logging
+					$ord = wc_get_order( $order_id );
+					if ( ! $verification ) {
+						$mailer = get_option( 'ivole_mailer_review_reminder', 'cr' );
+						$verification = ( 'wp' === $mailer ) ? 'local' : 'verified';
+					}
+					$log = new CR_Reminders_Log();
+					$l_result = $log->add(
+						$order_id,
+						'a',
+						'email',
+						array(
+							200,
+							__( 'Review reminder was canceled by a manual action', 'customer-reviews-woocommerce' ),
+							array(
+								'data' => array(
+									'email' => array(
+										'to' => Ivole_Email::get_customer_email( $ord )
+									),
+									'customer' => array(
+										'firstname' => $ord->get_billing_first_name(),
+										'lastname' => $ord->get_billing_last_name()
+									),
+									'verification' => $verification,
+									'language' => Ivole_Email::fetch_language_trnsl( $order_id, $ord )
+								)
+							)
+						)
+					);
+					// end of logging
 					$cancelled++;
 					break;
 				case 'send':
@@ -296,6 +327,8 @@ class CR_Reminders_Admin_Menu {
 					$sent_statuses[$row['status']]->count = $row['total'];
 					$sent_statuses['rmd_opened']->count += $row['total'];
 					$total_sent += $row['total'];
+					break;
+				case 'canceled':
 					break;
 				default:
 					break;

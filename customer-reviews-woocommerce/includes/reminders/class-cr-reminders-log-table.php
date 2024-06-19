@@ -29,7 +29,7 @@ if ( ! class_exists( 'CR_Reminders_Log_Table' ) ) :
 
 			$search = ( isset( $_REQUEST['s'] ) ) ? trim( esc_html( wp_unslash( $_REQUEST['s'] ) ) ) : '';
 			$status = isset( $_REQUEST['status'] ) ? $_REQUEST['status'] : 'rmd_all';
-			if ( ! in_array( $status, array( 'rmd_all', 'rmd_error', 'rmd_sent', 'rmd_opened', 'frm_opened' ) ) ) {
+			if ( ! in_array( $status, array( 'rmd_all', 'rmd_canceled', 'rmd_error', 'rmd_sent', 'rmd_opened', 'frm_opened' ) ) ) {
 				$status = 'rmd_all';
 			}
 
@@ -72,7 +72,7 @@ if ( ! class_exists( 'CR_Reminders_Log_Table' ) ) :
 				/* translators: please keep '%1$s' and '%2$s' as is   */
 				echo sprintf( __( 'Please log in to your account on %1$sCusRev website%2$s to view and manage the reminders.', 'customer-reviews-woocommerce' ), '<a href="https://www.cusrev.com/login.html" target="_blank" rel="noopener noreferrer">', '</a>' );
 			} else {
-				_e( 'There are currently no sent review reminders', 'customer-reviews-woocommerce' );
+				_e( 'There are no review reminders to display', 'customer-reviews-woocommerce' );
 			}
 		}
 
@@ -245,6 +245,12 @@ if ( ! class_exists( 'CR_Reminders_Log_Table' ) ) :
 					'reminders',
 					'customer-reviews-woocommerce'
 				),
+				'rmd_canceled' => _nx_noop(
+					'Canceled <span class="count">(%s)</span>',
+					'Canceled <span class="count">(%s)</span>',
+					'reminders',
+					'customer-reviews-woocommerce'
+				),
 				'rmd_error' => _nx_noop(
 					'Error <span class="count">(%s)</span>',
 					'Error <span class="count">(%s)</span>',
@@ -300,6 +306,7 @@ if ( ! class_exists( 'CR_Reminders_Log_Table' ) ) :
 			global $search;
 
 			$reminders_count = array(
+				'rmd_canceled' => 0,
 				'rmd_error' => 0,
 				'rmd_sent' => 0,
 				'rmd_opened' => 0,
@@ -311,6 +318,10 @@ if ( ! class_exists( 'CR_Reminders_Log_Table' ) ) :
 
 			foreach ( $totals as $row ) {
 				switch ( $row['status'] ) {
+					case 'canceled':
+						$reminders_count['rmd_canceled'] = $row['total'];
+						$reminders_count['rmd_all'] += $row['total'];
+						break;
 					case 'error':
 						$reminders_count['rmd_error'] = $row['total'];
 						$reminders_count['rmd_all'] += $row['total'];

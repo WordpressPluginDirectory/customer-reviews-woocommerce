@@ -963,12 +963,14 @@ class CR_Reviews_List_Table extends WP_List_Table {
 
 			if ( $pics_n > 0 ) {
 				for ( $i = 0; $i < $pics_n; $i++ ) {
-					echo '<div class="iv-comment-image">';
-					echo '<a href="' . $pics[$i]['url'] . $cr_query . '" class="cr-comment-a" rel="nofollow"><img src="' .
-					$pics[$i]['url'] . $cr_query . '" alt="' . sprintf( __( 'Image #%1$d from ', 'customer-reviews-woocommerce' ), $k ) .
-					$comment->comment_author . '"></a>';
-					echo '</div>';
-					$k++;
+					if ( isset( $pics[$i]['url'] ) ) {
+						echo '<div class="iv-comment-image">';
+						echo '<a href="' . $pics[$i]['url'] . $cr_query . '" class="cr-comment-a" rel="nofollow"><img src="' .
+						$pics[$i]['url'] . $cr_query . '" alt="' . sprintf( __( 'Image #%1$d from ', 'customer-reviews-woocommerce' ), $k ) .
+						$comment->comment_author . '"></a>';
+						echo '</div>';
+						$k++;
+					}
 				}
 			}
 
