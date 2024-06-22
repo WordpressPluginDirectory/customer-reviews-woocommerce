@@ -26,6 +26,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		<?php
 
+		if ( class_exists( 'WCML_Comments' ) ) {
+			// provide an action for WPML / WCML plugins to translate the review
+			do_action( 'woocommerce_review_before', $comment );
+		}
 		$cr_hide_avatars = false;
 		$hide_avatars_class = '';
 		if(

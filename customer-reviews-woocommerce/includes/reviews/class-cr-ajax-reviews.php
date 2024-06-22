@@ -72,6 +72,12 @@ if (! class_exists('CR_Ajax_Reviews')) :
 						}
 					}
 				}
+				if ( class_exists( 'WCML_Comments' ) ) {
+					global $woocommerce_wpml;
+					if ( $woocommerce_wpml ) {
+						remove_action( 'the_comments', array( $woocommerce_wpml->comments, 'translate_product_ids' ) );
+					}
+				}
 			}
 			if( 1 > count( $post_in ) ) {
 				$post_in[] = $product_id;
