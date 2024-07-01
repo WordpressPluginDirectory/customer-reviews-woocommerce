@@ -61,6 +61,16 @@ class CR_Reminders_List_Table extends WP_List_Table {
 
 					$order = wc_get_order( $order_id );
 					if( $order ) {
+						$reminder_type = apply_filters(
+							'cr_reminders_table_type',
+							1,
+							$event
+						);
+						$type_name = apply_filters(
+							'cr_reminders_table_type_name',
+							__( 'Automatic', 'customer-reviews-woocommerce' ),
+							$reminder_type
+						);
 						$customer_name = '';
 						$customer_email = '';
 						$order_number = $order_id;
@@ -91,7 +101,9 @@ class CR_Reminders_List_Table extends WP_List_Table {
 										'order_id'       => $order_id,
 										'order_number'   => $order_number,
 										'customer_name'  => $customer_name,
-										'customer_email' => $customer_email
+										'customer_email' => $customer_email,
+										'type'           => $reminder_type,
+										'type_name'      => $type_name
 									);
 							}
 						} else {
@@ -100,7 +112,9 @@ class CR_Reminders_List_Table extends WP_List_Table {
 								'order_id'       => $order_id,
 								'order_number'   => $order_number,
 								'customer_name'  => $customer_name,
-								'customer_email' => $customer_email
+								'customer_email' => $customer_email,
+								'type'           => $reminder_type,
+								'type_name'      => $type_name
 							);
 						}
 					}
@@ -197,6 +211,7 @@ class CR_Reminders_List_Table extends WP_List_Table {
 			'order'		=> __( 'Order Number', 'customer-reviews-woocommerce' ),
 			'customer'	=> __( 'Customer', 'customer-reviews-woocommerce' ),
 			'scheduled'	=> __( 'Scheduled', 'customer-reviews-woocommerce' ),
+			'type' => __( 'Type', 'customer-reviews-woocommerce' ),
 			'actions'	=> __( 'Actions', 'customer-reviews-woocommerce' )
 		);
 	}
@@ -328,6 +343,13 @@ class CR_Reminders_List_Table extends WP_List_Table {
 		echo esc_html( $local_timestamp );
 	}
 
+	public function column_type( $reminder ) {
+		echo esc_html( $reminder['type_name'] );
+		?>
+			<input type="hidden" name="types[]" value="<?php echo esc_attr( $reminder['type'] ); ?>" />
+		<?php
+	}
+
 	/**
 	 * Print the actions column
 	 *
@@ -343,7 +365,8 @@ class CR_Reminders_List_Table extends WP_List_Table {
 			add_query_arg(
 				array(
 					'action'   => 'cancelreminder',
-					'order_id' => $reminder['order_id']
+					'order_id' => $reminder['order_id'],
+					'type'     => $reminder['type']
 				),
 				$url
 			),

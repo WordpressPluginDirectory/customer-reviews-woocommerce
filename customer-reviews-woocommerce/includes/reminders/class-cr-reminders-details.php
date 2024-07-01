@@ -35,6 +35,7 @@ if ( ! class_exists( 'CR_Reminders_Details' ) ) :
 			$form_opened = '';
 			$reminder_status = '';
 			$reminder_error = '';
+			$reminder_cancelation = '';
 			$reminder_verification = '';
 			$reminder_channel = '';
 			$reminder_type = '';
@@ -69,10 +70,16 @@ if ( ! class_exists( 'CR_Reminders_Details' ) ) :
 				}
 				$reminder_status_code = $reminder['status'];
 				$reminder_status = CR_Reminders_Log::get_status_description( $reminder['status'] );
-				if ( 'error' === $reminder['status'] ) {
+				if ( in_array( $reminder['status'], array( 'error' ) ) ) {
 					$reminder_info = json_decode( $reminder['reminder'] );
 					if ( $reminder_info ) {
 						$reminder_error = $reminder_info->errorDetails;
+					}
+				}
+				if ( in_array( $reminder['status'], array( 'canceled' ) ) ) {
+					$cancelation_info = json_decode( $reminder['reminder'] );
+					if ( $cancelation_info ) {
+						$reminder_cancelation = $cancelation_info->errorDetails;
 					}
 				}
 				$reminder_verification = CR_Reminders_Log::get_verification_description( $reminder['verification'] );

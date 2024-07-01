@@ -857,7 +857,7 @@ li.select2-results__option {
 	width: 170px;
 }
 .ivole-new-settings .forminp-cr_sending_delay .cr-snd-dlay-table .cr-snd-dlay-tr input[type=number] {
-	width: 80px;
+	width: 70px;
 }
 .ivole-new-settings .forminp-cr_sending_delay .cr-snd-dlay-table .cr-snd-dlay-tr select,
 .ivole-new-settings .forminp-cr_enable_review_discount .cr-rev-disc-table .cr-rev-disc-table-tr select {
@@ -1355,6 +1355,9 @@ li.select2-results__option {
 	position: relative;
 	padding-right: 24px;
 }
+.ivole-new-settings table.form-table th.cr-snd-dlay-table-narrow {
+	width: 140px;
+}
 .ivole-new-settings table.form-table th label {
 	position: relative;
 	display: block;
@@ -1818,6 +1821,9 @@ li.select2-results__option {
 	.ivole-new-settings .cr-rev-disc-table,
 	.ivole-new-settings .cr-dns-table {
 		width: 100%;
+	}
+	.ivole-new-settings table.form-table th.cr-snd-dlay-table-narrow {
+		width: auto;
 	}
 	.cr-dns-records-acc .cr-dns-table .cr-dns-col-type,
 	.cr-email-verify-status,

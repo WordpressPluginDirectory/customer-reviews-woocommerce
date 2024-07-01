@@ -913,10 +913,20 @@ if ( ! class_exists( 'CR_Review_Reminder_Settings' ) ):
 						isset( $del_opt['delay'] ) &&
 						isset( $del_opt['channel'] )
 					) {
-						$reminders[] = array(
-							'delay' => $del_opt['delay'],
-							'channel' => $del_opt['channel']
-						);
+						// a temporary solution to be removed in the future versions
+						if ( isset( $del_opt['enabled'] ) ) {
+							$reminders[] = array(
+								'enabled' => $del_opt['enabled'],
+								'delay' => $del_opt['delay'],
+								'channel' => $del_opt['channel']
+							);
+						} else {
+							$reminders[] = array(
+								'delay' => $del_opt['delay'],
+								'channel' => $del_opt['channel']
+							);
+						}
+						//
 					}
 					if ( self::get_max_delays() <= count( $reminders ) ) {
 						break;
@@ -931,6 +941,7 @@ if ( ! class_exists( 'CR_Review_Reminder_Settings' ) ):
 					'channel' => 'email'
 				);
 			}
+			$reminders = apply_filters( 'cr_sending_delays', $reminders );
 			?>
 			<tr valign="top">
 				<th scope="row" class="titledesc">
@@ -948,6 +959,10 @@ if ( ! class_exists( 'CR_Review_Reminder_Settings' ) ):
 										'title' => '',
 										'help' => ''
 									),
+									'enabled' => array(
+										'title' => __( 'Enabled', 'customer-reviews-woocommerce' ),
+										'help' => __( 'Enable automatic follow-up emails with an invitation to submit a review.', 'customer-reviews-woocommerce' )
+									),
 									'delay' => array(
 										'title' => __( 'Delay (Days)', 'customer-reviews-woocommerce' ),
 										'help' => __( 'If automatic review reminders are enabled, review invitations will be sent N days after order status is changed to the value specified in the field below. N is a sending delay (in days) that needs to be defined here.', 'customer-reviews-woocommerce' )
@@ -957,9 +972,19 @@ if ( ! class_exists( 'CR_Review_Reminder_Settings' ) ):
 										'help' => __( 'A channel for sending review invitations to customers. For example, by email.', 'customer-reviews-woocommerce' )
 									)
 								);
+								// a temporary solution before the checkbox is moved to the new UI element
+								if ( 2 > count( $reminders ) ) {
+									unset( $columns['enabled'] );
+								}
+								//
 								foreach( $columns as $key => $column ) {
-									echo '<th class="cr-snd-dlay-table-' . esc_attr( $key ) . '">';
-									echo	esc_html( $column['title'] );
+									if ( 'reminder' === $key ) {
+										$th_class = '<th class="cr-snd-dlay-table-' . esc_attr( $key ) . '">';
+									} else{
+										$th_class = '<th class="cr-snd-dlay-table-' . esc_attr( $key ) . ' cr-snd-dlay-table-narrow">';
+									}
+									echo $th_class;
+									echo esc_html( $column['title'] );
 									if( $column['help'] ) {
 										echo '<span class="woocommerce-help-tip" data-tip="' . esc_attr( $column['help'] ) . '"></span>';
 									}
@@ -976,13 +1001,29 @@ if ( ! class_exists( 'CR_Review_Reminder_Settings' ) ):
 									foreach ( $columns as $key => $column ) {
 										switch ( $key ) {
 											case 'reminder':
-												echo '<td>' . __( 'Review reminder', 'customer-reviews-woocommerce' ) . '</td>';
+												$reminder_label = apply_filters(
+													'cr_sending_delay_label',
+													__( 'Review Reminder', 'customer-reviews-woocommerce' ),
+													$count
+												);
+												echo '<td>' . $reminder_label . '</td>';
+												break;
+											case 'enabled':
+												$reminder_enabled = apply_filters(
+													'cr_sending_delay_enabled',
+													'',
+													$count,
+													$field,
+													$key,
+													$reminder
+												);
+												echo '<td>' . $reminder_enabled . '</td>';
 												break;
 											case 'delay':
 												echo '<td><input type="number" id="';
 												echo esc_attr( $field['type'] . '_' . $key . '_' . $count );
 												echo '" name="' . esc_attr( $field['type'] . '_' . $key . '_' . $count );
-												echo '" min="0" value="' . intval( $reminder['delay'] ) . '" /></td>';
+												echo '" min="0" max="999" value="' . intval( $reminder['delay'] ) . '" /></td>';
 												break;
 											case 'channel':
 												echo '<td><select name="' . esc_attr( $field['type'] . '_' . $key . '_' . $count );
@@ -1014,10 +1055,23 @@ if ( ! class_exists( 'CR_Review_Reminder_Settings' ) ):
 						isset( $_POST[$option['type'] . '_delay_' . $i] ) &&
 						isset( $_POST[$option['type'] . '_channel_' . $i] )
 					) {
-						$delays[] = array(
-							'delay' => intval( $_POST[$option['type'] . '_delay_' . $i] ),
-							'channel' => strval( $_POST[$option['type'] . '_channel_' . $i] )
-						);
+						// a temporary solution, to be removed in the future versions
+						if ( 0 < $i ) {
+							if ( ! isset( $_POST[$option['type'] . '_enabled_' . $i] ) ) {
+								$_POST[$option['type'] . '_enabled_' . $i] = false;
+							}
+							$delays[] = array(
+								'enabled' => boolval( $_POST[$option['type'] . '_enabled_' . $i] ),
+								'delay' => intval( $_POST[$option['type'] . '_delay_' . $i] ),
+								'channel' => strval( $_POST[$option['type'] . '_channel_' . $i] )
+							);
+						} else {
+							$delays[] = array(
+								'delay' => intval( $_POST[$option['type'] . '_delay_' . $i] ),
+								'channel' => strval( $_POST[$option['type'] . '_channel_' . $i] )
+							);
+						}
+						//
 					}
 				}
 			}

@@ -78,45 +78,53 @@ class CR_Reminders_Admin_Menu {
 				check_admin_referer( 'bulk-reminders' );
 
 				$orders = ( isset( $_GET['orders'] ) && is_array( $_GET['orders'] ) ) ? $_GET['orders'] : array();
-				$orders = array_map( 'intval', $orders );
-				break;
-			case 'delete':
-				// Bulk actions
-				check_admin_referer( 'bulk-reminders' );
-
-				$reminders = ( isset( $_GET['reminders'] ) && is_array( $_GET['reminders'] ) ) ? $_GET['reminders'] : array();
-				$reminders = array_map( 'intval', $reminders );
+				$reminder_types = ( isset( $_GET['types'] ) && is_array( $_GET['types'] ) ) ? $_GET['types'] : array();
+				$orders = array_map(
+					function( $order, $type ) {
+						return array(
+							intval( $order ),
+							intval( $type )
+						);
+					},
+					$orders,
+					$reminder_types
+				);
 				break;
 			case 'cancelreminder':
 			case 'sendreminder':
 				// Single-reminder actions
 				check_admin_referer( 'manage-reminders' );
 
-				$order_id = ( isset( $_GET['order_id'] ) ) ? intval( $_GET['order_id'] ): 0;
+				$order_id = ( isset( $_GET['order_id'] ) ) ? intval( $_GET['order_id'] ) : 0;
+				$reminder_type = ( isset( $_GET['type'] ) ) ? intval( $_GET['type'] ) : 1;
 
 				if ( $order_id ) {
-					$orders[] = $order_id;
+					$orders[] = array(
+						$order_id,
+						$reminder_type
+					);
 				}
 		}
 
 		$cancelled = 0;
 		$sent = 0;
 		$verification = '';
-		foreach ( $orders as $order_id ) {
+		foreach ( $orders as $order ) {
+			$cron_arg = $order[1] > 1 ? array( $order[0], $order[1] ) : array( $order[0] );
 			switch ( $action ) {
 				case 'cancel':
 				case 'cancelreminder':
-					wp_clear_scheduled_hook( 'ivole_send_reminder', array( $order_id ) );
+					wp_clear_scheduled_hook( 'ivole_send_reminder', $cron_arg );
 					// logging
-					$ord = wc_get_order( $order_id );
+					$ord = wc_get_order( $order[0] );
 					if ( ! $verification ) {
 						$mailer = get_option( 'ivole_mailer_review_reminder', 'cr' );
 						$verification = ( 'wp' === $mailer ) ? 'local' : 'verified';
 					}
 					$log = new CR_Reminders_Log();
 					$l_result = $log->add(
-						$order_id,
-						'a',
+						$order[0],
+						apply_filters( 'cr_reminders_table_type_log', 'a', $order[1] ),
 						'email',
 						array(
 							200,
@@ -131,7 +139,7 @@ class CR_Reminders_Admin_Menu {
 										'lastname' => $ord->get_billing_last_name()
 									),
 									'verification' => $verification,
-									'language' => Ivole_Email::fetch_language_trnsl( $order_id, $ord )
+									'language' => Ivole_Email::fetch_language_trnsl( $order[0], $ord )
 								)
 							)
 						)
@@ -141,9 +149,12 @@ class CR_Reminders_Admin_Menu {
 					break;
 				case 'send':
 				case 'sendreminder':
-					wp_clear_scheduled_hook( 'ivole_send_reminder', array( $order_id ) );
-					wp_schedule_single_event( 1, 'ivole_send_reminder', array( $order_id ) );
+					wp_clear_scheduled_hook( 'ivole_send_reminder', $cron_arg );
+					wp_schedule_single_event( 1, 'ivole_send_reminder', $cron_arg );
 					$sent++;
+					break;
+				default:
+					break;
 			}
 		}
 

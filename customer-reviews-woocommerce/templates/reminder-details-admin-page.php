@@ -122,6 +122,19 @@
 									</td>
 								</tr>
 							<?php endif; ?>
+							<?php if ( $reminder_cancelation ) : ?>
+								<tr>
+									<td>
+										<?php echo esc_html__( 'Cancelation reason', 'customer-reviews-woocommerce' ); ?>
+									</td>
+									<td class="cr-reminder-details-help">
+										<?php echo CR_Admin::cr_help_tip( __( 'Details about the reason why this review reminder was canceled', 'customer-reviews-woocommerce' ) ); ?>
+									</td>
+									<td>
+										<?php echo esc_html( $reminder_cancelation ); ?>
+									</td>
+								</tr>
+							<?php endif; ?>
 							<tr>
 								<td>
 									<?php echo esc_html__( 'Verification', 'customer-reviews-woocommerce' ); ?>

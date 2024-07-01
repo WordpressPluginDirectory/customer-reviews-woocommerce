@@ -512,6 +512,8 @@ if ( ! class_exists( 'CR_Endpoint' ) ) :
 						$rne = new CR_Review_Notification_Email( 'review_notification' );
 						$rne->trigger_email( $customer_name, $local_reviews_notif );
 					}
+					// an action on posting reviews
+					do_action( 'cr_endpoint_review_posted', $order_id );
 					// if there are previous comments, it means that the customer has already received a coupon
 					// and we don't need to send another one, so return early
 					if( $previous_comments_exist ) {

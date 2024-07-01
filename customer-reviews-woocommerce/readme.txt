@@ -4,7 +4,7 @@ Tags: woocommerce, review plugin, review reminder, customer reviews, review for 
 Requires at least: 4.5
 Tested up to: 6.5
 Requires PHP: 7.2
-Stable tag: 5.52.1
+Stable tag: 5.53.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl.html
 
@@ -232,6 +232,10 @@ If you would like to change how reviews are sorted on product pages, it is possi
 
 == Changelog ==
 
+= 5.53.0 =
+* Improvement: saving information about errors with scheduling review reminders in the order notes
+* Improvement: additional checks if WP Cron events already exist before scheduling new ones
+* Improvement: logging of cancelation reasons for review reminders
 = 5.52.1 =
 * Improvement: compatibility with WPML / WCML reviews translation feature
 = 5.52.0 =

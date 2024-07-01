@@ -477,7 +477,7 @@ if ( ! class_exists( 'CR_Forms_Settings' ) ) :
 							<?php _e( 'Add Question', 'customer-reviews-woocommerce' ); ?>
 						</button>
 						<span>
-							<?php echo esc_html( 'The free version of the plugin supports up to 2 questions' ); ?>
+							<?php esc_html_e( 'The free version of the plugin supports up to 2 questions', 'customer-reviews-woocommerce' ); ?>
 						</span>
 					</div>
 					<input type="hidden" name="ivole_customer_attributes" id="ivole_customer_attributes" value="<?php echo esc_attr( json_encode( $cus_atts ) ); ?>" />

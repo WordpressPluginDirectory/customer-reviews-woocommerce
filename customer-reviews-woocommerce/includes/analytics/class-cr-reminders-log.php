@@ -413,7 +413,11 @@ class CR_Reminders_Log {
 			default:
 				break;
 		}
-		return $description;
+		return apply_filters(
+			'cr_reminders_log_type_desc',
+			$description,
+			$type
+		);
 	}
 
 }

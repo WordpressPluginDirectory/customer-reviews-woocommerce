@@ -178,17 +178,7 @@ if ( ! class_exists( 'CR_Reminders_Log_Table' ) ) :
 		}
 
 		public function column_type( $reminder ) {
-			$type = '';
-			switch ($reminder['type']) {
-				case 'm':
-					$type = __( 'Manual', 'customer-reviews-woocommerce' );
-					break;
-				case 'a':
-					$type = __( 'Automatic', 'customer-reviews-woocommerce' );
-					break;
-				default:
-					break;
-			}
+			$type = CR_Reminders_Log::get_type_description( $reminder['type'] );
 			echo esc_html( $type );
 		}
 

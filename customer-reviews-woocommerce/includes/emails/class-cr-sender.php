@@ -12,7 +12,7 @@ if ( ! class_exists( 'CR_Sender' ) ) :
 			$order_status = 'wc-' === substr( $order_status, 0, 3 ) ? substr( $order_status, 3 ) : $order_status;
 			// Triggers for completed orders
 			add_action( 'woocommerce_order_status_' . $order_status, array( $this, 'sender_trigger' ), 20, 1 );
-			add_action( 'ivole_send_reminder', array( $this, 'sender_action' ), 10, 1 );
+			add_action( 'ivole_send_reminder', array( $this, 'sender_action' ), 10, 2 );
 			// Trigger for refunded orders
 			add_action( 'woocommerce_order_status_refunded', array( $this, 'refund_trigger' ), 20, 1 );
 			// Trigger for cancelled orders
@@ -54,8 +54,8 @@ if ( ! class_exists( 'CR_Sender' ) ) :
 						}
 					}
 					if( $skip ) {
-						// there is no products from enabled categories in the order, skip sending
-						//error_log('categories');
+						// there are no products from enabled categories in the order, skip sending
+						$order->add_order_note( __( 'CR: a review reminder was not scheduled because the order did not have products from categories relevant for reminders.', 'customer-reviews-woocommerce' ) );
 						return;
 					}
 				}
@@ -68,12 +68,14 @@ if ( ! class_exists( 'CR_Sender' ) ) :
 							$intersection = array_intersect( $enabled_roles, $roles );
 							if( count( $intersection ) < 1 ) {
 								//the customer does not have roles for which review reminders are enabled
+								$order->add_order_note( __( 'CR: a review reminder was not scheduled because the customer did not have relevant roles.', 'customer-reviews-woocommerce' ) );
 								return;
 							}
 						}
 					} else {
 						if( 'no' === get_option( 'ivole_enable_for_guests', 'yes' ) ) {
 							//review reminders are disabled for guests
+							$order->add_order_note( __( 'CR: a review reminder was not scheduled because reminders are disabled for guests.', 'customer-reviews-woocommerce' ) );
 							return;
 						}
 					}
@@ -134,7 +136,7 @@ if ( ! class_exists( 'CR_Sender' ) ) :
 					( 'cr' === get_option( 'ivole_scheduler_type', 'wp' ) && '' === $order->get_meta( '_ivole_review_reminder', true ) ) ||
 					$order->get_meta( '_ivole_cr_cron', true )
 				) {
-					$sender_result = $this->sender_action( $order_id, true );
+					$sender_result = $this->sender_action( $order_id, 1, true );
 					if (
 						0 === $sender_result ||
 						( is_array( $sender_result ) && 0 < count( $sender_result ) && 0 == $sender_result[0] )
@@ -154,50 +156,38 @@ if ( ! class_exists( 'CR_Sender' ) ) :
 					}
 				} else {
 					//the logic for WP Cron otherwise
-					$delay_channel = self::get_sending_delay();
-					$delay = $delay_channel[0];
-					$timestamp = apply_filters( 'cr_reminder_delay', time() + $delay * DAY_IN_SECONDS, $order_id, $delay );
-					if( false === wp_schedule_single_event( $timestamp, 'ivole_send_reminder', array( $order_id ) ) ) {
-						$order->add_order_note( __( 'CR: a review reminder could not be scheduled.', 'customer-reviews-woocommerce' ) );
-					} else {
-						$count = $order->get_meta( '_ivole_review_reminder', true );
-						if ( ! $count ) {
-							$order->update_meta_data( '_ivole_review_reminder', 0 );
-							$order->save();
+					$delay_channel = self::get_sending_delays();
+					if ( ! wp_next_scheduled( 'ivole_send_reminder', array( $order_id ) ) ) {
+						$delay = $delay_channel[0]['delay'];
+						$timestamp = apply_filters( 'cr_reminder_delay', time() + $delay * DAY_IN_SECONDS, $order_id, $delay );
+						if( false === wp_schedule_single_event( $timestamp, 'ivole_send_reminder', array( $order_id ) ) ) {
+							$order->add_order_note( __( 'CR: a review reminder could not be scheduled.', 'customer-reviews-woocommerce' ) );
+						} else {
+							$count = $order->get_meta( '_ivole_review_reminder', true );
+							if ( ! $count ) {
+								$order->update_meta_data( '_ivole_review_reminder', 0 );
+								$order->save();
+							}
+							$local_timestamp = get_date_from_gmt( date( 'Y-m-d H:i:s', $timestamp ), 'F j, Y g:i a (T)' );
+							$order->add_order_note( sprintf( __( 'CR: a review reminder was successfully scheduled for %s.', 'customer-reviews-woocommerce' ) , $local_timestamp ) );
 						}
-						$local_timestamp = get_date_from_gmt( date( 'Y-m-d H:i:s', $timestamp ), 'F j, Y g:i a (T)' );
-						$order->add_order_note( sprintf( __( 'CR: a review reminder was successfully scheduled for %s.', 'customer-reviews-woocommerce' ) , $local_timestamp ) );
+					} else {
+						// a reminder for this order has already been scheduled
 					}
+					do_action( 'cr_wp_reminder_schedule', $order_id, $delay_channel );
 				}
 			}
 		}
 
-		public function sender_action( $order_id, $schedule = false ) {
+		public function sender_action( $order_id, $sequence = 1, $schedule = false ) {
 			//check for duplicate / staging / test site
 			if( ivole_is_duplicate_site() ) {
 				update_option( 'ivole_enable', 'no' );
 				return -1;
 			}
-			$order = wc_get_order( $order_id );
-			if ( $order ) {
-				//qTranslate integration
-				$lang = $order->get_meta( '_user_language', true );
-				$old_lang = '';
-				if( $lang ) {
-					global $q_config;
-					$old_lang = $q_config['language'];
-					$q_config['language'] = $lang;
 
-					//WPML integration
-					if ( has_filter( 'wpml_current_language' ) ) {
-						$old_lang = apply_filters( 'wpml_current_language', NULL );
-						do_action( 'wpml_switch_language', $lang );
-					}
-				}
-			}
-
-			$delay_channel = self::get_sending_delay();
-			if ( 'wa' === $delay_channel[1] ) {
+			$delay_channel = self::get_sending_delays();
+			if ( 'wa' === $delay_channel[$sequence - 1]['channel'] ) {
 				$w = new CR_Wtsap( $order_id );
 				$result = $w->send_message( $order_id, $schedule );
 			} else {
@@ -207,22 +197,13 @@ if ( ! class_exists( 'CR_Sender' ) ) :
 				$log = new CR_Reminders_Log();
 				$l_result = $log->add(
 					$order_id,
-					'a',
+					apply_filters( 'cr_reminders_table_type_log', 'a', $sequence ),
 					'email',
 					$result
 				);
 				// end of logging
 			}
 
-			//qTranslate integration
-			if( $lang ) {
-				$q_config['language'] = $old_lang;
-
-				//WPML integration
-				if ( has_filter( 'wpml_current_language' ) ) {
-					do_action( 'wpml_switch_language', $old_lang );
-				}
-			}
 			return $result;
 		}
 
@@ -275,27 +256,33 @@ if ( ! class_exists( 'CR_Sender' ) ) :
 			return $is_eu;
 		}
 
-		public static function get_sending_delay() {
+		public static function get_sending_delays() {
+			$sending_delays = array();
 			$delay_option = get_option( 'ivole_delay', 5 );
 			if ( is_array( $delay_option ) && 0 < count( $delay_option ) ) {
-				if (
-					isset( $delay_option[0]['delay'] ) &&
-					isset( $delay_option[0]['channel'] )
-				) {
-					return array(
-						intval( $delay_option[0]['delay'] ),
-						strval( $delay_option[0]['channel'] )
-					);
+				foreach ( $delay_option as $del_opt ) {
+					if (
+						isset( $del_opt['delay'] ) &&
+						isset( $del_opt['channel'] )
+					) {
+						$sending_delays[] = array(
+							'delay' => intval( $del_opt['delay'] ),
+							'channel' => strval( $del_opt['channel'] )
+						);
+					}
+				}
+				if ( 0 < count( $sending_delays ) ) {
+					return $sending_delays;
 				} else {
 					return array(
-						5,
-						'email'
+						'delay' => 5,
+						'channel' => 'email'
 					);
 				}
 			} else {
 				return array(
-					intval( $delay_option ),
-					'email'
+					'delay' => intval( $delay_option ),
+					'channel' => 'email'
 				);
 			}
 		}

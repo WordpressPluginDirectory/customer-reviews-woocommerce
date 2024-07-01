@@ -186,33 +186,26 @@ if ( ! class_exists( 'CR_Manual' ) ) :
 
 				$schedule = $this->get_schedule( $order );
 
-				$delay_channel = CR_Sender::get_sending_delay();
-				$delay_channel = 'email';
 				$l_msg = '';
-				if ( 'wa' === $delay_channel[1] ) {
-					$wa = new CR_Wtsap( $order_id );
-					$result = $wa->send_message( $order_id, $schedule );
-				} else {
-					$e = new Ivole_Email( $order_id );
-					$result = $e->trigger2( $order_id, null, $schedule );
-					// logging
-					$log = new CR_Reminders_Log();
-					$l_result = $log->add(
-						$order_id,
-						'm',
-						'email',
-						$result
-					);
-					if (
-						is_array( $l_result ) &&
-						isset( $l_result['code'] ) &&
-						0 !== $l_result['code'] &&
-						isset( $l_result['text'] )
-					) {
-						$l_msg = ';<br>' . esc_html( $l_result['text'] );
-					}
-					// end of logging
+				$e = new Ivole_Email( $order_id );
+				$result = $e->trigger2( $order_id, null, $schedule );
+				// logging
+				$log = new CR_Reminders_Log();
+				$l_result = $log->add(
+					$order_id,
+					'm',
+					'email',
+					$result
+				);
+				if (
+					is_array( $l_result ) &&
+					isset( $l_result['code'] ) &&
+					0 !== $l_result['code'] &&
+					isset( $l_result['text'] )
+				) {
+					$l_msg = ';<br>' . esc_html( $l_result['text'] );
 				}
+				// end of logging
 
 				//qTranslate integration
 				if( $lang ) {
@@ -248,16 +241,13 @@ if ( ! class_exists( 'CR_Manual' ) ) :
 					( is_array( $result ) && count( $result ) > 1 && 0 === $result[0] )
 				) {
 					// unschedule automatic review reminder if manual sending was successful (for reminders sent via WP Cron)
-					if( !$schedule ) {
+					if ( ! $schedule ) {
 						$timestamp = wp_next_scheduled( 'ivole_send_reminder', array( $order_id ) );
-						if( $timestamp ) {
+						if ( $timestamp ) {
 							wp_unschedule_event( $timestamp, 'ivole_send_reminder', array( $order_id ) );
 						}
-						if ( 'wa' === $delay_channel[1] ) {
-							$order->add_order_note( __( 'CR: a review reminder was triggered manually via WhatsApp.', 'customer-reviews-woocommerce' ) );
-						} else {
-							$order->add_order_note( __( 'CR: a review reminder was triggered manually via email.', 'customer-reviews-woocommerce' ) );
-						}
+						do_action( 'cr_manual_unschedule', $order_id );
+						$order->add_order_note( __( 'CR: a review reminder was triggered manually via email.', 'customer-reviews-woocommerce' ) );
 					} else {
 						$msg = __( 'Successfully synced with CR Cron', 'customer-reviews-woocommerce' );
 					}
@@ -347,6 +337,8 @@ if ( ! class_exists( 'CR_Manual' ) ) :
 								} else {
 									echo esc_html__( 'WP Cron error', 'customer-reviews-woocommerce' );
 								}
+							} else {
+								do_action( 'cr_manual_next_scheduled', $order );
 							}
 						}
 					}

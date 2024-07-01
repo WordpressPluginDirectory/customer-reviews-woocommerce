@@ -772,11 +772,13 @@ if ( ! class_exists( 'CR_Settings_Admin_Menu' ) ):
 											<li>An advanced editor for review forms templates</li>
 											<li>Customize colors and texts on review forms</li>
 											<li>Show or hide prices and display stars on rating bars</li>
+											<li>Automatic sending of a second review reminder</li>
 										</ul>
 										<ul class="cr-features-bnr-ul">
 											<li>Set specific times of day for review reminders</li>
 											<li>Set delays for reminders per destination country</li>
 											<li>Exclude certain emails from review reminders</li>
+											<li>Limit review invitations to one per customer</li>
 										</ul>
 									</div>
 									<div class="cr-features-bnr-other">And other powerful features...</div>
