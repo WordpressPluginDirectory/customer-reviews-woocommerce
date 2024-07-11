@@ -4,7 +4,7 @@ Tags: woocommerce, review plugin, review reminder, customer reviews, review for 
 Requires at least: 4.5
 Tested up to: 6.5
 Requires PHP: 7.2
-Stable tag: 5.53.0
+Stable tag: 5.55.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl.html
 
@@ -232,6 +232,13 @@ If you would like to change how reviews are sorted on product pages, it is possi
 
 == Changelog ==
 
+= 5.55.0 =
+* Improvement: display videos and images with the [cusrev_reviews_grid] shortcode or block for reviews that have media files attached
+* Accessibility fix: select element for sorting reviews must have an accessible name
+= 5.54.0 =
+* New feature: display videos with the [cusrev_reviews_grid] shortcode or block for reviews that have only video files attached
+* Bug fix: review reminders could be sent earlier than configured in the settings under certain conditions
+* Bug fix: Q&A reply button not visible for long questions
 = 5.53.0 =
 * Improvement: saving information about errors with scheduling review reminders in the order notes
 * Improvement: additional checks if WP Cron events already exist before scheduling new ones

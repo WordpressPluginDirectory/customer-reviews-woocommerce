@@ -47,10 +47,73 @@
 				}
 			}
 		});
-		//show lightbox when click on images in reviews grid
+		// play a video when a user clicks on it in the reviews grid
+		jQuery(".cr-reviews-grid").on("click", ".image-row-vid, .cr-comment-videoicon", function(t) {
+			if( ! jQuery(this).closest(".image-row").hasClass( "cr-vid-playing" ) ) {
+				jQuery(this).closest(".image-row").addClass( "cr-vid-playing" );
+				jQuery(this).closest(".image-row").find(".image-row-vid").prop( "controls", true );
+				jQuery(this).closest(".image-row").find(".image-row-vid").get(0).play();
+			} else {
+				jQuery(this).closest(".image-row").find(".image-row-vid").get(0).pause();
+				jQuery(this).closest(".image-row").find(".image-row-vid").prop( "controls", false );
+				jQuery(this).closest(".image-row").removeClass( "cr-vid-playing" );
+			}
+			return false;
+		} );
+		// open a gallery with media files in the reviews grid
+		jQuery(".cr-reviews-grid").on("click", ".media-row-count", function(t) {
+			if ( cr_ajax_object.disable_lightbox === '0' ) {
+				// only if lightbox is not disabled in settings of the plugin
+				t.preventDefault();
+				const oo = jQuery(".pswp");
+				let media = jQuery(this).parent().find(".image-row-vid,.image-row-img"),
+					this_media = jQuery(this),
+					inx = 0;
+				if (media.length > 0 && this_media.length > 0) {
+					const o = oo[0];
+					var a = [];
+					for (i = 0; i < media.length; i++) {
+						if ( "vid" === media[i].dataset.crmedia ) {
+							a.push({
+								html: '<div class="cr-video-wrapper"><video class="cr-media-video" src="' + media[i].src + '" controls></video></div>',
+								title: media[i].dataset.crtitle
+							});
+						} else {
+							a.push({
+								src: media[i].src,
+								w: media[i].naturalWidth,
+								h: media[i].naturalHeight,
+								title: media[i].alt
+							});
+						}
+						if (this_media[0].src == media[i].src) {
+							inx = i;
+						}
+					}
+					var r = {
+						index: inx
+					};
+					new PhotoSwipe(o, PhotoSwipeUI_Default, a, r).init();
+				}
+			}
+		} );
+		// play or pause a video in the gallery
+		jQuery(document).on("click", ".cr-video-wrapper .cr-media-video", function(t) {
+			const vid = jQuery(this).get(0);
+			if ( vid ) {
+				const isVideoPlaying = !!( vid.currentTime > 0 && !vid.paused && !vid.ended && vid.readyState > 2 );
+				if ( isVideoPlaying ) {
+					vid.pause();
+				} else {
+					vid.play();
+				}
+			}
+			return false;
+		} );
+		// show a lightbox when a user clicks on images in the reviews grid
 		jQuery(".cr-reviews-grid").on("click", ".image-row-img, .image-row-count", function(t) {
 			if(cr_ajax_object.disable_lightbox === '0') {
-				//only if lightbox is not disabled in settings of the plugin
+				// only if lightbox is not disabled in settings of the plugin
 				t.preventDefault();
 				const oo = jQuery(".pswp");
 				if ( 0 < oo.length ) {

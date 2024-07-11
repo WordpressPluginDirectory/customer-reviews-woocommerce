@@ -1152,7 +1152,7 @@ if (! class_exists('CR_All_Reviews')) :
 			$output = '<div class="cr-count-row">';
 			$output .=  '<div class="cr-count-row-count">' . $count_wording . '</div>';
 			$output .=  '<div class="cr-ajax-reviews-sort-div">';
-			$output .=   '<select name="cr_ajax_reviews_sort" class="cr-ajax-reviews-sort" data-nonce="' . wp_create_nonce( 'cr_product_reviews_sort' ) . '">';
+			$output .=   '<select name="cr_ajax_reviews_sort" class="cr-ajax-reviews-sort" data-nonce="' . wp_create_nonce( 'cr_product_reviews_sort' ) . '" aria-label="' . esc_html__( 'Sort reviews', 'customer-reviews-woocommerce' ) . '">';
 			$output .=    '<option value="recent"' . ( $sort_helpful ? '' : ' selected="selected"' ) . '>';
 			$output .=     esc_html__( 'Most Recent', 'customer-reviews-woocommerce' );
 			$output .=    '</option>';

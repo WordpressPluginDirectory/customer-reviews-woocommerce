@@ -275,14 +275,18 @@ if ( ! class_exists( 'CR_Sender' ) ) :
 					return $sending_delays;
 				} else {
 					return array(
-						'delay' => 5,
-						'channel' => 'email'
+						array(
+							'delay' => 5,
+							'channel' => 'email'
+						)
 					);
 				}
 			} else {
 				return array(
-					'delay' => intval( $delay_option ),
-					'channel' => 'email'
+					array(
+						'delay' => intval( $delay_option ),
+						'channel' => 'email'
+					)
 				);
 			}
 		}
