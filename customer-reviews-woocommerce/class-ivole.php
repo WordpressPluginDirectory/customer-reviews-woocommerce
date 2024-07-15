@@ -23,6 +23,7 @@ require_once( __DIR__ . '/includes/reminders/class-cr-local-forms-ajax.php' );
 require_once( __DIR__ . '/includes/blocks/class-cr-all-reviews.php' );
 require_once( __DIR__ . '/includes/blocks/class-cr-reviews-grid.php' );
 require_once( __DIR__ . '/includes/blocks/class-cr-reviews-slider.php' );
+require_once( __DIR__ . '/includes/blocks/class-cr-reviews-rating.php' );
 require_once( __DIR__ . '/includes/reviews/class-cr-admin-menu-reviews.php' );
 require_once( __DIR__ . '/includes/reviews/class-cr-ajax-reviews.php');
 require_once( __DIR__ . '/includes/reviews/class-cr-reviews-list-table.php' );
@@ -78,7 +79,7 @@ require_once( __DIR__ . '/includes/qna/class-cr-qna-email.php' );
 require_once( __DIR__ . '/includes/analytics/class-cr-reminders-log.php' );
 
 class Ivole {
-	const CR_VERSION = '5.55.0';
+	const CR_VERSION = '5.56.0';
 
 	public function __construct() {
 		if( function_exists( 'wc' ) ) {
@@ -103,6 +104,7 @@ class Ivole {
 			$cr_all_reviews = new CR_All_Reviews();
 			$cr_reviews_grid = new CR_Reviews_Grid();
 			$cr_reviews_slider = new CR_Reviews_Slider();
+			$cr_reviews_rating = new CR_Reviews_Rating();
 			$cr_qna_shortcode = new CR_Qna_Shortcode( $cr_qna );
 
 			if ( is_admin() ) {

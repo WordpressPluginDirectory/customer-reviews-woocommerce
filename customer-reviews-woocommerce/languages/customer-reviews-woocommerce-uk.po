@@ -6,7 +6,7 @@ msgstr ""
 "(latest release)\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/customer-reviews-"
 "woocommerce\n"
-"POT-Creation-Date: 2024-07-10T15:21:36+00:00\n"
+"POT-Creation-Date: 2024-07-14T23:41:56+00:00\n"
 "PO-Revision-Date: 2020-03-18 00:17+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -40,27 +40,27 @@ msgstr ""
 msgid "https://www.cusrev.com/business/"
 msgstr ""
 
-#: class-ivole.php:164
+#: class-ivole.php:166
 msgid "View CusRev documentation"
 msgstr ""
 
-#: class-ivole.php:164
+#: class-ivole.php:166
 msgid "Docs"
 msgstr ""
 
-#: class-ivole.php:165
+#: class-ivole.php:167
 msgid "Visit community forums"
 msgstr ""
 
-#: class-ivole.php:165
+#: class-ivole.php:167
 msgid "Community support"
 msgstr ""
 
-#: class-ivole.php:175
+#: class-ivole.php:177
 msgid "View Customer Reviews settings"
 msgstr ""
 
-#: class-ivole.php:175 includes/settings/class-cr-admin-menu-settings.php:67
+#: class-ivole.php:177 includes/settings/class-cr-admin-menu-settings.php:67
 #: includes/settings/class-cr-admin-menu-settings.php:68
 msgid "Settings"
 msgstr ""
@@ -399,6 +399,12 @@ msgid_plural "Showing %1$d of %2$d reviews (%3$d star). "
 msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
+
+#: includes/blocks/class-cr-reviews-rating.php:54
+msgid ""
+"Error: [cusrev_reviews_rating] shortcode works only on WooCommerce single "
+"product pages"
+msgstr ""
 
 #: includes/emails/class-cr-email-coupon.php:32
 msgid "Thank You for Leaving a Review"
@@ -2888,7 +2894,7 @@ msgstr ""
 
 #: includes/reviews/class-cr-admin-menu-reviews.php:596
 #: includes/reviews/class-cr-reviews-list-table.php:1160
-#: templates/cr-review.php:117 templates/reviews-grid.php:127
+#: templates/cr-review.php:117 templates/reviews-grid.php:129
 #: templates/reviews-slider.php:48
 msgid "Reviewer"
 msgstr ""
@@ -5372,6 +5378,7 @@ msgstr ""
 #: includes/settings/class-cr-settings-shortcodes.php:116
 #: includes/settings/class-cr-settings-shortcodes.php:148
 #: includes/settings/class-cr-settings-shortcodes.php:180
+#: includes/settings/class-cr-settings-shortcodes.php:188
 msgid "Parameters:"
 msgstr ""
 
@@ -5681,11 +5688,21 @@ msgstr ""
 
 #: includes/settings/class-cr-settings-shortcodes.php:178
 msgid ""
+"Use this shortcode to display a widget with rating stars on any single "
+"WooCommerce product page. Here are the default parameters of the shortcode:"
+msgstr ""
+
+#: includes/settings/class-cr-settings-shortcodes.php:182
+msgid "%1$s argument is a hex color code of rating stars."
+msgstr ""
+
+#: includes/settings/class-cr-settings-shortcodes.php:186
+msgid ""
 "Use this shortcode to display a block with Questions and Answers on any page "
 "or post. Here are the default parameters of the shortcode:"
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:182
+#: includes/settings/class-cr-settings-shortcodes.php:190
 msgid ""
 "%1$s parameter accepts a comma-separated list of product IDs or %2$s. If "
 "product IDs are provided, the block will display Q & A linked to the "
@@ -5693,7 +5710,7 @@ msgid ""
 "display Q & A for all products in the store."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:183
+#: includes/settings/class-cr-settings-shortcodes.php:191
 msgid ""
 "%1$s parameter accepts a comma-separated list of non-product pages (e.g., "
 "regular WordPress pages or posts) or %2$s. If non-product page IDs are "
@@ -6025,6 +6042,7 @@ msgstr ""
 
 #: includes/trust-badge/class-cr-trust-badge.php:193
 #: includes/trust-badge/class-cr-trust-badge.php:194 templates/cr-rating.php:44
+#: templates/cr-shortcode-rating.php:34
 msgid "%s review"
 msgid_plural "%s reviews"
 msgstr[0] ""
@@ -6153,7 +6171,7 @@ msgstr ""
 msgid "Next (arrow right)"
 msgstr ""
 
-#: templates/cr-rating.php:52
+#: templates/cr-rating.php:52 templates/cr-shortcode-rating.php:42
 msgid "%s answered question"
 msgid_plural "%s answered questions"
 msgstr[0] ""
@@ -6192,6 +6210,11 @@ msgstr ""
 msgid "Your review is awaiting approval"
 msgstr ""
 
+#. translators: %s: rating
+#: templates/cr-shortcode-rating.php:27
+msgid "Rated %s out of 5"
+msgstr ""
+
 #: templates/qna-list.php:18
 msgid "%s asked on %s"
 msgstr ""
@@ -6216,7 +6239,7 @@ msgstr ""
 msgid "Ask a question"
 msgstr ""
 
-#: templates/qna-tab.php:47 templates/reviews-grid.php:199
+#: templates/qna-tab.php:47 templates/reviews-grid.php:201
 msgid "Show more"
 msgstr ""
 
@@ -6478,7 +6501,7 @@ msgstr ""
 msgid "Are you sure you want to delete selected log record(s)?"
 msgstr ""
 
-#: templates/reviews-grid.php:155 templates/reviews-slider.php:93
+#: templates/reviews-grid.php:157 templates/reviews-slider.php:93
 msgctxt "%s = human-readable time difference"
 msgid "%s ago"
 msgstr ""

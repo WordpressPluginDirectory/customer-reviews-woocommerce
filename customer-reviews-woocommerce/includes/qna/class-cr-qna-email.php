@@ -21,7 +21,7 @@ if ( ! class_exists( 'CR_Qna_Email' ) ) :
 		private $find = array();
 		private $replace = array();
 
-		public function __construct( $name ) {
+		public function __construct( $name, $language = NULL ) {
 			$this->name = $name;
 			$this->headers[] = 'Content-Type: text/html; charset=UTF-8';
 
@@ -49,6 +49,9 @@ if ( ! class_exists( 'CR_Qna_Email' ) ) :
 				'</table>'
 			);
 
+			$from = '';
+			$from_name = '';
+
 			switch( $this->name ) {
 				case 'qna_reply':
 					$this->subject = get_option( 'ivole_email_subject_' . $this->name, 'New Response to Your Question about {product_name}' );
@@ -56,17 +59,27 @@ if ( ! class_exists( 'CR_Qna_Email' ) ) :
 					$this->body = get_option( 'ivole_email_body_' . $this->name, "Hi {customer_name},\n\n{user_name} responded to your question about <b>{product_name}</b>. Here is a copy of their response:\n\n<i>{answer}</i>\n\nYou can view <b>{product_name}</b> here:\n\n{product_button}\n\nBest wishes,\n{site_title} Team" );
 					$this->template_name = 'qna-email-reply.php';
 					$from = trim( get_option( 'ivole_email_from_' . $this->name, '' ) );
-					if( $from ) {
-						$from_name = trim( get_option( 'ivole_email_from_name_' . $this->name, '' ) );
-						if( $from_name ) {
-							$this->headers[] = 'From: ' . $from_name . ' <' . $from . '>';
-						} else {
-							$this->headers[] = 'From: ' . $from;
-						}
-					}
+					$from_name = trim( get_option( 'ivole_email_from_name_' . $this->name, '' ) );
 					break;
 				default:
 					break;
+			}
+
+			// WPML integration
+			if ( $language && has_filter( 'wpml_translate_single_string' ) ) {
+				$this->subject = apply_filters( 'wpml_translate_single_string', $this->subject, 'ivole', 'ivole_email_subject_' . $this->name, $language );
+				$this->heading = apply_filters( 'wpml_translate_single_string', $this->heading, 'ivole', 'ivole_email_heading_' . $this->name, $language );
+				$this->body = apply_filters( 'wpml_translate_single_string', $this->body, 'ivole', 'ivole_email_body_' . $this->name, $language );
+				$from = apply_filters( 'wpml_translate_single_string', $from, 'ivole', 'ivole_email_from_' . $this->name, $language );
+				$from_name = apply_filters( 'wpml_translate_single_string', $from_name, 'ivole', 'ivole_email_from_name_' . $this->name, $language );
+			}
+
+			if( $from ) {
+				if( $from_name ) {
+					$this->headers[] = 'From: ' . $from_name . ' <' . $from . '>';
+				} else {
+					$this->headers[] = 'From: ' . $from;
+				}
 			}
 		}
 

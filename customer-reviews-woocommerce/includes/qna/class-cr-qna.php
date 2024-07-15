@@ -803,7 +803,16 @@ if ( ! class_exists( 'CR_Qna' ) ) :
 			if( 'cr_qna' === get_comment_type( $comment ) && 0 < $comment->comment_parent ) {
 				if( $new_status != $old_status ) {
 					if( 'approved' === $new_status ) {
-						$qe = new CR_Qna_Email( 'qna_reply' );
+						$language = NULL;
+						// WPML integration
+						if ( has_action( 'wpml_post_language_details' ) ) {
+							$wpml_language = apply_filters( 'wpml_post_language_details', NULL, $comment->comment_post_ID );
+							if ( $wpml_language && isset( $wpml_language['language_code'] ) ) {
+								$language = $wpml_language['language_code'];
+							}
+						}
+						//
+						$qe = new CR_Qna_Email( 'qna_reply', $language );
 						$qe->trigger_email( $comment->comment_parent, $comment->comment_author, $comment->comment_post_ID, $comment->comment_content, $comment->comment_ID );
 					}
 				}
@@ -815,7 +824,16 @@ if ( ! class_exists( 'CR_Qna' ) ) :
 				if( isset( $commentdata['comment_type'] ) && 'cr_qna' === $commentdata['comment_type'] ) {
 					if( isset( $commentdata['comment_parent'] ) && 0 < $commentdata['comment_parent'] ) {
 						if( 1 === $comment_approved ) {
-							$qe = new CR_Qna_Email( 'qna_reply' );
+							$language = NULL;
+							// WPML integration
+							if ( has_action( 'wpml_post_language_details' ) ) {
+								$wpml_language = apply_filters( 'wpml_post_language_details', NULL, $commentdata['comment_post_ID'] );
+								if ( $wpml_language && isset( $wpml_language['language_code'] ) ) {
+									$language = $wpml_language['language_code'];
+								}
+							}
+							//
+							$qe = new CR_Qna_Email( 'qna_reply', $language );
 							$qe->trigger_email( $commentdata['comment_parent'], $commentdata['comment_author'], $commentdata['comment_post_ID'], $commentdata['comment_content'], $comment_ID );
 						}
 					}

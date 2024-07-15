@@ -174,6 +174,14 @@ if ( ! class_exists( 'CR_Shortcodes_Settings' ) ):
 			'</ul>' . '<br>' .
 			sprintf( __( '%1$s shortcode is also available as <strong>Reviews Slider</strong> block in the new WordPress Gutenberg page editor (blocks require WordPress 5.0 or newer).', 'customer-reviews-woocommerce' ), '<code>[cusrev_reviews_slider]</code>' ) . '<br><br>' .
 
+			'<p class="cr-admin-shortcodes-large"><code>[cusrev_reviews_rating]</code></p>' .
+			'<p>' . __( 'Use this shortcode to display a widget with rating stars on any single WooCommerce product page. Here are the default parameters of the shortcode:', 'customer-reviews-woocommerce' ) . '</p>' .
+			'<p class="cr-admin-shortcodes"><code>[cusrev_reviews_slider color_stars="#FFBC00"]</code></p>' .
+			'<p class="cr-admin-shortcodes"><b>' . __( 'Parameters:', 'customer-reviews-woocommerce' ) . '</b></p>' .
+			'<ul>' .
+			'<li>' . sprintf( __( '%1$s argument is a hex color code of rating stars.', 'customer-reviews-woocommerce' ), '<code>"color_stars"</code>' ) . '</li>' .
+			'</ul>' . '<br>' .
+
 			'<p class="cr-admin-shortcodes-large"><code>[cusrev_qna]</code></p>' .
 			'<p>' . __( 'Use this shortcode to display a block with Questions and Answers on any page or post. Here are the default parameters of the shortcode:', 'customer-reviews-woocommerce' ) . '</p>' .
 			'<p class="cr-admin-shortcodes"><code>[cusrev_qna products="" shop=""]</code></p>' .

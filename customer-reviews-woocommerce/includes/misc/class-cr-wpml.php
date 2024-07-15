@@ -27,21 +27,25 @@ if ( ! class_exists( 'CR_WPML' ) ) :
 					'ivole_email_body_coupon',
 					'ivole_customer_consent_text',
 					'ivole_verified_owner',
-					'ivole_review_button'
+					'ivole_review_button',
+					'ivole_email_from_name_qna_reply',
+					'ivole_email_from_qna_reply',
+					'ivole_email_subject_qna_reply',
+					'ivole_email_heading_qna_reply',
+					'ivole_email_body_qna_reply'
 				);
 				foreach ( $fields_to_translate as $field_to_translate ) {
 					if ( isset( $fields[$field_to_translate] ) ) {
 						$fields[$field_to_translate] = wp_unslash( $fields[$field_to_translate] );
 						switch ($field_to_translate) {
 							case 'ivole_email_body':
-							$fields[$field_to_translate] = wp_kses_post( $fields[$field_to_translate] );
-							break;
 							case 'ivole_email_body_coupon':
-							$fields[$field_to_translate] = wp_kses_post( $fields[$field_to_translate] );
-							break;
+							case 'ivole_email_body_qna_reply':
+								$fields[$field_to_translate] = wp_kses_post( $fields[$field_to_translate] );
+								break;
 							default:
-							$fields[$field_to_translate] = wc_clean( $fields[$field_to_translate] );
-							break;
+								$fields[$field_to_translate] = wc_clean( $fields[$field_to_translate] );
+								break;
 						}
 						do_action( 'wpml_register_single_string', 'ivole', $field_to_translate, $fields[$field_to_translate] );
 					}

@@ -718,11 +718,19 @@
 		jQuery("body").on("click", "a.cr-qna-link", function () {
 			const cr_qna_tab = jQuery( '.cr_qna_tab a' );
 			if( cr_qna_tab.length ) {
-				cr_qna_tab.click();
+				cr_qna_tab.trigger( "click" );
 			} else {
 				jQuery( '.cr-qna-block' ).parents( ':hidden' ).show();
 			}
 			return true;
+		});
+		// show Reviews tab
+		jQuery("body").on("click", ".cr-review-link", function () {
+			const wc_reviews_tab = jQuery( '.reviews_tab a' );
+			if( wc_reviews_tab.length ) {
+				wc_reviews_tab.trigger( "click" );
+				return true;
+			}
 		});
 
 		// upload images with a review
