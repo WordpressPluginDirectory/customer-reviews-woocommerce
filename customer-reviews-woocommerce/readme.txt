@@ -2,9 +2,9 @@
 Contributors: ivole
 Tags: woocommerce, review plugin, review reminder, customer reviews, review for discount
 Requires at least: 4.5
-Tested up to: 6.5
+Tested up to: 6.6
 Requires PHP: 7.2
-Stable tag: 5.56.0
+Stable tag: 5.57.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl.html
 
@@ -232,6 +232,11 @@ If you would like to change how reviews are sorted on product pages, it is possi
 
 == Changelog ==
 
+= 5.57.0 =
+* Improvement: an area above reviews in the [cusrev_all_reviews] shortcode to display media files uploaded by customers
+* Improvement: accessibility labels for elements on review widgets
+* Improvement: new parameter 'product' for the [cusrev_reviews_rating] shortcode
+* Improvement: new filter 'cr_generate_coupon' for coupons created by the plugin
 = 5.56.0 =
 * New feature: shortcode [cusrev_reviews_rating] to display a widget with rating stars on any single WooCommerce product page
 * Improvement: compatibility with WPML for translation of Q&A reply notification emails

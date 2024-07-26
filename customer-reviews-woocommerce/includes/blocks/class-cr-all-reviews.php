@@ -41,6 +41,7 @@ if (! class_exists('CR_All_Reviews')) :
 				'per_page' => $this->default_per_page,
 				'number' => -1,
 				'show_summary_bar' => 'true',
+				'show_media' => 'true',
 				'show_pictures' => 'false',
 				'show_products' => 'true',
 				'categories' => [],
@@ -103,6 +104,7 @@ if (! class_exists('CR_All_Reviews')) :
 
 			$this->shortcode_atts = shortcode_atts( $defaults, $attributes );
 			$this->shortcode_atts['show_summary_bar'] = $this->shortcode_atts['show_summary_bar'] === 'true' ? true : false;
+			$this->shortcode_atts['show_media'] = $this->shortcode_atts['show_media'] === 'true' ? true : false;
 			$this->shortcode_atts['show_pictures'] = $this->shortcode_atts['show_pictures'] === 'true' ? true : false;
 			$this->shortcode_atts['show_products'] = $this->shortcode_atts['show_products'] === 'true' ? true : false;
 			$this->shortcode_atts['shop_reviews'] = $this->shortcode_atts['shop_reviews'] === 'true' ? true : false;
@@ -500,10 +502,16 @@ if (! class_exists('CR_All_Reviews')) :
 			// show summary bar
 			if ( $this->shortcode_atts['show_summary_bar'] || $this->shortcode_atts['add_review'] ) {
 				$return .= $this->show_summary_table();
-				$return .= CR_Ajax_Reviews::get_search_field( true );
 			}
 
 			$comments = $this->get_reviews();
+
+			// show media files uploaded by customers
+			if ( $this->shortcode_atts['show_media'] ) {
+				$return .= CR_Reviews::display_review_images_top( $comments );
+			}
+
+			$return .= CR_Ajax_Reviews::get_search_field( true );
 
 			// show tags
 			$return .= CR_Ajax_Reviews::get_tags_field( $comments );
@@ -1152,7 +1160,7 @@ if (! class_exists('CR_All_Reviews')) :
 			$output = '<div class="cr-count-row">';
 			$output .=  '<div class="cr-count-row-count">' . $count_wording . '</div>';
 			$output .=  '<div class="cr-ajax-reviews-sort-div">';
-			$output .=   '<select name="cr_ajax_reviews_sort" class="cr-ajax-reviews-sort" data-nonce="' . wp_create_nonce( 'cr_product_reviews_sort' ) . '" aria-label="' . esc_html__( 'Sort reviews', 'customer-reviews-woocommerce' ) . '">';
+			$output .=   '<select name="cr_ajax_reviews_sort" class="cr-ajax-reviews-sort" data-nonce="' . wp_create_nonce( 'cr_product_reviews_sort' ) . '" aria-label="' . esc_attr__( 'Sort reviews', 'customer-reviews-woocommerce' ) . '">';
 			$output .=    '<option value="recent"' . ( $sort_helpful ? '' : ' selected="selected"' ) . '>';
 			$output .=     esc_html__( 'Most Recent', 'customer-reviews-woocommerce' );
 			$output .=    '</option>';

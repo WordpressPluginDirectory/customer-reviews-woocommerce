@@ -227,7 +227,7 @@ class CR_Email_Coupon {
 	public function generate_coupon( $to, $review_id, $coupon ) {
 		$prefix = $coupon['cr_coupon_prefix'];
 		$unique_code = ( !empty( $to ) ) ? strtoupper( uniqid( substr( preg_replace( '/[^a-z0-9]/i', '', sanitize_title( $to ) ), 0, 5 ) ) ) : strtoupper( uniqid() );
-		$unique_code = strtoupper( $prefix ) . $unique_code;
+		$unique_code = apply_filters( 'cr_generate_coupon', strtoupper( $prefix ) . $unique_code, $review_id );
 		$coupon_args = array(
 			'post_title' 	=> $unique_code,
 			'post_content' 	=> '',

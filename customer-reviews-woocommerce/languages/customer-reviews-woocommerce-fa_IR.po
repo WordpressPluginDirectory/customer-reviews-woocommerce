@@ -6,7 +6,7 @@ msgstr ""
 "(latest release)\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/customer-reviews-"
 "woocommerce\n"
-"POT-Creation-Date: 2024-07-14T23:41:56+00:00\n"
+"POT-Creation-Date: 2024-07-26T00:10:15+00:00\n"
 "PO-Revision-Date: 2019-07-20 00:46+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -146,14 +146,14 @@ msgstr ""
 msgid "Automatic"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:522
-#: includes/blocks/class-cr-all-reviews.php:562
+#: includes/blocks/class-cr-all-reviews.php:530
+#: includes/blocks/class-cr-all-reviews.php:570
 #: templates/cr-ajax-product-reviews.php:132
 msgid "Sorry, no reviews match your current selections"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:557
-#: includes/blocks/class-cr-all-reviews.php:666
+#: includes/blocks/class-cr-all-reviews.php:565
+#: includes/blocks/class-cr-all-reviews.php:674
 #: includes/reviews/class-cr-ajax-reviews.php:315
 #: includes/reviews/class-cr-ajax-reviews.php:394
 #: includes/reviews/class-cr-ajax-reviews.php:466
@@ -161,120 +161,120 @@ msgstr ""
 msgid "Show more reviews (%d)"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:996
+#: includes/blocks/class-cr-all-reviews.php:1004
 #: includes/blocks/class-cr-reviews-grid.php:942
-#: includes/reviews/class-cr-reviews.php:531
+#: includes/reviews/class-cr-reviews.php:533
 msgid "Based on %s review"
 msgid_plural "Based on %s reviews"
 msgstr[0] ""
 
-#: includes/blocks/class-cr-all-reviews.php:1009
-#: includes/blocks/class-cr-all-reviews.php:1013
+#: includes/blocks/class-cr-all-reviews.php:1017
+#: includes/blocks/class-cr-all-reviews.php:1021
 #: includes/blocks/class-cr-reviews-grid.php:955
 #: includes/blocks/class-cr-reviews-grid.php:959
-#: includes/reviews/class-cr-reviews.php:546
-#: includes/reviews/class-cr-reviews.php:550
+#: includes/reviews/class-cr-reviews.php:548
+#: includes/reviews/class-cr-reviews.php:552
 msgid "5 star"
 msgstr "5 ستاره"
 
-#: includes/blocks/class-cr-all-reviews.php:1022
-#: includes/blocks/class-cr-all-reviews.php:1026
+#: includes/blocks/class-cr-all-reviews.php:1030
+#: includes/blocks/class-cr-all-reviews.php:1034
 #: includes/blocks/class-cr-reviews-grid.php:968
 #: includes/blocks/class-cr-reviews-grid.php:972
-#: includes/reviews/class-cr-reviews.php:557
-#: includes/reviews/class-cr-reviews.php:561
+#: includes/reviews/class-cr-reviews.php:559
+#: includes/reviews/class-cr-reviews.php:563
 msgid "4 star"
 msgstr "4 ستاره"
 
-#: includes/blocks/class-cr-all-reviews.php:1035
-#: includes/blocks/class-cr-all-reviews.php:1039
+#: includes/blocks/class-cr-all-reviews.php:1043
+#: includes/blocks/class-cr-all-reviews.php:1047
 #: includes/blocks/class-cr-reviews-grid.php:981
 #: includes/blocks/class-cr-reviews-grid.php:985
-#: includes/reviews/class-cr-reviews.php:568
-#: includes/reviews/class-cr-reviews.php:572
+#: includes/reviews/class-cr-reviews.php:570
+#: includes/reviews/class-cr-reviews.php:574
 msgid "3 star"
 msgstr "3 ستاره"
 
-#: includes/blocks/class-cr-all-reviews.php:1048
-#: includes/blocks/class-cr-all-reviews.php:1052
+#: includes/blocks/class-cr-all-reviews.php:1056
+#: includes/blocks/class-cr-all-reviews.php:1060
 #: includes/blocks/class-cr-reviews-grid.php:994
 #: includes/blocks/class-cr-reviews-grid.php:998
-#: includes/reviews/class-cr-reviews.php:579
-#: includes/reviews/class-cr-reviews.php:583
+#: includes/reviews/class-cr-reviews.php:581
+#: includes/reviews/class-cr-reviews.php:585
 msgid "2 star"
 msgstr "2 ستاره"
 
-#: includes/blocks/class-cr-all-reviews.php:1061
-#: includes/blocks/class-cr-all-reviews.php:1065
+#: includes/blocks/class-cr-all-reviews.php:1069
+#: includes/blocks/class-cr-all-reviews.php:1073
 #: includes/blocks/class-cr-reviews-grid.php:1007
 #: includes/blocks/class-cr-reviews-grid.php:1011
 #: includes/reviews/class-cr-reviews-list-table.php:467
-#: includes/reviews/class-cr-reviews.php:590
-#: includes/reviews/class-cr-reviews.php:594
+#: includes/reviews/class-cr-reviews.php:592
+#: includes/reviews/class-cr-reviews.php:596
 msgid "1 star"
 msgstr "1 ستاره"
 
-#: includes/blocks/class-cr-all-reviews.php:1077
+#: includes/blocks/class-cr-all-reviews.php:1085
 #: includes/blocks/class-cr-reviews-grid.php:1024
-#: includes/reviews/class-cr-reviews.php:1655 templates/cr-review-form.php:31
+#: includes/reviews/class-cr-reviews.php:1721 templates/cr-review-form.php:31
 msgid "Add a review"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1155
+#: includes/blocks/class-cr-all-reviews.php:1163
 msgid "Sort reviews"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1157
-#: includes/reviews/class-cr-reviews.php:1584
+#: includes/blocks/class-cr-all-reviews.php:1165
+#: includes/reviews/class-cr-reviews.php:1650
 msgid "Most Recent"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1160
-#: includes/reviews/class-cr-reviews.php:1588
+#: includes/blocks/class-cr-all-reviews.php:1168
+#: includes/reviews/class-cr-reviews.php:1654
 msgid "Most Helpful"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1174
+#: includes/blocks/class-cr-all-reviews.php:1182
 msgid "%d star"
 msgid_plural "%d stars"
 msgstr[0] ""
 
-#: includes/blocks/class-cr-all-reviews.php:1180
+#: includes/blocks/class-cr-all-reviews.php:1188
 #: includes/blocks/class-cr-reviews-grid.php:1033
-#: includes/reviews/class-cr-reviews.php:606
+#: includes/reviews/class-cr-reviews.php:608
 msgid "See all %d review"
 msgid_plural "See all %d reviews"
 msgstr[0] ""
 
-#: includes/blocks/class-cr-all-reviews.php:1198
+#: includes/blocks/class-cr-all-reviews.php:1206
 msgid "%d-%d of %d review (%s). %s"
 msgid_plural "%d-%d of %d reviews (%s). %s"
 msgstr[0] ""
 
-#: includes/blocks/class-cr-all-reviews.php:1207
+#: includes/blocks/class-cr-all-reviews.php:1215
 msgid "%d-%d of %d review"
 msgid_plural "%d-%d of %d reviews"
 msgstr[0] ""
 
-#: includes/blocks/class-cr-all-reviews.php:1216
+#: includes/blocks/class-cr-all-reviews.php:1224
 msgid "0 of 0 reviews (%s). %s"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1221
+#: includes/blocks/class-cr-all-reviews.php:1229
 msgid "0 of 0 reviews"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1232
+#: includes/blocks/class-cr-all-reviews.php:1240
 #: includes/reminders/class-cr-local-forms.php:201
 #: templates/cr-ajax-product-reviews.php:153
 msgid "Add photos or video to your review"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1272
+#: includes/blocks/class-cr-all-reviews.php:1280
 msgid "Data validation error"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1273
+#: includes/blocks/class-cr-all-reviews.php:1281
 #: includes/qna/class-cr-admin-menu-qna.php:190
 #: includes/reminders/class-cr-manual.php:397
 #: includes/reviews/class-cr-admin-menu-reviews.php:238
@@ -282,62 +282,62 @@ msgstr ""
 msgid "OK"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1280
+#: includes/blocks/class-cr-all-reviews.php:1288
 #: templates/cr-review-form.php:70
 msgid "Currently, we are not accepting new reviews"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1304
+#: includes/blocks/class-cr-all-reviews.php:1312
 #: templates/cr-review-form.php:61
 msgid "You must be logged in to post a review"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1334
+#: includes/blocks/class-cr-all-reviews.php:1342
 msgid ""
 "Only customers who have purchased this product may leave a review. Please "
 "use the same email address as in your order for this product."
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1358
+#: includes/blocks/class-cr-all-reviews.php:1366
 msgid "Your review could not be added"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1359
+#: includes/blocks/class-cr-all-reviews.php:1367
 #: includes/qna/class-cr-admin-menu-qna.php:189
 #: includes/reviews/class-cr-admin-menu-reviews.php:237
 msgid "Try again"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1360
+#: includes/blocks/class-cr-all-reviews.php:1368
 msgid "Your review has been successfully added"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1361
+#: includes/blocks/class-cr-all-reviews.php:1369
 msgid "Continue"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1388
+#: includes/blocks/class-cr-all-reviews.php:1396
 msgid ""
 "Error: no shop page configured in WooCommerce settings (WooCommerce > "
 "Settings > Products > Shop page)"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1390
+#: includes/blocks/class-cr-all-reviews.php:1398
 msgid "Error: no product with ID %d found"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1430
+#: includes/blocks/class-cr-all-reviews.php:1438
 #: includes/reminders/class-cr-local-forms-ajax.php:99
 #: includes/reminders/class-cr-local-forms.php:150
-#: includes/reviews/class-cr-reviews.php:392
+#: includes/reviews/class-cr-reviews.php:394
 msgid "The file cannot be uploaded because its size exceeds the limit of %d MB"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1439
+#: includes/blocks/class-cr-all-reviews.php:1447
 #: includes/reminders/class-cr-local-forms-ajax.php:108
 #: includes/reminders/class-cr-local-forms.php:151
-#: includes/reviews/class-cr-reviews.php:390
-#: includes/reviews/class-cr-reviews.php:1463
+#: includes/reviews/class-cr-reviews.php:392
+#: includes/reviews/class-cr-reviews.php:1529
 msgid ""
 "Error: accepted file types are PNG, JPG, JPEG, GIF, MP4, MPEG, OGG, WEBM, "
 "MOV, AVI"
@@ -365,10 +365,10 @@ msgstr ""
 #: includes/blocks/class-cr-reviews-slider.php:268
 #: includes/blocks/class-cr-reviews-slider.php:270
 #: includes/reviews/class-cr-reviews-list-table.php:628
-#: includes/reviews/class-cr-reviews.php:1144
 #: includes/reviews/class-cr-reviews.php:1146
-#: includes/reviews/class-cr-reviews.php:1202
+#: includes/reviews/class-cr-reviews.php:1148
 #: includes/reviews/class-cr-reviews.php:1204
+#: includes/reviews/class-cr-reviews.php:1206
 msgid "Verified review"
 msgstr ""
 
@@ -376,21 +376,22 @@ msgstr ""
 #: includes/blocks/class-cr-reviews-grid.php:379
 #: includes/blocks/class-cr-reviews-slider.php:264
 #: includes/blocks/class-cr-reviews-slider.php:271
-#: includes/reviews/class-cr-reviews.php:1155
-#: includes/reviews/class-cr-reviews.php:1213
+#: includes/reviews/class-cr-reviews.php:1157
+#: includes/reviews/class-cr-reviews.php:1215
 msgid "view original"
 msgstr ""
 
 #: includes/blocks/class-cr-reviews-grid.php:1032
-#: includes/reviews/class-cr-reviews.php:605
+#: includes/reviews/class-cr-reviews.php:607
 msgid "Showing %1$d of %2$d review (%3$d star). "
 msgid_plural "Showing %1$d of %2$d reviews (%3$d star). "
 msgstr[0] ""
 
-#: includes/blocks/class-cr-reviews-rating.php:54
+#: includes/blocks/class-cr-reviews-rating.php:71
 msgid ""
-"Error: [cusrev_reviews_rating] shortcode works only on WooCommerce single "
-"product pages"
+"Error: if no valid product ID was provided as a parameter, "
+"[cusrev_reviews_rating] shortcode works only on WooCommerce single product "
+"pages"
 msgstr ""
 
 #: includes/emails/class-cr-email-coupon.php:32
@@ -1475,11 +1476,9 @@ msgstr ""
 #: includes/reviews/class-cr-reviews-list-table.php:988
 #: includes/reviews/class-cr-reviews-media-meta-box.php:54
 #: includes/reviews/class-cr-reviews-media-meta-box.php:97
-#: includes/reviews/class-cr-reviews.php:242
-#: includes/reviews/class-cr-reviews.php:259
-#: includes/reviews/class-cr-reviews.php:1294
-#: includes/reviews/class-cr-reviews.php:1364
-#: includes/reviews/class-cr-reviews.php:1395 templates/reviews-grid.php:82
+#: includes/reviews/class-cr-reviews.php:244
+#: includes/reviews/class-cr-reviews.php:261
+#: includes/reviews/class-cr-reviews.php:1451 templates/reviews-grid.php:82
 #: templates/reviews-grid.php:89
 msgid "Image #%1$d from "
 msgstr ""
@@ -2379,7 +2378,7 @@ msgstr ""
 
 #: includes/reminders/class-cr-local-forms.php:179
 #: includes/reviews/class-cr-custom-questions.php:452
-#: includes/reviews/class-cr-reviews.php:1651
+#: includes/reviews/class-cr-reviews.php:1717
 #: includes/settings/class-cr-settings-forms-rating.php:64
 #: includes/settings/class-cr-settings-forms-rating.php:161
 #: blocks/build/reviews-grid/index.js:12
@@ -3025,7 +3024,7 @@ msgid ""
 msgstr ""
 
 #: includes/reviews/class-cr-reviews-list-table.php:941
-#: includes/reviews/class-cr-reviews.php:1227 templates/cr-review.php:129
+#: includes/reviews/class-cr-reviews.php:1229 templates/cr-review.php:129
 msgid "Featured Review"
 msgstr ""
 
@@ -3033,8 +3032,10 @@ msgstr ""
 #: includes/reviews/class-cr-reviews-list-table.php:1032
 #: includes/reviews/class-cr-reviews-media-meta-box.php:70
 #: includes/reviews/class-cr-reviews-media-meta-box.php:129
-#: includes/reviews/class-cr-reviews.php:278
-#: includes/reviews/class-cr-reviews.php:297 templates/reviews-grid.php:73
+#: includes/reviews/class-cr-reviews.php:280
+#: includes/reviews/class-cr-reviews.php:299
+#: includes/reviews/class-cr-reviews.php:1309
+#: includes/reviews/class-cr-reviews.php:1323 templates/reviews-grid.php:73
 #: templates/reviews-grid.php:75 templates/reviews-grid.php:86
 msgid "Video #%1$d from %2$s"
 msgstr ""
@@ -3096,61 +3097,66 @@ msgstr ""
 msgid "Number"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews.php:132
-#: includes/reviews/class-cr-reviews.php:389
+#: includes/reviews/class-cr-reviews.php:134
+#: includes/reviews/class-cr-reviews.php:391
 msgid "Upload up to %d images or videos"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews.php:160
+#: includes/reviews/class-cr-reviews.php:162
 msgid "* Please confirm that you are not a robot"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews.php:187
+#: includes/reviews/class-cr-reviews.php:189
 msgid ""
 "Error: You tried to upload too many files. The maximum number of files that "
 "you can upload is %d."
 msgstr ""
 
-#: includes/reviews/class-cr-reviews.php:188
+#: includes/reviews/class-cr-reviews.php:190
 msgid "Go back to: %s"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews.php:391
+#: includes/reviews/class-cr-reviews.php:393
 msgid ""
 "Error: You tried to upload too many files. The maximum number of files that "
 "can be uploaded is %d."
 msgstr ""
 
-#: includes/reviews/class-cr-reviews.php:431
+#: includes/reviews/class-cr-reviews.php:433
 msgid "reCAPTCHA vertification failed and your review cannot be saved."
 msgstr ""
 
-#: includes/reviews/class-cr-reviews.php:431
+#: includes/reviews/class-cr-reviews.php:433
 msgid "Add Review Error"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews.php:1156
-#: includes/reviews/class-cr-reviews.php:1214
+#: includes/reviews/class-cr-reviews.php:1158
+#: includes/reviews/class-cr-reviews.php:1216
 msgid "External link"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews.php:1280
+#: includes/reviews/class-cr-reviews.php:1281
+#: includes/reviews/class-cr-reviews.php:1295
+msgid "Image #%1$d from %2$s"
+msgstr ""
+
+#: includes/reviews/class-cr-reviews.php:1337
 msgid "Customer Images"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews.php:1445
+#: includes/reviews/class-cr-reviews.php:1511
 msgid "Error: please solve the CAPTCHA before uploading files"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews.php:1454
+#: includes/reviews/class-cr-reviews.php:1520
 msgid "Error: the file(s) is too large"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews.php:1592
+#: includes/reviews/class-cr-reviews.php:1658
 msgid "Highest Rating"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews.php:1595
+#: includes/reviews/class-cr-reviews.php:1661
 msgid "Lowest Rating"
 msgstr ""
 
@@ -5326,10 +5332,10 @@ msgid ""
 msgstr ""
 
 #: includes/settings/class-cr-settings-shortcodes.php:88
-#: includes/settings/class-cr-settings-shortcodes.php:116
-#: includes/settings/class-cr-settings-shortcodes.php:148
-#: includes/settings/class-cr-settings-shortcodes.php:180
-#: includes/settings/class-cr-settings-shortcodes.php:188
+#: includes/settings/class-cr-settings-shortcodes.php:117
+#: includes/settings/class-cr-settings-shortcodes.php:149
+#: includes/settings/class-cr-settings-shortcodes.php:181
+#: includes/settings/class-cr-settings-shortcodes.php:190
 msgid "Parameters:"
 msgstr ""
 
@@ -5358,7 +5364,7 @@ msgid ""
 msgstr ""
 
 #: includes/settings/class-cr-settings-shortcodes.php:94
-#: includes/settings/class-cr-settings-shortcodes.php:139
+#: includes/settings/class-cr-settings-shortcodes.php:140
 msgid ""
 "%1$s argument accepts %2$s or %3$s and specifies if a summary bar should be "
 "shown on top of the reviews."
@@ -5366,35 +5372,41 @@ msgstr ""
 
 #: includes/settings/class-cr-settings-shortcodes.php:95
 msgid ""
-"%1$s argument accepts %2$s or %3$s and specifies if product names along with "
-"product thumbnails should be shown for each review."
+"%1$s parameter accepts %2$s or %3$s and specifies if media files uploaded by "
+"customers should be shown in an area above the reviews."
 msgstr ""
 
 #: includes/settings/class-cr-settings-shortcodes.php:96
 msgid ""
-"%1$s argument accepts a comma-separated list of product categories IDs. Use "
-"this argument to show reviews only from particular categories of products."
+"%1$s argument accepts %2$s or %3$s and specifies if product names along with "
+"product thumbnails should be shown for each review."
 msgstr ""
 
 #: includes/settings/class-cr-settings-shortcodes.php:97
-#: includes/settings/class-cr-settings-shortcodes.php:124
-#: includes/settings/class-cr-settings-shortcodes.php:157
 msgid ""
-"%1$s argument accepts a comma-separated list of product tags. Use this "
-"argument to show reviews from products associated with specific tags only."
+"%1$s argument accepts a comma-separated list of product categories IDs. Use "
+"this argument to show reviews only from particular categories of products."
 msgstr ""
 
 #: includes/settings/class-cr-settings-shortcodes.php:98
 #: includes/settings/class-cr-settings-shortcodes.php:125
 #: includes/settings/class-cr-settings-shortcodes.php:158
 msgid ""
-"%1$s argument accepts a comma-separated list of review tags. Use this "
-"argument to show reviews associated with specific tags only."
+"%1$s argument accepts a comma-separated list of product tags. Use this "
+"argument to show reviews from products associated with specific tags only."
 msgstr ""
 
 #: includes/settings/class-cr-settings-shortcodes.php:99
 #: includes/settings/class-cr-settings-shortcodes.php:126
 #: includes/settings/class-cr-settings-shortcodes.php:159
+msgid ""
+"%1$s argument accepts a comma-separated list of review tags. Use this "
+"argument to show reviews associated with specific tags only."
+msgstr ""
+
+#: includes/settings/class-cr-settings-shortcodes.php:100
+#: includes/settings/class-cr-settings-shortcodes.php:127
+#: includes/settings/class-cr-settings-shortcodes.php:160
 msgid ""
 "%1$s parameter accepts %2$s or a comma-separated list of product IDs. Use "
 "this parameter to show reviews of the current product only or reviews "
@@ -5403,35 +5415,35 @@ msgid ""
 "of all products."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:100
-#: includes/settings/class-cr-settings-shortcodes.php:133
-#: includes/settings/class-cr-settings-shortcodes.php:166
+#: includes/settings/class-cr-settings-shortcodes.php:101
+#: includes/settings/class-cr-settings-shortcodes.php:134
+#: includes/settings/class-cr-settings-shortcodes.php:167
 msgid ""
 "%1$s argument accepts %2$s or %3$s and specifies if general shop reviews "
 "will be shown."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:101
+#: includes/settings/class-cr-settings-shortcodes.php:102
 msgid ""
 "%1$s argument defines the total number of shop reviews to show. If you set "
 "%2$s to %3$s, then all shop reviews will be shown."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:102
-#: includes/settings/class-cr-settings-shortcodes.php:135
-#: includes/settings/class-cr-settings-shortcodes.php:168
+#: includes/settings/class-cr-settings-shortcodes.php:103
+#: includes/settings/class-cr-settings-shortcodes.php:136
+#: includes/settings/class-cr-settings-shortcodes.php:169
 msgid ""
 "%1$s argument accepts %2$s or %3$s and specifies if reviews corresponding to "
 "unpublished products will be shown."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:103
+#: includes/settings/class-cr-settings-shortcodes.php:104
 msgid ""
 "%1$s argument accepts %2$s or %3$s and specifies if replies to reviews will "
 "be shown."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:104
+#: includes/settings/class-cr-settings-shortcodes.php:105
 msgid ""
 "%1$s argument defines the number of additional reviews to display after a "
 "user presses the 'Show more' button. If this argument is %2$s, then 'Show "
@@ -5439,31 +5451,31 @@ msgid ""
 "used."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:105
-#: includes/settings/class-cr-settings-shortcodes.php:138
-#: includes/settings/class-cr-settings-shortcodes.php:172
+#: includes/settings/class-cr-settings-shortcodes.php:106
+#: includes/settings/class-cr-settings-shortcodes.php:139
+#: includes/settings/class-cr-settings-shortcodes.php:173
 msgid ""
 "%1$s argument defines the minimum number of characters that a review must "
 "have to be displayed. If this argument is %2$s, then all reviews (including "
 "rating-only reviews) will be displayed."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:106
-#: includes/settings/class-cr-settings-shortcodes.php:136
-#: includes/settings/class-cr-settings-shortcodes.php:170
+#: includes/settings/class-cr-settings-shortcodes.php:107
+#: includes/settings/class-cr-settings-shortcodes.php:137
+#: includes/settings/class-cr-settings-shortcodes.php:171
 msgid ""
 "%1$s argument accepts %2$s, %3$s or %4$s and defines how avatars of "
 "customers will be displayed on reviews."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:107
+#: includes/settings/class-cr-settings-shortcodes.php:108
 msgid ""
 "%1$s parameter accepts %2$s or %3$s. Use it to display reviews written by "
 "anyone or only the current WordPress user."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:108
-#: includes/settings/class-cr-settings-shortcodes.php:140
+#: includes/settings/class-cr-settings-shortcodes.php:109
+#: includes/settings/class-cr-settings-shortcodes.php:141
 msgid ""
 "%1$s parameter accepts %2$s, %3$s or a product ID. Use it to display a form "
 "to write a new review. If the shortcode is placed on a page of a product and "
@@ -5474,113 +5486,113 @@ msgid ""
 "that ID."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:112
+#: includes/settings/class-cr-settings-shortcodes.php:113
 msgid ""
 "Use this shortcode to display a grid of reviews on any page or post. Here "
 "are the default parameters of the shortcode:"
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:118
+#: includes/settings/class-cr-settings-shortcodes.php:119
 msgid ""
 "%1$s argument defines the number of product reviews to show. It is "
 "recommended to keep it between %2$s and %3$s."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:119
-#: includes/settings/class-cr-settings-shortcodes.php:152
+#: includes/settings/class-cr-settings-shortcodes.php:120
+#: includes/settings/class-cr-settings-shortcodes.php:153
 msgid ""
 "%1$s argument accepts %2$s or %3$s and defines if pictures and names of "
 "products corresponding to the review will be shown below the review."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:120
-#: includes/settings/class-cr-settings-shortcodes.php:153
+#: includes/settings/class-cr-settings-shortcodes.php:121
+#: includes/settings/class-cr-settings-shortcodes.php:154
 msgid ""
 "%1$s argument accepts %2$s or %3$s and defines if product names will include "
 "links to product pages."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:121
+#: includes/settings/class-cr-settings-shortcodes.php:122
 msgid ""
 "%1$s argument accepts %2$s to sort reviews by date, %3$s to sort reviews by "
 "rating, and %4$s to sort reviews by the number of attached images."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:122
-#: includes/settings/class-cr-settings-shortcodes.php:155
+#: includes/settings/class-cr-settings-shortcodes.php:123
+#: includes/settings/class-cr-settings-shortcodes.php:156
 msgid ""
 "%1$s argument defines how reviews are sorted. Possible values are %2$s, %3$s "
 "and %4$s."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:123
-#: includes/settings/class-cr-settings-shortcodes.php:156
+#: includes/settings/class-cr-settings-shortcodes.php:124
+#: includes/settings/class-cr-settings-shortcodes.php:157
 msgid ""
 "%1$s argument accepts a comma-separated list of product categories IDs to "
 "show only reviews corresponding to specified categories of products."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:127
+#: includes/settings/class-cr-settings-shortcodes.php:128
 msgid ""
 "%1$s argument is a hex color code of the external border around the grid of "
 "reviews."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:128
-#: includes/settings/class-cr-settings-shortcodes.php:161
+#: includes/settings/class-cr-settings-shortcodes.php:129
+#: includes/settings/class-cr-settings-shortcodes.php:162
 msgid "%1$s argument is a hex color code of the border around review cards."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:129
+#: includes/settings/class-cr-settings-shortcodes.php:130
 msgid ""
 "%1$s argument is a hex color code of the external background of the grid."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:130
-#: includes/settings/class-cr-settings-shortcodes.php:163
+#: includes/settings/class-cr-settings-shortcodes.php:131
+#: includes/settings/class-cr-settings-shortcodes.php:164
 msgid "%1$s argument is a hex color code of the background of review cards."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:131
-#: includes/settings/class-cr-settings-shortcodes.php:164
+#: includes/settings/class-cr-settings-shortcodes.php:132
+#: includes/settings/class-cr-settings-shortcodes.php:165
 msgid ""
 "%1$s argument is a hex color code of the background color of product areas "
 "on review cards."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:132
-#: includes/settings/class-cr-settings-shortcodes.php:165
+#: includes/settings/class-cr-settings-shortcodes.php:133
+#: includes/settings/class-cr-settings-shortcodes.php:166
 msgid "%1$s argument is a hex color code of rating stars on review cards."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:134
-#: includes/settings/class-cr-settings-shortcodes.php:167
+#: includes/settings/class-cr-settings-shortcodes.php:135
+#: includes/settings/class-cr-settings-shortcodes.php:168
 msgid ""
 "%1$s argument defines the total number of shop reviews to show. It is "
 "recommended to keep it between %2$s and %3$s."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:137
+#: includes/settings/class-cr-settings-shortcodes.php:138
 msgid ""
 "%1$s argument defines the number of additional reviews to display after a "
 "user presses the 'Show more' button. If this argument is %2$s, then 'Show "
 "more' button will be hidden."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:142
+#: includes/settings/class-cr-settings-shortcodes.php:143
 msgid ""
 "%1$s shortcode is also available as <strong>Reviews Grid</strong> block in "
 "the new WordPress Gutenberg page editor (blocks require WordPress 5.0 or "
 "newer)."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:145
+#: includes/settings/class-cr-settings-shortcodes.php:146
 msgid ""
 "Use this shortcode to display a slider with reviews on any page or post. "
 "Here are the default parameters of the shortcode:"
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:150
+#: includes/settings/class-cr-settings-shortcodes.php:151
 msgid ""
 "%1$s argument defines the number of product reviews to show. It is "
 "recommended to keep it between %2$s and %3$s. If you do not want to show "
@@ -5588,35 +5600,35 @@ msgid ""
 "below)."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:151
+#: includes/settings/class-cr-settings-shortcodes.php:152
 msgid ""
 "%1$s argument defines the number of slides to show. It is recommended to "
 "keep it between %2$s and %3$s."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:154
+#: includes/settings/class-cr-settings-shortcodes.php:155
 msgid ""
 "%1$s argument accepts %2$s to sort reviews by date and %3$s to sort reviews "
 "by rating."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:160
+#: includes/settings/class-cr-settings-shortcodes.php:161
 msgid ""
 "%1$s argument is a hex color code of the external border around the slider."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:162
+#: includes/settings/class-cr-settings-shortcodes.php:163
 msgid ""
 "%1$s argument is a hex color code of the external background of the slider."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:169
+#: includes/settings/class-cr-settings-shortcodes.php:170
 msgid ""
 "%1$s argument accepts %2$s or %3$s and defines if the slider will slide "
 "automatically."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:171
+#: includes/settings/class-cr-settings-shortcodes.php:172
 msgid ""
 "%1$s argument limits the number of characters that are displayed by default "
 "for each review. A 'Show More' button will be added to display the remaining "
@@ -5624,36 +5636,44 @@ msgid ""
 "number of characters to display, set this argument to %2$s."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:173
+#: includes/settings/class-cr-settings-shortcodes.php:174
 msgid ""
 "%1$s argument accepts %2$s or %3$s and specifies if dot indicators will be "
 "shown."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:175
+#: includes/settings/class-cr-settings-shortcodes.php:176
 msgid ""
 "%1$s shortcode is also available as <strong>Reviews Slider</strong> block in "
 "the new WordPress Gutenberg page editor (blocks require WordPress 5.0 or "
 "newer)."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:178
+#: includes/settings/class-cr-settings-shortcodes.php:179
 msgid ""
 "Use this shortcode to display a widget with rating stars on any single "
 "WooCommerce product page. Here are the default parameters of the shortcode:"
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:182
-msgid "%1$s argument is a hex color code of rating stars."
+#: includes/settings/class-cr-settings-shortcodes.php:183
+msgid "%1$s parameter is a hex color code of rating stars."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:186
+#: includes/settings/class-cr-settings-shortcodes.php:184
+msgid ""
+"%1$s parameter accepts a product ID. Use this parameter to show rating stars "
+"of a specific product. If you provide an empty parameter like %2$s and place "
+"the shortcode on a WooCommerce product page, it will display a rating of "
+"that product."
+msgstr ""
+
+#: includes/settings/class-cr-settings-shortcodes.php:188
 msgid ""
 "Use this shortcode to display a block with Questions and Answers on any page "
 "or post. Here are the default parameters of the shortcode:"
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:190
+#: includes/settings/class-cr-settings-shortcodes.php:192
 msgid ""
 "%1$s parameter accepts a comma-separated list of product IDs or %2$s. If "
 "product IDs are provided, the block will display Q & A linked to the "
@@ -5661,7 +5681,7 @@ msgid ""
 "display Q & A for all products in the store."
 msgstr ""
 
-#: includes/settings/class-cr-settings-shortcodes.php:191
+#: includes/settings/class-cr-settings-shortcodes.php:193
 msgid ""
 "%1$s parameter accepts a comma-separated list of non-product pages (e.g., "
 "regular WordPress pages or posts) or %2$s. If non-product page IDs are "
@@ -5993,7 +6013,7 @@ msgstr ""
 
 #: includes/trust-badge/class-cr-trust-badge.php:193
 #: includes/trust-badge/class-cr-trust-badge.php:194 templates/cr-rating.php:44
-#: templates/cr-shortcode-rating.php:34
+#: templates/cr-shortcode-rating.php:32
 msgid "%s review"
 msgid_plural "%s reviews"
 msgstr[0] ""
@@ -6120,7 +6140,7 @@ msgstr ""
 msgid "Next (arrow right)"
 msgstr ""
 
-#: templates/cr-rating.php:52 templates/cr-shortcode-rating.php:42
+#: templates/cr-rating.php:52 templates/cr-shortcode-rating.php:40
 msgid "%s answered question"
 msgid_plural "%s answered questions"
 msgstr[0] ""
@@ -6158,7 +6178,7 @@ msgid "Your review is awaiting approval"
 msgstr ""
 
 #. translators: %s: rating
-#: templates/cr-shortcode-rating.php:27
+#: templates/cr-shortcode-rating.php:25
 msgid "Rated %s out of 5"
 msgstr ""
 

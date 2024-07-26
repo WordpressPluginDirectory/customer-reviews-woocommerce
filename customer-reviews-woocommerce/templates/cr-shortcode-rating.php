@@ -4,20 +4,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-global $product;
-
 if ( ! wc_review_ratings_enabled() ) {
 	return;
 }
 
 $count_answered = 0;
 if( class_exists( 'CR_Qna' ) ) {
-	$count_answered = CR_Qna::get_count_answered( $product->get_id() );
+	$count_answered = CR_Qna::get_count_answered( $cr_product->get_id() );
 }
 
-$rating_count = $product->get_rating_count();
-$review_count = $product->get_review_count();
-$average      = $product->get_average_rating();
+$rating_count = $cr_product->get_rating_count();
+$review_count = $cr_product->get_review_count();
+$average      = $cr_product->get_average_rating();
 
 if ( $rating_count > 0 || $count_answered > 0 ) : ?>
 

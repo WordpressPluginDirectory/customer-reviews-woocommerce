@@ -63,7 +63,7 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 			}
 			if( 'yes' === get_option( 'ivole_form_attach_media', 'no' ) || 'yes' == get_option( 'ivole_attach_image', 'no' ) ) {
 				if( 'yes' === $this->ivole_ajax_reviews ) {
-					add_action( 'cr_reviews_customer_images', array( $this, 'display_review_images_top' ) );
+					add_action( 'cr_reviews_customer_images', array( $this, 'display_review_media_top_prd' ) );
 				}
 				// standard WooCommerce review template
 				add_action( 'woocommerce_review_after_comment_text', array( $this, 'display_review_image' ), 10 );
@@ -124,6 +124,8 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 			add_action( 'woocommerce_review_after_comment_text', array( $this, 'display_incentivized_badge' ), 8 );
 			// enhanced CusRev review template
 			add_action( 'cr_review_after_comment_text', array( $this, 'display_incentivized_badge' ), 8 );
+			// a filter for voting buttons on customer uploaded media pop-up
+			add_filter( 'cr_reviews_media_voting', array( $this, 'display_media_voting' ), 10, 2 );
 		}
 		public function custom_fields_attachment( $comment_form ) {
 			$post_id = get_the_ID();
@@ -1248,161 +1250,225 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 		remove_action( 'woocommerce_review_meta', 'woocommerce_review_display_meta', 10 );
 	}
 
-	public function display_review_images_top( $reviews ) {
-		$comments = $reviews[0];
+	public function display_review_media_top_prd( $reviews ) {
+		echo self::display_review_images_top( $reviews[0] );
+	}
+
+	public static function display_review_images_top( $comments ) {
 		$pics_prepared = array();
 		$cr_query = '?crsrc=wp';
+		$images_top = '';
+		$max_count_top = apply_filters( 'cr_topreviews_max_count', 10 );
 
 		foreach( $comments as $comment ) {
 			$pics = get_comment_meta( $comment->comment_ID, self::REVIEWS_META_IMG );
 			$pics_local = get_comment_meta( $comment->comment_ID, self::REVIEWS_META_LCL_IMG );
+			$pics_v = get_comment_meta( $comment->comment_ID, self::REVIEWS_META_VID );
+			$pics_v_local = get_comment_meta( $comment->comment_ID, self::REVIEWS_META_LCL_VID );
 			$pics_n = count( $pics );
 			$pics_local_n = count( $pics_local );
+			$pics_v_n = 0;
+			$pics_v_local_n = 0;
+			$img_label_counter = 1;
 			for( $i = 0; $i < $pics_n; $i ++) {
 				if ( isset( $pics[$i]['url'] ) ) {
-					$pics_prepared[] = array( $pics[$i]['url'] . $cr_query, $comment, 0, 0 );
+					$pics_prepared[] = array(
+						$pics[$i]['url'] . $cr_query,
+						$comment,
+						0, // width
+						0, // height
+						0, // a flag for images
+						sprintf( __( 'Image #%1$d from %2$s', 'customer-reviews-woocommerce' ), $img_label_counter, $comment->comment_author )
+					);
+					$img_label_counter++;
 				}
 			}
 			for( $i = 0; $i < $pics_local_n; $i ++) {
-				$attachmentUrl = wp_get_attachment_image_url( $pics_local[$i], apply_filters( 'cr_topreviews_image_size', 'large' ) );
 				$attachmentSrc = wp_get_attachment_image_src( $pics_local[$i], apply_filters( 'cr_topreviews_image_size', 'large' ) );
-				if( $attachmentSrc ) {
-					$pics_prepared[] = array( $attachmentSrc[0], $comment, $attachmentSrc[1], $attachmentSrc[2] );
+				if ( $attachmentSrc ) {
+					$pics_prepared[] = array(
+						$attachmentSrc[0],
+						$comment,
+						$attachmentSrc[1], // width
+						$attachmentSrc[2], // height
+						0,                 // a flag for images
+						sprintf( __( 'Image #%1$d from %2$s', 'customer-reviews-woocommerce' ), $img_label_counter, $comment->comment_author )
+					);
+					$img_label_counter++;
 				}
 			}
-			// to do - video handling
+			$vid_label_counter = 1;
+			for( $i = 0; $i < $pics_v_n; $i ++) {
+				if ( isset( $pics_v[$i]['url'] ) ) {
+					$pics_prepared[] = array(
+						$pics_v[$i]['url'] . $cr_query,
+						$comment,
+						0, // width
+						0, // height
+						1, // a flag for videos
+						sprintf( __( 'Video #%1$d from %2$s', 'customer-reviews-woocommerce' ), $vid_label_counter, $comment->comment_author )
+					);
+					$vid_label_counter++;
+				}
+			}
+			for( $i = 0; $i < $pics_v_local_n; $i ++) {
+				$attachmentUrl = wp_get_attachment_url( $pics_v_local[$i] );
+				if ( $attachmentUrl ) {
+					$pics_prepared[] = array(
+						$attachmentUrl,
+						$comment,
+						0, // width
+						0, // height
+						1, // a flag for images
+						sprintf( __( 'Video #%1$d from %2$s', 'customer-reviews-woocommerce' ), $vid_label_counter, $comment->comment_author )
+					);
+					$vid_label_counter++;
+				}
+			}
+			if ( $max_count_top <= count( $pics_prepared ) ) {
+				// there are sufficient media files already, stop the loop
+				break;
+			}
 		}
 		$count = count( $pics_prepared );
-		if( $count > 0 ) :
+		if ( 0 < $count ) :
 			wp_enqueue_script( 'cr-reviews-slider' );
-			?>
-			<div class="cr-ajax-reviews-cus-images-div">
-				<p class="cr-ajax-reviews-cus-images-title"><?php echo __( 'Customer Images', 'customer-reviews-woocommerce' ); ?></p>
-				<div class="cr-ajax-reviews-cus-images-div2">
-					<?php
-					// show the first five or less pictures only
-					$max_count_top = apply_filters( 'cr_topreviews_max_count', 5 );
-					$count_top = $count > $max_count_top - 1 ? $max_count_top : $count;
-					for( $i = 0; $i < $count_top; $i ++) {
-						$output = '';
-						$output_w = ( $pics_prepared[$i][2] > 0 ) ? ' width="' . $pics_prepared[$i][2] . '"' : '';
-						$output_h = ( $pics_prepared[$i][3] > 0 ) ? ' height="' . $pics_prepared[$i][3] . '"' : '';
-						$output_wh = ( $output_w && $output_h ) ? $output_w . $output_h : '';
-						$output .= '<div class="cr-comment-image-top">';
-						$output .= '<img data-slide="' . $i . '" src="' .
-						$pics_prepared[$i][0] . '"' . $output_wh . ' alt="' .
-						sprintf( __( 'Image #%1$d from ', 'customer-reviews-woocommerce' ), $i + 1 ) .
-						$pics_prepared[$i][1]->comment_author . '" loading="lazy">';
-						$output .= '</div>';
-						echo $output;
-					}
-					$nav_slides_to_show = $count > 2 ? 3 : $count;
-					$main_slider_settings = array(
-						'slidesToShow' => 1,
-						'slidesToScroll' => 1,
-						'arrows' => false,
-						'fade' => true,
-						'asNavFor' => '.cr-ajax-reviews-cus-images-slider-nav'
-					);
-					$dots = ( 15 < $count ) ? false : true;
-					$nav_slider_settings = array(
-						'slidesToShow' => $nav_slides_to_show,
-						'slidesToScroll' => 1,
-						'centerMode' => true,
-						'dots' => $dots,
-						'focusOnSelect' => true,
-						'asNavFor' => '.cr-ajax-reviews-cus-images-slider-main',
-						'respondTo' => 'min',
-						'responsive' => array(
-							array(
-								'breakpoint' => 600,
-								'settings' => array(
-									'centerMode' => true,
-									'centerPadding' => '30px',
-									'slidesToShow' => $nav_slides_to_show
-								)
-							),
-							array(
-								'breakpoint' => 415,
-								'settings' => array(
-									'centerMode' => true,
-									'centerPadding' => '35px',
-									'slidesToShow' => $nav_slides_to_show
-								)
-							),
-							array(
-								'breakpoint' => 320,
-								'settings' => array(
-									'centerMode' => true,
-									'centerPadding' => '40px',
-									'slidesToShow' => $nav_slides_to_show
-								)
-							)
+			$images_top .= '<div class="cr-ajax-reviews-cus-images-div">';
+			$images_top .= '<p class="cr-ajax-reviews-cus-images-title">' . esc_html__( 'Customer Images', 'customer-reviews-woocommerce' ) . '</p>';
+			$images_top .= '<div class="cr-ajax-reviews-cus-images-div2">';
+			// show the first ten or less pictures only
+			$count_top = $count > $max_count_top - 1 ? $max_count_top : $count;
+			for( $i = 0; $i < $count_top; $i ++) {
+				$output = '';
+				$output_w = ( $pics_prepared[$i][2] > 0 ) ? ' width="' . $pics_prepared[$i][2] . '"' : '';
+				$output_h = ( $pics_prepared[$i][3] > 0 ) ? ' height="' . $pics_prepared[$i][3] . '"' : '';
+				$output_wh = ( $output_w && $output_h ) ? $output_w . $output_h : '';
+				$output .= '<div class="cr-comment-image-top">';
+				if ( 1 === $pics_prepared[$i][4] ) {
+					// video
+					$output .= '<video preload="metadata" data-slide="' . $i . '" src="' . $pics_prepared[$i][0] . '"></video>';
+					$output .= '<img class="cr-comment-videoicon" src="' . plugin_dir_url( dirname( dirname( __FILE__ ) ) ) . 'img/video.svg" ';
+					$output .= 'alt="' . esc_attr( $pics_prepared[$i][5] ) . '">';
+				} else {
+					// images
+					$output .= '<img data-slide="' . $i . '" src="' . $pics_prepared[$i][0] . '"' . $output_wh . ' alt="' . esc_attr( $pics_prepared[$i][5] ) . '" loading="lazy">';
+				}
+				$output .= '</div>';
+				$images_top .= $output;
+			}
+			$nav_slides_to_show = $count > 2 ? 3 : $count;
+			$main_slider_settings = array(
+				'slidesToShow' => 1,
+				'slidesToScroll' => 1,
+				'arrows' => false,
+				'fade' => true,
+				'asNavFor' => '.cr-ajax-reviews-cus-images-slider-nav'
+			);
+			$dots = ( 15 < $count ) ? false : true;
+			$nav_slider_settings = array(
+				'slidesToShow' => $nav_slides_to_show,
+				'slidesToScroll' => 1,
+				'centerMode' => true,
+				'dots' => $dots,
+				'focusOnSelect' => true,
+				'asNavFor' => '.cr-ajax-reviews-cus-images-slider-main',
+				'respondTo' => 'min',
+				'responsive' => array(
+					array(
+						'breakpoint' => 600,
+						'settings' => array(
+							'centerMode' => true,
+							'centerPadding' => '30px',
+							'slidesToShow' => $nav_slides_to_show
 						)
-					);
-					if( is_rtl() ) {
-						$main_slider_settings['rtl'] = true;
-						$nav_slider_settings['rtl'] = true;
-					}
-					?>
-				</div>
-			</div>
-			<div class="cr-ajax-reviews-cus-images-modal-cont">
-				<div class="cr-ajax-reviews-cus-images-modal">
-					<div class="cr-ajax-reviews-cus-images-hdr">
-						<button class="cr-ajax-reviews-cus-images-close">
-							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><rect x="0" fill="none" width="20" height="20"/><g><path class="cr-no-icon" d="M12.12 10l3.53 3.53-2.12 2.12L10 12.12l-3.54 3.54-2.12-2.12L7.88 10 4.34 6.46l2.12-2.12L10 7.88l3.54-3.53 2.12 2.12z"/></g></svg>
-						</button>
-					</div>
-					<div class="cr-ajax-reviews-cus-images-slider-main cr-reviews-slider" data-slick='<?php echo wp_json_encode( $main_slider_settings ); ?>'>
-						<?php
-						for( $i = 0; $i < $count; $i ++) {
-							$ratingr = intval( get_comment_meta( $pics_prepared[$i][1]->comment_ID, 'rating', true ) );
-							$output = '';
-							$output .= '<div class="cr-ajax-reviews-slide-main"><div class="cr-ajax-reviews-slide-main-flex">';
-							$output .= '<img src="' .
-							$pics_prepared[$i][0] . '" alt="' . sprintf( __( 'Image #%1$d from ', 'customer-reviews-woocommerce' ), $i + 1 ) .
-							$pics_prepared[$i][1]->comment_author . '" loading="lazy">';
-							$output .= '<div class="cr-ajax-reviews-slide-main-comment">';
-							$output .= wc_get_rating_html( $ratingr );
-							$output .= '<p><strong class="woocommerce-review__author">' . esc_html( $pics_prepared[$i][1]->comment_author ) .'</strong></p>';
-							$output .= '<time class="woocommerce-review__published-date" datetime="' . esc_attr( mysql2date( 'c', $pics_prepared[$i][1]->comment_date ) ) . '">' . esc_html( mysql2date( wc_date_format(), $pics_prepared[$i][1]->comment_date ) ) . '</time>';
-							// WPML integration for translation of reviews
-							if( defined( 'ICL_LANGUAGE_CODE' ) && ICL_LANGUAGE_CODE ) {
-								ob_start();
-								do_action( 'woocommerce_review_before', $pics_prepared[$i][1] );
-								ob_end_clean();
-							}
-							$output .= '<p class="cr-ajax-reviews-slide-main-comment-body">' . $pics_prepared[$i][1]->comment_content . '</p>';
-							if( $this->reviews_voting ) {
-								ob_start();
-								$this->display_voting_buttons( $pics_prepared[$i][1] );
-								$vote_output = ob_get_contents();
-								ob_end_clean();
-								$output .= "<div class='cr-vote'>" . $vote_output . "</div>";
-							}
-							$output .= '</div></div></div>';
-							echo $output;
-						}
-						?>
-					</div>
-					<div class="cr-ajax-reviews-cus-images-slider-nav cr-reviews-slider" data-slick='<?php echo wp_json_encode( $nav_slider_settings ); ?>'>
-						<?php
-						for( $i = 0; $i < $count; $i ++) {
-							$output = '';
-							$output .= '<div class="cr-ajax-reviews-slide-nav">';
-							$output .= '<img src="' .
-							$pics_prepared[$i][0] . '" alt="' . sprintf( __( 'Image #%1$d from ', 'customer-reviews-woocommerce' ), $i + 1 ) .
-							$pics_prepared[$i][1]->comment_author . '" loading="lazy">';
-							$output .= '</div>';
-							echo $output;
-						}
-						?>
-					</div>
-				</div>
-			</div>
-			<?php
+					),
+					array(
+						'breakpoint' => 415,
+						'settings' => array(
+							'centerMode' => true,
+							'centerPadding' => '35px',
+							'slidesToShow' => $nav_slides_to_show
+						)
+					),
+					array(
+						'breakpoint' => 320,
+						'settings' => array(
+							'centerMode' => true,
+							'centerPadding' => '40px',
+							'slidesToShow' => $nav_slides_to_show
+						)
+					)
+				)
+			);
+			if ( is_rtl() ) {
+				$main_slider_settings['rtl'] = true;
+				$nav_slider_settings['rtl'] = true;
+			}
+			$images_top .= '</div>';
+			$images_top .= '</div>';
+			$images_top .= '<div class="cr-ajax-reviews-cus-images-modal-cont">';
+			$images_top .= '<div class="cr-ajax-reviews-cus-images-modal">';
+			$images_top .= '<div class="cr-ajax-reviews-cus-images-hdr">';
+			$images_top .= '<button class="cr-ajax-reviews-cus-images-close">';
+			$images_top .= '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><rect x="0" fill="none" width="20" height="20"/><g><path class="cr-no-icon" d="M12.12 10l3.53 3.53-2.12 2.12L10 12.12l-3.54 3.54-2.12-2.12L7.88 10 4.34 6.46l2.12-2.12L10 7.88l3.54-3.53 2.12 2.12z"/></g></svg>';
+			$images_top .= '</button>';
+			$images_top .= '</div>';
+			$images_top .= '<div class="cr-ajax-reviews-cus-images-slider-main cr-reviews-slider" data-slick=' . wp_json_encode( $main_slider_settings ) . '>';
+			for( $i = 0; $i < $count; $i ++) {
+				$ratingr = intval( get_comment_meta( $pics_prepared[$i][1]->comment_ID, 'rating', true ) );
+				$output = '';
+				$output .= '<div class="cr-ajax-reviews-slide-main"><div class="cr-ajax-reviews-slide-main-flex">';
+				if ( 1 === $pics_prepared[$i][4] ) {
+					// video
+					$output .= '<video preload="metadata" data-slide="' . $i . '" src="' . $pics_prepared[$i][0] . '"></video>';
+					$output .= '<img class="cr-comment-videoicon" src="' . plugin_dir_url( dirname( dirname( __FILE__ ) ) ) . 'img/video.svg" ';
+					$output .= 'alt="' . esc_attr( $pics_prepared[$i][5] ) . '">';
+				} else {
+					// images
+					$output .= '<img src="' . $pics_prepared[$i][0] . '" alt="' . esc_attr( $pics_prepared[$i][5] ) . '" loading="lazy">';
+				}
+				$output .= '<div class="cr-ajax-reviews-slide-main-comment">';
+				$output .= wc_get_rating_html( $ratingr );
+				$output .= '<p><strong class="woocommerce-review__author">' . esc_html( $pics_prepared[$i][1]->comment_author ) .'</strong></p>';
+				$output .= '<time class="woocommerce-review__published-date" datetime="' . esc_attr( mysql2date( 'c', $pics_prepared[$i][1]->comment_date ) ) . '">' . esc_html( mysql2date( wc_date_format(), $pics_prepared[$i][1]->comment_date ) ) . '</time>';
+				// WPML integration for translation of reviews
+				if ( defined( 'ICL_LANGUAGE_CODE' ) && ICL_LANGUAGE_CODE ) {
+					ob_start();
+					do_action( 'woocommerce_review_before', $pics_prepared[$i][1] );
+					ob_end_clean();
+				}
+				$output .= '<p class="cr-ajax-reviews-slide-main-comment-body">' . $pics_prepared[$i][1]->comment_content . '</p>';
+				$output .= apply_filters( 'cr_reviews_media_voting', '', $pics_prepared[$i][1] );
+				$output .= '</div></div></div>';
+				$images_top .= $output;
+			}
+			$images_top .= '</div>';
+			$images_top .= '<div class="cr-ajax-reviews-cus-images-slider-nav cr-reviews-slider" data-slick=' . wp_json_encode( $nav_slider_settings ) . '>';
+			for( $i = 0; $i < $count; $i ++) {
+				$output = '';
+				$output .= '<div class="cr-ajax-reviews-slide-nav">';
+				$output .= '<img src="' .
+				$pics_prepared[$i][0] . '" alt="' . sprintf( __( 'Image #%1$d from ', 'customer-reviews-woocommerce' ), $i + 1 ) .
+				$pics_prepared[$i][1]->comment_author . '" loading="lazy">';
+				$output .= '</div>';
+				$images_top .= $output;
+			}
+			$images_top .= '</div>';
+			$images_top .= '</div>';
+			$images_top .= '</div>';
 		endif;
+		return $images_top;
+	}
+
+	public function display_media_voting( $output, $comment ) {
+		if ( $this->reviews_voting ) {
+			ob_start();
+			$this->display_voting_buttons( $comment );
+			$vote_output = ob_get_contents();
+			ob_end_clean();
+			$output = "<div class='cr-vote'>" . $vote_output . "</div>";
+		}
+		return $output;
 	}
 
 	public function cr_photoswipe() {
@@ -1579,7 +1645,7 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 					<?php echo esc_html( $count_wording ); ?>
 				</div>
 				<div class="cr-ajax-reviews-sort-div">
-					<select name="cr_ajax_reviews_sort" class="cr-ajax-reviews-sort" aria-label="' . esc_html__( 'Sort reviews', 'customer-reviews-woocommerce' ) . '">
+					<select name="cr_ajax_reviews_sort" class="cr-ajax-reviews-sort" aria-label="' . esc_attr__( 'Sort reviews', 'customer-reviews-woocommerce' ) . '">
 						<option value="recent"<?php if( 'recent' === CR_Ajax_Reviews::get_sort() ) { echo ' selected="selected"'; } ?>>
 							<?php echo __( 'Most Recent', 'customer-reviews-woocommerce' ); ?>
 						</option>

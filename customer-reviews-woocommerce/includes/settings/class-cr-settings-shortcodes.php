@@ -83,7 +83,7 @@ if ( ! class_exists( 'CR_Shortcodes_Settings' ) ):
 		public function show_shortcodes( $value ) {
 			$shortcodes_desc = '<p class="cr-admin-shortcodes-large"><code>[cusrev_all_reviews]</code></p>' .
 			'<p>' .__( 'Use this shortcode to display a list of all reviews on any page or post. Here are the default parameters of the shortcode:', 'customer-reviews-woocommerce' ) . '</p>' .
-			'<p class="cr-admin-shortcodes"><code>[cusrev_all_reviews sort="DESC" sort_by="date" per_page="10" number="-1" show_summary_bar="true" ' .
+			'<p class="cr-admin-shortcodes"><code>[cusrev_all_reviews sort="DESC" sort_by="date" per_page="10" number="-1" show_summary_bar="true" show_media="true" ' .
 			'show_products="true" categories="" product_tags="" tags="" products="current" shop_reviews="true" number_shop_reviews="-1" inactive_products="false" show_replies="false" show_more="5" min_chars="0" avatars="initials" users="all" add_review="false"]</code></p>' .
 			'<p class="cr-admin-shortcodes"><b>' . __( 'Parameters:', 'customer-reviews-woocommerce' ) . '</b></p>' .
 			'<ul>' .
@@ -92,6 +92,7 @@ if ( ! class_exists( 'CR_Shortcodes_Settings' ) ):
 			'<li>' . sprintf( __( '%1$s argument defines how many reviews will be shown at once. This argument is ignored when %2$s argument is greater than %3$s.', 'customer-reviews-woocommerce' ), '<code>per_page</code>', '<code>show_more</code>', '<code>0</code>' ) . '</li>' .
 			'<li>' . sprintf( __( '%1$s argument defines the total number of product reviews to show. If you set %2$s to %3$s, then all product reviews will be shown.', 'customer-reviews-woocommerce' ), '<code>number</code>', '<code>number</code>', '<code>"-1"</code>' ) . '</li>' .
 			'<li>' . sprintf( __( '%1$s argument accepts %2$s or %3$s and specifies if a summary bar should be shown on top of the reviews.', 'customer-reviews-woocommerce' ), '<code>show_summary_bar</code>', '<code>"true"</code>', '<code>"false"</code>' ) . '</li>' .
+			'<li>' . sprintf( __( '%1$s parameter accepts %2$s or %3$s and specifies if media files uploaded by customers should be shown in an area above the reviews.', 'customer-reviews-woocommerce' ), '<code>show_media</code>', '<code>"true"</code>', '<code>"false"</code>' ) . '</li>' .
 			'<li>' . sprintf( __( '%1$s argument accepts %2$s or %3$s and specifies if product names along with product thumbnails should be shown for each review.', 'customer-reviews-woocommerce' ), '<code>show_products</code>', '<code>"true"</code>', '<code>"false"</code>' ) . '</li>' .
 			'<li>' . sprintf( __( '%1$s argument accepts a comma-separated list of product categories IDs. Use this argument to show reviews only from particular categories of products.', 'customer-reviews-woocommerce' ), '<code>categories</code>' ) . '</li>' .
 			'<li>' . sprintf( __( '%1$s argument accepts a comma-separated list of product tags. Use this argument to show reviews from products associated with specific tags only.', 'customer-reviews-woocommerce' ), '<code>product_tags</code>' ) . '</li>' .
@@ -176,10 +177,11 @@ if ( ! class_exists( 'CR_Shortcodes_Settings' ) ):
 
 			'<p class="cr-admin-shortcodes-large"><code>[cusrev_reviews_rating]</code></p>' .
 			'<p>' . __( 'Use this shortcode to display a widget with rating stars on any single WooCommerce product page. Here are the default parameters of the shortcode:', 'customer-reviews-woocommerce' ) . '</p>' .
-			'<p class="cr-admin-shortcodes"><code>[cusrev_reviews_slider color_stars="#FFBC00"]</code></p>' .
+			'<p class="cr-admin-shortcodes"><code>[cusrev_reviews_slider color_stars="#FFBC00" product=""]</code></p>' .
 			'<p class="cr-admin-shortcodes"><b>' . __( 'Parameters:', 'customer-reviews-woocommerce' ) . '</b></p>' .
 			'<ul>' .
-			'<li>' . sprintf( __( '%1$s argument is a hex color code of rating stars.', 'customer-reviews-woocommerce' ), '<code>"color_stars"</code>' ) . '</li>' .
+			'<li>' . sprintf( __( '%1$s parameter is a hex color code of rating stars.', 'customer-reviews-woocommerce' ), '<code>"color_stars"</code>' ) . '</li>' .
+			'<li>' . sprintf( __( '%1$s parameter accepts a product ID. Use this parameter to show rating stars of a specific product. If you provide an empty parameter like %2$s and place the shortcode on a WooCommerce product page, it will display a rating of that product.', 'customer-reviews-woocommerce' ), '<code>"product"</code>', '<code>""</code>' ) . '</li>' .
 			'</ul>' . '<br>' .
 
 			'<p class="cr-admin-shortcodes-large"><code>[cusrev_qna]</code></p>' .

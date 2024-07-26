@@ -369,25 +369,30 @@
 		//open popup window with pictures
 		jQuery(".cr-comment-image-top img").on( "click", function(t) {
 			t.preventDefault();
-			var slide_no = jQuery(this).data("slide");
-			jQuery("#reviews.cr-reviews-ajax-reviews div.cr-ajax-reviews-cus-images-modal-cont").addClass("cr-mask-active");
 			jQuery("body").addClass("cr-noscroll");
-			jQuery("#reviews.cr-reviews-ajax-reviews div.cr-ajax-reviews-cus-images-modal div.cr-ajax-reviews-cus-images-slider-main").slick('setPosition');
-			jQuery("#reviews.cr-reviews-ajax-reviews div.cr-ajax-reviews-cus-images-modal div.cr-ajax-reviews-cus-images-slider-nav").slick('setPosition');
-			if(typeof slide_no !== 'undefined') {
-				jQuery("#reviews.cr-reviews-ajax-reviews div.cr-ajax-reviews-cus-images-modal div.cr-ajax-reviews-cus-images-slider-main").slick('slickGoTo',slide_no,true);
-				jQuery("#reviews.cr-reviews-ajax-reviews div.cr-ajax-reviews-cus-images-modal div.cr-ajax-reviews-cus-images-slider-nav").slick('slickGoTo',slide_no,true);
+			let slide_no = jQuery(this).data("slide");
+			let imgParent = jQuery(this).closest(".cr-ajax-reviews-cus-images-div").parent();
+			imgParent.find(".cr-ajax-reviews-cus-images-modal-cont").addClass("cr-mask-active");
+			imgParent.find(".cr-ajax-reviews-cus-images-modal .cr-ajax-reviews-cus-images-slider-main").slick('setPosition');
+			imgParent.find(".cr-ajax-reviews-cus-images-modal .cr-ajax-reviews-cus-images-slider-nav").slick('setPosition');
+			if ( typeof slide_no !== 'undefined' ) {
+				imgParent.find(".cr-ajax-reviews-cus-images-modal .cr-ajax-reviews-cus-images-slider-main").slick('slickGoTo', slide_no, true);
+				imgParent.find(".cr-ajax-reviews-cus-images-modal .cr-ajax-reviews-cus-images-slider-nav").slick('slickGoTo', slide_no, true);
 			}
 		} );
 		//close popup window with pictures
-		jQuery("#reviews.cr-reviews-ajax-reviews div.cr-ajax-reviews-cus-images-modal-cont, #reviews.cr-reviews-ajax-reviews div.cr-ajax-reviews-cus-images-modal button.cr-ajax-reviews-cus-images-close").on( "click", function(t) {
+		jQuery(".cr-ajax-reviews-cus-images-modal-cont, .cr-ajax-reviews-cus-images-modal .cr-ajax-reviews-cus-images-close").on( "click", function(t) {
 			t.preventDefault();
-			jQuery("#reviews.cr-reviews-ajax-reviews .cr-mask-active div.cr-ajax-reviews-cus-images-modal div.cr-ajax-reviews-cus-images-slider-main").slick('slickGoTo',0,true);
-			jQuery("#reviews.cr-reviews-ajax-reviews .cr-mask-active div.cr-ajax-reviews-cus-images-modal div.cr-ajax-reviews-cus-images-slider-nav").slick('slickGoTo',0,true);
-			jQuery("#reviews.cr-reviews-ajax-reviews div.cr-ajax-reviews-cus-images-modal-cont").removeClass("cr-mask-active");
+			let closeParent = jQuery(this).closest(".cr-ajax-reviews-cus-images-modal-cont.cr-mask-active");
+			closeParent.find(".cr-ajax-reviews-cus-images-modal .cr-ajax-reviews-cus-images-slider-main").slick('slickGoTo',0,true);
+			closeParent.find(".cr-ajax-reviews-cus-images-modal .cr-ajax-reviews-cus-images-slider-nav").slick('slickGoTo',0,true);
+			// jQuery("#reviews.cr-reviews-ajax-reviews .cr-mask-active .cr-ajax-reviews-cus-images-modal .cr-ajax-reviews-cus-images-slider-main").slick('slickGoTo',0,true);
+			// jQuery("#reviews.cr-reviews-ajax-reviews .cr-mask-active .cr-ajax-reviews-cus-images-modal .cr-ajax-reviews-cus-images-slider-nav").slick('slickGoTo',0,true);
+			// jQuery("#reviews.cr-reviews-ajax-reviews .cr-ajax-reviews-cus-images-modal-cont").removeClass("cr-mask-active");
+			closeParent.removeClass("cr-mask-active");
 			jQuery("body").removeClass("cr-noscroll");
 		} );
-		jQuery("#reviews.cr-reviews-ajax-reviews div.cr-ajax-reviews-cus-images-modal").on( "click", function(t) {
+		jQuery(".cr-ajax-reviews-cus-images-modal-cont .cr-ajax-reviews-cus-images-modal").on( "click", function(t) {
 			t.stopPropagation();
 		} );
 		//Product variations

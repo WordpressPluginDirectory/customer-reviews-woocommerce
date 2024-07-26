@@ -179,11 +179,11 @@ if ( ! class_exists( 'CR_Custom_Questions' ) ) :
 								if ( 2 === $f ) {
 									// slider layout
 									$output .= '<div class="cr-sldr-custom-question">';
-									$output .= '<p class="cr-sldr-p"><span class="cr-sldr-label">' . $title . '</span> : ' . $this->questions[$i]->value . '</p>';
+									$output .= '<p class="cr-sldr-p"><span class="cr-sldr-label">' . $title . '</span> ' . $this->questions[$i]->value . '</p>';
 									$output .= '</div>';
 								} else {
 									$output .= '<p class="iv' . $fr . '-custom-question-p"><span class="iv' . $fr . '-custom-question-radio">' . $title .
-										'</span> : ' . $this->questions[$i]->value . '</p>';
+										'</span> ' . $this->questions[$i]->value . '</p>';
 								}
 							}
 							break;
