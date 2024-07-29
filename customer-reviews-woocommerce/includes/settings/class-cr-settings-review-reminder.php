@@ -1076,7 +1076,7 @@ if ( ! class_exists( 'CR_Review_Reminder_Settings' ) ):
 				}
 			}
 			if ( 0 < count( $delays ) ) {
-				return $delays;
+				return apply_filters( 'cr_save_sending_delays', $delays );
 			} else {
 				return $this->default_delay_setting;
 			}

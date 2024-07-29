@@ -64,6 +64,16 @@ p.cr-comment-video-text { margin-bottom: 0.5em; font-size: 0.9em; }
 	margin-top: -16px;
 	margin-left: -16px;
 }
+#reviews.cr-reviews-ajax-reviews .cr-ajax-reviews-cus-images-modal .cr-ajax-reviews-cus-images-slider-nav .cr-ajax-reviews-slide-nav .cr-comment-videoicon,
+.cr-all-reviews-shortcode .cr-ajax-reviews-cus-images-modal .cr-ajax-reviews-cus-images-slider-nav .cr-ajax-reviews-slide-nav .cr-comment-videoicon {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 26px;
+	height: auto;
+	margin-top: -13px;
+	margin-left: -13px;
+}
 .cr-comment-image-top img,
 .cr-comment-image-top video {
 	width: 150px;
@@ -2295,7 +2305,9 @@ img.ivole-verified-badge-ext-icon {
 	background-color: #f4f4f4;
 }
 #reviews.cr-reviews-ajax-reviews .cr-ajax-reviews-cus-images-modal .cr-ajax-reviews-cus-images-slider-nav .cr-ajax-reviews-slide-nav img,
-.cr-all-reviews-shortcode .cr-ajax-reviews-cus-images-modal .cr-ajax-reviews-cus-images-slider-nav .cr-ajax-reviews-slide-nav img {
+#reviews.cr-reviews-ajax-reviews .cr-ajax-reviews-cus-images-modal .cr-ajax-reviews-cus-images-slider-nav .cr-ajax-reviews-slide-nav video,
+.cr-all-reviews-shortcode .cr-ajax-reviews-cus-images-modal .cr-ajax-reviews-cus-images-slider-nav .cr-ajax-reviews-slide-nav img,
+.cr-all-reviews-shortcode .cr-ajax-reviews-cus-images-modal .cr-ajax-reviews-cus-images-slider-nav .cr-ajax-reviews-slide-nav video {
 	max-height: 75px;
 	margin: 0 auto;
 	width: auto;
@@ -2303,9 +2315,14 @@ img.ivole-verified-badge-ext-icon {
 #reviews.cr-reviews-ajax-reviews .cr-ajax-reviews-cus-images-modal .cr-ajax-reviews-cus-images-slider-nav .cr-ajax-reviews-slide-nav,
 .cr-all-reviews-shortcode .cr-ajax-reviews-cus-images-modal .cr-ajax-reviews-cus-images-slider-nav .cr-ajax-reviews-slide-nav {
 	padding: 0px;
+	line-height: 0;
+	text-align: center;
+	position: relative;
 }
 #reviews.cr-reviews-ajax-reviews .cr-ajax-reviews-cus-images-modal .cr-ajax-reviews-cus-images-slider-main .cr-ajax-reviews-slide-main img,
-.cr-all-reviews-shortcode .cr-ajax-reviews-cus-images-modal .cr-ajax-reviews-cus-images-slider-main .cr-ajax-reviews-slide-main img {
+#reviews.cr-reviews-ajax-reviews .cr-ajax-reviews-cus-images-modal .cr-ajax-reviews-cus-images-slider-main .cr-ajax-reviews-slide-main video,
+.cr-all-reviews-shortcode .cr-ajax-reviews-cus-images-modal .cr-ajax-reviews-cus-images-slider-main .cr-ajax-reviews-slide-main img,
+.cr-all-reviews-shortcode .cr-ajax-reviews-cus-images-modal .cr-ajax-reviews-cus-images-slider-main .cr-ajax-reviews-slide-main video {
 	max-width: 400px;
 	max-height: 400px;
 	width: auto;
@@ -3075,7 +3092,16 @@ img.ivole-verified-badge-ext-icon {
 	display: none;
 }
 
-.cr-review-card-content .cr-comment-videoicon {
+.cr-ajax-reviews-video {
+	display: block;
+	position: relative;
+	line-height: 0;
+	cursor: pointer;
+	text-align: center;
+}
+
+.cr-review-card-content .cr-comment-videoicon,
+.cr-ajax-reviews-video .cr-comment-videoicon {
 	position: absolute;
 	top: 50%;
 	left: 50%;
@@ -3085,7 +3111,15 @@ img.ivole-verified-badge-ext-icon {
 	cursor: pointer;
 }
 
-.cr-review-card-content .cr-vid-playing .cr-comment-videoicon {
+#reviews.cr-reviews-ajax-reviews .cr-ajax-reviews-cus-images-modal .cr-ajax-reviews-cus-images-slider-main .cr-ajax-reviews-slide-main .cr-comment-videoicon,
+.cr-all-reviews-shortcode .cr-ajax-reviews-cus-images-modal .cr-ajax-reviews-cus-images-slider-main .cr-ajax-reviews-slide-main .cr-comment-videoicon {
+	max-width: none;
+	max-height: none;
+	width: 40px;
+}
+
+.cr-review-card-content .cr-vid-playing .cr-comment-videoicon,
+.cr-ajax-reviews-video.cr-vid-playing .cr-comment-videoicon {
 	display: none;
 }
 
@@ -3557,6 +3591,9 @@ img.ivole-verified-badge-ext-icon {
 .cr-reviews-slider.slick-slider .slick-slide > div {
 	height: 100%;
 }
+.cr-ajax-reviews-cus-images-slider-nav.cr-reviews-slider.slick-slider .slick-slide > div {
+	line-height: 0;
+}
 .slick-track {
 	position: relative;
 	top: 0;
@@ -3845,7 +3882,8 @@ img.ivole-verified-badge-ext-icon {
 	font-weight: bold;
 }
 @media all and (max-width: 700px) {
-	#reviews.cr-reviews-ajax-reviews div.cr-ajax-reviews-cus-images-modal div.cr-ajax-reviews-slide-main-flex {
+	#reviews.cr-reviews-ajax-reviews div.cr-ajax-reviews-cus-images-modal div.cr-ajax-reviews-slide-main-flex,
+	.cr-all-reviews-shortcode .cr-ajax-reviews-cus-images-modal .cr-ajax-reviews-slide-main-flex {
 		flex-direction: column;
 	}
 	#reviews.cr-reviews-ajax-reviews div.cr-ajax-reviews-cus-images-modal div.cr-ajax-reviews-cus-images-slider-main .cr-ajax-reviews-slide-main-comment {

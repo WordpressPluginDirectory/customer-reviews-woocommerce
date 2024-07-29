@@ -60,6 +60,19 @@
 			}
 			return false;
 		} );
+		// play a video when a user clicks on it in the media pop-up window
+		jQuery(".cr-ajax-reviews-cus-images-modal").on("click", ".cr-ajax-reviews-video, .cr-ajax-reviews-video .cr-comment-videoicon", function(t) {
+			if( ! jQuery(this).closest(".cr-ajax-reviews-video").hasClass( "cr-vid-playing" ) ) {
+				jQuery(this).closest(".cr-ajax-reviews-video").addClass( "cr-vid-playing" );
+				jQuery(this).closest(".cr-ajax-reviews-video").find("video").prop( "controls", true );
+				jQuery(this).closest(".cr-ajax-reviews-video").find("video").get(0).play();
+			} else {
+				jQuery(this).closest(".cr-ajax-reviews-video").find("video").get(0).pause();
+				jQuery(this).closest(".cr-ajax-reviews-video").find("video").prop( "controls", false );
+				jQuery(this).closest(".cr-ajax-reviews-video").removeClass( "cr-vid-playing" );
+			}
+			return false;
+		} );
 		// open a gallery with media files in the reviews grid
 		jQuery(".cr-reviews-grid").on("click", ".media-row-count", function(t) {
 			if ( cr_ajax_object.disable_lightbox === '0' ) {
@@ -367,7 +380,7 @@
 			}
 		} );
 		//open popup window with pictures
-		jQuery(".cr-comment-image-top img").on( "click", function(t) {
+		jQuery(".cr-comment-image-top .cr-comment-image-top-item").on( "click", function(t) {
 			t.preventDefault();
 			jQuery("body").addClass("cr-noscroll");
 			let slide_no = jQuery(this).data("slide");
@@ -380,15 +393,15 @@
 				imgParent.find(".cr-ajax-reviews-cus-images-modal .cr-ajax-reviews-cus-images-slider-nav").slick('slickGoTo', slide_no, true);
 			}
 		} );
+		jQuery(".cr-comment-image-top .cr-comment-videoicon").on( "click", function(t) {
+			jQuery(this).closest( ".cr-comment-image-top" ).find( ".cr-comment-image-top-item" ).trigger( "click" );
+		} );
 		//close popup window with pictures
 		jQuery(".cr-ajax-reviews-cus-images-modal-cont, .cr-ajax-reviews-cus-images-modal .cr-ajax-reviews-cus-images-close").on( "click", function(t) {
 			t.preventDefault();
 			let closeParent = jQuery(this).closest(".cr-ajax-reviews-cus-images-modal-cont.cr-mask-active");
 			closeParent.find(".cr-ajax-reviews-cus-images-modal .cr-ajax-reviews-cus-images-slider-main").slick('slickGoTo',0,true);
 			closeParent.find(".cr-ajax-reviews-cus-images-modal .cr-ajax-reviews-cus-images-slider-nav").slick('slickGoTo',0,true);
-			// jQuery("#reviews.cr-reviews-ajax-reviews .cr-mask-active .cr-ajax-reviews-cus-images-modal .cr-ajax-reviews-cus-images-slider-main").slick('slickGoTo',0,true);
-			// jQuery("#reviews.cr-reviews-ajax-reviews .cr-mask-active .cr-ajax-reviews-cus-images-modal .cr-ajax-reviews-cus-images-slider-nav").slick('slickGoTo',0,true);
-			// jQuery("#reviews.cr-reviews-ajax-reviews .cr-ajax-reviews-cus-images-modal-cont").removeClass("cr-mask-active");
 			closeParent.removeClass("cr-mask-active");
 			jQuery("body").removeClass("cr-noscroll");
 		} );

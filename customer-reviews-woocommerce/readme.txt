@@ -4,7 +4,7 @@ Tags: woocommerce, review plugin, review reminder, customer reviews, review for 
 Requires at least: 4.5
 Tested up to: 6.6
 Requires PHP: 7.2
-Stable tag: 5.57.0
+Stable tag: 5.58.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl.html
 
@@ -20,7 +20,7 @@ Enhance the standard WooCommerce reviews with extra features, and reassure custo
 
 The **Customer Reviews for WooCommerce** plugin helps you increase engagement, build loyalty, improve SEO, and get more sales with social proof.
 
-**Localized to 30 languages and installed on over 60,000 stores!**
+**Localized to 30 languages and installed on over 70,000 stores!**
 
 The plugin includes an optional integration with an external service to verify customer reviews. **CusRev** collects reviews from customers and verifies their authenticity.
 
@@ -232,6 +232,8 @@ If you would like to change how reviews are sorted on product pages, it is possi
 
 == Changelog ==
 
+= 5.58.0 =
+* Improvement: display of videos in the area above reviews in the [cusrev_all_reviews] shortcode and on product pages
 = 5.57.0 =
 * Improvement: an area above reviews in the [cusrev_all_reviews] shortcode to display media files uploaded by customers
 * Improvement: accessibility labels for elements on review widgets

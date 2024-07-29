@@ -1267,8 +1267,8 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 			$pics_v_local = get_comment_meta( $comment->comment_ID, self::REVIEWS_META_LCL_VID );
 			$pics_n = count( $pics );
 			$pics_local_n = count( $pics_local );
-			$pics_v_n = 0;
-			$pics_v_local_n = 0;
+			$pics_v_n = count( $pics_v );
+			$pics_v_local_n = count( $pics_v_local );
 			$img_label_counter = 1;
 			for( $i = 0; $i < $pics_n; $i ++) {
 				if ( isset( $pics[$i]['url'] ) ) {
@@ -1346,12 +1346,12 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 				$output .= '<div class="cr-comment-image-top">';
 				if ( 1 === $pics_prepared[$i][4] ) {
 					// video
-					$output .= '<video preload="metadata" data-slide="' . $i . '" src="' . $pics_prepared[$i][0] . '"></video>';
+					$output .= '<video class="cr-comment-image-top-item" preload="metadata" data-slide="' . $i . '" src="' . $pics_prepared[$i][0] . '"></video>';
 					$output .= '<img class="cr-comment-videoicon" src="' . plugin_dir_url( dirname( dirname( __FILE__ ) ) ) . 'img/video.svg" ';
 					$output .= 'alt="' . esc_attr( $pics_prepared[$i][5] ) . '">';
 				} else {
 					// images
-					$output .= '<img data-slide="' . $i . '" src="' . $pics_prepared[$i][0] . '"' . $output_wh . ' alt="' . esc_attr( $pics_prepared[$i][5] ) . '" loading="lazy">';
+					$output .= '<img class="cr-comment-image-top-item" data-slide="' . $i . '" src="' . $pics_prepared[$i][0] . '"' . $output_wh . ' alt="' . esc_attr( $pics_prepared[$i][5] ) . '" loading="lazy">';
 				}
 				$output .= '</div>';
 				$images_top .= $output;
@@ -1416,13 +1416,14 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 			$images_top .= '<div class="cr-ajax-reviews-cus-images-slider-main cr-reviews-slider" data-slick=' . wp_json_encode( $main_slider_settings ) . '>';
 			for( $i = 0; $i < $count; $i ++) {
 				$ratingr = intval( get_comment_meta( $pics_prepared[$i][1]->comment_ID, 'rating', true ) );
-				$output = '';
-				$output .= '<div class="cr-ajax-reviews-slide-main"><div class="cr-ajax-reviews-slide-main-flex">';
+				$output = '<div class="cr-ajax-reviews-slide-main"><div class="cr-ajax-reviews-slide-main-flex">';
 				if ( 1 === $pics_prepared[$i][4] ) {
 					// video
+					$output .= '<div class="cr-ajax-reviews-video">';
 					$output .= '<video preload="metadata" data-slide="' . $i . '" src="' . $pics_prepared[$i][0] . '"></video>';
 					$output .= '<img class="cr-comment-videoicon" src="' . plugin_dir_url( dirname( dirname( __FILE__ ) ) ) . 'img/video.svg" ';
 					$output .= 'alt="' . esc_attr( $pics_prepared[$i][5] ) . '">';
+					$output .= '</div>';
 				} else {
 					// images
 					$output .= '<img src="' . $pics_prepared[$i][0] . '" alt="' . esc_attr( $pics_prepared[$i][5] ) . '" loading="lazy">';
@@ -1445,11 +1446,16 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 			$images_top .= '</div>';
 			$images_top .= '<div class="cr-ajax-reviews-cus-images-slider-nav cr-reviews-slider" data-slick=' . wp_json_encode( $nav_slider_settings ) . '>';
 			for( $i = 0; $i < $count; $i ++) {
-				$output = '';
-				$output .= '<div class="cr-ajax-reviews-slide-nav">';
-				$output .= '<img src="' .
-				$pics_prepared[$i][0] . '" alt="' . sprintf( __( 'Image #%1$d from ', 'customer-reviews-woocommerce' ), $i + 1 ) .
-				$pics_prepared[$i][1]->comment_author . '" loading="lazy">';
+				$output = '<div class="cr-ajax-reviews-slide-nav">';
+				if ( 1 === $pics_prepared[$i][4] ) {
+					// video
+					$output .= '<video preload="metadata" data-slide="' . $i . '" src="' . $pics_prepared[$i][0] . '"></video>';
+					$output .= '<img class="cr-comment-videoicon" src="' . plugin_dir_url( dirname( dirname( __FILE__ ) ) ) . 'img/video.svg" ';
+					$output .= 'alt="' . esc_attr( $pics_prepared[$i][5] ) . '">';
+				} else {
+					// images
+					$output .= '<img src="' . $pics_prepared[$i][0] . '" alt="' . esc_attr( $pics_prepared[$i][5] ) . '" loading="lazy">';
+				}
 				$output .= '</div>';
 				$images_top .= $output;
 			}
