@@ -4,7 +4,7 @@ Tags: woocommerce, review plugin, review reminder, customer reviews, review for 
 Requires at least: 4.5
 Tested up to: 6.6
 Requires PHP: 7.2
-Stable tag: 5.58.0
+Stable tag: 5.58.1
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl.html
 
@@ -232,6 +232,8 @@ If you would like to change how reviews are sorted on product pages, it is possi
 
 == Changelog ==
 
+= 5.58.1 =
+* Bug fix: multiple [cusrev_all_reviews] shortcodes placed on the same page did not apply the 'categories' parameter correctly
 = 5.58.0 =
 * Improvement: display of videos in the area above reviews in the [cusrev_all_reviews] shortcode and on product pages
 = 5.57.0 =

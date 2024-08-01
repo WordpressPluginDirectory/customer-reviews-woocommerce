@@ -276,10 +276,12 @@ if (! class_exists('CR_All_Reviews')) :
 				// Query needs to be modified if min_chars constraints are set
 				if ( ! empty( $this->shortcode_atts['min_chars'] ) ) {
 					add_filter( 'comments_clauses', array( $this, 'min_chars_comments_clauses' ) );
+					$args['cache_domain'] = self::random_cache_domain();
 				}
 				// Query needs to be modified if category constraints are set
 				if ( ! empty( $this->shortcode_atts['categories'] ) ) {
 					add_filter( 'comments_clauses', array( $this, 'modify_comments_clauses' ) );
+					$args['cache_domain'] = self::random_cache_domain();
 				}
 				if ( function_exists( 'pll_current_language' ) ) {
 					// Polylang compatibility
@@ -827,10 +829,12 @@ if (! class_exists('CR_All_Reviews')) :
 				// Query needs to be modified if min_chars constraints are set
 				if ( ! empty( $this->shortcode_atts['min_chars'] ) ) {
 					add_filter( 'comments_clauses', array( $this, 'min_chars_comments_clauses' ) );
+					$args['cache_domain'] = self::random_cache_domain();
 				}
 				// Query needs to be modified if category constraints are set
 				if ( ! empty( $this->shortcode_atts['categories'] ) ) {
 					add_filter( 'comments_clauses', array( $this, 'modify_comments_clauses' ) );
+					$args['cache_domain'] = self::random_cache_domain();
 				}
 				if ( function_exists( 'pll_current_language' ) ) {
 					// Polylang compatibility
@@ -860,64 +864,66 @@ if (! class_exists('CR_All_Reviews')) :
 			}
 
 			if( true === $this->shortcode_atts['shop_reviews'] ) {
-				$number_sr = $this->shortcode_atts['number_shop_reviews'] == -1 ? null : $this->shortcode_atts['number_shop_reviews'];
-				if( $this->shop_page_id > 0 ) {
-					$args = array(
-						'number'      => $number_sr,
-						'status'      => 'approve',
-						'post__in'     => CR_Reviews_List_Table::get_shop_page(),
-						'meta_key'    => 'rating',
-						'count'       => true,
-						'type__not_in' => 'cr_qna',
-						'comment__in'   => $comment_in
-					);
-					// filter by the current user if 'users' parameter was provided in the shortcode
-					if ( 'current' === $this->shortcode_atts['users'] ) {
-						$current_user = get_current_user_id();
-						if ( 0 < $current_user ) {
-							$args['user_id'] = $current_user;
-						}
-					}
-					//
-					if ( ! $this->shortcode_atts['inactive_products'] ) {
-						$args['post_status'] = 'publish';
-					}
-					if ($rating > 0) {
-						$args['meta_query'][] = array(
-							'key' => 'rating',
-							'value'   => $rating,
-							'compare' => '=',
-							'type'    => 'numeric'
+				$number_sr = $this->shortcode_atts['number_shop_reviews'] == -1 ? null : intval( $this->shortcode_atts['number_shop_reviews'] );
+				if ( 0 < $number_sr || null === $number_sr ) {
+					if ( 0 < $this->shop_page_id ) {
+						$args = array(
+							'number'      => $number_sr,
+							'status'      => 'approve',
+							'post__in'     => CR_Reviews_List_Table::get_shop_page(),
+							'meta_key'    => 'rating',
+							'count'       => true,
+							'type__not_in' => 'cr_qna',
+							'comment__in'   => $comment_in
 						);
-					}
-					// Query needs to be modified if min_chars constraints are set
-					if ( ! empty( $this->shortcode_atts['min_chars'] ) ) {
-						add_filter( 'comments_clauses', array( $this, 'min_chars_comments_clauses' ) );
-					}
-					if ( function_exists( 'pll_current_language' ) ) {
-						// Polylang compatibility
-						$args['lang'] = '';
-					} elseif ( has_filter( 'wpml_current_language' ) ) {
+						// filter by the current user if 'users' parameter was provided in the shortcode
+						if ( 'current' === $this->shortcode_atts['users'] ) {
+							$current_user = get_current_user_id();
+							if ( 0 < $current_user ) {
+								$args['user_id'] = $current_user;
+							}
+						}
+						//
+						if ( ! $this->shortcode_atts['inactive_products'] ) {
+							$args['post_status'] = 'publish';
+						}
+						if ($rating > 0) {
+							$args['meta_query'][] = array(
+								'key' => 'rating',
+								'value'   => $rating,
+								'compare' => '=',
+								'type'    => 'numeric'
+							);
+						}
+						// Query needs to be modified if min_chars constraints are set
+						if ( ! empty( $this->shortcode_atts['min_chars'] ) ) {
+							add_filter( 'comments_clauses', array( $this, 'min_chars_comments_clauses' ) );
+						}
+						if ( function_exists( 'pll_current_language' ) ) {
+							// Polylang compatibility
+							$args['lang'] = '';
+						} elseif ( has_filter( 'wpml_current_language' ) ) {
+							// WPML compatibility
+							global $sitepress;
+							if ( $sitepress ) {
+								remove_filter( 'comments_clauses', array( $sitepress, 'comments_clauses' ), 10, 2 );
+							}
+						}
+
+						$count_sr = get_comments($args);
+
 						// WPML compatibility
-						global $sitepress;
-						if ( $sitepress ) {
-							remove_filter( 'comments_clauses', array( $sitepress, 'comments_clauses' ), 10, 2 );
+						if( has_filter( 'wpml_current_language' ) && ! function_exists( 'pll_current_language' ) ) {
+							global $sitepress;
+							if ( $sitepress ) {
+								add_filter( 'comments_clauses', array( $sitepress, 'comments_clauses' ), 10, 2 );
+							}
 						}
+						//
+						remove_filter( 'comments_clauses', array( $this, 'min_chars_comments_clauses' ) );
+
+						$count = $count + $count_sr;
 					}
-
-					$count_sr = get_comments($args);
-
-					// WPML compatibility
-					if( has_filter( 'wpml_current_language' ) && ! function_exists( 'pll_current_language' ) ) {
-						global $sitepress;
-						if ( $sitepress ) {
-							add_filter( 'comments_clauses', array( $sitepress, 'comments_clauses' ), 10, 2 );
-						}
-					}
-					//
-					remove_filter( 'comments_clauses', array( $this, 'min_chars_comments_clauses' ) );
-
-					$count = $count + $count_sr;
 				}
 			}
 
@@ -1571,6 +1577,10 @@ if (! class_exists('CR_All_Reviews')) :
 
 			$r = implode( "\n", $page_links );
 			return $r;
+		}
+
+		public static function random_cache_domain() {
+			return bin2hex( random_bytes( 4 ) );
 		}
 
 	}
