@@ -3189,6 +3189,13 @@ img.ivole-verified-badge-ext-icon {
 	justify-content: center;
 }
 
+.cr-reviews-grid .cr-review-card .top-row .reviewer .reviewer-verified,
+.cr-reviews-slider .cr-review-card .top-row .reviewer .reviewer-verified {
+	display: flex;
+	align-items: center;
+	line-height: 20px
+}
+
 .cr-reviews-grid .cr-review-card .top-row .rating .datetime,
 .cr-reviews-slider .cr-review-card .top-row .rating .datetime {
 	font-size: 0.9em;

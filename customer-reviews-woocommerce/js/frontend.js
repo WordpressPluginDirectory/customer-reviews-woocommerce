@@ -386,11 +386,11 @@
 			let slide_no = jQuery(this).data("slide");
 			let imgParent = jQuery(this).closest(".cr-ajax-reviews-cus-images-div").parent();
 			imgParent.find(".cr-ajax-reviews-cus-images-modal-cont").addClass("cr-mask-active");
-			imgParent.find(".cr-ajax-reviews-cus-images-modal .cr-ajax-reviews-cus-images-slider-main").slick('setPosition');
-			imgParent.find(".cr-ajax-reviews-cus-images-modal .cr-ajax-reviews-cus-images-slider-nav").slick('setPosition');
+			imgParent.find(".cr-ajax-reviews-cus-images-modal .cr-ajax-reviews-cus-images-slider-main").slickk('setPosition');
+			imgParent.find(".cr-ajax-reviews-cus-images-modal .cr-ajax-reviews-cus-images-slider-nav").slickk('setPosition');
 			if ( typeof slide_no !== 'undefined' ) {
-				imgParent.find(".cr-ajax-reviews-cus-images-modal .cr-ajax-reviews-cus-images-slider-main").slick('slickGoTo', slide_no, true);
-				imgParent.find(".cr-ajax-reviews-cus-images-modal .cr-ajax-reviews-cus-images-slider-nav").slick('slickGoTo', slide_no, true);
+				imgParent.find(".cr-ajax-reviews-cus-images-modal .cr-ajax-reviews-cus-images-slider-main").slickk('slickGoTo', slide_no, true);
+				imgParent.find(".cr-ajax-reviews-cus-images-modal .cr-ajax-reviews-cus-images-slider-nav").slickk('slickGoTo', slide_no, true);
 			}
 		} );
 		jQuery(".cr-comment-image-top .cr-comment-videoicon").on( "click", function(t) {
@@ -400,8 +400,8 @@
 		jQuery(".cr-ajax-reviews-cus-images-modal-cont, .cr-ajax-reviews-cus-images-modal .cr-ajax-reviews-cus-images-close").on( "click", function(t) {
 			t.preventDefault();
 			let closeParent = jQuery(this).closest(".cr-ajax-reviews-cus-images-modal-cont.cr-mask-active");
-			closeParent.find(".cr-ajax-reviews-cus-images-modal .cr-ajax-reviews-cus-images-slider-main").slick('slickGoTo',0,true);
-			closeParent.find(".cr-ajax-reviews-cus-images-modal .cr-ajax-reviews-cus-images-slider-nav").slick('slickGoTo',0,true);
+			closeParent.find(".cr-ajax-reviews-cus-images-modal .cr-ajax-reviews-cus-images-slider-main").slickk('slickGoTo',0,true);
+			closeParent.find(".cr-ajax-reviews-cus-images-modal .cr-ajax-reviews-cus-images-slider-nav").slickk('slickGoTo',0,true);
 			closeParent.removeClass("cr-mask-active");
 			jQuery("body").removeClass("cr-noscroll");
 		} );
@@ -588,14 +588,14 @@
 			let parent = jQuery(this).parents(".review-text");
 			parent.find(".cr-slider-read-more").hide();
 			parent.find(".cr-slider-details").css("display", "inline");
-			jQuery(this).parents(".cr-reviews-slider").slick('setPosition');
+			jQuery(this).parents(".cr-reviews-slider").slickk('setPosition');
 		} );
 		jQuery( '.cr-reviews-slider' ).on( 'click', '.cr-slider-read-less a', function (e) {
 			e.preventDefault();
 			let parent = jQuery(this).parents(".review-text");
 			parent.find(".cr-slider-details").hide();
 			parent.find(".cr-slider-read-more").css("display", "inline");
-			jQuery(this).parents(".cr-reviews-slider").slick('setPosition');
+			jQuery(this).parents(".cr-reviews-slider").slickk('setPosition');
 		} );
 		jQuery('#cr_qna.cr-qna-block .cr-qna-search-block button.cr-qna-ask-button').on( 'click', function (e) {
 			e.preventDefault();

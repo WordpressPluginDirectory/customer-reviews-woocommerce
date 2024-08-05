@@ -222,15 +222,6 @@ class Ivole_Email {
 			$enabled_roles = get_option( 'ivole_enabled_roles', array() );
 			$for_guests = 'no' === get_option( 'ivole_enable_for_guests', 'yes' ) ? false : true;
 
-			// check if taxes should be included in list_products variable
-			$tax_displ = get_option( 'woocommerce_tax_display_cart' );
-			$incl_tax = false;
-			if ( 'excl' === $tax_displ ) {
-				$incl_tax = false;
-			} else {
-				$incl_tax = true;
-			}
-
 			//check if free products should be excluded from list_products variable
 			$excl_free = false;
 			if( 'yes' == get_option( 'ivole_exclude_free_products', 'no' ) ) {
@@ -267,10 +258,16 @@ class Ivole_Email {
 				$price_args = array( 'currency' => $order_currency );
 				$list_products = '';
 				foreach ( $order->get_items() as $order_item ) {
-					if( $excl_free && 0 >= $order->get_line_total( $order_item, $incl_tax ) ) {
+					if( $excl_free && 0 >= $order->get_line_total( $order_item ) ) {
 						continue;
 					}
-					$list_products .= $order_item->get_name() . ' / ' . CR_Email_Func::cr_price( $order->get_line_total( $order_item, $incl_tax ), $price_args ) . '<br/>';
+					if ( method_exists( $order_item, 'get_product_id' ) ) {
+						$product = wc_get_product( $order_item->get_product_id() );
+						if ( $product ) {
+							$product_price = wc_get_price_to_display( $product );
+							$list_products .= $order_item->get_name() . ' / ' . CR_Email_Func::cr_price( $product_price, $price_args ) . '<br/>';
+						}
+					}
 				}
 				$this->replace['list-products'] = $list_products;
 			} else {

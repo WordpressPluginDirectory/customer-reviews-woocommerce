@@ -62,25 +62,18 @@ if ( ! class_exists( 'CR_Email_Func' ) ) :
 				}
 				if ( apply_filters( 'woocommerce_order_item_visible', true, $item ) && $item['product_id'] ) {
 					// create WC_Product to use its function for getting name of the product
-					$prod_main_temp = new WC_Product( $item['product_id'] );
+					$prod_main_temp = wc_get_product( $item['product_id'] );
 					if( $item['variation_id'] ) {
 						$prod_temp = new WC_Product_Variation( $item['variation_id'] );
 					} else {
 						$prod_temp = new WC_Product( $item['product_id'] );
 					}
 					$image = wp_get_attachment_image_url( $prod_main_temp->get_image_id(), 'full', false );
-					if( !$image ) {
+					if ( ! $image ) {
 						$image = '';
 					}
 					$q_name = $prod_main_temp->get_title();
-					$price_per_item = floatval( $prod_temp->get_price() );
-					if( function_exists( 'wc_get_price_including_tax' ) ) {
-						if( $inc_tax ) {
-							$price_per_item = floatval( wc_get_price_including_tax( $prod_temp ) );
-						} else {
-							$price_per_item = floatval( wc_get_price_excluding_tax( $prod_temp ) );
-						}
-					}
+					$price_per_item = floatval( wc_get_price_to_display( $prod_temp ) );
 
 					// qTranslate integration
 					if ( function_exists( 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage' ) ) {

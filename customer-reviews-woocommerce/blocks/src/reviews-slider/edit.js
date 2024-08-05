@@ -42,7 +42,7 @@ export default function Edit( { attributes, setAttributes } ) {
 			if (jQuery(".cr-reviews-slider").length) {
 				blockLoaded = true;
 				jQuery(".cr-reviews-slider").each(function () {
-					if(!jQuery(this).hasClass("slick-initialized")) jQuery(this).slick();
+					if ( ! jQuery(this).hasClass("slick-initialized") ) jQuery(this).slickk();
 				});
 				clearInterval( blockLoadedInterval );
 			}

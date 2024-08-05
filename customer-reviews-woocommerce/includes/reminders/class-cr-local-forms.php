@@ -178,7 +178,11 @@ if ( ! class_exists( 'CR_Local_Forms' ) ) :
 				// otherwise product item
 				$cr_form_item_rating_name = __( 'Rating', 'customer-reviews-woocommerce' );
 				$cr_form_item_image = $item->image;
-				$cr_form_item_price = CR_Email_Func::cr_price( $item->price );
+				if ( isset( $item->pricePerItem ) ) {
+					$cr_form_item_price = CR_Email_Func::cr_price( $item->pricePerItem );
+				} else {
+					$cr_form_item_price = CR_Email_Func::cr_price( $item->price );
+				}
 				$cr_form_media_enabled = ( 'yes' === get_option( 'ivole_form_attach_media', 'no' ) ? true : false );
 				if( property_exists( $item, 'media' ) ) {
 					if( is_array(  $item->media ) ) {
