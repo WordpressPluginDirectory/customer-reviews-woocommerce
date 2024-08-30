@@ -20,19 +20,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 		if ( $verified ) {
 			$cr_comment_container_class .= ' cr-verified-owner';
 		}
-	?>
-
-	<div id="comment-<?php comment_ID(); ?>" class="<?php echo esc_attr( $cr_comment_container_class ); ?>">
-
-		<?php
-
-		if ( class_exists( 'WCML_Comments' ) ) {
-			// provide an action for WPML / WCML plugins to translate the review
-			do_action( 'woocommerce_review_before', $comment );
-		}
 		$cr_hide_avatars = false;
 		$hide_avatars_class = '';
-		if(
+		$hide_avatars_wcml_class = '';
+		if (
 			isset( $action_args ) &&
 			isset( $action_args['args'] ) &&
 			isset( $action_args['args']['args'] ) &&
@@ -41,9 +32,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 		) {
 			$cr_hide_avatars = true;
 			$hide_avatars_class = ' comment-text-no-avatar';
+			$hide_avatars_wcml_class = ' cr-comment-no-avatar';
+		}
+	?>
+
+	<div id="comment-<?php comment_ID(); ?>" class="<?php echo esc_attr( $cr_comment_container_class ) . $hide_avatars_wcml_class; ?>">
+
+		<?php
+
+		if ( class_exists( 'WCML_Comments' ) ) {
+			// provide an action for WPML / WCML plugins to translate the review
+			do_action( 'woocommerce_review_before', $comment );
 		}
 
-		if( ! $cr_hide_avatars ) {
+		if ( ! $cr_hide_avatars ) {
 			$get_avtr = get_avatar( $comment, apply_filters( 'cr_review_gravatar_size', '60' ), '' );
 			if ( $get_avtr ) {
 				echo $get_avtr;

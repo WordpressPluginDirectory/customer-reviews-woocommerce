@@ -655,6 +655,8 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 						}
 					}
 				}
+			} else {
+				$post_in = array( $product_id );
 			}
 		} else {
 			$post_in = array( $product_id );
@@ -1258,7 +1260,7 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 		$pics_prepared = array();
 		$cr_query = '?crsrc=wp';
 		$images_top = '';
-		$max_count_top = apply_filters( 'cr_topreviews_max_count', 10 );
+		$max_count_top = self::get_max_top_images();
 
 		foreach( $comments as $comment ) {
 			$pics = get_comment_meta( $comment->comment_ID, self::REVIEWS_META_IMG );
@@ -1762,6 +1764,10 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 				echo '<div class="cr-incentivized-badge">' . $incentivized_badge_content . '</div>';
 			}
 		}
+	}
+
+	public static function get_max_top_images() {
+		return apply_filters( 'cr_topreviews_max_count', 10 );
 	}
 }
 

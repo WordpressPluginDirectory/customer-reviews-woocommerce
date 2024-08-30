@@ -790,7 +790,7 @@ div.iv-comment-image img {
 .cr-reviews-grid .cr-review-form-submitting .cr-review-form-captcha,
 .cr-reviews-grid .cr-review-form-submitting .cr-onsite-question,
 .cr-reviews-grid .cr-review-form-submitting .cr-onsite-question-inp,
-.cr-reviews-grid .cr-review-form-submitting .cr-review-form-terms, {
+.cr-reviews-grid .cr-review-form-submitting .cr-review-form-terms {
 	pointer-events: none;
 }
 .cr-all-reviews-shortcode .cr-review-form-buttons .cr-review-form-submit span,
@@ -1188,6 +1188,9 @@ div.ivole-summaryBox.cr-summaryBar-updating,
 	border-radius: 25px;
 	max-height: none;
 }
+.cr-all-reviews-shortcode ol li.review .comment_container.cr-comment-no-avatar .avatar {
+	display: none;
+}
 #reviews #comments .cr-avatar-check {
 	display: none;
 }
@@ -1208,6 +1211,7 @@ div.ivole-summaryBox.cr-summaryBar-updating,
 	align-items: center;
 	justify-content: center;
 	box-sizing: border-box;
+	z-index: 10;
 }
 .cr-all-reviews-shortcode ol li.review .comment_container .meta,
 #reviews.cr-reviews-ajax-reviews #comments.cr-reviews-ajax-comments .cr-ajax-reviews-list .comment_container .meta {
