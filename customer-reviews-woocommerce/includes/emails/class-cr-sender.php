@@ -212,6 +212,7 @@ if ( ! class_exists( 'CR_Sender' ) ) :
 				$order = new WC_Order( $order_id );
 				wp_clear_scheduled_hook( 'ivole_send_reminder', array( $order_id ) );
 				$order->add_order_note( __( 'CR: a review reminder was cancelled because the order was refunded.', 'customer-reviews-woocommerce' ) );
+				do_action( 'cr_wp_reminder_refund', $order_id );
 			}
 		}
 
@@ -220,6 +221,7 @@ if ( ! class_exists( 'CR_Sender' ) ) :
 				$order = new WC_Order( $order_id );
 				wp_clear_scheduled_hook( 'ivole_send_reminder', array( $order_id ) );
 				$order->add_order_note( __( 'CR: a review reminder was cancelled because the order was cancelled.', 'customer-reviews-woocommerce' ) );
+				do_action( 'cr_wp_reminder_cancellation', $order_id );
 			}
 		}
 
@@ -261,6 +263,12 @@ if ( ! class_exists( 'CR_Sender' ) ) :
 			$delay_option = get_option( 'ivole_delay', 5 );
 			if ( is_array( $delay_option ) && 0 < count( $delay_option ) ) {
 				foreach ( $delay_option as $del_opt ) {
+					if (
+						isset( $del_opt['enabled'] ) &&
+						! $del_opt['enabled']
+					) {
+						continue;
+					}
 					if (
 						isset( $del_opt['delay'] ) &&
 						isset( $del_opt['channel'] )
