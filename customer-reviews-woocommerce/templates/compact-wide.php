@@ -44,7 +44,7 @@
 	<div class="badge__reviews"><?php echo $strCount; ?></div>
 
 	<?php if( $verifiedPage ) : ?>
-		<a href="<?php echo $verifiedPage; ?>" rel="nofollow noopener noreferrer" target="_blank">
+		<a href="<?php echo $verifiedPage; ?>" rel="nofollow noopener noreferrer" target="_blank" aria-label="<?php echo esc_attr( $storeStats['storeName'] ); ?>">
 			<span class="badge__link"></span>
 		</a>
 	<?php else : ?>

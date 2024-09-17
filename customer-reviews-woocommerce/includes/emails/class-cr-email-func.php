@@ -129,7 +129,11 @@ if ( ! class_exists( 'CR_Email_Func' ) ) :
 					// a proactive check if the product belongs to prohibited categories
 					if ( 'cr' === $mailer ) {
 						$stop_words = array( 'kratom', 'cbd', 'cannabis', 'marijuana', 'kush' );
-						$name_lowercase = mb_strtolower( $q_name );
+						if ( function_exists( 'mb_strtolower' ) ) {
+							$name_lowercase = mb_strtolower( $q_name );
+						} else {
+							$name_lowercase = strtolower( $q_name );
+						}
 						$stop_word_found = false;
 						foreach ( $stop_words as $word ) {
 							if ( false !== strpos( $name_lowercase, $word ) ) {
