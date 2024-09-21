@@ -191,7 +191,8 @@ if (! class_exists('CR_All_Reviews')) :
 					'orderby'      => 'comment_date_gmt',
 					'order'        => $this->shortcode_atts['sort'],
 					'type__not_in' => 'cr_qna',
-					'offset'       => $this->page * $limit_per_page
+					'offset'       => $this->page * $limit_per_page,
+					'cache_domain' => $this->get_cache_domain()
 				);
 				// filter by the current user if 'users' parameter was provided in the shortcode
 				if ( 'current' === $this->shortcode_atts['users'] ) {
@@ -286,12 +287,10 @@ if (! class_exists('CR_All_Reviews')) :
 				// Query needs to be modified if min_chars constraints are set
 				if ( ! empty( $this->shortcode_atts['min_chars'] ) ) {
 					add_filter( 'comments_clauses', array( $this, 'min_chars_comments_clauses' ) );
-					$args['cache_domain'] = self::random_cache_domain();
 				}
 				// Query needs to be modified if category constraints are set
 				if ( ! empty( $this->shortcode_atts['categories'] ) ) {
 					add_filter( 'comments_clauses', array( $this, 'modify_comments_clauses' ) );
-					$args['cache_domain'] = self::random_cache_domain();
 				}
 				if ( function_exists( 'pll_current_language' ) ) {
 					// Polylang compatibility
@@ -694,7 +693,8 @@ if (! class_exists('CR_All_Reviews')) :
 					'count'        => true,
 					'type__not_in' => 'cr_qna',
 					'comment__in'  => $comment_in,
-					'meta_key'     => 'rating'
+					'meta_key'     => 'rating',
+					'cache_domain' => $this->get_cache_domain()
 				);
 				// filter by the current user if 'users' parameter was provided in the shortcode
 				if ( 'current' === $this->shortcode_atts['users'] ) {
@@ -718,12 +718,10 @@ if (! class_exists('CR_All_Reviews')) :
 				// Query needs to be modified if min_chars constraints are set
 				if ( ! empty( $this->shortcode_atts['min_chars'] ) ) {
 					add_filter( 'comments_clauses', array( $this, 'min_chars_comments_clauses' ) );
-					$args['cache_domain'] = self::random_cache_domain();
 				}
 				// Query needs to be modified if category constraints are set
 				if ( ! empty( $this->shortcode_atts['categories'] ) ) {
 					add_filter( 'comments_clauses', array( $this, 'modify_comments_clauses' ) );
-					$args['cache_domain'] = self::random_cache_domain();
 				}
 				if ( function_exists( 'pll_current_language' ) ) {
 					// Polylang compatibility
@@ -1462,8 +1460,8 @@ if (! class_exists('CR_All_Reviews')) :
 			return $r;
 		}
 
-		public static function random_cache_domain() {
-			return bin2hex( random_bytes( 4 ) );
+		public function get_cache_domain() {
+			return md5( serialize( $this->shortcode_atts ) );
 		}
 
 	}

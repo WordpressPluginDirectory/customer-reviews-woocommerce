@@ -4,7 +4,7 @@ Tags: woocommerce, review plugin, review reminder, customer reviews, review for 
 Requires at least: 4.5
 Tested up to: 6.6
 Requires PHP: 7.2
-Stable tag: 5.59.5
+Stable tag: 5.60.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl.html
 
@@ -232,6 +232,11 @@ If you would like to change how reviews are sorted on product pages, it is possi
 
 == Changelog ==
 
+= 5.60.0 =
+* New feature: additional filters for featured product and store reviews in the admin console
+* Improvement: display a button to add reviews with the [cusrev_reviews_grid] shortcode when there are no reviews no display
+* Improvement: introduction of a cache domain in the [cusrev_all_reviews] shortcode to improve compatibility with 3rd party caching plugins
+* Bug fix: floating trust badge did not display correctly
 = 5.59.5 =
 * Improvement: compatibility with hosting providers that do not provide mb_strtolower function in PHP installations
 * Improvement: aria-label attributes for trust badges to improve accessibility of pages

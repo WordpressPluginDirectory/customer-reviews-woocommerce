@@ -301,8 +301,21 @@ if (! class_exists('CR_Trust_Badge')) :
 						$badgeClass .= ' cr-trustbadge-border';
 					}
 					break;
+				case 'cl':
+					$templateFile = 'compact.php';
+					if( 'no' !== $borderStyle ) {
+						$badgeClass .= ' cr-trustbadge-border';
+					}
+					break;
 				case 'cwl':
 					$templateFile = 'compact-wide.php';
+					if( 'no' !== $borderStyle ) {
+						$badgeClass .= ' cr-trustbadge-border';
+					}
+					break;
+				case 'cd':
+					$templateFile = 'compact.php';
+					$badgeClass = ' badge_color_dark';
 					if( 'no' !== $borderStyle ) {
 						$badgeClass .= ' cr-trustbadge-border';
 					}

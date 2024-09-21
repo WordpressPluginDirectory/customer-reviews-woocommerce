@@ -241,7 +241,8 @@ div.iv-comment-image img {
 .cr-all-reviews-shortcode.cr-all-reviews-new-review .cr-summaryBox-wrap {
 	display: none;
 }
-.cr-reviews-grid.cr-reviews-grid-new-review .cr-summaryBox-wrap {
+.cr-reviews-grid.cr-reviews-grid-new-review .cr-summaryBox-wrap,
+.cr-reviews-grid.cr-reviews-grid-new-review .cr-reviews-grid-empty {
 	display: none;
 }
 #reviews .cr-summaryBox-wrap {
@@ -3004,6 +3005,13 @@ img.ivole-verified-badge-ext-icon {
 }
 .cr-reviews-grid-inner .cr-reviews-grid-col.cr-reviews-grid-col-none {
 	display: none;
+}
+.cr-reviews-grid-empty {
+	border-radius: inherit;
+	display: flex;
+	padding: 0 10px;
+	margin: 10px 0;
+	justify-content: center;
 }
 .cr-reviews-slider{
 	padding: 15px 0px;
