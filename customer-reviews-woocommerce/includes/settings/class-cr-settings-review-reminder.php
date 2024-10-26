@@ -122,6 +122,14 @@ if ( ! class_exists( 'CR_Review_Reminder_Settings' ) ):
 
 			// if Verified Reviews option was changed, check if Mailer and Scheduler options requires an update
 			if( ! empty( $_POST ) && isset( $_POST['ivole_verified_reviews'] ) ) {
+				$licenseKey = trim( get_option( 'ivole_license_key', '' ) );
+				// if there is no license key entered, the plugin should work only with the 'no verification' setting
+				if ( ! $licenseKey ) {
+					if ( 'yes' === $_POST['ivole_verified_reviews'] ) {
+						$_POST['ivole_verified_reviews_error'] = true;
+					}
+					$_POST['ivole_verified_reviews'] = 'no';
+				}
 				if( 'yes' === $_POST['ivole_verified_reviews'] ) {
 					update_option( 'ivole_mailer_review_reminder', 'cr', false );
 				} else {
@@ -716,6 +724,20 @@ if ( ! class_exists( 'CR_Review_Reminder_Settings' ) ):
 					<?php echo $tooltip_html; ?>
 				</th>
 				<td class="forminp forminp-checkbox">
+					<?php
+						if (
+							! empty( $_POST ) &&
+							isset( $_POST['ivole_verified_reviews_error'] ) &&
+							$_POST['ivole_verified_reviews_error']
+						) :
+					?>
+							<div class="cr-twocols-error">
+								<?php
+									esc_html_e( 'The "Independently Verified" option cannot be activated without a license key (either Free or Pro)', 'customer-reviews-woocommerce' );
+									echo wc_help_tip( __( 'A license key (either Free or Pro) is required for security purposes to ensure that only you can use CusRev to send review reminders on behalf of your business. No license key is required if you wish to collect reviews locally without third-party verification.', 'customer-reviews-woocommerce' ) );
+								?>
+							</div>
+					<?php endif; ?>
 					<div class="cr-twocols-cont">
 						<input type="hidden" name="<?php echo esc_attr( $value['id'] ); ?>" value="<?php echo esc_attr( $option_value ); ?>">
 						<div class="cr-twocols-left cr-twocols-cols<?php if( 'yes' !== $option_value ) echo ' cr-twocols-sel'; ?>">

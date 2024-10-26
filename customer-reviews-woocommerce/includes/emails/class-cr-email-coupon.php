@@ -166,7 +166,6 @@ class CR_Email_Coupon {
 		$message = $this->replace_variables( $message );
 
 		$data = array(
-			'token' => '164592f60fbf658711d47b2f55a1bbba',
 			'shop' => array( "name" => Ivole_Email::get_blogname(),
 				'domain' => Ivole_Email::get_blogurl() ),
 			'email' => array( 'to' => $to,
@@ -182,15 +181,7 @@ class CR_Email_Coupon {
 			'order' => array( 'id' => '12345',
 				'date' => date_i18n( 'd.m.Y', time() ),
 				'currency' => get_woocommerce_currency(),
-				'items' => array( array( 'id' => 1,
-						'name' => __( 'Item 1 Test', 'customer-reviews-woocommerce' ),
-						'price' => 15,
-						'image' => ''),
-					array( 'id' => 2,
-						'name' => __( 'Item 2 Test', 'customer-reviews-woocommerce' ),
-						'price' => 150,
-						'image' => '')
-					)
+				'items' => CR_Email_Func::get_test_items()
 				),
 				'colors' => array(
 					'email' => array(

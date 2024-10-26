@@ -274,6 +274,20 @@ if ( ! class_exists( 'CR_Forms_Settings' ) ) :
 						'anybody' => __( 'Anyone can submit reviews', 'customer-reviews-woocommerce' )
 					)
 				),
+				24 => array(
+					'title'    => __( 'Login URL', 'customer-reviews-woocommerce' ),
+					'type'     => 'text',
+					/* translators: keep %1$s and %2$s as is, they will be automatically replaced with a name of a WordPress function and a standard login URL correspondingly */
+					'desc'     => sprintf(
+						__( 'Customize the URL for the login button on on-site review forms. You can override the default URL returned by the WordPress %1$s function with a custom URL specified in this field. If left blank, the standard URL %2$s will be used.', 'customer-reviews-woocommerce' ),
+						'\'wp_login_url\'',
+						wp_login_url()
+					),
+					'default'  => '',
+					'id'       => 'ivole_review_login_url',
+					'desc_tip' => true,
+					'autoload' => false
+				),
 				25 => array(
 					'title'   => __( 'reCAPTCHA V2 for Reviews', 'customer-reviews-woocommerce' ),
 					'desc'    => __( 'Enable reCAPTCHA to eliminate fake reviews. You must enter Site Key and Secret Key in the fields below if you want to use reCAPTCHA. You will receive Site Key and Secret Key after registration at reCAPTCHA website.', 'customer-reviews-woocommerce' ),

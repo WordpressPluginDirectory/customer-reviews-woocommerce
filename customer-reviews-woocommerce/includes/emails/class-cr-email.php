@@ -429,7 +429,7 @@ class Ivole_Email {
 			//check that array of items is not empty
 			if( 1 > count( $data['order']['items'] ) ) {
 				$order->add_order_note(
-					__( 'CR: A review invitation cannot be sent because the order does not contain any products for which review reminders are enabled in the settings.', 'customer-reviews-woocommerce' ),
+					__( 'CR: A review invitation cannot be sent because the order does not contain any products for which review reminders are enabled in the settings.', 'customer-reviews-woocommerce' )
 				);
 				return array(
 					4,
@@ -470,7 +470,6 @@ class Ivole_Email {
 			$message = $this->replace_variables( $message );
 
 			$data = array(
-				'token' => '164592f60fbf658711d47b2f55a1bbba',
 				'shop' => array( "name" => self::get_blogname(),
 			 	'domain' => self::get_blogurl() ),
 				'email' => array( 'to' => $to,
@@ -487,17 +486,7 @@ class Ivole_Email {
 				'order' => array( 'id' => '12345',
 					'date' => date_i18n( 'd.m.Y', time() ),
 					'currency' => get_woocommerce_currency(),
-					'items' => array( array( 'id' => 1,
-							'name' => __( 'Item 1 Test', 'customer-reviews-woocommerce' ),
-							'price' => 15,
-							'image' => plugin_dir_url( dirname( dirname( __FILE__ ) ) ) . 'img/test-product-1.jpeg'
-						),
-						array( 'id' => 2,
-							'name' => __( 'Item 2 Test', 'customer-reviews-woocommerce' ),
-							'price' => 150,
-							'image' => plugin_dir_url( dirname( dirname( __FILE__ ) ) ) . 'img/test-product-2.jpeg'
-						)
-					)
+					'items' => CR_Email_Func::get_test_items()
 				),
 				'form' => array( 'header' => $this->replace_variables( $this->form_header ),
 					'description' => $this->replace_variables( $this->form_body ),

@@ -29,6 +29,7 @@ class CR_Google_Shopping_Feed {
 	private $field_map;
 	private $cron_options;
 	private $default_limit;
+	private $min_review_length;
 
 	public function __construct( $field_map = array() ) {
 		$this->feed_file = apply_filters( 'cr_gs_product_reviews_feed_file', 'product_reviews.xml' );
@@ -293,9 +294,10 @@ class CR_Google_Shopping_Feed {
 		$this->reschedule_cron();
 	}
 
-	protected function reschedule_cron(){
-		wp_clear_scheduled_hook( 'cr_generate_product_reviews_feed_chunk' );
-		wp_schedule_single_event( time(), 'cr_generate_product_reviews_feed_chunk' );
+	protected function reschedule_cron() {
+		if ( ! wp_next_scheduled( 'cr_generate_product_reviews_feed_chunk' ) ) {
+			wp_schedule_single_event( time(), 'cr_generate_product_reviews_feed_chunk' );
+		}
 	}
 
 	/**
@@ -308,21 +310,28 @@ class CR_Google_Shopping_Feed {
 	protected function get_review_data() {
 		global $wpdb;
 		$reviews = array();
+		$this->min_review_length = intval( get_option( 'ivole_google_min_review_length', 10 ) );
 		//WPML integration
 		//fetch IDs of reviews (cannot use get_comments due to WPML that adds a hook to filter comments by language)
 		if ( defined( 'ICL_LANGUAGE_CODE' ) ) {
+			$min_length = '';
+			if ( 0 < $this->min_review_length ) {
+				$min_length = " AND CHAR_LENGTH(comms.comment_content) >= " . $this->min_review_length;
+			}
 			$query_count = "SELECT COUNT(comms.comment_ID) FROM $wpdb->comments comms " .
 			"INNER JOIN $wpdb->posts psts ON comms.comment_post_ID = psts.ID " .
 			"INNER JOIN $wpdb->commentmeta commsm ON comms.comment_ID = commsm.comment_id " .
-			"WHERE comms.comment_approved = '1' AND psts.post_type = 'product' AND commsm.meta_key = 'rating'"
+			"WHERE comms.comment_approved = '1' AND psts.post_type = 'product' AND commsm.meta_key = 'rating'" .
+			$min_length
 			;
 			$this->cron_options['total'] = $wpdb->get_var( $query_count );
 
 			$query_ids = "SELECT comms.comment_ID FROM $wpdb->comments comms " .
 			"INNER JOIN $wpdb->posts psts ON comms.comment_post_ID = psts.ID " .
 			"INNER JOIN $wpdb->commentmeta commsm ON comms.comment_ID = commsm.comment_id " .
-			"WHERE comms.comment_approved = '1' AND psts.post_type = 'product' AND commsm.meta_key = 'rating' " .
-			"LIMIT ".$this->cron_options['offset'].",".$this->cron_options['limit']
+			"WHERE comms.comment_approved = '1' AND psts.post_type = 'product' AND commsm.meta_key = 'rating'" .
+			$min_length .
+			" LIMIT ".$this->cron_options['offset'].",".$this->cron_options['limit']
 			;
 			$reviews_ids = $wpdb->get_col( $query_ids );
 			if( $reviews_ids ) {
@@ -342,11 +351,15 @@ class CR_Google_Shopping_Feed {
 				'update_comment_post_cache' => true,
 				'count' => true
 			);
+			if ( 0 < $this->min_review_length ) {
+				add_filter( 'comments_clauses', array( $this, 'min_reviews_length' ) );
+			}
 			$this->cron_options['total'] = get_comments( $args );
 			$args['number'] = $this->cron_options['limit'];
 			$args['offset'] = $this->cron_options['offset'];
 			$args['count'] = false;
 			$reviews = get_comments( $args );
+			remove_filter( 'comments_clauses', array( $this, 'min_reviews_length' ) );
 		}
 
 		$reviews = array_map( function( $review ) {
@@ -381,11 +394,7 @@ class CR_Google_Shopping_Feed {
 			}
 
 			$_review->id = $review->comment_ID;
-			if( 'yes' === get_option( 'ivole_google_encode_special_chars', 'no' ) ) {
-				$_review->author = mb_convert_encoding( htmlspecialchars( $_review->author, ENT_QUOTES | ENT_XML1, 'UTF-8' ), 'HTML-ENTITIES' );
-			} else {
-				$_review->author = htmlspecialchars( $_review->author, ENT_QUOTES | ENT_XML1, 'UTF-8' );
-			}
+			$_review->author = htmlspecialchars( $_review->author, ENT_QUOTES | ENT_XML1, 'UTF-8' );
 			$_review->post_id = $review->comment_post_ID;
 			$_review->rating  = get_comment_meta( $review->comment_ID, 'rating', true );
 			$_review->date    = date( 'c', strtotime( $review->comment_date ) );
@@ -393,38 +402,18 @@ class CR_Google_Shopping_Feed {
 			if( '+00:00' === substr( $_review->date, -6 ) ) {
 				$_review->date = substr( $_review->date, 0, -6 ) . 'Z';
 			}
-			if( 'yes' === get_option( 'ivole_google_encode_special_chars', 'no' ) ) {
-				$_review->content = mb_convert_encoding( htmlspecialchars( $review->comment_content, ENT_XML1, 'UTF-8' ), 'HTML-ENTITIES' );
-				//$_review->content = mb_convert_encoding( esc_html( $review->comment_content ), 'HTML-ENTITIES' );
-			} else {
-				$_review->content = htmlspecialchars( $review->comment_content, ENT_XML1, 'UTF-8' );
-				//$_review->content = esc_html( $review->comment_content );
-			}
+			$_review->content = htmlspecialchars( $review->comment_content, ENT_XML1, 'UTF-8' );
 			$_review->content = trim( $_review->content );
 			$_review->gtins   = self::get_field( $this->field_map['gtin'], $review );
 			$_review->mpns    = self::get_field( $this->field_map['mpn'], $review );
 			$_review->skus    = self::get_field( $this->field_map['sku'], $review );
 			$_review->brands  = self::get_field( $this->field_map['brand'], $review );
 			//check if a static brand was specified
-			if( !$_review->brands || count( $_review->brands ) == 0 ) {
-				if( 'yes' === get_option( 'ivole_google_encode_special_chars', 'no' ) ) {
-					$_review->brands = array( mb_convert_encoding( htmlspecialchars( trim( get_option( 'ivole_google_brand_static', '' ) ), ENT_XML1, 'UTF-8' ), 'HTML-ENTITIES' ) );
-				} else {
-					$_review->brands = array( htmlspecialchars( trim( get_option( 'ivole_google_brand_static', '' ) ), ENT_XML1, 'UTF-8' ) );
-				}
+			if ( ! $_review->brands || 0 === count( $_review->brands ) ) {
+				$_review->brands = array( htmlspecialchars( trim( get_option( 'ivole_google_brand_static', '' ) ), ENT_XML1, 'UTF-8' ) );
 			}
 			return $_review;
 		}, $reviews );
-
-		// remove reviews that don't have comments or are too short (because Google don't accept them)
-		$min_review_length = get_option( 'ivole_google_min_review_length', 10 );
-		$reviews = array_filter( $reviews, function( $review ) use( $min_review_length ) {
-			if( isset( $review->content ) && strlen( $review->content ) >= $min_review_length ) {
-				return true;
-			} else {
-				return false;
-			}
-		} );
 
 		// remove reviews of out-of-stock products
 		if( 'yes' === get_option( 'ivole_excl_out_of_stock', 'no' ) ) {
@@ -621,6 +610,14 @@ class CR_Google_Shopping_Feed {
 		}
 
 		return $value;
+	}
+
+	public function min_reviews_length( $clauses ) {
+		global $wpdb;
+		if ( 0 < $this->min_review_length ) {
+			$clauses['where'] .= " AND CHAR_LENGTH({$wpdb->comments}.comment_content) >= " . $this->min_review_length;
+		}
+		return $clauses;
 	}
 
 }

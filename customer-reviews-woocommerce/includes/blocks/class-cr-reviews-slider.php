@@ -313,6 +313,10 @@ if ( ! class_exists( 'CR_Reviews_Slider' ) ) {
 				)
 			);
 
+			if ( is_rtl() ) {
+				$slider_settings['rtl'] = true;
+			}
+
 			$id = uniqid( 'cr-reviews-slider-' );
 
 			// display incentivized badges

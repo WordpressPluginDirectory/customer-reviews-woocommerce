@@ -94,37 +94,42 @@ if ( ! class_exists( 'CR_Identifiers_Product_Feed' ) ):
 					'title'    => __( 'GTIN', 'customer-reviews-woocommerce' ),
 					'desc'     => __( 'Add a GTIN field to WooCommerce products (on \'Inventory\' tab). GTIN refers to a Global Trade Item Number, a globally unique number used to identify trade items, products, or services that can be purchased. GTIN is also an umbrella term that refers to UPC, EAN, JAN, and ISBN.', 'customer-reviews-woocommerce' ),
 					'default'  => 'no',
-					'type'     => 'checkbox'
+					'type'     => 'checkbox',
+					'autoload' => false
 				),
 				array(
 					'id'       => 'ivole_product_feed_enable_mpn',
 					'title'    => __( 'MPN', 'customer-reviews-woocommerce' ),
 					'desc'     => __( 'Add an MPN field to WooCommerce products (on \'Inventory\' tab). MPN refers to a Manufacturer Part Number, a number that uniquely identifies the product to its manufacturer.', 'customer-reviews-woocommerce' ),
 					'default'  => 'no',
-					'type'     => 'checkbox'
+					'type'     => 'checkbox',
+					'autoload' => false
 				),
 				array(
 					'id'       => 'ivole_product_feed_enable_brand',
 					'title'    => __( 'Brand', 'customer-reviews-woocommerce' ),
 					'desc'     => __( 'Add a Brand field to WooCommerce products (on \'Inventory\' tab). This field refers to a brand of the product.', 'customer-reviews-woocommerce' ),
 					'default'  => 'no',
-					'type'     => 'checkbox'
+					'type'     => 'checkbox',
+					'autoload' => false
 				),
 				array(
 					'id'       => 'ivole_product_feed_enable_identifier_exists',
 					'title'    => __( 'identifier_exists', 'customer-reviews-woocommerce' ),
 					'desc'     => __( 'Add an identifier_exists field to WooCommerce products (on \'Inventory\' tab). Use it to indicate whether or not the unique product identifiers and brand are available for a product.', 'customer-reviews-woocommerce' ),
 					'default'  => 'no',
-					'type'     => 'checkbox'
+					'type'     => 'checkbox',
+					'autoload' => false
 				),
 				array(
-					'id'                => 'ivole_google_brand_static',
-					'title'             => __( 'Brand (Static)', 'customer-reviews-woocommerce' ),
-					'type'              => 'text',
+					'id'       => 'ivole_google_brand_static',
+					'title'    => __( 'Brand (Static)', 'customer-reviews-woocommerce' ),
+					'type'     => 'text',
 					'desc'     => __( 'Specify a default brand for all products in your store. If this field is non-empty, the plugin will use this brand for all products in XML feeds for Google Shopping.', 'customer-reviews-woocommerce' ),
 					'desc_tip' => true,
-					'default'           => '',
-					'css'               => 'width: 500px;max-width:100%;'
+					'default'  => '',
+					'css'      => 'width: 500px;max-width:100%;',
+					'autoload' => false
 				),
 				array(
 					'id'       => 'ivole_product_feed_enable_id_str_dat',
@@ -264,6 +269,7 @@ if ( ! class_exists( 'CR_Identifiers_Product_Feed' ) ):
 					OR meta.meta_key LIKE '\_yoast%'
 					OR meta.meta_key LIKE '\_alg_ean%'
 					OR meta.meta_key LIKE '\_wpsso_product%'
+					OR meta.meta_key LIKE '\_ts_%'
 				)
 				GROUP BY meta.meta_key",
 				ARRAY_A

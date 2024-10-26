@@ -91,6 +91,7 @@ if ( ! class_exists( 'CR_Reviews_Product_Feed' ) ):
 						'parent' => 'Include IDs of variable products only',
 						'yes' => 'Include IDs of variations only'
 					),
+					'autoload' => false
 				),
 				array(
 					'id'       => 'ivole_google_min_review_length',
@@ -98,7 +99,8 @@ if ( ! class_exists( 'CR_Reviews_Product_Feed' ) ):
 					'desc'     => __( 'Google might reject XML feeds with very short reviews. Use this setting to specify a minimum number of characters that a review should have to be included in the XML feed.', 'customer-reviews-woocommerce' ),
 					'default'  => 10,
 					'type'     => 'number',
-					'desc_tip' => true
+					'desc_tip' => true,
+					'autoload' => false
 				),
 				array(
 					'id'        => 'ivole_google_field_map',
@@ -106,7 +108,8 @@ if ( ! class_exists( 'CR_Reviews_Product_Feed' ) ):
 					'title'     => __( 'Fields Mapping', 'customer-reviews-woocommerce' ),
 					'desc'      => __( 'Specify WooCommerce fields that should be mapped to GTIN, MPN, SKU, and Brand fields in XML Product Review Feed for Google Shopping.', 'customer-reviews-woocommerce' ),
 					'desc_tip'  => true,
-					'field_map' => $field_map
+					'field_map' => $field_map,
+					'autoload' => false
 				),
 				array(
 					'type' => 'sectionend',
@@ -252,6 +255,7 @@ if ( ! class_exists( 'CR_Reviews_Product_Feed' ) ):
 					OR meta.meta_key LIKE '\_yoast%'
 					OR meta.meta_key LIKE '\_alg_ean%'
 					OR meta.meta_key LIKE '\_wpsso_product%'
+					OR meta.meta_key LIKE '\_ts_%'
 				)
 				GROUP BY meta.meta_key",
 				ARRAY_A

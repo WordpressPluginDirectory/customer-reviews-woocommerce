@@ -2284,6 +2284,7 @@ img.ivole-verified-badge-ext-icon {
 	right: 5px;
 	margin: -15px 0 0;
 	line-height: 0;
+	min-height: auto;
 }
 #reviews.cr-reviews-ajax-reviews .cr-ajax-reviews-cus-images-modal button.cr-ajax-reviews-cus-images-close svg,
 .cr-all-reviews-shortcode .cr-ajax-reviews-cus-images-modal button.cr-ajax-reviews-cus-images-close svg {
@@ -3259,6 +3260,10 @@ img.ivole-verified-badge-ext-icon {
 	margin: 0 6px 0 0;
 }
 
+.rtl .cr-reviews-slider .cr-review-card .top-row .reviewer .reviewer-verified .cr-reviewer-verified {
+	margin: 0 0 0 6px;
+}
+
 .cr-reviews-grid .cr-review-card .middle-row,
 .cr-reviews-grid .cr-review-card .cr-incentivized-row {
 	padding: 16px;
@@ -3332,6 +3337,10 @@ img.ivole-verified-badge-ext-icon {
 	letter-spacing: 0.1em;
 	text-align: left;
 	color: #898F92;
+}
+
+.rtl .cr-reviews-slider .cr-review-card .rating-row .rating-label {
+	margin: 0 16px 0 0;
 }
 
 .cr-reviews-grid .cr-review-card .middle-row .review-content,
@@ -3414,6 +3423,11 @@ img.ivole-verified-badge-ext-icon {
 	letter-spacing: 0em;
 	text-align: left;
 	color: #203741;
+}
+
+.rtl .cr-reviews-slider .cr-review-card .review-product .product-title {
+	padding-left: 0;
+	padding-right: 5px;
 }
 
 p.ivole-verified-badge {

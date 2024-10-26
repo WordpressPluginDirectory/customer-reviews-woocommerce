@@ -32,7 +32,8 @@ if ( ! class_exists( 'CR_WPML' ) ) :
 					'ivole_email_from_qna_reply',
 					'ivole_email_subject_qna_reply',
 					'ivole_email_heading_qna_reply',
-					'ivole_email_body_qna_reply'
+					'ivole_email_body_qna_reply',
+					'ivole_review_login_url'
 				);
 				foreach ( $fields_to_translate as $field_to_translate ) {
 					if ( isset( $fields[$field_to_translate] ) ) {

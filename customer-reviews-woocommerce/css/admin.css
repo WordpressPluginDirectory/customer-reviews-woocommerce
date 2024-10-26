@@ -617,6 +617,14 @@ li.select2-results__option {
 .ivole-new-settings .cr-twocols-cont .cr-twocols-sel .cr-twocols-chkbox svg {
 	display: block;
 }
+.ivole-new-settings .cr-twocols-error {
+	background-color: #ff8983;
+	padding: 5px 5px;
+	margin: 0 0 10px 0;
+	width: 100%;
+	max-width: 675px;
+	box-sizing: border-box;
+}
 .cr-verified-badge-status {
 	font-style: italic;
 	visibility: hidden;

@@ -297,6 +297,29 @@ if (! class_exists('CR_All_Reviews')) :
 					$args['lang'] = '';
 				} elseif ( has_filter( 'wpml_current_language' ) ) {
 					// WPML compatibility
+					// Check for the 'show reviews in all languages' setting of WPML
+					$is_filtered = apply_filters(
+						'wpml_is_comment_query_filtered',
+						true,
+						null,
+						(object) array( 'query_vars' => array( 'post_type' => 'product' ) )
+					);
+					if ( false === $is_filtered ) {
+						foreach ( $this->shortcode_atts['products'] as $product_id ) {
+							$trid = apply_filters( 'wpml_element_trid', NULL, $product_id, 'post_product' );
+							if ( $trid ) {
+								$translations = apply_filters( 'wpml_get_element_translations', NULL, $trid, 'post_product' );
+								if ( $translations && is_array( $translations ) ) {
+									foreach ( $translations as $translation ) {
+										if ( isset( $translation->element_id ) ) {
+											$this->shortcode_atts['products'][] = intval( $translation->element_id );
+										}
+									}
+								}
+							}
+						}
+					}
+					//
 					global $sitepress;
 					if ( $sitepress ) {
 						remove_filter( 'comments_clauses', array( $sitepress, 'comments_clauses' ), 10, 2 );

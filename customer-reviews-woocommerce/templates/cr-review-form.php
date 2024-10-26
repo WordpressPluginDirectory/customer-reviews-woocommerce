@@ -60,7 +60,15 @@ if( $cr_current_user instanceof WP_User ) {
 			<span>
 			<?php _e( 'You must be logged in to post a review', 'customer-reviews-woocommerce' ); ?>
 			</span>
-			<a class="cr-review-form-continue" href="<?php echo esc_url( wp_login_url( apply_filters( 'the_permalink', get_the_permalink(), $cr_item_id ) ) ); ?>" rel="nofollow"><?php _e( 'Log In', 'customer-reviews-woocommerce' ); ?></a>
+			<?php
+				$cr_login_url = get_option( 'ivole_review_login_url' );
+				if ( $cr_login_url ) {
+					$cr_login_url = add_query_arg( 'redirect_to', urlencode( apply_filters( 'the_permalink', get_the_permalink(), $cr_item_id ) ), $cr_login_url );
+				} else {
+					$cr_login_url = wp_login_url( apply_filters( 'the_permalink', get_the_permalink(), $cr_item_id ) );
+				}
+			?>
+			<a class="cr-review-form-continue" href="<?php echo esc_url( $cr_login_url ); ?>" rel="nofollow"><?php _e( 'Log In', 'customer-reviews-woocommerce' ); ?></a>
 		</div>
 
 	<?php elseif ( 'nobody' === $cr_form_permissions ) : ?>

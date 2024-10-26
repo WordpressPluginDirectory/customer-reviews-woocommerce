@@ -112,7 +112,7 @@ if ( ! class_exists( 'CR_Diagnostics_Admin_Menu' ) ):
 				// check the possibility to post reviews
 				$test_secret_key = bin2hex( openssl_random_pseudo_bytes( 16 ) );
 
-				update_option( 'ivole_test_secret_key', $test_secret_key );
+				update_option( 'ivole_test_secret_key', $test_secret_key, false );
 
 				$test_data = array( 'test' => $test_secret_key );
 				$body_data = json_encode( $test_data );
