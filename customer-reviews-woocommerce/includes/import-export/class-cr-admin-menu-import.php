@@ -109,9 +109,7 @@ class CR_Import_Admin_Menu {
         $check_loopback = $this->can_perform_loopback();
 
         ?>
-          <!--<div class="wrap">
-            <h1 class="wp-heading-inline"><?php echo esc_html( get_admin_page_title() ); ?></h1>-->
-            <div class="ivole-import-container">
+            <div class="ivole-import-container" data-nonce="<?php echo wp_create_nonce( 'cr_import_page' ); ?>">
                 <h2><?php echo _e( 'Import Reviews from CSV File', 'customer-reviews-woocommerce' ); ?></h2>
                 <p><?php
                   _e( 'A utility to import reviews from a CSV file. Use it in three steps. ', 'customer-reviews-woocommerce' );

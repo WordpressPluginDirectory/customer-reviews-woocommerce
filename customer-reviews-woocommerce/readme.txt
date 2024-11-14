@@ -2,9 +2,9 @@
 Contributors: ivole
 Tags: woocommerce, review plugin, review reminder, customer reviews, review for discount
 Requires at least: 4.5
-Tested up to: 6.6
+Tested up to: 6.7
 Requires PHP: 7.2
-Stable tag: 5.61.2
+Stable tag: 5.62.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl.html
 
@@ -232,6 +232,12 @@ If you would like to change how reviews are sorted on product pages, it is possi
 
 == Changelog ==
 
+= 5.62.0 =
+* New feature: undo likes and dislikes for reviews and questions
+* Improvement: a screen option to set pagination on the reviews page in the admin console
+* Improvement: tiles with reviews statistics on the reviews page in the admin console
+* Improvement: removal of Google Fonts dependency on self-hosted aggregated review forms
+* Security: additional validations in the tool for import of reviews
 = 5.61.2 =
 * Improvement: performance optimization for creation of XML Product Reviews feeds for Google Shopping
 * Improvement: support of product identifiers for XML feeds from the Germanized plugin

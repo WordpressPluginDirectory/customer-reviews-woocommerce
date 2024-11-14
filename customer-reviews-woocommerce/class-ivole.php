@@ -77,9 +77,10 @@ require_once( __DIR__ . '/includes/qna/class-cr-settings-qna.php' );
 require_once( __DIR__ . '/includes/qna/class-cr-qna-shortcode.php' );
 require_once( __DIR__ . '/includes/qna/class-cr-qna-email.php' );
 require_once( __DIR__ . '/includes/analytics/class-cr-reminders-log.php' );
+require_once( __DIR__ . '/includes/analytics/class-cr-reviews-top-charts.php' );
 
 class Ivole {
-	const CR_VERSION = '5.61.2';
+	const CR_VERSION = '5.62.0';
 
 	public function __construct() {
 		if( function_exists( 'wc' ) ) {

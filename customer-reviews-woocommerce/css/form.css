@@ -604,6 +604,49 @@
 	margin-left: 7px;
 }
 
+@font-face {
+	font-display: swap;
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: 400;
+	src: url('../fonts/open-sans-regular.woff2') format('woff2');
+}
+@font-face {
+	font-display: swap;
+	font-family: 'Open Sans';
+	font-style: italic;
+	font-weight: 400;
+	src: url('../fonts/open-sans-italic.woff2') format('woff2');
+}
+@font-face {
+	font-display: swap;
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: 500;
+	src: url('../fonts/open-sans-500.woff2') format('woff2');
+}
+@font-face {
+	font-display: swap;
+	font-family: 'Open Sans';
+	font-style: italic;
+	font-weight: 500;
+	src: url('../fonts/open-sans-500italic.woff2') format('woff2');
+}
+@font-face {
+	font-display: swap;
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: 600;
+	src: url('../fonts/open-sans-600.woff2') format('woff2');
+}
+@font-face {
+	font-display: swap;
+	font-family: 'Open Sans';
+	font-style: italic;
+	font-weight: 600;
+	src: url('../fonts/open-sans-600italic.woff2') format('woff2');
+}
+
 @media all and (max-width: 600px) {
 	.cr-form-header {
 		display: none;

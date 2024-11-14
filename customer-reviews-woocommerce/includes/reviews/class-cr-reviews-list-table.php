@@ -161,7 +161,7 @@ class CR_Reviews_List_Table extends WP_List_Table {
 			$args['post__in'] = self::get_shop_page();
 		} else {
 			// all reviews
-			add_filter( 'comments_clauses', array( $this, 'filter_include_shop_reviews' ), 10, 1 );
+			add_filter( 'comments_clauses', array( self::class, 'filter_include_shop_reviews' ), 10, 1 );
 		}
 		if( 'all' !== $cr_rating_type && 0 < $cr_rating_type && 6 > $cr_rating_type ) {
 			$args['meta_key'] = 'rating';
@@ -187,7 +187,7 @@ class CR_Reviews_List_Table extends WP_List_Table {
 			'store_review' !== $comment_type
 		) {
 			// all reviews
-			add_filter( 'comments_clauses', array( $this, 'filter_include_shop_reviews' ), 10, 1 );
+			add_filter( 'comments_clauses', array( self::class, 'filter_include_shop_reviews' ), 10, 1 );
 		}
 		$total_comments = get_comments( array_merge( $args, array(
 			'count'     => true,
@@ -207,15 +207,7 @@ class CR_Reviews_List_Table extends WP_List_Table {
 	* @return int
 	*/
 	public function get_per_page( $comment_status = 'all' ) {
-		$comments_per_page = $this->get_items_per_page( 'edit_comments_per_page' );
-		/**
-		* Filters the number of comments listed per page in the comments list table.
-		*
-		* @since 2.6.0
-		*
-		* @param int    $comments_per_page The number of comments to list per page.
-		* @param string $comment_status    The comment status name. Default 'All'.
-		*/
+		$comments_per_page = $this->get_items_per_page( 'reviews_per_page', 10 );
 		return apply_filters( 'comments_per_page', $comments_per_page, $comment_status );
 	}
 
@@ -1459,7 +1451,7 @@ protected function comments_bubble( $post_id, $pending_comments ) {
 		}
 	}
 
-	public function filter_include_shop_reviews( $pieces ) {
+	public static function filter_include_shop_reviews( $pieces ) {
 		global $wpdb;
 		$shop_page = self::get_shop_page();
 		if( $shop_page ) {
@@ -1470,7 +1462,7 @@ protected function comments_bubble( $post_id, $pending_comments ) {
 			$pieces['join'] .= " JOIN $wpdb->posts AS crposts ON crposts.ID = $wpdb->comments.comment_post_ID";
 			$pieces['where'] .= " AND ( crposts.post_type = 'product' )";
 		}
-		remove_filter( 'comments_clauses', array ( $this, 'filter_include_shop_reviews' ) );
+		remove_filter( 'comments_clauses', array ( self::class, 'filter_include_shop_reviews' ) );
 		return $pieces;
 	}
 

@@ -740,6 +740,7 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 		return $comment_args;
 	}
 	public function vote_review_registered() {
+		$undo_existing_vote = false;
 		$comment_id = intval( $_POST['reviewID'] );
 		$upvote = intval( $_POST['upvote'] );
 		$registered_upvoters = get_comment_meta( $comment_id, 'ivole_review_reg_upvoters', true );
@@ -752,17 +753,13 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 				$registered_upvoters_count = count( $registered_upvoters );
 				$index_upvoters = -1;
 				for($i = 0; $i < $registered_upvoters_count; $i++ ) {
-					if( $current_user === $registered_upvoters[$i] ) {
-						if( 0 < $upvote ) {
-							// upvote request, exit because this user has already upvoted this review earlier
-							$votes = $this->get_votes( $comment_id );
-							wp_send_json( array( 'code' => 0, 'votes' => $votes ) );
-							return;
-						} else {
-							// downvote request, remove the upvote
-							$index_upvoters = $i;
-							break;
+					if ( $current_user === $registered_upvoters[$i] ) {
+						if ( 0 < $upvote ) {
+							// upvote request, undo because this user has already upvoted this review earlier
+							$undo_existing_vote = true;
 						}
+						$index_upvoters = $i;
+						break;
 					}
 				}
 				if( 0 <= $index_upvoters ) {
@@ -781,17 +778,13 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 				$registered_downvoters_count = count( $registered_downvoters );
 				$index_downvoters = -1;
 				for($i = 0; $i < $registered_downvoters_count; $i++ ) {
-					if( $current_user === $registered_downvoters[$i] ) {
-						if( 0 < $upvote ) {
-							// upvote request, remove the downvote
-							$index_downvoters = $i;
-							break;
-						} else {
-							// downvote request, exit because this user has already downvoted this review earlier
-							$votes = $this->get_votes( $comment_id );
-							wp_send_json( array( 'code' => 0, 'votes' => $votes ) );
-							return;
+					if ( $current_user === $registered_downvoters[$i] ) {
+						if ( 0 >= $upvote ) {
+							// downvote request, undo because this user has already downvoted this review earlier
+							$undo_existing_vote = true;
 						}
+						$index_downvoters = $i;
+						break;
 					}
 				}
 				if( 0 <= $index_downvoters ) {
@@ -805,10 +798,12 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 		}
 
 		//update arrays of registered upvoters and downvoters
-		if( 0 < $upvote ) {
-			$registered_upvoters[] = $current_user;
-		} else {
-			$registered_downvoters[] = $current_user;
+		if ( ! $undo_existing_vote ) {
+			if ( 0 < $upvote ) {
+				$registered_upvoters[] = $current_user;
+			} else {
+				$registered_downvoters[] = $current_user;
+			}
 		}
 
 		update_comment_meta( $comment_id, 'ivole_review_reg_upvoters', $registered_upvoters );
@@ -826,6 +821,8 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 		$ip = $_SERVER['REMOTE_ADDR'];
 		$comment_id = intval( $_POST['reviewID'] );
 		$upvote = intval( $_POST['upvote'] );
+		$undo_existing_cookie_vote = false;
+		$undo_existing_ip_vote = false;
 
 		// check (via cookie) if this unregistered user has already upvoted this review
 		if( isset( $_COOKIE['ivole_review_upvote'] ) ) {
@@ -834,16 +831,13 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 				$upcomment_ids_count = count( $upcomment_ids );
 				$index_upvoters = -1;
 				for( $i = 0; $i < $upcomment_ids_count; $i++ ) {
-					if( $comment_id === $upcomment_ids[$i] ) {
-						if( 0 < $upvote ) {
-							// upvote request, exit because this user has already upvoted this review earlier
-							$votes = $this->get_votes( $comment_id );
-							wp_send_json( array( 'code' => 0, 'votes' => $votes ) );
-						} else {
-							// downvote request, remove the upvote
-							$index_upvoters = $i;
-							break;
+					if ( $comment_id === $upcomment_ids[$i] ) {
+						if ( 0 < $upvote ) {
+							// upvote request, undo because this user has already upvoted this review earlier
+							$undo_existing_cookie_vote = true;
 						}
+						$index_upvoters = $i;
+						break;
 					}
 				}
 				if( 0 <= $index_upvoters ) {
@@ -863,16 +857,13 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 				$downcomment_ids_count = count( $downcomment_ids );
 				$index_downvoters = -1;
 				for( $i = 0; $i < $downcomment_ids_count; $i++ ) {
-					if( $comment_id === $downcomment_ids[$i] ) {
-						if( 0 < $upvote ) {
-							// upvote request, remove the downvote
-							$index_downvoters = $i;
-							break;
-						} else {
-							// downvote request, exit because this user has already downvoted this review earlier
-							$votes = $this->get_votes( $comment_id );
-							wp_send_json( array( 'code' => 0, 'votes' => $votes ) );
+					if ( $comment_id === $downcomment_ids[$i] ) {
+						if ( 0 >= $upvote ) {
+							// downvote request, undo because this user has already downvoted this review earlier
+							$undo_existing_cookie_vote = true;
 						}
+						$index_downvoters = $i;
+						break;
 					}
 				}
 				if( 0 <= $index_downvoters ) {
@@ -895,16 +886,13 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 				$unregistered_upvoters_count = count( $unregistered_upvoters );
 				$index_upvoters = -1;
 				for($i = 0; $i < $unregistered_upvoters_count; $i++ ) {
-					if( $ip === $unregistered_upvoters[$i] ) {
-						if( 0 < $upvote ) {
-							// upvote request, exit because this user has already upvoted this review earlier
-							$votes = $this->get_votes( $comment_id );
-							wp_send_json( array( 'code' => 0, 'votes' => $votes ) );
-						} else {
-							// downvote request, remove the upvote
-							$index_upvoters = $i;
-							break;
+					if ( $ip === $unregistered_upvoters[$i] ) {
+						if ( 0 < $upvote ) {
+							// upvote request, undo because this user has already upvoted this review earlier
+							$undo_existing_ip_vote = true;
 						}
+						$index_upvoters = $i;
+						break;
 					}
 				}
 				if( 0 <= $index_upvoters ) {
@@ -924,16 +912,13 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 				$unregistered_downvoters_count = count( $unregistered_downvoters );
 				$index_downvoters = -1;
 				for($i = 0; $i < $unregistered_downvoters_count; $i++ ) {
-					if( $ip === $unregistered_downvoters[$i] ) {
-						if( 0 < $upvote ) {
-							// upvote request, remove the downvote
-							$index_downvoters = $i;
-							break;
-						} else {
-							// downvote request, exit because this user has already downvoted this review earlier
-							$votes = $this->get_votes( $comment_id );
-							wp_send_json( array( 'code' => 0, 'votes' => $votes ) );
+					if ( $ip === $unregistered_downvoters[$i] ) {
+						if ( 0 >= $upvote ) {
+							// downvote request, undo because this user has already downvoted this review earlier
+							$undo_existing_ip_vote = true;
 						}
+						$index_downvoters = $i;
+						break;
 					}
 				}
 				if( 0 <= $index_downvoters ) {
@@ -947,18 +932,25 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 		}
 
 		//update cookie arrays of unregistered upvoters and downvoters
-		if( 0 < $upvote ) {
-			$upcomment_ids[] = $comment_id;
-			$unregistered_upvoters[] = $ip;
-		} else {
-			$downcomment_ids[] = $comment_id;
-			$unregistered_downvoters[] = $ip;
+		if ( ! $undo_existing_cookie_vote ) {
+			if ( 0 < $upvote ) {
+				$upcomment_ids[] = $comment_id;
+			} else {
+				$downcomment_ids[] = $comment_id;
+			}
+		}
+		if ( ! $undo_existing_ip_vote ) {
+			if( 0 < $upvote ) {
+				$unregistered_upvoters[] = $ip;
+			} else {
+				$unregistered_downvoters[] = $ip;
+			}
 		}
 		setcookie( 'ivole_review_upvote', json_encode( $upcomment_ids ), time() + 365*24*60*60, COOKIEPATH, COOKIE_DOMAIN );
 		setcookie( 'ivole_review_downvote', json_encode( $downcomment_ids ), time() + 365*24*60*60, COOKIEPATH, COOKIE_DOMAIN );
 		update_comment_meta( $comment_id, 'ivole_review_unreg_upvoters', $unregistered_upvoters );
 		update_comment_meta( $comment_id, 'ivole_review_unreg_downvoters', $unregistered_downvoters );
-		$votes = $this->send_votes( $comment_id );
+		$votes = $this->send_votes( $comment_id, true );
 		// compatibility with W3 Total Cache plugin
 		// clear DB cache to make sure that count of upvotes is immediately updated
 		if( function_exists( 'w3tc_dbcache_flush' ) ) {
@@ -966,7 +958,8 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 		}
 		wp_send_json( array( 'code' => 0, 'votes' => $votes ) );
 	}
-	public function get_votes( $comment_id ) {
+
+	public function get_votes( $comment_id, $ajax = false ) {
 		$r_upvotes = 0;
 		$r_downvotes = 0;
 		$u_upvotes = 0;
@@ -1033,7 +1026,7 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 					$current = -1;
 				}
 			}
-			if( 0 === $current ) {
+			if( 0 === $current && ! $ajax ) {
 				if( isset( $_COOKIE['ivole_review_upvote'] ) ) {
 					$upcomment_ids = json_decode( $_COOKIE['ivole_review_upvote'], true );
 					if( is_array( $upcomment_ids ) ) {
@@ -1063,10 +1056,11 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 		);
 		return $votes;
 	}
-	public function send_votes( $comment_id ) {
+
+	public function send_votes( $comment_id, $ajax = false ) {
 		$comment = get_comment( $comment_id );
 		if( $comment ) {
-			$votes = $this->get_votes( $comment_id );
+			$votes = $this->get_votes( $comment_id, $ajax );
 			update_comment_meta( $comment_id, 'ivole_review_votes', $votes['upvotes'] - $votes['downvotes'] );
 			$product_id = $comment->comment_post_ID;
 			//clear WP Super Cache after voting

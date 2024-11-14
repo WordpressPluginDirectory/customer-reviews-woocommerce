@@ -192,22 +192,23 @@ jQuery(document).ready(function() {
                 localStorage.removeItem('ivole_import_data');
             }
 
-            var start_date = new Date(data.started * 1000);
-            var end_date   = new Date(data.finished * 1000);
-            var delta      = end_date.getSeconds() - start_date.getSeconds();
+            let start_date = new Date(data.started * 1000);
+            let end_date   = new Date(data.finished * 1000);
+            let delta      = end_date.getSeconds() - start_date.getSeconds();
+            let import_result_details = '';
 
             jQuery('#ivole-import-result-started').html(ivoleImporterStrings.result_started.replace('%s', start_date.toLocaleDateString() + ' ' + start_date.toLocaleTimeString()));
             jQuery('#ivole-import-result-finished').html(ivoleImporterStrings.result_finished.replace('%s', end_date.toLocaleDateString() + ' ' + end_date.toLocaleTimeString()));
-            jQuery('#ivole-import-result-imported').html(ivoleImporterStrings.result_imported.replace('%d', data.reviews.imported));
-            jQuery('#ivole-import-result-skipped').html(ivoleImporterStrings.result_skipped.replace('%d', data.reviews.skipped));
-            jQuery('#ivole-import-result-errors').html(ivoleImporterStrings.result_errors.replace('%d', data.reviews.errors));
-
-            var import_result_details = '';
-            if (data.reviews.error_list && data.reviews.error_list.length > 0) {
-                import_result_details = '<div>' + data.reviews.error_list.join('<br>') + '</div>';
-            }
-            if (data.reviews.duplicate_list && data.reviews.duplicate_list.length > 0) {
-                import_result_details = import_result_details + '<div>' + data.reviews.duplicate_list.join('<br>') + '</div>';
+            if ( data.hasOwnProperty( 'reviews' ) ) {
+              jQuery('#ivole-import-result-imported').html(ivoleImporterStrings.result_imported.replace('%d', data.reviews.imported));
+              jQuery('#ivole-import-result-skipped').html(ivoleImporterStrings.result_skipped.replace('%d', data.reviews.skipped));
+              jQuery('#ivole-import-result-errors').html(ivoleImporterStrings.result_errors.replace('%d', data.reviews.errors));
+              if (data.reviews.error_list && data.reviews.error_list.length > 0) {
+                  import_result_details = '<div>' + data.reviews.error_list.join('<br>') + '</div>';
+              }
+              if (data.reviews.duplicate_list && data.reviews.duplicate_list.length > 0) {
+                  import_result_details = import_result_details + '<div>' + data.reviews.duplicate_list.join('<br>') + '</div>';
+              }
             }
             if( import_result_details.length > 0 ) {
                 jQuery('#ivole-import-result-details').show().html(import_result_details);
@@ -242,9 +243,11 @@ jQuery(document).ready(function() {
                 ajaxurl,
                 {
                     action: 'ivole_check_import_progress',
-                    progress_id: ivoleImporter.progress_id
+                    progress_id: ivoleImporter.progress_id,
+                    cr_nonce: jQuery('.ivole-import-container').data('nonce')
                 }
             ).done(function(response) {
+              if ( response ) {
                 if (response.status) {
                     if (response.status === 'importing') {
                         var processed = response.reviews.imported + response.reviews.skipped + response.reviews.errors;
@@ -264,6 +267,7 @@ jQuery(document).ready(function() {
                 } else if (response === false) {
                     ivoleImporter.import_failed();
                 }
+              }
             });
         },
 
@@ -275,10 +279,13 @@ jQuery(document).ready(function() {
                 ajaxurl,
                 {
                     action: 'ivole_cancel_import',
-                    progress_id: ivoleImporter.progress_id
+                    progress_id: ivoleImporter.progress_id,
+                    cr_nonce: jQuery('.ivole-import-container').data('nonce')
                 }
-            ).done(function(response){
-              ivoleImporter.import_cancelled(response);
+            ).done(function(response) {
+              if ( response ) {
+                ivoleImporter.import_cancelled( response );
+              }
             }).fail(function(response) {
               jQuery('#ivole-import-result-status').html(ivoleImporterStrings.upload_cancelled);
               clearInterval(ivoleImporter.__progress_check_interval);

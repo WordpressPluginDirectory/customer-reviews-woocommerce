@@ -31,6 +31,8 @@ if ( ! class_exists( 'Ivole_Reviews_Admin_Menu' ) ):
 			add_action( 'wp_ajax_cr-feature-review', array( $this, 'wp_ajax_cr_feature_review' ) );
 			add_action( 'wp_ajax_cr-unverify-review', array( $this, 'wp_ajax_cr_unverify_review' ) );
 			add_filter( 'wp_update_comment_data', array( $this, 'update_author_type' ), 10, 3 );
+			add_filter( 'set-screen-option', array( $this, 'save_screen_options' ), 10, 3 );
+			add_action( 'wp_ajax_cr_get_reviews_top_row_stats', array( 'CR_Reviews_Top_Charts', 'get_reviews_top_row_stats' ) );
 			$cr_reviews_media_meta_box = new CR_Reviews_Media_Meta_Box();
 		}
 
@@ -54,7 +56,7 @@ if ( ! class_exists( 'Ivole_Reviews_Admin_Menu' ) ):
 				56
 			);
 
-			add_submenu_page(
+			$submenu = add_submenu_page(
 				'cr-reviews',
 				__( 'Reviews', 'customer-reviews-woocommerce' ),
 				__( 'Reviews', 'customer-reviews-woocommerce' ) . sprintf( ' <span class="awaiting-mod count-%1$d"><span class="pending-count-rev" aria-hidden="true" data-nonce="%2$s">%3$d</span></span>', $notification_count, wp_create_nonce( 'cr_rev_count_bubble' ), $notification_count ),
@@ -62,6 +64,10 @@ if ( ! class_exists( 'Ivole_Reviews_Admin_Menu' ) ):
 				'cr-reviews',
 				array( $this, 'display_reviews_admin_page' )
 			);
+
+			if ( $submenu ) {
+				add_action( "load-$submenu", array( $this, 'display_screen_options' ) );
+			}
 		}
 
 		public function display_reviews_admin_page() {
@@ -214,6 +220,10 @@ if ( ! class_exists( 'Ivole_Reviews_Admin_Menu' ) ):
 			$assets_version = Ivole::CR_VERSION;
 
 			if ( isset( $_REQUEST['page'] ) && $_REQUEST['page'] === 'cr-reviews' ) {
+				$asset_file = include( plugin_dir_path( dirname( dirname( __FILE__ ) ) ) . '/admin/build/index.asset.php' );
+				wp_enqueue_script( 'jquery' );
+				wp_enqueue_style( 'cr-admin-charts', plugins_url( '/admin/build/index.css', dirname( dirname( __FILE__ ) ) ), array(),  Ivole::CR_VERSION );
+				wp_enqueue_script( 'cr-admin-charts', plugins_url( '/admin/build/index.js' , dirname( dirname( __FILE__ ) ) ), $asset_file['dependencies'], Ivole::CR_VERSION, true );
 				wp_enqueue_script( 'admin-comments' );
 			}
 			if( ( isset( $_REQUEST['page'] ) && $_REQUEST['page'] === 'cr-reviews' ) || 'comment.php' === $hook ) {
@@ -753,6 +763,24 @@ if ( ! class_exists( 'Ivole_Reviews_Admin_Menu' ) ):
 					dirname( dirname( dirname( __FILE__ ) ) ) . '/templates/'
 				);
 			}
+		}
+
+		public function display_screen_options() {
+			$args = array(
+				'label' => __( 'Reviews per page', 'customer-reviews-woocommerce' ),
+				'default' => 10,
+				'option' => 'reviews_per_page'
+			);
+			add_screen_option( 'per_page', $args );
+		}
+
+		public function save_screen_options( $screen_option, $option, $value ) {
+			if ( 'reviews_per_page' === $option ) {
+				if ( $value < 1 || $value > 999 ) {
+					return false;
+				}
+			}
+			return $value;
 		}
 
 	}

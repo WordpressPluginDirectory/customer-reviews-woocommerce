@@ -253,25 +253,29 @@ if (! class_exists('CR_Reviews_Importer')):
 			);
 		}
 
-		public function check_import_progress()
-		{
-			$progress_id = $_POST['progress_id'];
-			$progress = get_transient($progress_id);
-
-			wp_send_json($progress, 200);
+		public function check_import_progress() {
+			$progress = '';
+			if ( current_user_can( 'manage_options' ) ) {
+				if ( check_ajax_referer( 'cr_import_page', 'cr_nonce', false ) ) {
+					$progress_id = $_POST['progress_id'];
+					$progress = get_transient( $progress_id );
+				}
+			}
+			wp_send_json( $progress, 200 );
 			wp_die();
 		}
 
-		public function cancel_import()
-		{
-			$progress_id = $_POST['progress_id'];
-
-			set_transient('cancel' . $progress_id, true, WEEK_IN_SECONDS);
-
-			self::$background_importer->maybe_handle();
-
-			$progress = get_transient($progress_id);
-			wp_send_json($progress, 200);
+		public function cancel_import() {
+			$progress = '';
+			if ( current_user_can( 'manage_options' ) ) {
+				if ( check_ajax_referer( 'cr_import_page', 'cr_nonce', false ) ) {
+					$progress_id = $_POST['progress_id'];
+					set_transient( 'cancel' . $progress_id, true, WEEK_IN_SECONDS );
+					// self::$background_importer->maybe_handle();
+					$progress = get_transient( $progress_id );
+				}
+			}
+			wp_send_json( $progress, 200 );
 			wp_die();
 		}
 

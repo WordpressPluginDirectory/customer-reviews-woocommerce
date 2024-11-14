@@ -128,7 +128,7 @@ class CR_Qna_List_Table extends WP_List_Table {
 			'order' => $order,
 			'type' => 'cr_qna'
 		);
-		//add_filter( 'comments_clauses', array( $this, 'filter_include_shop_reviews' ), 10, 1 );
+
 		$_comments = get_comments( $args );
 
 		if ( is_array( $_comments ) ) {
@@ -142,7 +142,6 @@ class CR_Qna_List_Table extends WP_List_Table {
 			$this->pending_count = get_pending_comments_num( $_comment_post_ids );
 		}
 
-		//add_filter( 'comments_clauses', array( $this, 'filter_include_shop_reviews' ), 10, 1 );
 		$total_comments = get_comments( array_merge( $args, array(
 			'count'     => true,
 			'offset'    => 0,
@@ -968,47 +967,6 @@ protected function comments_bubble( $post_id, $pending_comments ) {
 				$approved_comments ? __( 'No pending comments' ) : __( 'No comments' )
 			);
 		}
-	}
-
-	public function filter_include_shop_reviews( $pieces ) {
-		global $wpdb;
-		$shop_page_id = intval( wc_get_page_id( 'shop' ) );
-		if( $shop_page_id > 0 ) {
-			$in_shop_page = strval( $shop_page_id );
-			// Polylang integration
-			if( function_exists( 'pll_get_post_translations' ) ) {
-				$translated_shop_page_ids = pll_get_post_translations( $shop_page_id );
-				if( $translated_shop_page_ids && is_array( $translated_shop_page_ids ) && count( $translated_shop_page_ids ) > 0 ) {
-					$in_shop_page = implode( ",", array_map( 'intval', $translated_shop_page_ids ) );
-				}
-			} else {
-				// WPML integration
-				if( has_filter( 'wpml_object_id' ) ) {
-					$trid = apply_filters( 'wpml_element_trid', NULL, $shop_page_id, 'post_page' );
-					if( $trid ) {
-						$translations = apply_filters( 'wpml_get_element_translations', NULL, $trid, 'post_page' );
-						if( $translations && is_array( $translations ) && count( $translations ) > 0 ) {
-							$translated_shop_page_ids = array();
-							foreach ($translations as $translation) {
-								if( isset( $translation->element_id ) ) {
-									$translated_shop_page_ids[] = intval( $translation->element_id );
-								}
-							}
-							if( count($translated_shop_page_ids ) > 0 ) {
-								$in_shop_page = implode( ",", $translated_shop_page_ids );
-							}
-						}
-					}
-				}
-			}
-			$pieces['join'] .= " JOIN $wpdb->posts AS crposts ON crposts.ID = $wpdb->comments.comment_post_ID";
-			$pieces['where'] .= " AND ( crposts.post_type = 'product' OR comment_post_ID IN ( " . $in_shop_page . " ) )";
-		} else {
-			$pieces['join'] .= " JOIN $wpdb->posts AS crposts ON crposts.ID = $wpdb->comments.comment_post_ID";
-			$pieces['where'] .= " AND ( crposts.post_type = 'product' )";
-		}
-		remove_filter( 'comments_clauses', array ( $this, 'filter_include_shop_reviews' ) );
-		return $pieces;
 	}
 
 }

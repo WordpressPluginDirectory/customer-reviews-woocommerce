@@ -4,6 +4,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
+// jQuery
+$cr_wp_scripts = wp_scripts();
+$cr_jquery = $cr_wp_scripts->registered['jquery-core'];
+$cr_jquery_src = 'https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js';
+if ( property_exists( $cr_jquery, 'src' ) && $cr_jquery->src ) {
+	$cr_jquery_src = $cr_jquery->src;
+}
+
 ?>
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
@@ -13,10 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title><?php echo esc_html( $cr_form_header . ' - ' . get_option( 'ivole_shop_name', get_bloginfo( 'name', 'display' ) ) ); ?></title>
 		<link rel="stylesheet" href="<?php echo $cr_form_css; ?>">
-		<link rel="preconnect" href="https://fonts.googleapis.com">
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-		<script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+		<script defer src="<?php echo esc_url( $cr_jquery_src ); ?>"></script>
 		<script defer src="<?php echo $cr_form_js; ?>"></script>
 		<script>
 			var crAjaxURL = "<?php echo esc_url_raw( $cr_form_ajax ); ?>";
