@@ -214,17 +214,17 @@ div.iv-comment-image img {
 	height: 1px;
 	margin: 1px
 }
-#ivole-histogramTable tr.ivole-histogramRow .ivole-histogramCell1 {
+.cr-histogramTable tr.ivole-histogramRow .ivole-histogramCell1 {
 	white-space: nowrap;
 	width: auto;
 }
-#ivole-histogramTable tr.ivole-histogramRow .ivole-histogramCell2 {
+.cr-histogramTable tr.ivole-histogramRow .ivole-histogramCell2 {
 	width: 70%;
 }
-.cr-all-reviews-shortcode #ivole-histogramTable tr.ivole-histogramRow .ivole-histogramCell2 {
+.cr-all-reviews-shortcode .cr-histogramTable tr.ivole-histogramRow .ivole-histogramCell2 {
 	min-width: 100px;
 }
-#ivole-histogramTable tr.ivole-histogramRow .ivole-histogramCell3 {
+.cr-histogramTable tr.ivole-histogramRow .ivole-histogramCell3 {
 	text-align: right;
 	white-space: nowrap;
 	width: auto;
@@ -943,7 +943,7 @@ div.iv-comment-image img {
 div.ivole-summaryBox {
 	margin-bottom: 2rem;
 }
-#ivole-histogramTable {
+.cr-histogramTable {
 	margin-bottom: 0px;
 	border-collapse: collapse;
 	border: 0px;
@@ -952,25 +952,25 @@ div.ivole-summaryBox {
 	min-width: auto;
 	margin: 0 auto;
 }
-#ivole-histogramTable .ivole-histogramRow {
+.cr-histogramTable .ivole-histogramRow {
 	border: 0px;
 }
-#ivole-histogramTable tr.ivole-histogramRow td {
+.cr-histogramTable tr.ivole-histogramRow td {
 	padding: 0.2rem 0.3rem;
 	vertical-align: middle;
 	border: 0px;
 	background-color: transparent;
 }
-#ivole-histogramTable tr.ivole-histogramRow:first-child td {
+.cr-histogramTable tr.ivole-histogramRow:first-child td {
 	padding-top: 0
 }
-#ivole-histogramTable tr.ivole-histogramRow:last-child td {
+.cr-histogramTable tr.ivole-histogramRow:last-child td {
 	padding-bottom: 0
 }
-#ivole-histogramTable tr.ivole-histogramRow td:first-child {
+.cr-histogramTable tr.ivole-histogramRow td:first-child {
 	padding-left: 0
 }
-#ivole-histogramTable tr.ivole-histogramRow td:last-child {
+.cr-histogramTable tr.ivole-histogramRow td:last-child {
 	padding-right: 0
 }
 #reviews .cr-credits-div,
@@ -1014,10 +1014,14 @@ div.ivole-summaryBox {
 	font-size: 14px;
 	color: #0E252C;
 }
-#ivole-histogramTable tr.ivole-histogramRow a {
+.cr-histogramTable tr.ivole-histogramRow .ivole-histogram-a,
+.cr-histogramTable tr.ivole-histogramRow .cr-histogram-a {
 	display: inline;
+	cursor: pointer;
+	color: #0E252C;
 }
-#ivole-histogramTable tr.ivole-histogramRow.ivole-histogramRow-s a {
+.cr-histogramTable tr.ivole-histogramRow.ivole-histogramRow-s .ivole-histogram-a,
+.cr-histogramTable tr.ivole-histogramRow.ivole-histogramRow-s .cr-histogram-a {
 	display: inline;
 	font-weight: bold;
 }

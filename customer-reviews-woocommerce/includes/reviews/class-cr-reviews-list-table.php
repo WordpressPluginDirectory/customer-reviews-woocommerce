@@ -703,7 +703,7 @@ class CR_Reviews_List_Table extends WP_List_Table {
 			return '';
 		}
 
-		if ( ! $this->user_can ) {
+		if ( ! current_user_can( 'moderate_comments' ) ) {
 			return;
 		}
 
@@ -761,7 +761,7 @@ class CR_Reviews_List_Table extends WP_List_Table {
 			$actions['trash'] = "<a href='$trash_url' data-wp-lists='delete:the-comment-list:comment-$comment->comment_ID::trash=1' class='delete vim-d vim-destructive' aria-label='" . esc_attr__( 'Move this review to the Trash' ) . "'>" . _x( 'Trash', 'verb' ) . '</a>';
 		}
 
-		if ( 'spam' !== $the_comment_status && 'trash' !== $the_comment_status ) {
+		if ( 'spam' !== $the_comment_status && 'trash' !== $the_comment_status && $this->user_can ) {
 			$actions['edit'] = "<a href='comment.php?action=editcomment&amp;c={$comment->comment_ID}' aria-label='" . esc_attr__( 'Edit this review' ) . "'>". __( 'Edit' ) . '</a>';
 
 			$format = '<a data-comment-id="%d" data-post-id="%d" data-action="%s" class="%s" aria-label="%s" href="#">%s</a>';

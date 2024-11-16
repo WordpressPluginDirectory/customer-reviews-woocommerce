@@ -231,7 +231,7 @@ class CR_Reviews_Top_Charts {
 						'class' => 'chartColor5'
 					)
 				) ),
-				'total' => number_format_i18n( $via_any, 0 ),
+				'total' => html_entity_decode( number_format_i18n( $via_any, 0 ) ),
 				'sources' => array_values( $sources )
 			)
 		);

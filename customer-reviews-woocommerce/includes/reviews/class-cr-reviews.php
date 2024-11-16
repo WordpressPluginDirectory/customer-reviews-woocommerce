@@ -14,7 +14,7 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 
 		private $limit_file_size = 5000000;
 		private $limit_file_count = 3;
-		private $ivrating = 'ivrating';
+		public static $rating_get_filter = 'ivrating';
 		private $ivole_reviews_histogram = 'no';
 		private $ivole_ajax_reviews = 'no';
 		private $disable_lightbox = false;
@@ -22,6 +22,7 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 		protected $lang;
 		public static $onsite_q_types;
 		private $incentivized_badge = false;
+		public static $reviews_tab;
 
 		const REVIEWS_META_IMG = 'ivole_review_image';
 		const REVIEWS_META_LCL_IMG = 'ivole_review_image2';
@@ -36,6 +37,7 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 			$this->ivole_reviews_histogram = get_option( 'ivole_reviews_histogram', 'no' );
 			$this->ivole_ajax_reviews = get_option( 'ivole_ajax_reviews', 'no' );
 			$this->reviews_voting = 'yes' === get_option( 'ivole_reviews_voting', 'no' ) ? true : false;
+			self::$reviews_tab = apply_filters( 'cr_productpage_reviews_tab', '#tab-reviews' );
 			self::$onsite_q_types = array(
 				'text' => __( 'Text', 'customer-reviews-woocommerce' ),
 				'number' => __( 'Number', 'customer-reviews-woocommerce' )
@@ -393,7 +395,9 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 						'cr_upload_error_too_many' => sprintf( __( 'Error: You tried to upload too many files. The maximum number of files that can be uploaded is %d.', 'customer-reviews-woocommerce' ), $this->limit_file_count ),
 						'cr_upload_error_file_size' => sprintf( __( 'The file cannot be uploaded because its size exceeds the limit of %d MB', 'customer-reviews-woocommerce' ), intval( $this->limit_file_size / 1024 / 1024 ) ),
 						'cr_images_upload_limit' => $this->limit_file_count,
-						'cr_images_upload_max_size' => $this->limit_file_size
+						'cr_images_upload_max_size' => $this->limit_file_size,
+						'rating_filter' => self::$rating_get_filter,
+						'reviews_tab' => self::$reviews_tab
 					)
 			);
 			wp_enqueue_script( 'cr-frontend-js' );
@@ -471,7 +475,6 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 		return wc_locate_template( $template_file_name, '', plugin_dir_path ( dirname( dirname( __FILE__ ) ) ) . '/templates/' );
 	}
 	public function show_summary_table( $product_id, $is_ajax = false, $new_reviews_allowed = false ) {
-		$tab_reviews = apply_filters( 'cr_productpage_reviews_tab', '#tab-reviews' );
 		$all = $this->count_ratings( $product_id, 0 );
 		if( $all > 0 ) {
 			$five = (float)$this->count_ratings( $product_id, 5 );
@@ -539,15 +542,15 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 				$nonce = wp_create_nonce( "cr_product_reviews_filter_" . $product_id );
 				$output .= '<div class="ivole-summaryBox cr-summaryBox-ajax" data-nonce="' . $nonce . '">';
 			} else {
-				$output .= '<div class="ivole-summaryBox">';
+				$output .= '<div class="ivole-summaryBox cr-noAjax">';
 			}
-			$output .= '<table id="ivole-histogramTable">';
+			$output .= '<table class="cr-histogramTable">';
 			$output .= '<tbody>';
 			$output .= '<tr class="ivole-histogramRow">';
 			if( $five > 0 ) {
-				$output .= '<td class="ivole-histogramCell1"><a class="ivole-histogram-a" data-rating="5" href="' . esc_url( add_query_arg( $this->ivrating, 5, get_permalink( $product_id ) ) ) . $tab_reviews . '" title="' . __( '5 star', 'customer-reviews-woocommerce' ) . '">' . __( '5 star', 'customer-reviews-woocommerce' ) . '</a></td>';
-				$output .= '<td class="ivole-histogramCell2"><a class="ivole-histogram-a" data-rating="5" href="' . esc_url( add_query_arg( $this->ivrating, 5, get_permalink( $product_id ) ) ) . $tab_reviews . '"><div class="ivole-meter"><div class="ivole-meter-bar" style="width: ' . $five_percent . '%">' . $five_percent . '</div></div></a></td>';
-				$output .= '<td class="ivole-histogramCell3"><a class="ivole-histogram-a" data-rating="5" href="' . esc_url( add_query_arg( $this->ivrating, 5, get_permalink( $product_id ) ) ) . $tab_reviews . '">' . (string)$five_percent . '%</a></td>';
+				$output .= '<td class="ivole-histogramCell1"><span class="ivole-histogram-a" data-rating="5">' . __( '5 star', 'customer-reviews-woocommerce' ) . '</span></td>';
+				$output .= '<td class="ivole-histogramCell2"><div class="ivole-histogram-a" data-rating="5"><div class="ivole-meter"><div class="ivole-meter-bar" style="width: ' . $five_percent . '%">' . $five_percent . '</div></div></div></td>';
+				$output .= '<td class="ivole-histogramCell3"><span class="ivole-histogram-a" data-rating="5">' . (string)$five_percent . '%</span></td>';
 			} else {
 				$output .= '<td class="ivole-histogramCell1">' . __( '5 star', 'customer-reviews-woocommerce' ) . '</td>';
 				$output .= '<td class="ivole-histogramCell2"><div class="ivole-meter"><div class="ivole-meter-bar" style="width: ' . $five_percent . '%"></div></div></td>';
@@ -556,9 +559,9 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 			$output .= '</tr>';
 			$output .= '<tr class="ivole-histogramRow">';
 			if( $four > 0 ) {
-				$output .= '<td class="ivole-histogramCell1"><a class="ivole-histogram-a" data-rating="4" href="' . esc_url( add_query_arg( $this->ivrating, 4, get_permalink( $product_id ) ) ) . $tab_reviews . '" title="' . __( '4 star', 'customer-reviews-woocommerce' ) . '">' . __( '4 star', 'customer-reviews-woocommerce' ) . '</a></td>';
-				$output .= '<td class="ivole-histogramCell2"><a class="ivole-histogram-a" data-rating="4" href="' . esc_url( add_query_arg( $this->ivrating, 4, get_permalink( $product_id ) ) ) . $tab_reviews . '"><div class="ivole-meter"><div class="ivole-meter-bar" style="width: ' . $four_percent . '%">' . $four_percent . '</div></div></a></td>';
-				$output .= '<td class="ivole-histogramCell3"><a class="ivole-histogram-a" data-rating="4" href="' . esc_url( add_query_arg( $this->ivrating, 4, get_permalink( $product_id ) ) ) . $tab_reviews . '">' . (string)$four_percent . '%</a></td>';
+				$output .= '<td class="ivole-histogramCell1"><span class="ivole-histogram-a" data-rating="4">' . __( '4 star', 'customer-reviews-woocommerce' ) . '</span></td>';
+				$output .= '<td class="ivole-histogramCell2"><div class="ivole-histogram-a" data-rating="4"><div class="ivole-meter"><div class="ivole-meter-bar" style="width: ' . $four_percent . '%">' . $four_percent . '</div></div></div></td>';
+				$output .= '<td class="ivole-histogramCell3"><span class="ivole-histogram-a" data-rating="4">' . (string)$four_percent . '%</span></td>';
 			} else {
 				$output .= '<td class="ivole-histogramCell1">' . __( '4 star', 'customer-reviews-woocommerce' ) . '</td>';
 				$output .= '<td class="ivole-histogramCell2"><div class="ivole-meter"><div class="ivole-meter-bar" style="width: ' . $four_percent . '%"></div></div></td>';
@@ -567,9 +570,9 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 			$output .= '</tr>';
 			$output .= '<tr class="ivole-histogramRow">';
 			if( $three > 0 ) {
-				$output .= '<td class="ivole-histogramCell1"><a class="ivole-histogram-a" data-rating="3" href="' . esc_url( add_query_arg( $this->ivrating, 3, get_permalink( $product_id ) ) ) . $tab_reviews . '" title="' . __( '3 star', 'customer-reviews-woocommerce' ) . '">' . __( '3 star', 'customer-reviews-woocommerce' ) . '</a></td>';
-				$output .= '<td class="ivole-histogramCell2"><a class="ivole-histogram-a" data-rating="3" href="' . esc_url( add_query_arg( $this->ivrating, 3, get_permalink( $product_id ) ) ) . $tab_reviews . '"><div class="ivole-meter"><div class="ivole-meter-bar" style="width: ' . $three_percent . '%">' . $three_percent .'</div></div></a></td>';
-				$output .= '<td class="ivole-histogramCell3"><a class="ivole-histogram-a" data-rating="3" href="' . esc_url( add_query_arg( $this->ivrating, 3, get_permalink( $product_id ) ) ) . $tab_reviews . '">' . (string)$three_percent . '%</a></td>';
+				$output .= '<td class="ivole-histogramCell1"><span class="ivole-histogram-a" data-rating="3">' . __( '3 star', 'customer-reviews-woocommerce' ) . '</span></td>';
+				$output .= '<td class="ivole-histogramCell2"><div class="ivole-histogram-a" data-rating="3"><div class="ivole-meter"><div class="ivole-meter-bar" style="width: ' . $three_percent . '%">' . $three_percent .'</div></div></div></td>';
+				$output .= '<td class="ivole-histogramCell3"><span class="ivole-histogram-a" data-rating="3">' . (string)$three_percent . '%</span></td>';
 			} else {
 				$output .= '<td class="ivole-histogramCell1">' . __( '3 star', 'customer-reviews-woocommerce' ) . '</td>';
 				$output .= '<td class="ivole-histogramCell2"><div class="ivole-meter"><div class="ivole-meter-bar" style="width: ' . $three_percent . '%"></div></div></td>';
@@ -578,9 +581,9 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 			$output .= '</tr>';
 			$output .= '<tr class="ivole-histogramRow">';
 			if( $two > 0 ) {
-				$output .= '<td class="ivole-histogramCell1"><a class="ivole-histogram-a" data-rating="2" href="' . esc_url( add_query_arg( $this->ivrating, 2, get_permalink( $product_id ) ) ) . $tab_reviews . '" title="' . __( '2 star', 'customer-reviews-woocommerce' ) . '">' . __( '2 star', 'customer-reviews-woocommerce' ) . '</a></td>';
-				$output .= '<td class="ivole-histogramCell2"><a class="ivole-histogram-a" data-rating="2" href="' . esc_url( add_query_arg( $this->ivrating, 2, get_permalink( $product_id ) ) ) . $tab_reviews . '"><div class="ivole-meter"><div class="ivole-meter-bar" style="width: ' . $two_percent . '%">' . $two_percent . '</div></div></a></td>';
-				$output .= '<td class="ivole-histogramCell3"><a class="ivole-histogram-a" data-rating="2" href="' . esc_url( add_query_arg( $this->ivrating, 2, get_permalink( $product_id ) ) ) . $tab_reviews . '">' . (string)$two_percent . '%</a></td>';
+				$output .= '<td class="ivole-histogramCell1"><span class="ivole-histogram-a" data-rating="2">' . __( '2 star', 'customer-reviews-woocommerce' ) . '</span></td>';
+				$output .= '<td class="ivole-histogramCell2"><div class="ivole-histogram-a" data-rating="2"><div class="ivole-meter"><div class="ivole-meter-bar" style="width: ' . $two_percent . '%">' . $two_percent . '</div></div></div></td>';
+				$output .= '<td class="ivole-histogramCell3"><span class="ivole-histogram-a" data-rating="2">' . (string)$two_percent . '%</span></td>';
 			} else {
 				$output .= '<td class="ivole-histogramCell1">' . __( '2 star', 'customer-reviews-woocommerce' ) . '</td>';
 				$output .= '<td class="ivole-histogramCell2"><div class="ivole-meter"><div class="ivole-meter-bar" style="width: ' . $two_percent . '%"></div></div></td>';
@@ -589,9 +592,9 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 			$output .= '</tr>';
 			$output .= '<tr class="ivole-histogramRow">';
 			if( $one > 0 ) {
-				$output .= '<td class="ivole-histogramCell1"><a class="ivole-histogram-a" data-rating="1" href="' . esc_url( add_query_arg( $this->ivrating, 1, get_permalink( $product_id ) ) ) . $tab_reviews . '" title="' . __( '1 star', 'customer-reviews-woocommerce' ) . '">' . __( '1 star', 'customer-reviews-woocommerce' ) . '</a></td>';
-				$output .= '<td class="ivole-histogramCell2"><a class="ivole-histogram-a" data-rating="1" href="' . esc_url( add_query_arg( $this->ivrating, 1, get_permalink( $product_id ) ) ) . $tab_reviews . '"><div class="ivole-meter"><div class="ivole-meter-bar" style="width: ' . $one_percent . '%">' . $one_percent . '</div></div></a></td>';
-				$output .= '<td class="ivole-histogramCell3"><a class="ivole-histogram-a" data-rating="1" href="' . esc_url( add_query_arg( $this->ivrating, 1, get_permalink( $product_id ) ) ) . $tab_reviews . '">' . (string)$one_percent . '%</a></td>';
+				$output .= '<td class="ivole-histogramCell1"><span class="ivole-histogram-a" data-rating="1">' . __( '1 star', 'customer-reviews-woocommerce' ) . '</span></td>';
+				$output .= '<td class="ivole-histogramCell2"><div class="ivole-histogram-a" data-rating="1"><div class="ivole-meter"><div class="ivole-meter-bar" style="width: ' . $one_percent . '%">' . $one_percent . '</div></div></div></td>';
+				$output .= '<td class="ivole-histogramCell3"><span class="ivole-histogram-a" data-rating="1">' . (string)$one_percent . '%</span></td>';
 			} else {
 				$output .= '<td class="ivole-histogramCell1">' . __( '1 star', 'customer-reviews-woocommerce' ) . '</td>';
 				$output .= '<td class="ivole-histogramCell2"><div class="ivole-meter"><div class="ivole-meter-bar" style="width: ' . $one_percent . '%"></div></div></td>';
@@ -601,12 +604,12 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 			$output .= '</tbody>';
 			$output .= '</table>';
 			$output .= '</div>';
-			if( get_query_var( $this->ivrating ) ) {
-				$rating = intval( get_query_var( $this->ivrating ) );
+			if( get_query_var( self::$rating_get_filter ) ) {
+				$rating = intval( get_query_var( self::$rating_get_filter ) );
 				if( $rating > 0 && $rating <= 5 ) {
 					$filtered_comments = sprintf( esc_html( _n( 'Showing %1$d of %2$d review (%3$d star). ', 'Showing %1$d of %2$d reviews (%3$d star). ', $all, 'customer-reviews-woocommerce'  ) ), $this->count_ratings( $product_id, $rating ), $all, $rating );
 					$all_comments = sprintf( esc_html( _n( 'See all %d review', 'See all %d reviews', $all, 'customer-reviews-woocommerce'  ) ), $all );
-					$output .= '<div class="cr-count-filtered-reviews">' . $filtered_comments . '<a class="cr-seeAllReviews" href="' . esc_url( get_permalink( $product_id ) ) . $tab_reviews . '">' . $all_comments . '</a></div>';
+					$output .= '<div class="cr-count-filtered-reviews">' . $filtered_comments . '<a class="cr-seeAllReviews" href="' . esc_url( get_permalink( $product_id ) ) . self::$reviews_tab . '">' . $all_comments . '</a></div>';
 				}
 			}
 			$output .= '</div>';
@@ -688,14 +691,14 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 	}
 	public function add_query_var() {
 		global $wp;
-		$wp->add_query_var( $this->ivrating );
+		$wp->add_query_var( self::$rating_get_filter );
 		$wp->add_query_var( 'crsearch' );
 	}
 	public function filter_comments2( $comment_args ) {
 		global $post;
 		if( get_post_type() === 'product' ) {
-			if( get_query_var( $this->ivrating ) ) {
-				$rating = intval( get_query_var( $this->ivrating ) );
+			if( get_query_var( self::$rating_get_filter ) ) {
+				$rating = intval( get_query_var( self::$rating_get_filter ) );
 				if( $rating > 0 && $rating <= 5 ) {
 					$comment_args['meta_query'][] = array(
 						'key' => 'rating',

@@ -10,7 +10,6 @@ if (! class_exists('CR_All_Reviews')) :
 	{
 		private $shortcode_atts;
 		private $shop_page_id;
-		private $ivrating = 'ivrating';
 		private $crsearch = 'crsearch';
 		private $search = '';
 		private $tags = array();
@@ -261,8 +260,8 @@ if (! class_exists('CR_All_Reviews')) :
 				}
 
 				$is_filtered_by_rating = false;
-				if ( get_query_var( $this->ivrating ) ) {
-					$rating = intval( get_query_var( $this->ivrating ) );
+				if ( get_query_var( CR_Reviews::$rating_get_filter ) ) {
+					$rating = intval( get_query_var( CR_Reviews::$rating_get_filter ) );
 					if ( $rating > 0 && $rating <= 5 ) {
 						$args['meta_query']['relation'] = 'AND';
 						$args['meta_query']['cr_rating_filter'] = array(
@@ -556,7 +555,7 @@ if (! class_exists('CR_All_Reviews')) :
 			if ( isset( $_POST['rating'] ) ) {
 				$rating = intval( $_POST['rating'] );
 				if ( 0 < $rating && 5 >= $rating ) {
-					set_query_var( $this->ivrating, $rating );
+					set_query_var( CR_Reviews::$rating_get_filter, $rating );
 					$all = $this->count_ratings(0);
 				} else {
 					$rating = 0;
@@ -863,14 +862,14 @@ if (! class_exists('CR_All_Reviews')) :
 			} else {
 				$output .= '<div class="ivole-summaryBox">';
 			}
-			$output .= '<table id="ivole-histogramTable">';
+			$output .= '<table class="cr-histogramTable">';
 			$output .= '<tbody>';
 			$output .= '<tr class="ivole-histogramRow">';
 			// five
 			if( $five > 0 ) {
-				$output .= '<td class="ivole-histogramCell1"><a class="cr-histogram-a" data-rating="5" href="' . esc_url( add_query_arg( $this->ivrating, 5, get_permalink() ) ) . '" title="' . __( '5 star', 'customer-reviews-woocommerce' ) . '">' . __( '5 star', 'customer-reviews-woocommerce' ) . '</a></td>';
-				$output .= '<td class="ivole-histogramCell2"><a class="cr-histogram-a" data-rating="5" href="' . esc_url( add_query_arg( $this->ivrating, 5, get_permalink() ) ) . '"><div class="ivole-meter"><div class="ivole-meter-bar" style="width: ' . $five_percent . '%">' . $five_percent . '</div></div></a></td>';
-				$output .= '<td class="ivole-histogramCell3"><a class="cr-histogram-a" data-rating="5" href="' . esc_url( add_query_arg( $this->ivrating, 5, get_permalink() ) ) . '">' . (string)$five_percent . '%</a></td>';
+				$output .= '<td class="ivole-histogramCell1"><span class="cr-histogram-a" data-rating="5">' . __( '5 star', 'customer-reviews-woocommerce' ) . '</span></td>';
+				$output .= '<td class="ivole-histogramCell2"><div class="cr-histogram-a" data-rating="5"><div class="ivole-meter"><div class="ivole-meter-bar" style="width: ' . $five_percent . '%">' . $five_percent . '</div></div></div></td>';
+				$output .= '<td class="ivole-histogramCell3"><span class="cr-histogram-a" data-rating="5">' . (string)$five_percent . '%</span></td>';
 			} else {
 				$output .= '<td class="ivole-histogramCell1">' . __('5 star', 'customer-reviews-woocommerce') . '</td>';
 				$output .= '<td class="ivole-histogramCell2"><div class="ivole-meter"><div class="ivole-meter-bar" style="width: ' . $five_percent . '%"></div></div></td>';
@@ -881,9 +880,9 @@ if (! class_exists('CR_All_Reviews')) :
 			$output .= '<tr class="ivole-histogramRow">';
 			// four
 			if( $four > 0 ) {
-				$output .= '<td class="ivole-histogramCell1"><a class="cr-histogram-a" data-rating="4" href="' . esc_url( add_query_arg( $this->ivrating, 4, get_permalink() ) ) . '" title="' . __( '4 star', 'customer-reviews-woocommerce' ) . '">' . __( '4 star', 'customer-reviews-woocommerce' ) . '</a></td>';
-				$output .= '<td class="ivole-histogramCell2"><a class="cr-histogram-a" data-rating="4" href="' . esc_url( add_query_arg( $this->ivrating, 4, get_permalink() ) ) . '"><div class="ivole-meter"><div class="ivole-meter-bar" style="width: ' . $four_percent . '%">' . $four_percent . '</div></div></a></td>';
-				$output .= '<td class="ivole-histogramCell3"><a class="cr-histogram-a" data-rating="4" href="' . esc_url( add_query_arg( $this->ivrating, 4, get_permalink() ) ) . '">' . (string)$four_percent . '%</a></td>';
+				$output .= '<td class="ivole-histogramCell1"><span class="cr-histogram-a" data-rating="4">' . __( '4 star', 'customer-reviews-woocommerce' ) . '</span></td>';
+				$output .= '<td class="ivole-histogramCell2"><div class="cr-histogram-a" data-rating="4"><div class="ivole-meter"><div class="ivole-meter-bar" style="width: ' . $four_percent . '%">' . $four_percent . '</div></div></div></td>';
+				$output .= '<td class="ivole-histogramCell3"><span class="cr-histogram-a" data-rating="4">' . (string)$four_percent . '%</span></td>';
 			} else {
 				$output .= '<td class="ivole-histogramCell1">' . __('4 star', 'customer-reviews-woocommerce') . '</td>';
 				$output .= '<td class="ivole-histogramCell2"><div class="ivole-meter"><div class="ivole-meter-bar" style="width: ' . $four_percent . '%"></div></div></td>';
@@ -894,9 +893,9 @@ if (! class_exists('CR_All_Reviews')) :
 			$output .= '<tr class="ivole-histogramRow">';
 			// three
 			if( $three > 0 ) {
-				$output .= '<td class="ivole-histogramCell1"><a class="cr-histogram-a" data-rating="3" href="' . esc_url( add_query_arg( $this->ivrating, 3, get_permalink() ) ) . '" title="' . __( '3 star', 'customer-reviews-woocommerce' ) . '">' . __( '3 star', 'customer-reviews-woocommerce' ) . '</a></td>';
-				$output .= '<td class="ivole-histogramCell2"><a class="cr-histogram-a" data-rating="3" href="' . esc_url( add_query_arg( $this->ivrating, 3, get_permalink() ) ) . '"><div class="ivole-meter"><div class="ivole-meter-bar" style="width: ' . $three_percent . '%">' . $three_percent . '</div></div></a></td>';
-				$output .= '<td class="ivole-histogramCell3"><a class="cr-histogram-a" data-rating="3" href="' . esc_url( add_query_arg( $this->ivrating, 3, get_permalink() ) ) . '">' . (string)$three_percent . '%</a></td>';
+				$output .= '<td class="ivole-histogramCell1"><span class="cr-histogram-a" data-rating="3">' . __( '3 star', 'customer-reviews-woocommerce' ) . '</span></td>';
+				$output .= '<td class="ivole-histogramCell2"><div class="cr-histogram-a" data-rating="3"><div class="ivole-meter"><div class="ivole-meter-bar" style="width: ' . $three_percent . '%">' . $three_percent . '</div></div></div></td>';
+				$output .= '<td class="ivole-histogramCell3"><span class="cr-histogram-a" data-rating="3">' . (string)$three_percent . '%</span></td>';
 			} else {
 				$output .= '<td class="ivole-histogramCell1">' . __('3 star', 'customer-reviews-woocommerce') . '</td>';
 				$output .= '<td class="ivole-histogramCell2"><div class="ivole-meter"><div class="ivole-meter-bar" style="width: ' . $three_percent . '%"></div></div></td>';
@@ -907,9 +906,9 @@ if (! class_exists('CR_All_Reviews')) :
 			$output .= '<tr class="ivole-histogramRow">';
 			// two
 			if( $two > 0 ) {
-				$output .= '<td class="ivole-histogramCell1"><a class="cr-histogram-a" data-rating="2" href="' . esc_url( add_query_arg( $this->ivrating, 2, get_permalink() ) ) . '" title="' . __( '2 star', 'customer-reviews-woocommerce' ) . '">' . __( '2 star', 'customer-reviews-woocommerce' ) . '</a></td>';
-				$output .= '<td class="ivole-histogramCell2"><a class="cr-histogram-a" data-rating="2" href="' . esc_url( add_query_arg( $this->ivrating, 2, get_permalink() ) ) . '"><div class="ivole-meter"><div class="ivole-meter-bar" style="width: ' . $two_percent . '%">' . $two_percent .'</div></div></a></td>';
-				$output .= '<td class="ivole-histogramCell3"><a class="cr-histogram-a" data-rating="2" href="' . esc_url( add_query_arg( $this->ivrating, 2, get_permalink() ) ) . '">' . (string)$two_percent . '%</a></td>';
+				$output .= '<td class="ivole-histogramCell1"><span class="cr-histogram-a" data-rating="2">' . __( '2 star', 'customer-reviews-woocommerce' ) . '</span></td>';
+				$output .= '<td class="ivole-histogramCell2"><div class="cr-histogram-a" data-rating="2"><div class="ivole-meter"><div class="ivole-meter-bar" style="width: ' . $two_percent . '%">' . $two_percent .'</div></div></div></td>';
+				$output .= '<td class="ivole-histogramCell3"><span class="cr-histogram-a" data-rating="2">' . (string)$two_percent . '%</span></td>';
 			} else {
 				$output .= '<td class="ivole-histogramCell1">' . __('2 star', 'customer-reviews-woocommerce') . '</td>';
 				$output .= '<td class="ivole-histogramCell2"><div class="ivole-meter"><div class="ivole-meter-bar" style="width: ' . $two_percent . '%"></div></div></td>';
@@ -920,9 +919,9 @@ if (! class_exists('CR_All_Reviews')) :
 			$output .= '<tr class="ivole-histogramRow">';
 			// one
 			if( $one > 0 ) {
-				$output .= '<td class="ivole-histogramCell1"><a class="cr-histogram-a" data-rating="1" href="' . esc_url( add_query_arg( $this->ivrating, 1, get_permalink() ) ) . '" title="' . __( '1 star', 'customer-reviews-woocommerce' ) . '">' . __( '1 star', 'customer-reviews-woocommerce' ) . '</a></td>';
-				$output .= '<td class="ivole-histogramCell2"><a class="cr-histogram-a" data-rating="1" href="' . esc_url( add_query_arg( $this->ivrating, 1, get_permalink() ) ) . '"><div class="ivole-meter"><div class="ivole-meter-bar" style="width: ' . $one_percent . '%">' . $one_percent . '</div></div></a></td>';
-				$output .= '<td class="ivole-histogramCell3"><a class="cr-histogram-a" data-rating="1" href="' . esc_url( add_query_arg( $this->ivrating, 1, get_permalink() ) ) . '">' . (string)$one_percent . '%</a></td>';
+				$output .= '<td class="ivole-histogramCell1"><span class="cr-histogram-a" data-rating="1">' . __( '1 star', 'customer-reviews-woocommerce' ) . '</span></td>';
+				$output .= '<td class="ivole-histogramCell2"><div class="cr-histogram-a" data-rating="1"><div class="ivole-meter"><div class="ivole-meter-bar" style="width: ' . $one_percent . '%">' . $one_percent . '</div></div></div></td>';
+				$output .= '<td class="ivole-histogramCell3"><span class="cr-histogram-a" data-rating="1">' . (string)$one_percent . '%</span></td>';
 			} else {
 				$output .= '<td class="ivole-histogramCell1">' . __('1 star', 'customer-reviews-woocommerce') . '</td>';
 				$output .= '<td class="ivole-histogramCell2"><div class="ivole-meter"><div class="ivole-meter-bar" style="width: ' . $one_percent . '%"></div></div></td>';
