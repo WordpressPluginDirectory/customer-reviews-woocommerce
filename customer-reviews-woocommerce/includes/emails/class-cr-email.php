@@ -262,7 +262,13 @@ class Ivole_Email {
 						continue;
 					}
 					if ( method_exists( $order_item, 'get_product_id' ) ) {
-						$product = wc_get_product( $order_item->get_product_id() );
+						// check if a variable product
+						$variation_id = $order_item->get_variation_id();
+						if ( $variation_id ) {
+							$product = wc_get_product( $variation_id );
+						} else {
+							$product = wc_get_product( $order_item->get_product_id() );
+						}
 						if ( $product ) {
 							$product_price = wc_get_price_to_display( $product );
 							$list_products .= $order_item->get_name() . ' / ' . CR_Email_Func::cr_price( $product_price, $price_args ) . '<br/>';

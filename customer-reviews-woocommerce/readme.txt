@@ -4,7 +4,7 @@ Tags: woocommerce, review plugin, review reminder, customer reviews, review for 
 Requires at least: 4.5
 Tested up to: 6.7
 Requires PHP: 7.2
-Stable tag: 5.63.0
+Stable tag: 5.63.1
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl.html
 
@@ -232,6 +232,8 @@ If you would like to change how reviews are sorted on product pages, it is possi
 
 == Changelog ==
 
+= 5.63.1 =
+* Bug fix: incorrect variation price when using {list_products} variable in the review reminder email template
 = 5.63.0 =
 * Improvement: removal of 'ivrating' URLs in the reviews summary box to exclude them from search engines indexing
 * Improvement: display of buttons to moderate reviews for users with the 'moderate_comments' capability
