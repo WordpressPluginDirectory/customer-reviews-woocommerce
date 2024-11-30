@@ -126,10 +126,19 @@ if ( ! class_exists( 'CR_Endpoint' ) ) :
 					$media_count_total = 0;
 
 					//shop review
-					if( isset( $body2->order->shop_rating ) && isset( $body2->order->shop_comment ) ) {
+					if ( isset( $body2->order->shop_rating ) && isset( $body2->order->shop_comment ) ) {
 						$shop_page_id = wc_get_page_id( 'shop' );
 						if( $shop_page_id > 0 ) {
-							$shop_comment_text = strval( $body2->order->shop_comment );
+							if ( is_object( $body2->order->shop_comment ) ) {
+								$shop_comment_text = strval( $body2->order->shop_comment->value );
+							} else {
+								$shop_comment_text = strval( $body2->order->shop_comment );
+							}
+							if ( is_object( $body2->order->shop_rating ) ) {
+								$shop_rating = intval( $body2->order->shop_rating->value );
+							} else {
+								$shop_rating = intval( $body2->order->shop_rating );
+							}
 
 							//check if API provided replies to custom questions
 							$shop_custom_questions = new CR_Custom_Questions();
@@ -186,7 +195,7 @@ if ( ! class_exists( 'CR_Endpoint' ) ) :
 									'comment_date' => $comment_date,
 									'comment_date_gmt' => get_gmt_from_date( $comment_date ) );
 								wp_update_comment( $commentdata );
-								update_comment_meta( $review_id, 'rating', intval( $body2->order->shop_rating ) );
+								update_comment_meta( $review_id, 'rating', $shop_rating );
 								if( $country ) {
 									update_comment_meta( $review_id, 'ivole_country', $country );
 								} else {
@@ -208,7 +217,7 @@ if ( ! class_exists( 'CR_Endpoint' ) ) :
 									'comment_post_ID' =>  $shop_page_id,
 									'comment_type' => 'review',
 									'comment_approved' => $comment_approved,
-									'comment_meta' => array( 'rating' => intval( $body2->order->shop_rating ) ) );
+									'comment_meta' => array( 'rating' => $shop_rating ) );
 								$review_id = wp_insert_comment( $commentdata );
 								if( !$review_id ) {
 									//adding a new review may fail, if review fields include characters that are not supported by DB
@@ -253,7 +262,7 @@ if ( ! class_exists( 'CR_Endpoint' ) ) :
 									if ( $local ) {
 										$local_reviews_notif[] = array(
 											'item' => $commentdata['comment_post_ID'],
-											'rating' => intval( $body2->order->shop_rating ),
+											'rating' => $shop_rating,
 											'comment' => $commentdata['comment_content']
 										);
 									}

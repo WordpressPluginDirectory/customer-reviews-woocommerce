@@ -125,7 +125,7 @@ if ( ! class_exists( 'CR_Reminders_Log_Table' ) ) :
 			$this->screen->render_screen_reader_content( 'heading_list' );
 
 			?>
-			<table class="wp-list-table cr-reminders-log-table <?php echo implode( ' ', $this->get_table_classes() ); ?>">
+			<table class="wp-list-table cr-reminders-log-table <?php echo implode( ' ', $this->get_table_classes() ); ?>" data-noncetr="<?php echo wp_create_nonce( 'reminders' ); ?>">
 				<thead>
 					<tr>
 						<?php $this->print_column_headers(); ?>
@@ -159,10 +159,14 @@ if ( ! class_exists( 'CR_Reminders_Log_Table' ) ) :
 			<?php
 		}
 
-		public function column_order( $reminder ) {
-			?>
-			<a href="<?php echo esc_url( get_edit_post_link( $reminder['orderId'] ) ); ?>"><?php echo $reminder['orderId']; ?></a>
-			<?php
+		public function _column_order( $reminder, $classes, $data, $primary ) {
+			if ( 'verified' === $reminder['verification'] && $reminder['extId'] ) {
+				$data .= 'data-orderid="' . esc_attr( wp_strip_all_tags( $reminder['orderId'] ) ) . '"';
+			}
+			$attributes = "class='$classes' $data";
+			echo "<td $attributes>";
+			echo '<a href="' . esc_url( get_edit_post_link( $reminder['orderId'] ) ) . '">' . $reminder['orderId'] . '</a>';
+			echo '</td>';
 		}
 
 		public function column_customer( $reminder ) {
@@ -187,10 +191,14 @@ if ( ! class_exists( 'CR_Reminders_Log_Table' ) ) :
 			echo esc_html( $local_timestamp );
 		}
 
-		public function column_status( $reminder ) {
-			echo esc_html(
-				CR_Reminders_Log::get_status_description( $reminder['status'] )
-			);
+		public function _column_status( $reminder, $classes, $data, $primary ) {
+			if ( 'verified' === $reminder['verification'] ) {
+				$data .= 'data-extid="' . esc_attr( wp_strip_all_tags( $reminder['extId'] ) ) . '"';
+			}
+			$attributes = "class='$classes' $data";
+			echo "<td $attributes>";
+			echo esc_html( CR_Reminders_Log::get_status_description( $reminder['status'] ) );
+			echo '</td>';
 		}
 
 		public function column_verification( $reminder ) {
@@ -335,6 +343,12 @@ if ( ! class_exists( 'CR_Reminders_Log_Table' ) ) :
 
 			$count_object = (object) $reminders_count;
 			return $count_object;
+		}
+
+		protected function extra_tablenav( $which ) {
+			if ( 'top' === $which ) {
+				echo '<span class="cr-reminders-log-table-loader"></span>';
+			}
 		}
 
 	}

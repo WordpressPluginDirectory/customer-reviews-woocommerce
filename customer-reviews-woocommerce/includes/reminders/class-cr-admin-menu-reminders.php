@@ -30,6 +30,7 @@ class CR_Reminders_Admin_Menu {
 			add_action( 'admin_enqueue_scripts', array( $this, 'include_scripts' ) );
 			add_filter( 'set-screen-option', array( $this, 'save_screen_options' ), 10, 3 );
 			add_action( 'wp_ajax_cr_get_reminders_top_row_stats', array( $this, 'get_reminders_top_row_stats' ) );
+			add_action( 'wp_ajax_cr_get_reminders_tracking_stats', array( 'CR_Reminders_Tracking', 'get_tracking_stats' ) );
 		}
 
 		/**

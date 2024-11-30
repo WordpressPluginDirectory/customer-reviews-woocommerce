@@ -772,5 +772,24 @@
 			}
 		}
 
+		// fetch tracking stats for the reminders
+		if ( 0 < jQuery('.cr-reminders-log-table').length ) {
+			let orderIds = jQuery('.cr-reminders-log-table .column-order').map( function() {
+				return jQuery(this).data('orderid');
+			} ).get();
+			let data = {
+				'action': 'cr_get_reminders_tracking_stats',
+				'orderIds': orderIds,
+				'nonce': jQuery('.cr-reminders-log-table').data('noncetr')
+			};
+			jQuery('.cr-reminders-log-table-loader').addClass('cr-fetch-in-progress');
+			jQuery.post( ajaxurl, data, function(response) {
+				jQuery('.cr-reminders-log-table-loader').removeClass('cr-fetch-in-progress');
+				response.forEach( ( el ) => {
+					jQuery('.cr-reminders-log-table .column-status[data-extid="' + el.extId + '"]').text(el.status);
+				} );
+			} );
+		}
+
 	} );
 } () );

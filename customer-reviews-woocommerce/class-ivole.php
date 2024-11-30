@@ -20,6 +20,7 @@ require_once( __DIR__ . '/includes/reminders/class-cr-reminders-log-table.php' )
 require_once( __DIR__ . '/includes/reminders/class-cr-reminders-details.php' );
 require_once( __DIR__ . '/includes/reminders/class-cr-local-forms.php' );
 require_once( __DIR__ . '/includes/reminders/class-cr-local-forms-ajax.php' );
+require_once( __DIR__ . '/includes/reminders/class-cr-reminders-tracking.php' );
 require_once( __DIR__ . '/includes/blocks/class-cr-all-reviews.php' );
 require_once( __DIR__ . '/includes/blocks/class-cr-reviews-grid.php' );
 require_once( __DIR__ . '/includes/blocks/class-cr-reviews-slider.php' );
@@ -80,7 +81,7 @@ require_once( __DIR__ . '/includes/analytics/class-cr-reminders-log.php' );
 require_once( __DIR__ . '/includes/analytics/class-cr-reviews-top-charts.php' );
 
 class Ivole {
-	const CR_VERSION = '5.63.1';
+	const CR_VERSION = '5.64.1';
 
 	public function __construct() {
 		if( function_exists( 'wc' ) ) {

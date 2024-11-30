@@ -407,20 +407,17 @@ if ( ! class_exists( 'CR_Review_Reminder_Settings' ) ):
 				)
 			);
 
-			// an option to track email opening is currently available only for local review forms
-			if ( 'yes' !== $verified_reviews ) {
-				$this->settings[88] = array(
-					'title'   => __( 'Track Opens', 'customer-reviews-woocommerce' ),
-					'desc'    => sprintf(
-						__( 'Enable this checkbox to discover when customers open emails with review invitations by embedding an invisible pixel into email templates and tracking when it is downloaded. The tracking status will be displayed on the <a href="%s">Reminders</a> page.', 'customer-reviews-woocommerce' ),
-						admin_url( 'admin.php?page=cr-reviews-reminders&tab=sent' )
-					),
-					'id'      => 'ivole_track_reminder_open',
-					'default' => 'no',
-					'type'    => 'checkbox',
-					'autoload' => false
-				);
-			}
+			$this->settings[88] = array(
+				'title'   => __( 'Track Opens', 'customer-reviews-woocommerce' ),
+				'desc'    => sprintf(
+					__( 'Enable this checkbox to discover when customers open emails with review invitations by embedding an invisible pixel into email templates and tracking when it is downloaded. The tracking status will be displayed on the <a href="%s">Reminders</a> page.', 'customer-reviews-woocommerce' ),
+					admin_url( 'admin.php?page=cr-reviews-reminders&tab=sent' )
+				),
+				'id'      => 'ivole_track_reminder_open',
+				'default' => 'no',
+				'type'    => 'checkbox',
+				'autoload' => false
+			);
 
 			// some features of review forms are not available for local forms
 			if( 0 < count( $available_languages ) ) {

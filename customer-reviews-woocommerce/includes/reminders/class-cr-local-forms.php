@@ -23,6 +23,7 @@ if ( ! class_exists( 'CR_Local_Forms' ) ) :
 		const HEADER_TEMPLATE = 'form-header.php';
 		const ITEM_BLOCK_TEMPLATE = 'form-block-item.php';
 		const CUSTOMER_TEMPLATE = 'form-customer.php';
+		const ERROR_TEMPLATE = 'form-error.php';
 		const FOOTER_TEMPLATE = 'form-footer.php';
 		const FORMS_TABLE = 'cr_local_forms';
 		const FORMS_SLUG = 'cusrev';
@@ -119,6 +120,9 @@ if ( ! class_exists( 'CR_Local_Forms' ) ) :
 					$this->form_block( $item );
 				}
 				$this->customer_block();
+				$this->form_footer();
+			} else {
+				$this->form_error();
 				$this->form_footer();
 			}
 		}
@@ -268,6 +272,27 @@ if ( ! class_exists( 'CR_Local_Forms' ) ) :
 			echo $output;
 		}
 
+		private function form_error() {
+			$template = wc_locate_template(
+				self::ERROR_TEMPLATE,
+				'customer-reviews-woocommerce',
+				__DIR__ . '/../../templates/'
+			);
+			$output = '';
+			$cr_form_css = plugins_url( '/css/form.css', dirname( dirname( __FILE__ ) ) ) . '?ver=' . Ivole::CR_VERSION;
+			$cr_form_js = plugins_url( '/js/form.js', dirname( dirname( __FILE__ ) ) ) . '?ver=' . Ivole::CR_VERSION;
+			$cr_form_id = $this->form_id;
+			$cr_form_header = __( 'Error', 'customer-reviews-woocommerce' );
+			$cr_form_desc = __( 'The order contains no items for review. Please reach out to the website administrator for assistance.', 'customer-reviews-woocommerce' );
+			$cr_form_color1 = $this->cr_form_color1;
+			$cr_form_color2 = $this->cr_form_color2;
+			$cr_form_color3 = $this->cr_form_color3;
+			ob_start();
+			include( $template );
+			$output = ob_get_clean();
+			echo $output;
+		}
+
 		public static function save_form( $orderId, $customer, $header, $body, $items, $is_test, $language, $extra ) {
 			// check if the table exists
 			global $wpdb;
@@ -286,30 +311,13 @@ if ( ! class_exists( 'CR_Local_Forms' ) ) :
 								`displayName` varchar(1024) DEFAULT NULL,
 								`formHeader` varchar(1024) DEFAULT NULL,
 								`formBody` varchar(1024) DEFAULT NULL,
-								`items` json DEFAULT NULL,
+								`items` text DEFAULT NULL,
 								`language` varchar(10) DEFAULT NULL,
 								`extra` text DEFAULT NULL,
 								PRIMARY KEY (`formId`),
 								KEY `orderId_index` (`orderId`)
 							) CHARACTER SET 'utf8mb4';" ) ) {
-						// it is possible that Maria DB is used that does not support JSON type
-						if( true !== $wpdb->query(
-								"CREATE TABLE `$table_name` (
-									`formId` varchar(190),
-									`orderId` varchar(190) DEFAULT NULL,
-									`customerEmail` varchar(1024) DEFAULT NULL,
-									`customerName` varchar(1024) DEFAULT NULL,
-									`displayName` varchar(1024) DEFAULT NULL,
-									`formHeader` varchar(1024) DEFAULT NULL,
-									`formBody` varchar(1024) DEFAULT NULL,
-									`items` text DEFAULT NULL,
-									`language` varchar(10) DEFAULT NULL,
-									`extra` text DEFAULT NULL,
-									PRIMARY KEY (`formId`),
-									KEY `orderId_index` (`orderId`)
-								) CHARACTER SET 'utf8mb4';" ) ) {
-							return array( 'code' => 1, 'text' => 'Table ' . $table_name . ' could not be created' );
-						}
+						return array( 'code' => 1, 'text' => 'Table ' . $table_name . ' could not be created' );
 					}
 				} else {
 					$table_name = $name_check;

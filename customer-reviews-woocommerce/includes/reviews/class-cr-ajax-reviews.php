@@ -774,7 +774,7 @@ if (! class_exists('CR_Ajax_Reviews')) :
 			return $html;
 		}
 
-		public function wpml_is_filtered( $name, $args ) {
+		public function wpml_is_filtered( $name, $args = array() ) {
 			if (
 				has_filter( 'wpml_is_comment_query_filtered' ) &&
 				! wp_doing_ajax() &&

@@ -386,7 +386,6 @@ class Ivole_Email {
 			}
 
 			$data = array(
-				'token' => '164592f60fbf658711d47b2f55a1bbba',
 				'shop' => array( "name" => self::get_blogname(),
 			 		'domain' => self::get_blogurl(),
 				 	'country' => apply_filters( 'woocommerce_get_base_location', get_option( 'woocommerce_default_country' ) ) ),
@@ -428,6 +427,7 @@ class Ivole_Email {
 						'text' => get_option( 'ivole_email_color_text', '#ffffff' )
 					)
 				),
+				'trackOpens' => ( 'yes' === get_option( 'ivole_track_reminder_open', 'no' ) ? true : false ),
 				'language' => $this->language,
 				'schedule' => $schedule,
 				'liveMode' => $liveMode

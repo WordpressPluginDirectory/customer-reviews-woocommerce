@@ -257,7 +257,7 @@ class CR_Reminders_Log {
 		$wpdb->query( "DELETE FROM `$table_name` WHERE id IN($ids)" );
 	}
 
-	public function email_opened( $extId ) {
+	public function email_opened( $extId, $timestamp = null ) {
 		global $wpdb;
 		if ( 0 === $this->check_create_table() ) {
 			$extId = sanitize_text_field( $extId );
@@ -275,13 +275,15 @@ class CR_Reminders_Log {
 						$this->logs_tbl_name,
 						array(
 							'status' => 'rmd_opened',
-							'dateEmailOpened' => gmdate('Y-m-d H:i:s')
+							'dateEmailOpened' => gmdate( 'Y-m-d H:i:s', $timestamp )
 						),
 						array( 'extId' => $extId )
 					);
+					return true;
 				}
 			}
 		}
+		return false;
 	}
 
 	public static function count_reminders( $search ) {
@@ -303,7 +305,7 @@ class CR_Reminders_Log {
 		}
 	}
 
-	public function form_opened( $extId ) {
+	public function form_opened( $extId, $timestamp = null ) {
 		global $wpdb;
 		if ( 0 === $this->check_create_table() ) {
 			$extId = sanitize_text_field( $extId );
@@ -321,14 +323,16 @@ class CR_Reminders_Log {
 							$this->logs_tbl_name,
 							array(
 								'status' => 'frm_opened',
-								'dateFormOpened' => gmdate('Y-m-d H:i:s')
+								'dateFormOpened' => gmdate( 'Y-m-d H:i:s', $timestamp )
 							),
 							array( 'extId' => $extId )
 						);
+						return true;
 					}
 				}
 			}
 		}
+		return false;
 	}
 
 	public function get_details( $id ) {

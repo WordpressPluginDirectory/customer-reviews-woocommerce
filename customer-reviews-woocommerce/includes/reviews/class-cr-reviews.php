@@ -1650,7 +1650,7 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 					<?php echo esc_html( $count_wording ); ?>
 				</div>
 				<div class="cr-ajax-reviews-sort-div">
-					<select name="cr_ajax_reviews_sort" class="cr-ajax-reviews-sort" aria-label="' . esc_attr__( 'Sort reviews', 'customer-reviews-woocommerce' ) . '">
+					<select name="cr_ajax_reviews_sort" class="cr-ajax-reviews-sort" aria-label="<?php echo esc_attr__( 'Sort reviews', 'customer-reviews-woocommerce' ); ?>">
 						<option value="recent"<?php if( 'recent' === CR_Ajax_Reviews::get_sort() ) { echo ' selected="selected"'; } ?>>
 							<?php echo __( 'Most Recent', 'customer-reviews-woocommerce' ); ?>
 						</option>

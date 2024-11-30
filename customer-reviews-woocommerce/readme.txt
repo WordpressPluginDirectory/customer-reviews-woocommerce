@@ -4,7 +4,7 @@ Tags: woocommerce, review plugin, review reminder, customer reviews, review for 
 Requires at least: 4.5
 Tested up to: 6.7
 Requires PHP: 7.2
-Stable tag: 5.63.1
+Stable tag: 5.64.1
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl.html
 
@@ -232,6 +232,12 @@ If you would like to change how reviews are sorted on product pages, it is possi
 
 == Changelog ==
 
+= 5.64.1 =
+* Bug fix: an error on submission of reviews
+= 5.64.0 =
+* Breaking change: support of a new version of the Review Reminder API - please verify that a license key is maintained in the settings (Reviews > Settings > License Key) before installing the update
+* Improvement: 'Track Opens' option can be enabled for review reminders sent with the 'Independently verified' setting
+* Improvement: an error message on local aggregated review forms created for orders with no items for review
 = 5.63.1 =
 * Bug fix: incorrect variation price when using {list_products} variable in the review reminder email template
 = 5.63.0 =

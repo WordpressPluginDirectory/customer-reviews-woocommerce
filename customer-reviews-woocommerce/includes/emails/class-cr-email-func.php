@@ -304,7 +304,7 @@ if ( ! class_exists( 'CR_Email_Func' ) ) :
 			$cr_email_color_text = get_option( 'ivole_email_color_text', '#ffffff' );
 			// optional tracking pixel
 			$cr_email_pixel = '';
-			if ( 'yes' === get_option( 'ivole_track_reminder_open', 'no' ) ) {
+			if ( $data['trackOpens'] ) {
 				$pixel_src = esc_url( get_home_url() . '/' . CR_Local_Forms::PIXEL_SLUG . '/' . $ext_id . '.png' );
 				$cr_email_pixel = sprintf( CR_Local_Forms::PIXEL_DIV, $pixel_src );
 			}
@@ -426,7 +426,7 @@ if ( ! class_exists( 'CR_Email_Func' ) ) :
 				$result['email_id'] = $message['email_id'];
 			} else {
 				// CusRev mailer
-				$api_url = 'https://api.cusrev.com/v1/production/review-reminder';
+				$api_url = 'https://api.cusrev.com/v2/review-reminder';
 				if( $is_test ) {
 					unset( $data['order']['items'] );
 					$api_url = 'https://api.cusrev.com/v2/test-email';
@@ -450,9 +450,11 @@ if ( ! class_exists( 'CR_Email_Func' ) ) :
 					$result = json_decode( $result, true );
 				}
 				$result['message'] = '';
+				if ( isset( $result['extId'] ) && $result['extId'] ) {
+					$result['email_id'] = $result['extId'];
+				}
 			}
 			$result['data'] = $data;
-			$message['email_id'] = NULL;
 			return $result;
 		}
 
