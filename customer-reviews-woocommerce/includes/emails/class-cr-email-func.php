@@ -304,7 +304,7 @@ if ( ! class_exists( 'CR_Email_Func' ) ) :
 			$cr_email_color_text = get_option( 'ivole_email_color_text', '#ffffff' );
 			// optional tracking pixel
 			$cr_email_pixel = '';
-			if ( $data['trackOpens'] ) {
+			if ( isset( $data['trackOpens'] ) && $data['trackOpens'] ) {
 				$pixel_src = esc_url( get_home_url() . '/' . CR_Local_Forms::PIXEL_SLUG . '/' . $ext_id . '.png' );
 				$cr_email_pixel = sprintf( CR_Local_Forms::PIXEL_DIV, $pixel_src );
 			}

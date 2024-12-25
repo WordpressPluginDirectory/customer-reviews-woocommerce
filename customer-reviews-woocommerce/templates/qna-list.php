@@ -9,8 +9,8 @@ foreach ($qna as $q) {
 		<div class="cr-qna-list-q-q">
 			<div class="cr-qna-list-q-q-l">
 				<svg class="cr-qna-list-q-icon" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-				<circle cx="11" cy="11" r="10.25" stroke="#898F92" stroke-width="1.5"/>
-				<path d="M11.7668 13.0628H10.1794V12.5437C10.1794 12.1066 10.2422 11.7468 10.3677 11.4645C10.4933 11.1821 10.7265 10.877 11.0673 10.5492L11.6726 9.96175C12.0852 9.57923 12.2915 9.17395 12.2915 8.7459C12.2915 8.3816 12.1749 8.08106 11.9417 7.84426C11.7175 7.60747 11.4126 7.48907 11.0269 7.48907C10.6233 7.48907 10.296 7.63024 10.0448 7.91257C9.80269 8.18579 9.67265 8.51821 9.65471 8.90984L8 8.75956C8.09865 7.90346 8.43498 7.22951 9.00897 6.7377C9.58296 6.2459 10.2915 6 11.1345 6C11.9507 6 12.6323 6.23224 13.1794 6.69672C13.7265 7.1612 14 7.80783 14 8.63661C14 9.16484 13.8969 9.5929 13.6906 9.92077C13.4843 10.2486 13.139 10.6266 12.6547 11.0546C12.287 11.3825 12.0448 11.6466 11.9283 11.847C11.8206 12.0383 11.7668 12.3251 11.7668 12.7076V13.0628ZM10.2332 15.6995C10.0179 15.4991 9.91031 15.2532 9.91031 14.9617C9.91031 14.6703 10.0135 14.4199 10.2197 14.2104C10.435 14.0009 10.6906 13.8962 10.9865 13.8962C11.2825 13.8962 11.5336 13.9964 11.7399 14.1967C11.9552 14.3971 12.0628 14.643 12.0628 14.9344C12.0628 15.2259 11.9552 15.4763 11.7399 15.6858C11.5336 15.8953 11.2825 16 10.9865 16C10.6996 16 10.4484 15.8998 10.2332 15.6995Z" fill="#898F92"/>
+				<circle cx="11" cy="11" r="10.25" stroke="#276A56" stroke-width="1.5"/>
+				<path d="M11.7668 13.0628H10.1794V12.5437C10.1794 12.1066 10.2422 11.7468 10.3677 11.4645C10.4933 11.1821 10.7265 10.877 11.0673 10.5492L11.6726 9.96175C12.0852 9.57923 12.2915 9.17395 12.2915 8.7459C12.2915 8.3816 12.1749 8.08106 11.9417 7.84426C11.7175 7.60747 11.4126 7.48907 11.0269 7.48907C10.6233 7.48907 10.296 7.63024 10.0448 7.91257C9.80269 8.18579 9.67265 8.51821 9.65471 8.90984L8 8.75956C8.09865 7.90346 8.43498 7.22951 9.00897 6.7377C9.58296 6.2459 10.2915 6 11.1345 6C11.9507 6 12.6323 6.23224 13.1794 6.69672C13.7265 7.1612 14 7.80783 14 8.63661C14 9.16484 13.8969 9.5929 13.6906 9.92077C13.4843 10.2486 13.139 10.6266 12.6547 11.0546C12.287 11.3825 12.0448 11.6466 11.9283 11.847C11.8206 12.0383 11.7668 12.3251 11.7668 12.7076V13.0628ZM10.2332 15.6995C10.0179 15.4991 9.91031 15.2532 9.91031 14.9617C9.91031 14.6703 10.0135 14.4199 10.2197 14.2104C10.435 14.0009 10.6906 13.8962 10.9865 13.8962C11.2825 13.8962 11.5336 13.9964 11.7399 14.1967C11.9552 14.3971 12.0628 14.643 12.0628 14.9344C12.0628 15.2259 11.9552 15.4763 11.7399 15.6858C11.5336 15.8953 11.2825 16 10.9865 16C10.6996 16 10.4484 15.8998 10.2332 15.6995Z" fill="#31856C"/>
 				</svg>
 			</div>
 			<div class="cr-qna-list-q-q-r">
@@ -25,8 +25,8 @@ foreach ($qna as $q) {
 			<div class="cr-qna-list-q-a-l">
 				<svg class="cr-qna-list-q-icon" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
 				<g clip-path="url(#clip0)">
-				<path d="M11.5386 1C11.533 1.00563 11.5217 1.00563 11.5049 1.00563C5.81081 1.00563 1.18018 5.63625 1.18018 11.3303C1.18018 13.654 1.97352 15.9103 3.42516 17.7276L1.92288 21.2161C1.79909 21.503 1.93413 21.835 2.21546 21.9532C2.31673 21.9982 2.42926 22.0094 2.53617 21.9925L8.04454 21.0248C9.14734 21.4243 10.3064 21.6268 11.4767 21.6212C17.1708 21.6212 21.8014 16.9906 21.8014 11.2965C21.8127 5.61937 17.2158 1.00563 11.5386 1ZM11.4823 20.5015C10.3964 20.5015 9.32176 20.3046 8.30336 19.922C8.20771 19.8826 8.10643 19.877 8.00515 19.8939L3.36889 20.7041L4.59548 17.8514C4.67988 17.6545 4.64612 17.4238 4.50545 17.2606C3.84152 16.4898 3.31263 15.6121 2.94128 14.6612C2.52492 13.5978 2.31111 12.4668 2.31111 11.3247C2.31111 6.24954 6.44098 2.1253 11.5105 2.1253C16.5687 2.11405 20.6761 6.20453 20.6817 11.2628C20.6817 11.274 20.6817 11.2853 20.6817 11.2965C20.6817 16.3773 16.5518 20.5015 11.4823 20.5015Z" fill="#898F92" stroke="#898F92" stroke-width="0.6"/>
-				<rect x="7.29126" y="9.3999" width="8.4" height="1.575" fill="#898F92"/><rect x="7.29102" y="12.0244" width="6.3" height="1.575" fill="#898F92"/></g>
+				<path d="M11.5386 1C11.533 1.00563 11.5217 1.00563 11.5049 1.00563C5.81081 1.00563 1.18018 5.63625 1.18018 11.3303C1.18018 13.654 1.97352 15.9103 3.42516 17.7276L1.92288 21.2161C1.79909 21.503 1.93413 21.835 2.21546 21.9532C2.31673 21.9982 2.42926 22.0094 2.53617 21.9925L8.04454 21.0248C9.14734 21.4243 10.3064 21.6268 11.4767 21.6212C17.1708 21.6212 21.8014 16.9906 21.8014 11.2965C21.8127 5.61937 17.2158 1.00563 11.5386 1ZM11.4823 20.5015C10.3964 20.5015 9.32176 20.3046 8.30336 19.922C8.20771 19.8826 8.10643 19.877 8.00515 19.8939L3.36889 20.7041L4.59548 17.8514C4.67988 17.6545 4.64612 17.4238 4.50545 17.2606C3.84152 16.4898 3.31263 15.6121 2.94128 14.6612C2.52492 13.5978 2.31111 12.4668 2.31111 11.3247C2.31111 6.24954 6.44098 2.1253 11.5105 2.1253C16.5687 2.11405 20.6761 6.20453 20.6817 11.2628C20.6817 11.274 20.6817 11.2853 20.6817 11.2965C20.6817 16.3773 16.5518 20.5015 11.4823 20.5015Z" fill="#31856C" stroke="#31856C" stroke-width="0.6"/>
+				<rect x="7.29126" y="9.3999" width="8.4" height="1.575" fill="#31856C"/><rect x="7.29102" y="12.0244" width="6.3" height="1.575" fill="#31856C"/></g>
 				<defs><clipPath id="clip0"><rect width="22" height="22" fill="white"/></clipPath></defs>
 				</svg>
 			</div>
@@ -48,15 +48,15 @@ foreach ($qna as $q) {
 							if( 1 === $a['author_type'] ) {
 								$store_manager = apply_filters( 'cr_qna_store_manager', __( 'store manager', 'customer-reviews-woocommerce' ) );
 								$store_manager_svg = '<svg class="cr-qna-list-v-icon" width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-								<path class="cr-store-manager-svg" d="M14.26 2.7401C12.7215 1.20157 10.6758 0.354248 8.50002 0.354248C6.3241 0.354248 4.27857 1.20157 2.74004 2.7401C1.20151 4.27863 0.354187 6.32416 0.354187 8.50008C0.354187 10.6759 1.20151 12.7215 2.74004 14.2601C4.27857 15.7986 6.3241 16.6459 8.50002 16.6459C10.6758 16.6459 12.7215 15.7986 14.26 14.2601C15.7985 12.7215 16.6459 10.6759 16.6459 8.50008C16.6459 6.32416 15.7985 4.27863 14.26 2.7401ZM4.43792 14.4308C4.77861 12.4692 6.47848 11.0223 8.50002 11.0223C10.5217 11.0223 12.2214 12.4692 12.5621 14.4308C11.4056 15.2255 10.0062 15.6913 8.50002 15.6913C6.99381 15.6913 5.59449 15.2255 4.43792 14.4308ZM5.90995 7.47763C5.90995 6.04935 7.07187 4.88756 8.50002 4.88756C9.92818 4.88756 11.0901 6.04947 11.0901 7.47763C11.0901 8.90578 9.92818 10.0677 8.50002 10.0677C7.07187 10.0677 5.90995 8.90578 5.90995 7.47763ZM13.3889 13.7687C13.132 12.8555 12.6218 12.027 11.9066 11.3798C11.4678 10.9826 10.9684 10.6693 10.4314 10.4484C11.4019 9.81538 12.0448 8.72021 12.0448 7.47763C12.0448 5.52308 10.4546 3.93297 8.50002 3.93297C6.54547 3.93297 4.95536 5.52308 4.95536 7.47763C4.95536 8.72021 5.59822 9.81538 6.56859 10.4484C6.03176 10.6693 5.53222 10.9825 5.09345 11.3796C4.37838 12.0268 3.86802 12.8554 3.6111 13.7686C2.196 12.4544 1.30878 10.5791 1.30878 8.50008C1.30878 4.5348 4.53474 1.30884 8.50002 1.30884C12.4653 1.30884 15.6913 4.5348 15.6913 8.50008C15.6913 10.5792 14.804 12.4545 13.3889 13.7687Z" fill="#18B394" stroke="#18B394" stroke-width="0.5"/>
+								<path class="cr-store-manager-svg" d="M14.26 2.7401C12.7215 1.20157 10.6758 0.354248 8.50002 0.354248C6.3241 0.354248 4.27857 1.20157 2.74004 2.7401C1.20151 4.27863 0.354187 6.32416 0.354187 8.50008C0.354187 10.6759 1.20151 12.7215 2.74004 14.2601C4.27857 15.7986 6.3241 16.6459 8.50002 16.6459C10.6758 16.6459 12.7215 15.7986 14.26 14.2601C15.7985 12.7215 16.6459 10.6759 16.6459 8.50008C16.6459 6.32416 15.7985 4.27863 14.26 2.7401ZM4.43792 14.4308C4.77861 12.4692 6.47848 11.0223 8.50002 11.0223C10.5217 11.0223 12.2214 12.4692 12.5621 14.4308C11.4056 15.2255 10.0062 15.6913 8.50002 15.6913C6.99381 15.6913 5.59449 15.2255 4.43792 14.4308ZM5.90995 7.47763C5.90995 6.04935 7.07187 4.88756 8.50002 4.88756C9.92818 4.88756 11.0901 6.04947 11.0901 7.47763C11.0901 8.90578 9.92818 10.0677 8.50002 10.0677C7.07187 10.0677 5.90995 8.90578 5.90995 7.47763ZM13.3889 13.7687C13.132 12.8555 12.6218 12.027 11.9066 11.3798C11.4678 10.9826 10.9684 10.6693 10.4314 10.4484C11.4019 9.81538 12.0448 8.72021 12.0448 7.47763C12.0448 5.52308 10.4546 3.93297 8.50002 3.93297C6.54547 3.93297 4.95536 5.52308 4.95536 7.47763C4.95536 8.72021 5.59822 9.81538 6.56859 10.4484C6.03176 10.6693 5.53222 10.9825 5.09345 11.3796C4.37838 12.0268 3.86802 12.8554 3.6111 13.7686C2.196 12.4544 1.30878 10.5791 1.30878 8.50008C1.30878 4.5348 4.53474 1.30884 8.50002 1.30884C12.4653 1.30884 15.6913 4.5348 15.6913 8.50008C15.6913 10.5792 14.804 12.4545 13.3889 13.7687Z" fill="#31856C" stroke="#31856C" stroke-width="0.5"/>
 								</svg>';
 								echo '<span class="cr-qna-list-q-author-verified">';
 								echo $store_manager_svg;
 								echo esc_html__( $store_manager, 'customer-reviews-woocommerce' ) . '</span>';
 							} elseif( 2 === $a['author_type'] ) {
 								$verified_svg = '<svg class="cr-qna-list-v-icon" width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-								<path class="cr-verified-circle-svg" fill-rule="evenodd" clip-rule="evenodd" d="M8.5 15.3C12.2555 15.3 15.3 12.2555 15.3 8.5C15.3 4.74446 12.2555 1.7 8.5 1.7C4.74446 1.7 1.7 4.74446 1.7 8.5C1.7 12.2555 4.74446 15.3 8.5 15.3ZM8.5 17C13.1944 17 17 13.1944 17 8.5C17 3.80558 13.1944 0 8.5 0C3.80558 0 0 3.80558 0 8.5C0 13.1944 3.80558 17 8.5 17Z" fill="#18B394"/>
-								<path class="cr-verified-tick-svg" fill-rule="evenodd" clip-rule="evenodd" d="M4.42148 7.4927C4.75343 7.16076 5.29162 7.16076 5.62356 7.4927L7.6892 9.55835L11.3183 5.92926C11.6502 5.59731 12.1884 5.59731 12.5204 5.92926C12.8523 6.2612 12.8523 6.79939 12.5204 7.13134L7.6892 11.9625L4.42148 8.69479C4.08953 8.36284 4.08954 7.82465 4.42148 7.4927Z" fill="#18B394"/>
+								<path class="cr-verified-circle-svg" fill-rule="evenodd" clip-rule="evenodd" d="M8.5 15.3C12.2555 15.3 15.3 12.2555 15.3 8.5C15.3 4.74446 12.2555 1.7 8.5 1.7C4.74446 1.7 1.7 4.74446 1.7 8.5C1.7 12.2555 4.74446 15.3 8.5 15.3ZM8.5 17C13.1944 17 17 13.1944 17 8.5C17 3.80558 13.1944 0 8.5 0C3.80558 0 0 3.80558 0 8.5C0 13.1944 3.80558 17 8.5 17Z" fill="#31856C"/>
+								<path class="cr-verified-tick-svg" fill-rule="evenodd" clip-rule="evenodd" d="M4.42148 7.4927C4.75343 7.16076 5.29162 7.16076 5.62356 7.4927L7.6892 9.55835L11.3183 5.92926C11.6502 5.59731 12.1884 5.59731 12.5204 5.92926C12.8523 6.2612 12.8523 6.79939 12.5204 7.13134L7.6892 11.9625L4.42148 8.69479C4.08953 8.36284 4.08954 7.82465 4.42148 7.4927Z" fill="#31856C"/>
 								</svg>';
 								echo '<span class="cr-qna-list-q-author-verified">';
 								echo $verified_svg;
@@ -73,10 +73,18 @@ foreach ($qna as $q) {
 		<?php
 		endif;
 		?>
-		<div class="cr-qna-list-q-b">
+		<div class="cr-qna-list-q-b" data-question="<?php echo $q['id']; ?>" data-post="<?php echo $q['post']; ?>">
 			<div class="cr-qna-list-q-b-l"></div>
-			<div class="cr-qna-list-q-b-r">
-				<button type="button" data-question="<?php echo $q['id']; ?>" data-post="<?php echo $q['post']; ?>" class="cr-qna-ans-button"><?php _e( 'Answer the question', 'customer-reviews-woocommerce' ); ?></button>
+			<?php
+				$class_cr_qna_list_q_b_r = 'cr-qna-list-q-b-r';
+				if ( ! in_array( $cr_qna_permissions, ['registered', 'anybody'] ) ) {
+					$class_cr_qna_list_q_b_r .= ' cr-qna-list-q-b-r-no-ans';
+				}
+			?>
+			<div class="<?php echo esc_attr( $class_cr_qna_list_q_b_r ); ?>">
+				<button type="button" class="cr-qna-ans-button">
+					<?php _e( 'Answer the question', 'customer-reviews-woocommerce' ); ?>
+				</button>
 				<div class="cr-qna-q-voting cr-voting-cont-uni cr-qna-q-voting-<?php echo $q['id']; ?>" data-vquestion="<?php echo $q['id']; ?>">
 					<span class="cr-voting-upvote cr-voting-a<?php echo ( $q['votes']['current'] > 0 ? ' cr-voting-active' : '' ); ?>" data-vote="<?php echo $q['id']; ?>" data-upvote="1">
 						<svg width="1000" height="1227" viewBox="0 0 1000 1227" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -103,6 +111,97 @@ foreach ($qna as $q) {
 							echo '0';
 						} ?>)</span>
 				</div>
+			</div>
+			<div class="cr-qna-list-inl-answ">
+				<div class="cr-review-form-nav">
+					<div class="cr-nav-left">
+						<svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M16.9607 19.2506L11.0396 13.3295L16.9607 7.40833" stroke="#0E252C" stroke-miterlimit="10"/>
+						</svg>
+						<span>
+							<?php _e( 'Add an answer', 'customer-reviews-woocommerce' ); ?>
+						</span>
+					</div>
+					<div class="cr-nav-right">
+						<svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M8.61914 8.62009L19.381 19.3799M8.61914 19.3799L19.381 8.62009" stroke="#0E252C" stroke-miterlimit="10" stroke-linejoin="round"/>
+						</svg>
+					</div>
+				</div>
+				<?php if ( 'registered' === $cr_qna_permissions && ! is_user_logged_in() ) : ?>
+					<div class="cr-review-form-not-logged-in">
+						<span>
+							<?php _e( 'You must be logged in to answer a question', 'customer-reviews-woocommerce' ); ?>
+						</span>
+						<?php
+							if ( $cr_qna_login ) {
+								$cr_qna_login = add_query_arg( 'redirect_to', urlencode( $cr_permalink ), $cr_qna_login );
+							} else {
+								$cr_qna_login = wp_login_url( $cr_permalink );
+							}
+						?>
+						<a class="cr-review-form-continue" href="<?php echo esc_url( $cr_qna_login ); ?>" rel="nofollow"><?php _e( 'Log In', 'customer-reviews-woocommerce' ); ?></a>
+					</div>
+				<?php elseif ( 'anybody' === $cr_qna_permissions || ( 'registered' === $cr_qna_permissions && is_user_logged_in() ) ) : ?>
+					<div class="cr-review-form-comment">
+						<div class="cr-review-form-lbl">
+							<?php _e( 'Your answer', 'customer-reviews-woocommerce' ); ?>
+						</div>
+						<textarea rows="4" name="cr_review_form_comment_txt" class="cr-review-form-comment-txt" placeholder="<?php _e( 'Write your answer here', 'customer-reviews-woocommerce' ); ?>"></textarea>
+						<div class="cr-review-form-field-error">
+							<?php _e( '* Answer is required', 'customer-reviews-woocommerce' ); ?>
+						</div>
+					</div>
+					<div class="cr-review-form-ne">
+						<div class="cr-review-form-name">
+							<div class="cr-review-form-lbl">
+								<?php _e( 'Name', 'customer-reviews-woocommerce' ); ?>
+							</div>
+							<input type="text" name="cr_review_form_name" class="cr-review-form-txt" autocomplete="name" placeholder="<?php esc_attr_e( 'Your name', 'customer-reviews-woocommerce' ); ?>"></input>
+							<div class="cr-review-form-field-error">
+								<?php _e( '* Name is required', 'customer-reviews-woocommerce' ); ?>
+							</div>
+						</div>
+						<div class="cr-review-form-email">
+							<div class="cr-review-form-lbl">
+								<?php _e( 'Email', 'customer-reviews-woocommerce' ); ?>
+							</div>
+							<input type="email" name="cr_review_form_email" class="cr-review-form-txt" autocomplete="email" placeholder="<?php esc_attr_e( 'Your email', 'customer-reviews-woocommerce' ); ?>"></input>
+							<div class="cr-review-form-field-error">
+								<?php _e( '* Email is required', 'customer-reviews-woocommerce' ); ?>
+							</div>
+						</div>
+					</div>
+					<?php if ( $cr_qna_checkbox ) : ?>
+						<div class="cr-review-form-terms">
+							<label>
+								<input type="checkbox" class="cr-review-form-checkbox" name="cr_review_form_checkbox" />
+								<span><?php echo $cr_qna_checkbox_text; ?></span>
+							</label>
+							<div class="cr-review-form-field-error">
+								<?php _e( '* Please tick the checkbox to proceed', 'customer-reviews-woocommerce' ); ?>
+							</div>
+						</div>
+					<?php endif; ?>
+					<?php if ( 0 < strlen( $cr_recaptcha ) ) : ?>
+						<div class="cr-captcha-terms">
+							<?php echo sprintf( esc_html( __( 'This site is protected by reCAPTCHA and the Google %1$sPrivacy Policy%2$s and %3$sTerms of Service%4$s apply.', 'customer-reviews-woocommerce' ) ), '<a href="https://policies.google.com/privacy" rel="noopener noreferrer nofollow" target="_blank">', '</a>', '<a href="https://policies.google.com/terms" rel="noopener noreferrer nofollow" target="_blank">', '</a>' ); ?>
+						</div>
+					<?php endif; ?>
+					<div class="cr-review-form-buttons">
+						<button type="button" class="cr-review-form-submit" data-crcptcha="<?php echo $cr_recaptcha; ?>">
+							<span><?php _e( 'Submit', 'customer-reviews-woocommerce' ); ?></span>
+							<img src="<?php echo plugin_dir_url( dirname( __FILE__ ) ) . 'img/spinner-dots.svg'; ?>" alt="Loading" />
+						</button>
+						<button type="button" class="cr-review-form-cancel">
+							<?php _e( 'Cancel', 'customer-reviews-woocommerce' ); ?>
+						</button>
+					</div>
+					<div class="cr-review-form-result">
+						<span></span>
+						<button type="button" class="cr-review-form-continue"></button>
+					</div>
+				<?php endif; ?>
 			</div>
 		</div>
 	</div>

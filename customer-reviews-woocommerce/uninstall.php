@@ -160,7 +160,8 @@ $cr_uninstall_options = array(
 	'ivole_review_forms',
 	'ivole_wa_message',
 	'ivole_track_reminder_open',
-	'ivole_review_login_url'
+	'ivole_review_login_url',
+	'ivole_qna_settings'
 );
 
 foreach ( $cr_uninstall_options as $uninstall_option ) {

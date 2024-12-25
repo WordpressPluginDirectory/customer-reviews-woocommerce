@@ -102,7 +102,8 @@ if ( ! class_exists( 'CR_Forms_Settings' ) ) :
 				$ivole_review_forms = array(
 					array(
 						'rtn_crta' => '',
-						'cus_atts' => ''
+						'cus_atts' => '',
+						'rev_perm' => ''
 					)
 				);
 				$update_ivole_review_forms = false;
@@ -272,7 +273,8 @@ if ( ! class_exists( 'CR_Forms_Settings' ) ) :
 						'registered' => __( 'Reviewers must be registered and logged in', 'customer-reviews-woocommerce' ),
 						'verified' => __( 'Reviewers must be verified owners', 'customer-reviews-woocommerce' ),
 						'anybody' => __( 'Anyone can submit reviews', 'customer-reviews-woocommerce' )
-					)
+					),
+					'is_option' => false
 				),
 				24 => array(
 					'title'    => __( 'Login URL', 'customer-reviews-woocommerce' ),

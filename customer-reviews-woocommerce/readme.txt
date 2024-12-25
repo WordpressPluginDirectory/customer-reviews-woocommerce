@@ -4,7 +4,7 @@ Tags: woocommerce, review plugin, review reminder, customer reviews, review for 
 Requires at least: 4.5
 Tested up to: 6.7
 Requires PHP: 7.2
-Stable tag: 5.64.1
+Stable tag: 5.66.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl.html
 
@@ -232,6 +232,12 @@ If you would like to change how reviews are sorted on product pages, it is possi
 
 == Changelog ==
 
+= 5.66.0 =
+* New feature: settings for permissions to submit questions and answers
+* New feature: settings for a terms and privacy checkbox on question and answer forms
+= 5.65.0 =
+* New feature: support of the new 'Global Unique ID' field in WooCommerce products for GTIN, UPC, EAN, or ISBN
+* Improvement: replacement of pop-up windows for Q & A with inline forms to improve compatibility with UI of various 3rd-party WordPress themes
 = 5.64.1 =
 * Bug fix: an error on submission of reviews
 = 5.64.0 =

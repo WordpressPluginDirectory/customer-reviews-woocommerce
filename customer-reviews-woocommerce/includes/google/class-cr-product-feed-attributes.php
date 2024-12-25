@@ -316,6 +316,18 @@ if ( ! class_exists( 'CR_Attributes_Product_Feed' ) ):
 				return $attributes;
 			}, $product_attributes );
 
+			// _woosea           : Product Feed PRO for WooCommerce
+			// _cr               : Customer Reviews for WooCommerce
+			// _cpf              : Advanced Custom Fields
+			// _yoast            : Yoast SEO
+			// _alg_ean          : EAN Barcode Generator for WooCommerce
+			// _wpsso_product    : WPSSO Product Metadata (aka Custom Fields) for WooCommerce
+			// _ts               : Germanized for WooCommerce
+			// _unit_product     : Germanized for WooCommerce
+			// _unit             : Germanized for WooCommerce
+			// _unit_base        : Germanized for WooCommerce
+			// _global_unique_id : WooCommerce
+
 			$meta_attributes = $wpdb->get_results(
 				"SELECT meta.meta_id, meta.meta_key
 				FROM {$wpdb->postmeta} AS meta, {$wpdb->posts} AS posts
@@ -330,6 +342,7 @@ if ( ! class_exists( 'CR_Attributes_Product_Feed' ) ):
 					OR meta.meta_key = '_unit_product'
 					OR meta.meta_key = '_unit'
 					OR meta.meta_key = '_unit_base'
+					OR meta.meta_key = '_global_unique_id'
 				)
 				GROUP BY meta.meta_key",
 				ARRAY_A
@@ -353,6 +366,7 @@ if ( ! class_exists( 'CR_Attributes_Product_Feed' ) ):
 			$product_attributes['meta__cr_material'] = __( 'Product Material', 'customer-reviews-woocommerce' );
 			$product_attributes['meta__cr_multipack'] = __( 'Product Multipack', 'customer-reviews-woocommerce' );
 			$product_attributes['meta__cr_bundle'] = __( 'Product Bundle', 'customer-reviews-woocommerce' );
+			$product_attributes['meta__global_unique_id'] = __( 'Global Unique ID', 'customer-reviews-woocommerce' );
 
 			$product_attributes['tags_tags'] = __( 'Product Tag', 'customer-reviews-woocommerce' );
 

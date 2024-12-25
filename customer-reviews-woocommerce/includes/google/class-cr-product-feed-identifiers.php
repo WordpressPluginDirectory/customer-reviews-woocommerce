@@ -270,6 +270,7 @@ if ( ! class_exists( 'CR_Identifiers_Product_Feed' ) ):
 					OR meta.meta_key LIKE '\_alg_ean%'
 					OR meta.meta_key LIKE '\_wpsso_product%'
 					OR meta.meta_key LIKE '\_ts_%'
+					OR meta.meta_key = '_global_unique_id'
 				)
 				GROUP BY meta.meta_key",
 				ARRAY_A
@@ -293,6 +294,7 @@ if ( ! class_exists( 'CR_Identifiers_Product_Feed' ) ):
 			$product_attributes['meta__cr_material'] = __( 'Product Material', 'customer-reviews-woocommerce' );
 			$product_attributes['meta__cr_multipack'] = __( 'Product Multipack', 'customer-reviews-woocommerce' );
 			$product_attributes['meta__cr_bundle'] = __( 'Product Bundle', 'customer-reviews-woocommerce' );
+			$product_attributes['meta__global_unique_id'] = __( 'Global Unique ID', 'customer-reviews-woocommerce' );
 
 			$product_attributes['tags_tags'] = __( 'Product Tag', 'customer-reviews-woocommerce' );
 
