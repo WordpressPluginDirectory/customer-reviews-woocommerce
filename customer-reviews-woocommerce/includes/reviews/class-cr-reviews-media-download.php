@@ -152,13 +152,21 @@ if ( ! class_exists( 'CR_Reviews_Media_Download' ) ) :
 					} else {
 						$reviewedItem = get_the_title( $review->comment_post_ID );
 					}
-					$fileDesc = sprintf( __( 'Review of %s by %s', 'customer-reviews-woocommerce' ), $reviewedItem, $customerName );
+					$fileDesc = sprintf( __( 'Media from review %s', 'customer-reviews-woocommerce' ), $review->comment_ID );
 					$customerUserId = $review->user_id ? $review->user_id : 0;
 					$reviewId = sprintf( __( 'Review ID: %s', 'customer-reviews-woocommerce' ), $review->comment_ID );
-					$mediaId = media_handle_sideload( $file_array, $review->comment_post_ID, $fileDesc, array( 'post_author' => $customerUserId, 'post_date' => $review->comment_date, 'post_content' => $reviewId ) );
-					if( is_wp_error( $mediaId ) ) {
+					$post_data = array( 'post_author' => $customerUserId, 'post_date' => $review->comment_date, 'post_content' => $reviewId );
+					$mediaId = media_handle_sideload( $file_array, $review->comment_post_ID, $fileDesc, $post_data );
+					if ( is_wp_error( $mediaId ) ) {
 						$return['code'] = 401;
-						$return['msg'] = sprintf( __( 'An error occurred while downloading a media file. Error code: %s.', 'customer-reviews-woocommerce' ), $return['code'] );
+						$return['msg'] = sprintf(
+							__( 'An error occurred while downloading a media file. Error code: %1$s. Error description: %2$s. Error data: %3$s. Product ID: %4$s. Parameters: %5$s.', 'customer-reviews-woocommerce' ),
+							print_r( $mediaId->get_error_codes(), true ),
+							$mediaId->get_error_message(),
+							$mediaId->get_error_data(),
+							$review->comment_post_ID . ' (' . $reviewedItem . ')',
+							print_r( $post_data, true )
+						);
 					} else {
 						$metaId = add_comment_meta( $review->comment_ID, $commentMeta['newLocal'], $mediaId );
 						if( $metaId ) {

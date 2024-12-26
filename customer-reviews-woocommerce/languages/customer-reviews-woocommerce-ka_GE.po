@@ -6,7 +6,7 @@ msgstr ""
 "(latest release)\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/customer-reviews-"
 "woocommerce\n"
-"POT-Creation-Date: 2024-12-24T12:07:20+00:00\n"
+"POT-Creation-Date: 2024-12-25T20:23:10+00:00\n"
 "PO-Revision-Date: 2020-07-09 00:09+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1790,7 +1790,6 @@ msgid ""
 msgstr ""
 
 #: includes/import-export/class-cr-background-importer.php:313
-#: includes/reviews/class-cr-reviews-media-download.php:155
 msgid "Review of %s by %s"
 msgstr ""
 
@@ -3163,18 +3162,27 @@ msgid ""
 "File name: %3$s"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews-media-download.php:161
-#: includes/reviews/class-cr-reviews-media-download.php:174
-#: includes/reviews/class-cr-reviews-media-download.php:180
-#: includes/reviews/class-cr-reviews-media-download.php:185
-#: includes/reviews/class-cr-reviews-media-download.php:195
-msgid "An error occurred while downloading a media file. Error code: %s."
+#: includes/reviews/class-cr-reviews-media-download.php:155
+msgid "Media from review %s"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews-media-download.php:168
+#: includes/reviews/class-cr-reviews-media-download.php:163
+msgid ""
+"An error occurred while downloading a media file. Error code: %1$s. Error "
+"description: %2$s. Error data: %3$s. Product ID: %4$s. Parameters: %5$s."
+msgstr ""
+
+#: includes/reviews/class-cr-reviews-media-download.php:176
 msgid ""
 "Downloaded the file <b>%1$s</b> attached by <b>%2$s</b> to their review of "
 "<b>%3$s</b>. Downloading the next file..."
+msgstr ""
+
+#: includes/reviews/class-cr-reviews-media-download.php:182
+#: includes/reviews/class-cr-reviews-media-download.php:188
+#: includes/reviews/class-cr-reviews-media-download.php:193
+#: includes/reviews/class-cr-reviews-media-download.php:203
+msgid "An error occurred while downloading a media file. Error code: %s."
 msgstr ""
 
 #: includes/reviews/class-cr-reviews-media-meta-box.php:25

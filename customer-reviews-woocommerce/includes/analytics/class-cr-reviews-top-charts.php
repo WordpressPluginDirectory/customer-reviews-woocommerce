@@ -202,31 +202,31 @@ class CR_Reviews_Top_Charts {
 				'ratings' => array_values( array(
 					5 => (object) array(
 						'label' => '5',
-						'count' => $five,
+						'count' => html_entity_decode( number_format_i18n( $five, 0 ) ),
 						'part'  => $five_prcnt,
 						'class' => 'chartColor1'
 					),
 					4 => (object) array(
 						'label' => '4',
-						'count' => $four,
+						'count' => html_entity_decode( number_format_i18n( $four, 0 ) ),
 						'part' => $four_prcnt,
 						'class' => 'chartColor2'
 					),
 					3 => (object) array(
 						'label' => '3',
-						'count' => $three,
+						'count' => html_entity_decode( number_format_i18n( $three, 0 ) ),
 						'part' => $three_prcnt,
 						'class' => 'chartColor3'
 					),
 					2 => (object) array(
 						'label' => '2',
-						'count' => $two,
+						'count' => html_entity_decode( number_format_i18n( $two, 0 ) ),
 						'part' => $two_prcnt,
 						'class' => 'chartColor4'
 					),
 					1 => (object) array(
 						'label' => '1',
-						'count' => $one,
+						'count' => html_entity_decode( number_format_i18n( $one, 0 ) ),
 						'part' => $one_prcnt,
 						'class' => 'chartColor5'
 					)
