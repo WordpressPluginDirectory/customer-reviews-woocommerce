@@ -1479,7 +1479,7 @@ div.cr-review-tags-filter.cr-review-tags-filter-disabled {
 	padding-inline-start: 0;
 }
 .cr-all-reviews-shortcode .crstar-rating,
-#reviews.cr-reviews-ajax-reviews #comments.cr-reviews-ajax-comments .cr-ajax-reviews-list .comment-text .crstar-rating,
+.cr-reviews-ajax-reviews .cr-reviews-ajax-comments .cr-ajax-reviews-list .comment-text .crstar-rating,
 #reviews #comments .cr-summaryBox-wrap .crstar-rating {
 	overflow: hidden;
 	position: relative;
@@ -1490,6 +1490,7 @@ div.cr-review-tags-filter.cr-review-tags-filter-disabled {
 	font-family: crstar;
 	color:#ffbc00;
 	margin: 10px 0;
+	letter-spacing: normal;
 }
 .cr-reviews-rating .crstar-rating {
 	overflow: hidden;
