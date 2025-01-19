@@ -125,10 +125,10 @@ if ( ! class_exists( 'CR_Endpoint' ) ) :
 					$comment_date = current_time( 'mysql' );
 					$media_count_total = 0;
 
-					//shop review
+					// a shop review
 					if ( isset( $body2->order->shop_rating ) && isset( $body2->order->shop_comment ) ) {
 						$shop_page_id = wc_get_page_id( 'shop' );
-						if( $shop_page_id > 0 ) {
+						if ( $shop_page_id > 0 ) {
 							if ( is_object( $body2->order->shop_comment ) ) {
 								$shop_comment_text = strval( $body2->order->shop_comment->value );
 							} else {
@@ -140,146 +140,149 @@ if ( ! class_exists( 'CR_Endpoint' ) ) :
 								$shop_rating = intval( $body2->order->shop_rating );
 							}
 
-							//check if API provided replies to custom questions
-							$shop_custom_questions = new CR_Custom_Questions();
-							$shop_custom_questions->parse_shop_questions( $body2->order );
+							// check that a rating was provided for a shop review
+							if ( 0 < $shop_rating ) {
+								// check if API provided replies to custom questions
+								$shop_custom_questions = new CR_Custom_Questions();
+								$shop_custom_questions->parse_shop_questions( $body2->order );
 
-							//WPML integration
-							//wc_get_page_id returns shop page ID in the default WPML site language
-							//If a review was submitted in a language different from the default one, it is necessary to get shop page ID for the non-default language
-							$wpml_current_lang = '';
-							if ( has_filter( 'wpml_object_id' ) ) {
-								$wpml_order_language = $order->get_meta( 'wpml_language', true );
-								$shop_page_id = apply_filters( 'wpml_object_id', $shop_page_id, 'page', true, $wpml_order_language );
-								//switch the current WPML site language to the language of the order because
-								//call to get_comments (below) returns only comments for shop page in the current WPML language
-								$wpml_current_lang = apply_filters( 'wpml_current_language', null );
-								do_action( 'wpml_switch_language', $wpml_order_language );
-							}
-							if ( has_filter( 'wpml_object_id' ) ) {
-								if( class_exists( 'WCML_Comments' ) ) {
-									global $woocommerce_wpml;
-									if( $woocommerce_wpml ) {
-										remove_action( 'added_comment_meta', array( $woocommerce_wpml->comments, 'maybe_duplicate_comment_rating' ), 10, 4 );
-									}
+								//WPML integration
+								//wc_get_page_id returns shop page ID in the default WPML site language
+								//If a review was submitted in a language different from the default one, it is necessary to get shop page ID for the non-default language
+								$wpml_current_lang = '';
+								if ( has_filter( 'wpml_object_id' ) ) {
+									$wpml_order_language = $order->get_meta( 'wpml_language', true );
+									$shop_page_id = apply_filters( 'wpml_object_id', $shop_page_id, 'page', true, $wpml_order_language );
+									//switch the current WPML site language to the language of the order because
+									//call to get_comments (below) returns only comments for shop page in the current WPML language
+									$wpml_current_lang = apply_filters( 'wpml_current_language', null );
+									do_action( 'wpml_switch_language', $wpml_order_language );
 								}
-							}
-							// Polylang integration
-							if ( function_exists( 'pll_get_post' ) && function_exists( 'pll_get_post_language' ) ) {
-								$polylang_order_language = pll_get_post_language( $order_id );
-								if( $polylang_order_language ) {
-									$shop_page_id = pll_get_post( $shop_page_id, $polylang_order_language  );
-								}
-							}
-
-							// check if a shop review has already been submitted for this order by this customer
-							$args = array(
-								'post_id' => $shop_page_id,
-								'author_email' => $customer_email,
-								'meta_key' => $ivole_order,
-								'meta_value' => $order_id,
-								'orderby' => 'comment_ID',
-								'order' => 'DESC'
-							);
-							$existing_comments = get_comments( $args );
-							$num_existing_comments = count( $existing_comments );
-
-							if( $num_existing_comments > 0 ) {
-								$previous_comments_exist = true;
-								$review_id = $existing_comments[0]->comment_ID;
-								$commentdata = array(
-									'comment_ID' => $review_id,
-									'comment_content' => $shop_comment_text,
-									'comment_approved' => $comment_approved,
-									'comment_author' => $customer_name,
-									'comment_date' => $comment_date,
-									'comment_date_gmt' => get_gmt_from_date( $comment_date ) );
-								wp_update_comment( $commentdata );
-								update_comment_meta( $review_id, 'rating', $shop_rating );
-								if( $country ) {
-									update_comment_meta( $review_id, 'ivole_country', $country );
-								} else {
-									delete_comment_meta( $review_id, 'ivole_country' );
-								}
-								if( $shop_custom_questions->has_questions() ) {
-									$shop_custom_questions->save_questions( $review_id );
-								} else {
-									$shop_custom_questions->delete_questions( $review_id );
-								}
-								wp_update_comment_count_now( $shop_page_id );
-							} else {
-								$commentdata = array(
-									'comment_author' => $customer_name,
-									'comment_author_email' => $customer_email,
-									'comment_author_url' => '',
-									'user_id' => $customer_user_id,
-									'comment_content' => $shop_comment_text,
-									'comment_post_ID' =>  $shop_page_id,
-									'comment_type' => 'review',
-									'comment_approved' => $comment_approved,
-									'comment_meta' => array( 'rating' => $shop_rating ) );
-								$review_id = wp_insert_comment( $commentdata );
-								if( !$review_id ) {
-									//adding a new review may fail, if review fields include characters that are not supported by DB
-									//for example, collation utf8_general_ci does not support emoticons
-									//in these cases, we will remove unsupported characters and try to add the review again
-									$tfields = array( 'comment_author', 'comment_author_email', 'comment_content' );
-									foreach ( $tfields as $field ) {
-										if ( isset( $commentdata[ $field ] ) ) {
-												$commentdata[ $field ] = $wpdb->strip_invalid_text_for_column( $wpdb->comments, $field, $commentdata[ $field ] );
+								if ( has_filter( 'wpml_object_id' ) ) {
+									if( class_exists( 'WCML_Comments' ) ) {
+										global $woocommerce_wpml;
+										if( $woocommerce_wpml ) {
+											remove_action( 'added_comment_meta', array( $woocommerce_wpml->comments, 'maybe_duplicate_comment_rating' ), 10, 4 );
 										}
 									}
-									$review_id = wp_insert_comment( $commentdata );
 								}
-								if( $review_id ) {
-									$reviews[] = $review_id;
-									add_comment_meta( $review_id, $ivole_order, $order_id, true );
+								// Polylang integration
+								if ( function_exists( 'pll_get_post' ) && function_exists( 'pll_get_post_language' ) ) {
+									$polylang_order_language = pll_get_post_language( $order_id );
+									if( $polylang_order_language ) {
+										$shop_page_id = pll_get_post( $shop_page_id, $polylang_order_language  );
+									}
+								}
+
+								// check if a shop review has already been submitted for this order by this customer
+								$args = array(
+									'post_id' => $shop_page_id,
+									'author_email' => $customer_email,
+									'meta_key' => $ivole_order,
+									'meta_value' => $order_id,
+									'orderby' => 'comment_ID',
+									'order' => 'DESC'
+								);
+								$existing_comments = get_comments( $args );
+								$num_existing_comments = count( $existing_comments );
+
+								if( $num_existing_comments > 0 ) {
+									$previous_comments_exist = true;
+									$review_id = $existing_comments[0]->comment_ID;
+									$commentdata = array(
+										'comment_ID' => $review_id,
+										'comment_content' => $shop_comment_text,
+										'comment_approved' => $comment_approved,
+										'comment_author' => $customer_name,
+										'comment_date' => $comment_date,
+										'comment_date_gmt' => get_gmt_from_date( $comment_date ) );
+									wp_update_comment( $commentdata );
+									update_comment_meta( $review_id, 'rating', $shop_rating );
 									if( $country ) {
 										update_comment_meta( $review_id, 'ivole_country', $country );
+									} else {
+										delete_comment_meta( $review_id, 'ivole_country' );
 									}
 									if( $shop_custom_questions->has_questions() ) {
 										$shop_custom_questions->save_questions( $review_id );
+									} else {
+										$shop_custom_questions->delete_questions( $review_id );
 									}
 									wp_update_comment_count_now( $shop_page_id );
-									// set current user to emulate submission of review by a real user - it is necessary for compatibility with other plugins
-									$current_user = wp_get_current_user();
-									if( $customer_user_id ) {
-										wp_set_current_user( $customer_user_id );
-									}
-									// deactivate AutomateWoo hook because otherwise it might trigger a PHP error
-									if ( class_exists( '\AutomateWoo\Session_Tracker' ) ) {
-										remove_action( 'comment_post', array( '\AutomateWoo\Session_Tracker', 'capture_from_comment' ), 10 );
-									}
-									//
-									do_action( 'comment_post', $review_id, $commentdata['comment_approved'], $commentdata );
-									// set the previous current user back
-									if( $current_user ) {
-										wp_set_current_user( $current_user->ID );
-									} else {
-										wp_set_current_user( 0 );
-									}
-									// notifications for local reviews
-									if ( $local ) {
-										$local_reviews_notif[] = array(
-											'item' => $commentdata['comment_post_ID'],
-											'rating' => $shop_rating,
-											'comment' => $commentdata['comment_content']
-										);
-									}
 								} else {
-									return new WP_REST_Response( 'Review creation error 3', 500 );
+									$commentdata = array(
+										'comment_author' => $customer_name,
+										'comment_author_email' => $customer_email,
+										'comment_author_url' => '',
+										'user_id' => $customer_user_id,
+										'comment_content' => $shop_comment_text,
+										'comment_post_ID' =>  $shop_page_id,
+										'comment_type' => 'review',
+										'comment_approved' => $comment_approved,
+										'comment_meta' => array( 'rating' => $shop_rating ) );
+									$review_id = wp_insert_comment( $commentdata );
+									if( !$review_id ) {
+										//adding a new review may fail, if review fields include characters that are not supported by DB
+										//for example, collation utf8_general_ci does not support emoticons
+										//in these cases, we will remove unsupported characters and try to add the review again
+										$tfields = array( 'comment_author', 'comment_author_email', 'comment_content' );
+										foreach ( $tfields as $field ) {
+											if ( isset( $commentdata[ $field ] ) ) {
+													$commentdata[ $field ] = $wpdb->strip_invalid_text_for_column( $wpdb->comments, $field, $commentdata[ $field ] );
+											}
+										}
+										$review_id = wp_insert_comment( $commentdata );
+									}
+									if( $review_id ) {
+										$reviews[] = $review_id;
+										add_comment_meta( $review_id, $ivole_order, $order_id, true );
+										if( $country ) {
+											update_comment_meta( $review_id, 'ivole_country', $country );
+										}
+										if( $shop_custom_questions->has_questions() ) {
+											$shop_custom_questions->save_questions( $review_id );
+										}
+										wp_update_comment_count_now( $shop_page_id );
+										// set current user to emulate submission of review by a real user - it is necessary for compatibility with other plugins
+										$current_user = wp_get_current_user();
+										if( $customer_user_id ) {
+											wp_set_current_user( $customer_user_id );
+										}
+										// deactivate AutomateWoo hook because otherwise it might trigger a PHP error
+										if ( class_exists( '\AutomateWoo\Session_Tracker' ) ) {
+											remove_action( 'comment_post', array( '\AutomateWoo\Session_Tracker', 'capture_from_comment' ), 10 );
+										}
+										//
+										do_action( 'comment_post', $review_id, $commentdata['comment_approved'], $commentdata );
+										// set the previous current user back
+										if( $current_user ) {
+											wp_set_current_user( $current_user->ID );
+										} else {
+											wp_set_current_user( 0 );
+										}
+										// notifications for local reviews
+										if ( $local ) {
+											$local_reviews_notif[] = array(
+												'item' => $commentdata['comment_post_ID'],
+												'rating' => $shop_rating,
+												'comment' => $commentdata['comment_content']
+											);
+										}
+									} else {
+										return new WP_REST_Response( 'Review creation error 3', 500 );
+									}
 								}
-							}
-							//WPML integration
-							if ( has_filter( 'wpml_object_id' ) ) {
-								do_action( 'wpml_switch_language', $wpml_current_lang );
-							}
-							//WPML integration
-							if ( has_filter( 'wpml_object_id' ) ) {
-								if( class_exists( 'WCML_Comments' ) ) {
-									global $woocommerce_wpml;
-									if( $woocommerce_wpml ) {
-										add_action( 'added_comment_meta', array( $woocommerce_wpml->comments, 'maybe_duplicate_comment_rating' ), 10, 4 );
+								//WPML integration
+								if ( has_filter( 'wpml_object_id' ) ) {
+									do_action( 'wpml_switch_language', $wpml_current_lang );
+								}
+								//WPML integration
+								if ( has_filter( 'wpml_object_id' ) ) {
+									if( class_exists( 'WCML_Comments' ) ) {
+										global $woocommerce_wpml;
+										if( $woocommerce_wpml ) {
+											add_action( 'added_comment_meta', array( $woocommerce_wpml->comments, 'maybe_duplicate_comment_rating' ), 10, 4 );
+										}
 									}
 								}
 							}

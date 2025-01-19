@@ -176,7 +176,7 @@ if ( ! class_exists( 'CR_Shortcodes_Settings' ) ):
 
 			'<p class="cr-admin-shortcodes-large"><code>[cusrev_reviews_rating]</code></p>' .
 			'<p>' . __( 'Use this shortcode to display a widget with rating stars on any single WooCommerce product page. Here are the default parameters of the shortcode:', 'customer-reviews-woocommerce' ) . '</p>' .
-			'<p class="cr-admin-shortcodes"><code>[cusrev_reviews_slider color_stars="#FFBC00" product=""]</code></p>' .
+			'<p class="cr-admin-shortcodes"><code>[cusrev_reviews_rating color_stars="#FFBC00" product=""]</code></p>' .
 			'<p class="cr-admin-shortcodes"><b>' . __( 'Parameters:', 'customer-reviews-woocommerce' ) . '</b></p>' .
 			'<ul>' .
 			'<li>' . sprintf( __( '%1$s parameter is a hex color code of rating stars.', 'customer-reviews-woocommerce' ), '<code>"color_stars"</code>' ) . '</li>' .

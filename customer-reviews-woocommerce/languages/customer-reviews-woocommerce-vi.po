@@ -6,7 +6,7 @@ msgstr ""
 "(latest release)\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/customer-reviews-"
 "woocommerce\n"
-"POT-Creation-Date: 2024-12-25T20:23:10+00:00\n"
+"POT-Creation-Date: 2025-01-18T01:10:22+00:00\n"
 "PO-Revision-Date: 2018-11-24 18:45+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -139,10 +139,12 @@ msgid "WhatsApp"
 msgstr ""
 
 #: includes/analytics/class-cr-reminders-log.php:412
+#: includes/analytics/class-cr-reviews-top-charts.php:245
 msgid "Manual"
 msgstr ""
 
 #: includes/analytics/class-cr-reminders-log.php:415
+#: includes/analytics/class-cr-reviews-top-charts.php:238
 #: includes/reminders/class-cr-reminders-list-table.php:71
 msgid "Automatic"
 msgstr ""
@@ -153,6 +155,57 @@ msgstr ""
 
 #: includes/analytics/class-cr-reviews-top-charts.php:184
 msgid "On-site reviews and other"
+msgstr ""
+
+#: includes/analytics/class-cr-reviews-top-charts.php:207
+msgid ""
+"Review reminders are configured to invite customers to review their orders "
+"using aggregated review forms hosted locally on your website. This setup is "
+"ideal for meeting personal data protection requirements, as customer data "
+"does not leave your website. You can adjust this configuration in the plugin "
+"settings."
+msgstr ""
+
+#: includes/analytics/class-cr-reviews-top-charts.php:216
+msgid ""
+"Review reminders are configured to invite customers to review their orders "
+"using aggregated review forms hosted on CusRev.com. These reviews are "
+"collected in \"Live\" mode, meaning they will be publicly published both on "
+"CusRev.com and your website. You can adjust this configuration in the plugin "
+"settings."
+msgstr ""
+
+#: includes/analytics/class-cr-reviews-top-charts.php:222
+msgid ""
+"Review reminders are configured to invite customers to review their orders "
+"using aggregated review forms hosted on CusRev.com. These reviews are "
+"collected in \"Private\" mode, which means they will only be displayed on "
+"your website but not on CusRev.com. The \"Private\" mode is intended for "
+"setting up and testing the integration of the plugin with CusRev.com. You "
+"can adjust this configuration in the plugin settings."
+msgstr ""
+
+#: includes/analytics/class-cr-reviews-top-charts.php:230
+msgid "Off"
+msgstr ""
+
+#: includes/analytics/class-cr-reviews-top-charts.php:231
+msgid ""
+"Review reminders are switched off. Enabling them can help you gather more "
+"authentic feedback from your customers about the products, services, and "
+"your store."
+msgstr ""
+
+#: includes/analytics/class-cr-reviews-top-charts.php:239
+msgid ""
+"Review reminders are sent automatically with a delay and parameters defined "
+"in the settings."
+msgstr ""
+
+#: includes/analytics/class-cr-reviews-top-charts.php:246
+msgid ""
+"Review reminders can be manually triggered from the WooCommerce Orders page "
+"by clicking the envelope button next to each order."
 msgstr ""
 
 #: includes/blocks/class-cr-all-reviews.php:485
@@ -244,107 +297,107 @@ msgstr ""
 msgid "Most Helpful"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1091
+#: includes/blocks/class-cr-all-reviews.php:1092
 msgid "%d star"
 msgid_plural "%d stars"
 msgstr[0] ""
 
-#: includes/blocks/class-cr-all-reviews.php:1097
+#: includes/blocks/class-cr-all-reviews.php:1098
 #: includes/blocks/class-cr-reviews-grid.php:1036
 #: includes/reviews/class-cr-reviews.php:611
 msgid "See all %d review"
 msgid_plural "See all %d reviews"
 msgstr[0] ""
 
-#: includes/blocks/class-cr-all-reviews.php:1115
+#: includes/blocks/class-cr-all-reviews.php:1116
 msgid "%d-%d of %d review (%s). %s"
 msgid_plural "%d-%d of %d reviews (%s). %s"
 msgstr[0] ""
 
-#: includes/blocks/class-cr-all-reviews.php:1124
+#: includes/blocks/class-cr-all-reviews.php:1125
 msgid "%d-%d of %d review"
 msgid_plural "%d-%d of %d reviews"
 msgstr[0] ""
 
-#: includes/blocks/class-cr-all-reviews.php:1133
+#: includes/blocks/class-cr-all-reviews.php:1134
 msgid "0 of 0 reviews (%s). %s"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1138
+#: includes/blocks/class-cr-all-reviews.php:1139
 msgid "0 of 0 reviews"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1149
+#: includes/blocks/class-cr-all-reviews.php:1150
 #: includes/reminders/class-cr-local-forms.php:209
 #: templates/cr-ajax-product-reviews.php:153
 msgid "Add photos or video to your review"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1189
+#: includes/blocks/class-cr-all-reviews.php:1190
 msgid "Data validation error"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1190
+#: includes/blocks/class-cr-all-reviews.php:1191
 #: includes/qna/class-cr-admin-menu-qna.php:190
 #: includes/qna/class-cr-qna.php:179 includes/reminders/class-cr-manual.php:397
 #: includes/reviews/class-cr-admin-menu-reviews.php:248
 msgid "OK"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1197
+#: includes/blocks/class-cr-all-reviews.php:1198
 #: templates/cr-review-form.php:78
 msgid "Currently, we are not accepting new reviews"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1221
+#: includes/blocks/class-cr-all-reviews.php:1222
 #: templates/cr-review-form.php:61
 msgid "You must be logged in to post a review"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1251
+#: includes/blocks/class-cr-all-reviews.php:1252
 msgid ""
 "Only customers who have purchased this product may leave a review. Please "
 "use the same email address as in your order for this product."
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1275
+#: includes/blocks/class-cr-all-reviews.php:1276
 msgid "Your review could not be added"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1276
+#: includes/blocks/class-cr-all-reviews.php:1277
 #: includes/qna/class-cr-admin-menu-qna.php:189
 #: includes/qna/class-cr-qna.php:181
 #: includes/reviews/class-cr-admin-menu-reviews.php:247
 msgid "Try again"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1277
+#: includes/blocks/class-cr-all-reviews.php:1278
 msgid "Your review has been successfully added"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1278
+#: includes/blocks/class-cr-all-reviews.php:1279
 #: includes/qna/class-cr-qna.php:182
 msgid "Continue"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1305
+#: includes/blocks/class-cr-all-reviews.php:1306
 msgid ""
 "Error: no shop page configured in WooCommerce settings (WooCommerce > "
 "Settings > Products > Shop page)"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1307
+#: includes/blocks/class-cr-all-reviews.php:1308
 msgid "Error: no product with ID %d found"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1347
+#: includes/blocks/class-cr-all-reviews.php:1348
 #: includes/reminders/class-cr-local-forms-ajax.php:99
 #: includes/reminders/class-cr-local-forms.php:154
 #: includes/reviews/class-cr-reviews.php:396
 msgid "The file cannot be uploaded because its size exceeds the limit of %d MB"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1356
+#: includes/blocks/class-cr-all-reviews.php:1357
 #: includes/reminders/class-cr-local-forms-ajax.php:108
 #: includes/reminders/class-cr-local-forms.php:155
 #: includes/reviews/class-cr-reviews.php:394
@@ -758,7 +811,7 @@ msgstr ""
 #: includes/reviews/class-cr-admin-menu-reviews.php:62
 #: includes/settings/class-cr-admin-menu-settings.php:174
 #: includes/settings/class-cr-settings-trust-badges.php:344
-#: admin/build/index.js:1 admin/src/reviews/Reviews.jsx:48
+#: admin/build/index.js:1 admin/src/reviews/Reviews.jsx:52
 msgid "Reviews"
 msgstr ""
 
@@ -1291,7 +1344,8 @@ msgstr ""
 
 #: includes/google/class-cr-product-feed-status.php:146
 #: includes/reminders/class-cr-reminders-log-table.php:95
-#: templates/reminder-details-admin-page.php:103
+#: templates/reminder-details-admin-page.php:103 admin/build/index.js:1
+#: admin/src/reviews/Reviews.jsx:69
 msgid "Status"
 msgstr ""
 
@@ -6220,6 +6274,7 @@ msgid "Search reviews"
 msgstr ""
 
 #: templates/cr-ajax-product-reviews.php:134
+#: templates/cr-shortcode-rating.php:49
 #: templates/cr-single-product-reviews.php:74
 msgid "There are no reviews yet"
 msgstr ""
@@ -6577,20 +6632,25 @@ msgstr ""
 msgid "Show Less"
 msgstr ""
 
-#: admin/build/index.js:1 admin/src/reviews/Reviews.jsx:32
+#: admin/build/index.js:1 admin/src/reviews/Reviews.jsx:36
 msgid "Ratings"
 msgstr ""
 
-#: admin/build/index.js:1 admin/src/reviews/Reviews.jsx:34
+#: admin/build/index.js:1 admin/src/reviews/Reviews.jsx:38
 msgid "Average review rating"
 msgstr ""
 
-#: admin/build/index.js:1 admin/src/reviews/Reviews.jsx:35
+#: admin/build/index.js:1 admin/src/reviews/Reviews.jsx:39
 msgid "Ratings distribution"
 msgstr ""
 
-#: admin/build/index.js:1 admin/src/reviews/Reviews.jsx:50
+#: admin/build/index.js:1 admin/src/reviews/Reviews.jsx:54
 msgid "Reviews received"
+msgstr ""
+
+#: admin/build/index.js:1 admin/src/reviews/Reviews.jsx:185
+#: admin/src/reviews/Reviews.jsx:228
+msgid "Review reminders"
 msgstr ""
 
 #: admin/build/index.js:1 admin/src/Reminders.jsx:34

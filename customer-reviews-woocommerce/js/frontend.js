@@ -1144,7 +1144,7 @@
 				//
 				let cr_cptcha = jQuery(this).attr("data-crcptcha");
 				var rf = this;
-				if ( cr_cptcha && cr_cptcha.length > 0 ) {
+				if ( cr_cptcha && cr_cptcha.length > 0 && grecaptcha ) {
 					grecaptcha.ready(function() {
 						grecaptcha.execute( cr_cptcha, {action: 'submit'} ).then( function(token) {
 							postQuestion( token, cr_data, rf )

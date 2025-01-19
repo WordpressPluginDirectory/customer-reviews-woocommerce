@@ -196,6 +196,60 @@ class CR_Reviews_Top_Charts {
 			}
 		}
 
+		// collect information for the status card
+		$verified_reviews = get_option( 'ivole_verified_reviews', 'no' );
+		$live_mode = get_option( 'ivole_verified_live_mode', 'no' );
+		$auto_reminders = get_option( 'ivole_enable', 'no' );
+		$manual_reminders = get_option( 'ivole_enable_manual', 'no' );
+		//
+		$reviewReminderIcon = 'IconServer';
+		$reviewReminderLabel = 'Local';
+		$reviewReminderHelp = __(
+			'Review reminders are configured to invite customers to review their orders using aggregated review forms hosted locally on your website. This setup is ideal for meeting personal data protection requirements, as customer data does not leave your website. You can adjust this configuration in the plugin settings.',
+			'customer-reviews-woocommerce'
+		);
+		$reviewReminderHelpLink = admin_url( 'admin.php?page=cr-reviews-settings&tab=review_reminder' );
+		if ( 'yes' === $verified_reviews ) {
+			$reviewReminderLabel = 'CusRev';
+			if ( 'yes' === $live_mode ) {
+				$reviewReminderIcon = 'IconBroadcast';
+				$reviewReminderHelp = __(
+					'Review reminders are configured to invite customers to review their orders using aggregated review forms hosted on CusRev.com. These reviews are collected in "Live" mode, meaning they will be publicly published both on CusRev.com and your website. You can adjust this configuration in the plugin settings.',
+					'customer-reviews-woocommerce'
+				);
+			} else {
+				$reviewReminderIcon = 'IconLockFilled';
+				$reviewReminderHelp = __(
+					'Review reminders are configured to invite customers to review their orders using aggregated review forms hosted on CusRev.com. These reviews are collected in "Private" mode, which means they will only be displayed on your website but not on CusRev.com. The "Private" mode is intended for setting up and testing the integration of the plugin with CusRev.com. You can adjust this configuration in the plugin settings.',
+					'customer-reviews-woocommerce'
+				);
+			}
+		}
+		//
+		$reminderSendingIcon = 'IconSendOff';
+		$reminderSendingLabel = __( 'Off', 'customer-reviews-woocommerce' );
+		$reminderSendingHelp = __(
+			'Review reminders are switched off. Enabling them can help you gather more authentic feedback from your customers about the products, services, and your store.',
+			'customer-reviews-woocommerce'
+		);
+		$reminderSendingHelpLink = admin_url( 'admin.php?page=cr-reviews-settings&tab=review_reminder' );
+		if ( 'yes' === $auto_reminders ) {
+			$reminderSendingIcon = 'IconSend';
+			$reminderSendingLabel = __( 'Automatic', 'customer-reviews-woocommerce' );
+			$reminderSendingHelp = __(
+				'Review reminders are sent automatically with a delay and parameters defined in the settings.',
+				'customer-reviews-woocommerce'
+			);
+		} elseif ( 'yes' === $manual_reminders ) {
+			$reminderSendingIcon = 'IconHandClick';
+			$reminderSendingLabel = __( 'Manual', 'customer-reviews-woocommerce' );
+			$reminderSendingHelp = __(
+				'Review reminders can be manually triggered from the WooCommerce Orders page by clicking the envelope button next to each order.',
+				'customer-reviews-woocommerce'
+			);
+		}
+
+
 		wp_send_json(
 			array(
 				'average' => number_format_i18n( $average, 1 ),
@@ -232,7 +286,21 @@ class CR_Reviews_Top_Charts {
 					)
 				) ),
 				'total' => html_entity_decode( number_format_i18n( $via_any, 0 ) ),
-				'sources' => array_values( $sources )
+				'sources' => array_values( $sources ),
+				'status' => array(
+					'reviewReminder' => (object) array(
+						'icon' => $reviewReminderIcon,
+						'label' => $reviewReminderLabel,
+						'help' => $reviewReminderHelp,
+						'helpLink' => $reviewReminderHelpLink
+					),
+					'reminderSending' => (object) array(
+						'icon' => $reminderSendingIcon,
+						'label' => $reminderSendingLabel,
+						'help' => $reminderSendingHelp,
+						'helpLink' => $reminderSendingHelpLink
+					)
+				)
 			)
 		);
 	}

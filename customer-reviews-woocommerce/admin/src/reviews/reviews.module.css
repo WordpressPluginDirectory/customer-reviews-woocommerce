@@ -97,3 +97,26 @@
   align-items: center;
   column-gap: 4px;
 }
+.statusTable {
+  tr:first-child td {
+    padding-bottom: 7px;
+  }
+}
+.helpIcon {
+  width: 11px;
+  height: 11px;
+}
+.helpIcon:hover {
+  cursor: pointer;
+}
+.statusCard {
+  align-self: flex-start;
+}
+.statusCardBadgeIcon {
+  width: 12px;
+  height: 12px;
+}
+.settingsIcon {
+  width: 12px;
+  height: 12px;
+}

@@ -17,7 +17,7 @@ $rating_count = $cr_product->get_rating_count();
 $review_count = $cr_product->get_review_count();
 $average      = $cr_product->get_average_rating();
 
-if ( $rating_count > 0 || $count_answered > 0 ) : ?>
+if ( 0 <= $rating_count || 0 < $count_answered ) : ?>
 
 	<div class="cr-reviews-rating">
 		<?php
@@ -27,20 +27,26 @@ if ( $rating_count > 0 || $count_answered > 0 ) : ?>
 			echo $html_star_rating;
 		?>
 		<?php
-			if( 0 < $rating_count ) {
+			if( 0 <= $rating_count ) {
 				echo '<a href="#reviews" class="cr-review-link" rel="nofollow">';
 				printf( _n( '%s review', '%s reviews', $review_count, 'customer-reviews-woocommerce' ), '<span class="count">' . esc_html( $review_count ) . '</span>' );
 				echo '</a>';
 			}
-			if( 0 < $rating_count && 0 < $count_answered ) {
+			if( 0 <= $rating_count && 0 < $count_answered ) {
 				echo '<span class="cr-qna-separator">|</span>';
 			}
 			if( 0 < $count_answered ) {
-    		echo '<a href="#cr_qna" class="cr-qna-link" rel="nofollow">';
+				echo '<a href="#cr_qna" class="cr-qna-link" rel="nofollow">';
 				printf( _n( '%s answered question', '%s answered questions', $count_answered, 'customer-reviews-woocommerce' ), '<span class="count">' . esc_html( $count_answered ) . '</span>' );
 				echo '</a>';
 			}
 	?>
+	</div>
+
+<?php else : ?>
+
+	<div class="cr-reviews-rating">
+		<?php esc_html_e( 'There are no reviews yet', 'customer-reviews-woocommerce' ); ?>
 	</div>
 
 <?php endif; ?>

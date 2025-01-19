@@ -134,7 +134,7 @@ if ( ! class_exists( 'CR_Local_Forms' ) ) :
 				__DIR__ . '/../../templates/'
 			);
 			$output = '';
-			$cr_form_css = plugins_url( '/css/form.css', dirname( dirname( __FILE__ ) ) ) . '?ver=' . Ivole::CR_VERSION;
+			$cr_form_css = self::get_form_css();
 			$cr_form_js = plugins_url( '/js/form.js', dirname( dirname( __FILE__ ) ) ) . '?ver=' . Ivole::CR_VERSION;
 			$cr_form_id = $this->form_id;
 			$cr_form_header = $this->form_header;
@@ -279,7 +279,7 @@ if ( ! class_exists( 'CR_Local_Forms' ) ) :
 				__DIR__ . '/../../templates/'
 			);
 			$output = '';
-			$cr_form_css = plugins_url( '/css/form.css', dirname( dirname( __FILE__ ) ) ) . '?ver=' . Ivole::CR_VERSION;
+			$cr_form_css = self::get_form_css();
 			$cr_form_js = plugins_url( '/js/form.js', dirname( dirname( __FILE__ ) ) ) . '?ver=' . Ivole::CR_VERSION;
 			$cr_form_id = $this->form_id;
 			$cr_form_header = __( 'Error', 'customer-reviews-woocommerce' );
@@ -411,6 +411,17 @@ if ( ! class_exists( 'CR_Local_Forms' ) ) :
 			header("Cache-Control: private, no-cache, no-cache=Set-Cookie, proxy-revalidate");
 			header("Pragma: no-cache");
 			echo base64_decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAAtJREFUGFdjYAACAAAFAAGq1chRAAAAAElFTkSuQmCC');
+		}
+
+		private static function get_form_css() {
+			$template_name = 'customer-reviews-woocommerce/form.css';
+			$located = locate_template( $template_name );
+			if ( $located ) {
+				$located = get_theme_file_uri( $template_name );
+			} else {
+				$located = plugins_url( '/css/form.css', dirname( dirname( __FILE__ ) ) );
+			}
+			return $located . '?ver=' . Ivole::CR_VERSION;
 		}
 
 	}

@@ -1083,6 +1083,7 @@ if (! class_exists('CR_All_Reviews')) :
 		}
 
 		public static function get_count_wording( $count, $page, $per_page, $pagination, $rating, $all ) {
+			$per_page = intval( $per_page );
 			// optional strings that need to be displayed when reviews are filtered by rating
 			$rating_string = '';
 			$all_reviews_string = '';

@@ -4,7 +4,7 @@ Tags: woocommerce, review plugin, review reminder, customer reviews, review for 
 Requires at least: 4.5
 Tested up to: 6.7
 Requires PHP: 7.2
-Stable tag: 5.66.2
+Stable tag: 5.68.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl.html
 
@@ -50,8 +50,8 @@ It’s an easy process:
 1. Your customer places an order.
 2. You fulfill the order and mark it as completed.
 3. After a delay (customizable by you), your customer receives an automated review request email.
-4. The customer leaves a review for all of their purchases on our aggregated form. Reviews can include ratings and images to increase trust.
-5. The review is posted to WooCommerce and published on your site.
+4. The customer leaves a review for all of their purchases on an aggregated form. Reviews can include ratings, images, and videos to increase trust.
+5. The review is posted in the standard WooCommerce review format and published on your site.
 
 You can even choose to automatically send the customer a discount code for future purchases as a thank you.
 
@@ -67,7 +67,7 @@ Plus, benefit from:
 * A built-in testing tool to ensure emails look beautiful before sending
 * Reminders in different languages via “qTranslate X”, “Polylang”, "TranslatePress" and “WPML” plugin integration
 * Support for custom WooCommerce order statuses
-* Tracking when customers open emails with review invitations and view aggregated review forms
+* Tracking when customers open emails with review invitations and when customers view aggregated review forms
 
 === 💸 Boost Sales – With Extra Features ===
 
@@ -152,6 +152,7 @@ There's nothing more reassuring to customers than having their questions answere
 * Reducing return and refund requests by providing answers to common questions about products, as well as offering extra information to avoid any potential misunderstanding of product features or benefits
 * Improving SEO with content created by your customers – that in turn helps search engines better understand and index your website
 * Sending email notifications to customers about replies to their questions and making them come back to your website
+* Displaying a terms and privacy checkbox that people need to tick before asking questions or posting answers
 
 === 🛒 Google Shopping Integration ===
 
@@ -232,6 +233,14 @@ If you would like to change how reviews are sorted on product pages, it is possi
 
 == Changelog ==
 
+= 5.68.0 =
+* Improvement: [cusrev_reviews_rating] shortcode supports products with no reviews
+* Improvement: a status card on the Reviews page in the admin console with information about the plugin configuration
+* Bug fix: typo in description of [cusrev_reviews_rating] shortcode in the plugin's settings
+* Bug fix: empty shop reviews could be created while the setting for shop reviews was disabled
+= 5.67.0 =
+* Improvement: load of 'form.css' file for local aggregated review forms from a child theme folder when available
+* Bug fix: an authorization error during submission of new questions and answers for unregistered users
 = 5.66.2 =
 * Improvement: CSS compatibility with third-party WordPress themes
 = 5.66.1 =

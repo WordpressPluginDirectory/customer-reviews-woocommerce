@@ -182,7 +182,7 @@ if ( ! class_exists( 'CR_Qna' ) ) :
 			$success_button = __( 'Continue', 'customer-reviews-woocommerce' );
 			$permissions = CR_Qna_Settings::get_qna_permissions();
 			if (
-				'anyone' === $permissions ||
+				'anybody' === $permissions ||
 				( 'registered' === $permissions && is_user_logged_in() )
 			) {
 				if (
