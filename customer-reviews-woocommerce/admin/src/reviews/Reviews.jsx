@@ -12,7 +12,7 @@ import '@mantine/core/styles/Table.css';
 import '@mantine/core/styles/Popover.css';
 import '@mantine/core/styles/Divider.css';
 import { MantineProvider, Badge, Text, Progress, Card, Group, Box, SimpleGrid, Skeleton, Paper, Table, HoverCard, Anchor, Divider, rem } from '@mantine/core';
-import { IconHelp, IconStar, IconMessage, IconStarFilled, IconHeartRateMonitor, IconBroadcast, IconLockFilled, IconServer, IconSendOff, IconSend, IconHandClick, IconAdjustments } from '@tabler/icons-react';
+import { IconHelp, IconStar, IconMessage, IconStarFilled, IconHeartRateMonitor, IconBroadcast, IconLockFilled, IconServer, IconSendOff, IconSend, IconHandClick, IconAdjustments, IconShoppingCart } from '@tabler/icons-react';
 import { __ } from '@wordpress/i18n';
 import useSWR from "swr";
 import classes from './reviews.module.css'
@@ -120,10 +120,47 @@ function Reviews({ nonce }) {
       </Box>
     ));
     // statusCard
+    const statusCardIcons = {
+      'IconAdjustments': IconAdjustments,
+      'IconShoppingCart': IconShoppingCart
+    }
+    //
     let statusCardReviewRemindersIcon = <IconServer className={classes.statusCardBadgeIcon} />;
     let statusCardReviewRemindersGradient = { from: '#7b79e2', to: '#7b79e2', deg: 90 };
+    let statusCardReviewRemindersHelp = [<Divider my="xs" />];
+    data.status['reviewReminder'].helpLinks.forEach( (el) => {
+      let IconTagNameVariable = statusCardIcons[el.icon];
+      statusCardReviewRemindersHelp.push(
+        <Group gap="5px">
+          <IconTagNameVariable className={classes.settingsIcon} />
+          <Anchor
+            size="xs"
+            href={el.link}
+          >
+            {el.label}
+          </Anchor>
+        </Group>
+      );
+    } );
+    //
     let statusCardReminderSendingIcon = <IconSendOff className={classes.statusCardBadgeIcon} />
     let statusCardReminderSendingGradient = { from: '#da8fcc', to: '#da8fcc', deg: 90 };
+    let statusCardReminderSendingHelp = [<Divider my="xs" />];
+    data.status['reminderSending'].helpLinks.forEach( (el) => {
+      let IconTagNameVariable = statusCardIcons[el.icon];
+      statusCardReminderSendingHelp.push(
+        <Group gap="5px">
+          <IconTagNameVariable className={classes.settingsIcon} />
+          <Anchor
+            size="xs"
+            href={el.link}
+          >
+            {el.label}
+          </Anchor>
+        </Group>
+      );
+    } );
+    //
     switch (data.status['reviewReminder'].icon) {
       case 'IconBroadcast':
         statusCardReviewRemindersIcon = <IconBroadcast className={classes.statusCardBadgeIcon} />;
@@ -175,16 +212,7 @@ function Reviews({ nonce }) {
               <Text size="xs">
                 {data.status['reviewReminder'].help}
               </Text>
-              <Divider my="xs" />
-              <Group gap="5px">
-                <IconAdjustments className={classes.settingsIcon} />
-                <Anchor
-                  size="xs"
-                  href={data.status['reviewReminder'].helpLink}
-                >
-                  { __( "Review reminders", "customer-reviews-woocommerce" ) }
-                </Anchor>
-              </Group>
+              {statusCardReviewRemindersHelp}
             </HoverCard.Dropdown>
           </HoverCard>
         </Group>
@@ -218,16 +246,7 @@ function Reviews({ nonce }) {
               <Text size="xs">
                 {data.status['reminderSending'].help}
               </Text>
-              <Divider my="xs" />
-              <Group gap="5px">
-                <IconAdjustments className={classes.settingsIcon} />
-                <Anchor
-                  size="xs"
-                  href={data.status['reminderSending'].helpLink}
-                >
-                  { __( "Review reminders", "customer-reviews-woocommerce" ) }
-                </Anchor>
-              </Group>
+              {statusCardReminderSendingHelp}
             </HoverCard.Dropdown>
           </HoverCard>
         </Group>

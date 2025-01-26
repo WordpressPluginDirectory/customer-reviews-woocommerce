@@ -645,6 +645,14 @@
 			}, "json");
 		});
 
+		jQuery(".cr-help-tip").tipTip( {
+			attribute: "data-tip",
+			fadeIn: 50,
+			fadeOut: 50,
+			delay: 200,
+			keepAlive: false,
+		} );
+
 	});
 
 	function cr_updatePending( diff ) {

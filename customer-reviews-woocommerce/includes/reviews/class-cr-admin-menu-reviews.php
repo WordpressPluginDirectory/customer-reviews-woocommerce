@@ -257,6 +257,7 @@ if ( ! class_exists( 'Ivole_Reviews_Admin_Menu' ) ):
 				wp_enqueue_script( 'cr-all-reviews' );
 				wp_enqueue_style( 'cr_select2_admin_css', plugins_url('css/select2.min.css', dirname( dirname( __FILE__ ) ) ) );
 				wp_enqueue_script( 'cr_select2_admin_js', plugins_url('js/select2.min.js', dirname( dirname( __FILE__ ) ) ) );
+				wp_enqueue_script( 'cr-tiptip', plugins_url( 'js/jquery.tipTip.minified.js' , dirname( dirname( __FILE__ ) ) ), array(), Ivole::CR_VERSION, false );
 				add_action( 'admin_footer', array( $this, 'cr_admin_photoswipe' ) );
 			}
 		}

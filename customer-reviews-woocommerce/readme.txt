@@ -4,7 +4,7 @@ Tags: woocommerce, review plugin, review reminder, customer reviews, review for 
 Requires at least: 4.5
 Tested up to: 6.7
 Requires PHP: 7.2
-Stable tag: 5.68.0
+Stable tag: 5.68.1
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl.html
 
@@ -233,6 +233,9 @@ If you would like to change how reviews are sorted on product pages, it is possi
 
 == Changelog ==
 
+= 5.68.1 =
+* Improvement: additional information in the tooltips for the Status card on the Reviews page in the admin console
+* Improvement: additional information about order numbers related to reviews on the Reviews page in the admin console
 = 5.68.0 =
 * Improvement: [cusrev_reviews_rating] shortcode supports products with no reviews
 * Improvement: a status card on the Reviews page in the admin console with information about the plugin configuration

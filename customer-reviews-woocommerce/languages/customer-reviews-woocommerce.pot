@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv3.
 msgid ""
 msgstr ""
-"Project-Id-Version: Customer Reviews for WooCommerce 5.68.0\n"
+"Project-Id-Version: Customer Reviews for WooCommerce 5.68.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/customer-reviews-woocommerce\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-01-18T01:10:22+00:00\n"
+"POT-Creation-Date: 2025-01-25T23:36:30+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 "X-Domain: customer-reviews-woocommerce\n"
@@ -137,12 +137,12 @@ msgid "WhatsApp"
 msgstr ""
 
 #: includes/analytics/class-cr-reminders-log.php:412
-#: includes/analytics/class-cr-reviews-top-charts.php:245
+#: includes/analytics/class-cr-reviews-top-charts.php:260
 msgid "Manual"
 msgstr ""
 
 #: includes/analytics/class-cr-reminders-log.php:415
-#: includes/analytics/class-cr-reviews-top-charts.php:238
+#: includes/analytics/class-cr-reviews-top-charts.php:253
 #: includes/reminders/class-cr-reminders-list-table.php:71
 msgid "Automatic"
 msgstr ""
@@ -159,28 +159,37 @@ msgstr ""
 msgid "Review reminders are configured to invite customers to review their orders using aggregated review forms hosted locally on your website. This setup is ideal for meeting personal data protection requirements, as customer data does not leave your website. You can adjust this configuration in the plugin settings."
 msgstr ""
 
-#: includes/analytics/class-cr-reviews-top-charts.php:216
+#: includes/analytics/class-cr-reviews-top-charts.php:215
+#: includes/analytics/class-cr-reviews-top-charts.php:249
+msgid "Review reminders"
+msgstr ""
+
+#: includes/analytics/class-cr-reviews-top-charts.php:221
 msgid "Review reminders are configured to invite customers to review their orders using aggregated review forms hosted on CusRev.com. These reviews are collected in \"Live\" mode, meaning they will be publicly published both on CusRev.com and your website. You can adjust this configuration in the plugin settings."
 msgstr ""
 
-#: includes/analytics/class-cr-reviews-top-charts.php:222
+#: includes/analytics/class-cr-reviews-top-charts.php:227
 msgid "Review reminders are configured to invite customers to review their orders using aggregated review forms hosted on CusRev.com. These reviews are collected in \"Private\" mode, which means they will only be displayed on your website but not on CusRev.com. The \"Private\" mode is intended for setting up and testing the integration of the plugin with CusRev.com. You can adjust this configuration in the plugin settings."
 msgstr ""
 
-#: includes/analytics/class-cr-reviews-top-charts.php:230
+#: includes/analytics/class-cr-reviews-top-charts.php:240
 msgid "Off"
 msgstr ""
 
-#: includes/analytics/class-cr-reviews-top-charts.php:231
+#: includes/analytics/class-cr-reviews-top-charts.php:241
 msgid "Review reminders are switched off. Enabling them can help you gather more authentic feedback from your customers about the products, services, and your store."
 msgstr ""
 
-#: includes/analytics/class-cr-reviews-top-charts.php:239
+#: includes/analytics/class-cr-reviews-top-charts.php:254
 msgid "Review reminders are sent automatically with a delay and parameters defined in the settings."
 msgstr ""
 
-#: includes/analytics/class-cr-reviews-top-charts.php:246
+#: includes/analytics/class-cr-reviews-top-charts.php:261
 msgid "Review reminders can be manually triggered from the WooCommerce Orders page by clicking the envelope button next to each order."
+msgstr ""
+
+#: includes/analytics/class-cr-reviews-top-charts.php:268
+msgid "Orders"
 msgstr ""
 
 #: includes/blocks/class-cr-all-reviews.php:485
@@ -386,8 +395,8 @@ msgstr ""
 
 #: includes/blocks/class-cr-reviews-grid.php:360
 #: includes/blocks/class-cr-reviews-slider.php:257
-#: includes/reviews/class-cr-admin-menu-reviews.php:618
-#: includes/reviews/class-cr-reviews-list-table.php:1192
+#: includes/reviews/class-cr-admin-menu-reviews.php:619
+#: includes/reviews/class-cr-reviews-list-table.php:1220
 #: templates/cr-review.php:116
 msgid "Verified owner"
 msgstr ""
@@ -400,7 +409,7 @@ msgstr ""
 #: includes/blocks/class-cr-reviews-slider.php:263
 #: includes/blocks/class-cr-reviews-slider.php:268
 #: includes/blocks/class-cr-reviews-slider.php:270
-#: includes/reviews/class-cr-reviews-list-table.php:663
+#: includes/reviews/class-cr-reviews-list-table.php:665
 #: includes/reviews/class-cr-reviews.php:1145
 #: includes/reviews/class-cr-reviews.php:1147
 #: includes/reviews/class-cr-reviews.php:1203
@@ -1358,8 +1367,8 @@ msgid "Enable the option to add \"identifier_exists = no\" in Google Shopping fe
 msgstr ""
 
 #: includes/google/class-cr-structured-data.php:48
-#: includes/reviews/class-cr-reviews-list-table.php:1004
-#: includes/reviews/class-cr-reviews-list-table.php:1023
+#: includes/reviews/class-cr-reviews-list-table.php:1032
+#: includes/reviews/class-cr-reviews-list-table.php:1051
 #: includes/reviews/class-cr-reviews-media-meta-box.php:54
 #: includes/reviews/class-cr-reviews-media-meta-box.php:97
 #: includes/reviews/class-cr-reviews.php:246
@@ -2009,7 +2018,7 @@ msgid "Submitted On"
 msgstr ""
 
 #: includes/qna/class-cr-qna-list-table.php:612
-#: includes/reviews/class-cr-reviews-list-table.php:861
+#: includes/reviews/class-cr-reviews-list-table.php:869
 msgid "In reply to %s"
 msgstr ""
 
@@ -2609,112 +2618,112 @@ msgstr[1] ""
 msgid "Would you like to remove verification from this review?"
 msgstr ""
 
-#: includes/reviews/class-cr-admin-menu-reviews.php:295
+#: includes/reviews/class-cr-admin-menu-reviews.php:296
 msgid "Reply to Review"
 msgstr ""
 
-#: includes/reviews/class-cr-admin-menu-reviews.php:369
+#: includes/reviews/class-cr-admin-menu-reviews.php:370
 msgid "Publish a copy of your reply to <a href=\"%s\" target=\"_blank\" rel=\"noopener noreferrer\">CusRev</a> portal"
 msgstr ""
 
-#: includes/reviews/class-cr-admin-menu-reviews.php:371
+#: includes/reviews/class-cr-admin-menu-reviews.php:372
 msgid "CusRev (Customer Reviews) portal"
 msgstr ""
 
-#: includes/reviews/class-cr-admin-menu-reviews.php:372
+#: includes/reviews/class-cr-admin-menu-reviews.php:373
 msgid "plugin's settings"
 msgstr ""
 
-#: includes/reviews/class-cr-admin-menu-reviews.php:373
+#: includes/reviews/class-cr-admin-menu-reviews.php:374
 msgid "A copy of this reply will not be published on %1$s because no license key was entered in the %2$s. A license key (free or professional) is used as a secret token for additional security when communicating with CusRev service."
 msgstr ""
 
-#: includes/reviews/class-cr-admin-menu-reviews.php:499
+#: includes/reviews/class-cr-admin-menu-reviews.php:500
 msgid "Author Type"
 msgstr ""
 
-#: includes/reviews/class-cr-admin-menu-reviews.php:514
+#: includes/reviews/class-cr-admin-menu-reviews.php:515
 msgid "Customer Reviews (CR)"
 msgstr ""
 
-#: includes/reviews/class-cr-admin-menu-reviews.php:527
+#: includes/reviews/class-cr-admin-menu-reviews.php:528
 msgid "Answers to Custom Questions"
 msgstr ""
 
-#: includes/reviews/class-cr-admin-menu-reviews.php:551
-#: includes/reviews/class-cr-admin-menu-reviews.php:553
-#: includes/reviews/class-cr-admin-menu-reviews.php:560
-#: includes/reviews/class-cr-admin-menu-reviews.php:562
-#: includes/reviews/class-cr-admin-menu-reviews.php:569
-#: includes/reviews/class-cr-admin-menu-reviews.php:571
-#: includes/reviews/class-cr-admin-menu-reviews.php:578
-#: includes/reviews/class-cr-admin-menu-reviews.php:580
-#: includes/reviews/class-cr-reviews-list-table.php:877
-#: includes/reviews/class-cr-reviews-list-table.php:879
-#: includes/reviews/class-cr-reviews-list-table.php:894
-#: includes/reviews/class-cr-reviews-list-table.php:896
-#: includes/reviews/class-cr-reviews-list-table.php:911
-#: includes/reviews/class-cr-reviews-list-table.php:913
-#: includes/reviews/class-cr-reviews-list-table.php:928
-#: includes/reviews/class-cr-reviews-list-table.php:930
+#: includes/reviews/class-cr-admin-menu-reviews.php:552
+#: includes/reviews/class-cr-admin-menu-reviews.php:554
+#: includes/reviews/class-cr-admin-menu-reviews.php:561
+#: includes/reviews/class-cr-admin-menu-reviews.php:563
+#: includes/reviews/class-cr-admin-menu-reviews.php:570
+#: includes/reviews/class-cr-admin-menu-reviews.php:572
+#: includes/reviews/class-cr-admin-menu-reviews.php:579
+#: includes/reviews/class-cr-admin-menu-reviews.php:581
+#: includes/reviews/class-cr-reviews-list-table.php:885
+#: includes/reviews/class-cr-reviews-list-table.php:887
+#: includes/reviews/class-cr-reviews-list-table.php:902
+#: includes/reviews/class-cr-reviews-list-table.php:904
+#: includes/reviews/class-cr-reviews-list-table.php:919
+#: includes/reviews/class-cr-reviews-list-table.php:921
+#: includes/reviews/class-cr-reviews-list-table.php:936
+#: includes/reviews/class-cr-reviews-list-table.php:938
 msgid "CusRev portal"
 msgstr ""
 
-#: includes/reviews/class-cr-admin-menu-reviews.php:555
-#: includes/reviews/class-cr-reviews-list-table.php:884
+#: includes/reviews/class-cr-admin-menu-reviews.php:556
+#: includes/reviews/class-cr-reviews-list-table.php:892
 msgid "A verified copy of this reply was published on %s"
 msgstr ""
 
-#: includes/reviews/class-cr-admin-menu-reviews.php:564
-#: includes/reviews/class-cr-reviews-list-table.php:901
+#: includes/reviews/class-cr-admin-menu-reviews.php:565
+#: includes/reviews/class-cr-reviews-list-table.php:909
 msgid "This reply was originally posted on %s. If this copy of the reply is edited, the original reply will NOT be updated. Only the customer can edit the original reply on CusRev portal."
 msgstr ""
 
-#: includes/reviews/class-cr-admin-menu-reviews.php:573
-#: includes/reviews/class-cr-reviews-list-table.php:918
+#: includes/reviews/class-cr-admin-menu-reviews.php:574
+#: includes/reviews/class-cr-reviews-list-table.php:926
 msgid "This reply was originally posted on %s. This copy of the reply was modified and might be different from the original published on CusRev portal."
 msgstr ""
 
-#: includes/reviews/class-cr-admin-menu-reviews.php:582
-#: includes/reviews/class-cr-reviews-list-table.php:935
+#: includes/reviews/class-cr-admin-menu-reviews.php:583
+#: includes/reviews/class-cr-reviews-list-table.php:943
 msgid "A verified copy published on %s could not be updated because it is not the last reply for the review. The verified copy might be different from this reply."
 msgstr ""
 
-#: includes/reviews/class-cr-admin-menu-reviews.php:585
-#: includes/reviews/class-cr-reviews-list-table.php:941
+#: includes/reviews/class-cr-admin-menu-reviews.php:586
+#: includes/reviews/class-cr-reviews-list-table.php:949
 msgid "Reply could not be published to CusRev portal. Error "
 msgstr ""
 
-#: includes/reviews/class-cr-admin-menu-reviews.php:606
-#: includes/reviews/class-cr-reviews-list-table.php:1195
+#: includes/reviews/class-cr-admin-menu-reviews.php:607
+#: includes/reviews/class-cr-reviews-list-table.php:1223
 #: templates/cr-review.php:119
 #: templates/reviews-grid.php:130
 #: templates/reviews-slider.php:48
 msgid "Reviewer"
 msgstr ""
 
-#: includes/reviews/class-cr-admin-menu-reviews.php:625
-#: includes/reviews/class-cr-admin-menu-reviews.php:634
-#: includes/reviews/class-cr-reviews-list-table.php:1178
+#: includes/reviews/class-cr-admin-menu-reviews.php:626
+#: includes/reviews/class-cr-admin-menu-reviews.php:635
+#: includes/reviews/class-cr-reviews-list-table.php:1206
 #: templates/cr-review.php:104
 msgid "Store manager"
 msgstr ""
 
-#: includes/reviews/class-cr-admin-menu-reviews.php:658
+#: includes/reviews/class-cr-admin-menu-reviews.php:659
 msgid "This reply was originally posted on CusRev portal. This copy of the reply was modified and might be different from the original reply published on CusRev portal."
 msgstr ""
 
-#: includes/reviews/class-cr-admin-menu-reviews.php:670
-#: includes/reviews/class-cr-reviews-list-table.php:785
+#: includes/reviews/class-cr-admin-menu-reviews.php:671
+#: includes/reviews/class-cr-reviews-list-table.php:793
 msgid "Feature"
 msgstr ""
 
-#: includes/reviews/class-cr-admin-menu-reviews.php:676
-#: includes/reviews/class-cr-reviews-list-table.php:787
+#: includes/reviews/class-cr-admin-menu-reviews.php:677
+#: includes/reviews/class-cr-reviews-list-table.php:795
 msgid "Unfeature"
 msgstr ""
 
-#: includes/reviews/class-cr-admin-menu-reviews.php:770
+#: includes/reviews/class-cr-admin-menu-reviews.php:771
 msgid "Reviews per page"
 msgstr ""
 
@@ -2762,7 +2771,7 @@ msgid "No reviews found."
 msgstr ""
 
 #: includes/reviews/class-cr-reviews-list-table.php:365
-#: includes/reviews/class-cr-reviews-list-table.php:804
+#: includes/reviews/class-cr-reviews-list-table.php:812
 msgid "Unverify"
 msgstr ""
 
@@ -2826,50 +2835,54 @@ msgstr ""
 msgid "All ratings"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews-list-table.php:664
-#: includes/reviews/class-cr-reviews-list-table.php:674
+#: includes/reviews/class-cr-reviews-list-table.php:666
+#: includes/reviews/class-cr-reviews-list-table.php:682
 msgid "via CR"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews-list-table.php:668
+#: includes/reviews/class-cr-reviews-list-table.php:672
 msgid "via CR (Local)"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews-list-table.php:671
+#: includes/reviews/class-cr-reviews-list-table.php:677
 msgid "via CR (Private)"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews-list-table.php:882
+#: includes/reviews/class-cr-reviews-list-table.php:890
 msgid "A verified copy of this reply was published on %1$s. If this reply is deleted, the verified copy will remain published. If this reply is edited, the verified copy will be updated. The page with verified copies of reviews and replies to reviews for your shop on CusRev portal can be completely hidden by disabling Trust Badges in the %2$s."
 msgstr ""
 
-#: includes/reviews/class-cr-reviews-list-table.php:887
-#: includes/reviews/class-cr-reviews-list-table.php:938
+#: includes/reviews/class-cr-reviews-list-table.php:895
+#: includes/reviews/class-cr-reviews-list-table.php:946
 msgid "A copy of this reply was published on CusRev portal"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews-list-table.php:899
-#: includes/reviews/class-cr-reviews-list-table.php:916
+#: includes/reviews/class-cr-reviews-list-table.php:907
+#: includes/reviews/class-cr-reviews-list-table.php:924
 msgid "This reply was originally posted on %1$s. If this copy of the reply is deleted, the original on CusRev portal will remain published. If this copy is edited, the original reply will NOT be updated. Only the customer can edit the original reply on CusRev portal. The page with verified copies of reviews and replies to reviews for your shop on CusRev portal can be completely hidden by disabling Trust Badges in the %2$s."
 msgstr ""
 
-#: includes/reviews/class-cr-reviews-list-table.php:904
-#: includes/reviews/class-cr-reviews-list-table.php:921
+#: includes/reviews/class-cr-reviews-list-table.php:912
+#: includes/reviews/class-cr-reviews-list-table.php:929
 msgid "This reply was originally posted on CusRev portal"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews-list-table.php:933
+#: includes/reviews/class-cr-reviews-list-table.php:941
 msgid "A verified copy of this reply was published on %1$s. If this reply is deleted, the verified copy will remain published. The page with verified copies of reviews and replies to reviews for your shop on CusRev portal can be completely hidden by disabling Trust Badges in the %2$s."
 msgstr ""
 
-#: includes/reviews/class-cr-reviews-list-table.php:976
+#: includes/reviews/class-cr-reviews-list-table.php:984
 #: includes/reviews/class-cr-reviews.php:1228
 #: templates/cr-review.php:131
 msgid "Featured Review"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews-list-table.php:1045
-#: includes/reviews/class-cr-reviews-list-table.php:1067
+#: includes/reviews/class-cr-reviews-list-table.php:999
+msgid "This review was submitted in response to a review invitation sent for the order %s"
+msgstr ""
+
+#: includes/reviews/class-cr-reviews-list-table.php:1073
+#: includes/reviews/class-cr-reviews-list-table.php:1095
 #: includes/reviews/class-cr-reviews-media-meta-box.php:70
 #: includes/reviews/class-cr-reviews-media-meta-box.php:129
 #: includes/reviews/class-cr-reviews.php:282
@@ -2882,7 +2895,7 @@ msgstr ""
 msgid "Video #%1$d from %2$s"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews-list-table.php:1119
+#: includes/reviews/class-cr-reviews-list-table.php:1147
 msgid "Add a tag"
 msgstr ""
 
@@ -5854,12 +5867,6 @@ msgstr ""
 #: admin/build/index.js:1
 #: admin/src/reviews/Reviews.jsx:54
 msgid "Reviews received"
-msgstr ""
-
-#: admin/build/index.js:1
-#: admin/src/reviews/Reviews.jsx:185
-#: admin/src/reviews/Reviews.jsx:228
-msgid "Review reminders"
 msgstr ""
 
 #: admin/build/index.js:1

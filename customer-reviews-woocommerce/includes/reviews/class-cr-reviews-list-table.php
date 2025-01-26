@@ -657,24 +657,32 @@ class CR_Reviews_List_Table extends WP_List_Table {
 		$this->user_can = current_user_can( 'edit_comment', $comment->comment_ID );
 
 		$comment->rating = intval( get_comment_meta( $comment->comment_ID, 'rating', true ) );
-		if ( "" !== get_comment_meta( $comment->comment_ID, 'ivole_order', true ) ) {
+		$comment->cr_order = get_comment_meta( $comment->comment_ID, 'ivole_order', true );
+		$comment->via_cr = '';
+		if ( $comment->cr_order ) {
 			// reviews collected via CusRev in the Live mode
 			$comment->via_cr = sprintf(
 				'%s<img src="' . plugins_url( '/img/shield-20.png', dirname( dirname( __FILE__ ) ) ) . '" alt="' . __( 'Verified review', 'customer-reviews-woocommerce' ) . '" class="ivole-verified-badge-icon">',
 				esc_html( __( 'via CR', 'customer-reviews-woocommerce' ) )
 			);
-		} elseif ( "" !== get_comment_meta( $comment->comment_ID, 'ivole_order_locl', true ) ) {
-			// reviews collected locally
-			$comment->via_cr = esc_html( __( 'via CR (Local)', 'customer-reviews-woocommerce' ) );
-		} elseif ( "" !== get_comment_meta( $comment->comment_ID, 'ivole_order_priv', true ) ) {
-			// reviews collected via CusRev in the Private mode
-			$comment->via_cr = esc_html( __( 'via CR (Private)', 'customer-reviews-woocommerce' ) );
-		} elseif ( "" !== get_comment_meta( $comment->comment_ID, 'ivole_order_unve', true ) ) {
-			// reviews collected via CusRev in the Live mode with removed verification (unverified)
-			$comment->via_cr = esc_html( __( 'via CR', 'customer-reviews-woocommerce' ) );
 		} else {
-			// other reviews
-			$comment->via_cr = '';
+			$comment->cr_order = get_comment_meta( $comment->comment_ID, 'ivole_order_locl', true );
+			if ( $comment->cr_order ) {
+				// reviews collected locally
+				$comment->via_cr = esc_html( __( 'via CR (Local)', 'customer-reviews-woocommerce' ) );
+			} else {
+				$comment->cr_order = get_comment_meta( $comment->comment_ID, 'ivole_order_priv', true );
+				if ( $comment->cr_order ) {
+					// reviews collected via CusRev in the Private mode
+					$comment->via_cr = esc_html( __( 'via CR (Private)', 'customer-reviews-woocommerce' ) );
+				} else {
+					$comment->cr_order = get_comment_meta( $comment->comment_ID, 'ivole_order_unve', true );
+					if ( $comment->cr_order ) {
+						// reviews collected via CusRev in the Live mode with removed verification (unverified)
+						$comment->via_cr = esc_html( __( 'via CR', 'customer-reviews-woocommerce' ) );
+					}
+				}
+			}
 		}
 
 		echo "<tr id='comment-$comment->comment_ID' class='$the_comment_class'>";
@@ -976,6 +984,26 @@ class CR_Reviews_List_Table extends WP_List_Table {
 			echo __( 'Featured Review', 'customer-reviews-woocommerce' );
 			echo '</span></div>';
 		}
+
+		if ( $comment->via_cr ):
+			$cr_order = wc_get_order( $comment->cr_order );
+			if ( $cr_order ) : ?>
+				<div class="cr-all-reviews-details">
+					<span class="dashicons dashicons-cart"></span>
+					<a href="<?php echo esc_attr( $cr_order->get_edit_order_url() ); ?>">
+						<?php echo esc_html( $cr_order->get_order_number() ); ?>
+					</a>
+					<?php
+					echo CR_Admin::cr_help_tip(
+						sprintf(
+							__( 'This review was submitted in response to a review invitation sent for the order %s', 'customer-reviews-woocommerce' ),
+							$cr_order->get_order_number()
+						)
+					);
+					?>
+				</div><?php
+			endif;
+		endif;
 
 		comment_text( $comment );
 

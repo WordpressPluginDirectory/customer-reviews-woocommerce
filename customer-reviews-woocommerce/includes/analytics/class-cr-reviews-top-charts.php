@@ -208,7 +208,12 @@ class CR_Reviews_Top_Charts {
 			'Review reminders are configured to invite customers to review their orders using aggregated review forms hosted locally on your website. This setup is ideal for meeting personal data protection requirements, as customer data does not leave your website. You can adjust this configuration in the plugin settings.',
 			'customer-reviews-woocommerce'
 		);
-		$reviewReminderHelpLink = admin_url( 'admin.php?page=cr-reviews-settings&tab=review_reminder' );
+		$reviewReminderHelpLinks = array();
+		$reviewReminderHelpLinks[] = (object) array(
+			'icon' => 'IconAdjustments',
+			'link' => admin_url( 'admin.php?page=cr-reviews-settings&tab=review_reminder' ),
+			'label' => __( 'Review reminders', 'customer-reviews-woocommerce' )
+		);
 		if ( 'yes' === $verified_reviews ) {
 			$reviewReminderLabel = 'CusRev';
 			if ( 'yes' === $live_mode ) {
@@ -224,6 +229,11 @@ class CR_Reviews_Top_Charts {
 					'customer-reviews-woocommerce'
 				);
 			}
+			$reviewReminderHelpLinks[] = (object) array(
+				'icon' => 'IconAdjustments',
+				'link' => admin_url( 'admin.php?page=cr-reviews-settings&tab=cusrev' ),
+				'label' => 'CusRev.com'
+			);
 		}
 		//
 		$reminderSendingIcon = 'IconSendOff';
@@ -232,7 +242,12 @@ class CR_Reviews_Top_Charts {
 			'Review reminders are switched off. Enabling them can help you gather more authentic feedback from your customers about the products, services, and your store.',
 			'customer-reviews-woocommerce'
 		);
-		$reminderSendingHelpLink = admin_url( 'admin.php?page=cr-reviews-settings&tab=review_reminder' );
+		$reminderSendingHelpLinks = array();
+		$reminderSendingHelpLinks[] = (object) array(
+			'icon' => 'IconAdjustments',
+			'link' => admin_url( 'admin.php?page=cr-reviews-settings&tab=review_reminder' ),
+			'label' => __( 'Review reminders', 'customer-reviews-woocommerce' )
+		);
 		if ( 'yes' === $auto_reminders ) {
 			$reminderSendingIcon = 'IconSend';
 			$reminderSendingLabel = __( 'Automatic', 'customer-reviews-woocommerce' );
@@ -246,6 +261,11 @@ class CR_Reviews_Top_Charts {
 			$reminderSendingHelp = __(
 				'Review reminders can be manually triggered from the WooCommerce Orders page by clicking the envelope button next to each order.',
 				'customer-reviews-woocommerce'
+			);
+			$reminderSendingHelpLinks[] = (object) array(
+				'icon' => 'IconShoppingCart',
+				'link' => admin_url( 'admin.php?page=wc-orders' ),
+				'label' => __( 'Orders', 'customer-reviews-woocommerce' )
 			);
 		}
 
@@ -292,13 +312,13 @@ class CR_Reviews_Top_Charts {
 						'icon' => $reviewReminderIcon,
 						'label' => $reviewReminderLabel,
 						'help' => $reviewReminderHelp,
-						'helpLink' => $reviewReminderHelpLink
+						'helpLinks' => $reviewReminderHelpLinks
 					),
 					'reminderSending' => (object) array(
 						'icon' => $reminderSendingIcon,
 						'label' => $reminderSendingLabel,
 						'help' => $reminderSendingHelp,
-						'helpLink' => $reminderSendingHelpLink
+						'helpLinks' => $reminderSendingHelpLinks
 					)
 				)
 			)
