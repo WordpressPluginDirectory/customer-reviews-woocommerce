@@ -10,6 +10,9 @@
 .icon {
   color: var(--mantine-color-dimmed);
 }
+.iconReferrals {
+  color: #7B79E2;
+}
 .value {
   font-size: rem(20px);
   font-weight: 600;
@@ -109,9 +112,6 @@
 .helpIcon:hover {
   cursor: pointer;
 }
-.statusCard {
-  align-self: flex-start;
-}
 .statusCardBadgeIcon {
   width: 12px;
   height: 12px;
@@ -119,4 +119,10 @@
 .settingsIcon {
   width: 12px;
   height: 12px;
+}
+.contReferrals {
+  display: flex;
+}
+.subContReferrals {
+  text-align: center;
 }

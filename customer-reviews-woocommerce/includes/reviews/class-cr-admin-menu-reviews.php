@@ -33,6 +33,7 @@ if ( ! class_exists( 'Ivole_Reviews_Admin_Menu' ) ):
 			add_filter( 'wp_update_comment_data', array( $this, 'update_author_type' ), 10, 3 );
 			add_filter( 'set-screen-option', array( $this, 'save_screen_options' ), 10, 3 );
 			add_action( 'wp_ajax_cr_get_reviews_top_row_stats', array( 'CR_Reviews_Top_Charts', 'get_reviews_top_row_stats' ) );
+			add_action( 'wp_ajax_cr_get_reviews_top_row_refs', array( 'CR_Reviews_Top_Charts', 'get_reviews_top_row_refs' ) );
 			$cr_reviews_media_meta_box = new CR_Reviews_Media_Meta_Box();
 		}
 

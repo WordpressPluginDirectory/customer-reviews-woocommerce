@@ -290,9 +290,17 @@ if ( ! class_exists( 'CR_Email_Func' ) ) :
 			}
 			// fetch a local email template
 			$template = wc_locate_template(
-				self::TEMPLATE_REVIEW_REMINDER,
+				apply_filters(
+					'cr_settings_email_file_name',
+					self::TEMPLATE_REVIEW_REMINDER,
+					$data['templateId']
+				),
 				'customer-reviews-woocommerce',
-				__DIR__ . '/../../templates/'
+				apply_filters(
+					'cr_settings_email_template_base',
+					__DIR__ . '/../../templates/',
+					$data['templateId']
+				)
 			);
 			$email_template = '';
 			ob_start();
@@ -300,8 +308,8 @@ if ( ! class_exists( 'CR_Email_Func' ) ) :
 			$cr_email_body = $data['email']['body'];
 			$cr_email_review_btn = $data['email']['reviewBtn'];
 			$cr_email_footer = $data['email']['footer'];
-			$cr_email_color_bg = get_option( 'ivole_email_color_bg', '#0f9d58' );
-			$cr_email_color_text = get_option( 'ivole_email_color_text', '#ffffff' );
+			$cr_email_color_bg = $data['colors']['email']['bg'];
+			$cr_email_color_text = $data['colors']['email']['text'];
 			// optional tracking pixel
 			$cr_email_pixel = '';
 			if ( isset( $data['trackOpens'] ) && $data['trackOpens'] ) {
@@ -385,7 +393,8 @@ if ( ! class_exists( 'CR_Email_Func' ) ) :
 							'items' => $data['order']['items'],
 							'currency' => $data['order']['currency'],
 							'email_id' =>  $message['email_id'],
-							'is_test' => $is_test
+							'is_test' => $is_test,
+							'template_id' => $data['templateId']
 						)
 					);
 					$headers[] = self::CR_MESSAGE_ID . ': ' . $message['email_id'];
@@ -396,7 +405,8 @@ if ( ! class_exists( 'CR_Email_Func' ) ) :
 							'language' => $data['language'],
 							'firstname' => $data['customer']['firstname'],
 							'lastname' => $data['customer']['lastname'],
-							'order_id' => $data['order']['id']
+							'order_id' => $data['order']['id'],
+							'template_id' => $data['templateId']
 						)
 					);
 					$wpmail_result = wp_mail( $data['email']['to'], $data['email']['subject'], $message['template'], $headers );
@@ -431,6 +441,7 @@ if ( ! class_exists( 'CR_Email_Func' ) ) :
 					unset( $data['order']['items'] );
 					$api_url = 'https://api.cusrev.com/v2/test-email';
 				}
+				unset( $data['templateId'] );
 				$data_string = json_encode( $data );
 				//error_log( $data_string );
 				$ch = curl_init();

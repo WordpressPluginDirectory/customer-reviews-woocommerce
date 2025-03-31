@@ -111,11 +111,21 @@
 		}
 		?>
 
-		<?php CR_Reviews_Media_Download::maybe_auto_download_media(); ?>
+		<?php
+			CR_Reviews_Media_Download::maybe_auto_download_media();
+			$display_referrals = false;
+			if (
+				'yes' === get_option( 'ivole_verified_reviews', 'no' ) &&
+				get_option( 'ivole_license_key', '' )
+			) {
+				$display_referrals = true;
+			}
+		?>
 
 		<div
 			id="cr_reviews_top_charts"
 			data-nonce="<?php echo wp_create_nonce( 'cr-reviews-top-row' ); ?>"
+			data-referrals="<?php echo $display_referrals; ?>"
 			style="display:flex;margin:1em 0;"
 			>
 		</div>

@@ -1,19 +1,4 @@
 <?php
-/**
-* Display single product reviews (comments)
-*
-* This template can be overridden by copying it to yourtheme/woocommerce/single-product-reviews.php.
-*
-* HOWEVER, on occasion WooCommerce will need to update template files and you
-* (the theme developer) will need to copy the new files to your theme to
-* maintain compatibility. We try to do this as little as possible, but it does
-* happen. When this occurs the version of the template file will be bumped and
-* the readme will list any important changes.
-*
-* @see     https://docs.woocommerce.com/document/template-structure/
-* @package WooCommerce/Templates
-* @version 4.3.0
-*/
 
 defined( 'ABSPATH' ) || exit;
 
@@ -39,11 +24,15 @@ $nonce = wp_create_nonce( "cr_product_reviews_" . $cr_product_id );
 	<div id="comments" class="cr-reviews-ajax-comments" data-nonce="<?php echo $nonce; ?>" data-page="1">
 		<h2 class="woocommerce-Reviews-title">
 			<?php
-			$count = $product->get_review_count();
-			if ( $count && wc_review_ratings_enabled() ) {
+			$cr_get_reviews = CR_Ajax_Reviews::get_reviews( $cr_product_id );
+			if ( 0 < $cr_get_reviews['reviews_count'] ) {
 				/* translators: 1: reviews count 2: product name */
-				$reviews_title = sprintf( esc_html( _n( '%1$s review for %2$s', '%1$s reviews for %2$s', $count, 'woocommerce' ) ), esc_html( $count ), '<span>' . get_the_title() . '</span>' );
-				echo apply_filters( 'woocommerce_reviews_title', $reviews_title, $count, $product ); // WPCS: XSS ok.
+				$reviews_title = sprintf(
+					esc_html( _n( '%1$s review for %2$s', '%1$s reviews for %2$s', $cr_get_reviews['reviews_count'], 'woocommerce' ) ),
+					esc_html( $cr_get_reviews['reviews_count'] ),
+					'<span>' . get_the_title() . '</span>'
+				);
+				echo apply_filters( 'woocommerce_reviews_title', $reviews_title, $cr_get_reviews['reviews_count'], $product );
 			} else {
 				esc_html_e( 'Reviews', 'woocommerce' );
 			}
@@ -60,10 +49,8 @@ $nonce = wp_create_nonce( "cr_product_reviews_" . $cr_product_id );
 		}
 		$new_reviews_allowed = in_array( $cr_form_permissions, array( 'registered', 'verified', 'anybody' ) ) ? true : false;
 		$cr_per_page = CR_Ajax_Reviews::get_per_page();
-		if ( have_comments() ) : ?>
-			<?php
+		if ( 0 < $cr_get_reviews['reviews_count'] ) :
 			$no_comments_yet = false;
-			$cr_get_reviews = CR_Ajax_Reviews::get_reviews( $cr_product_id );
 			do_action( 'cr_reviews_summary', $cr_product_id, true, $new_reviews_allowed );
 			do_action( 'cr_reviews_customer_images', $cr_get_reviews['reviews'] );
 			if ( $new_reviews_allowed ) {

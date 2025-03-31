@@ -135,7 +135,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</div>
 						<div class="rating-row">
 							<div class="rating">
-								<div class="crstar-rating" style="<?php echo esc_attr( $stars_style ); ?>"><span style="width:<?php echo ($rating / 5) * 100; ?>%;"></span></div>
+								<div class="crstar-rating-svg" role="img"><?php echo CR_Reviews::get_star_rating_svg( $rating, 0, '' ); ?></div>
 							</div>
 							<div class="rating-label">
 								<?php echo $rating . '/5'; ?>
@@ -197,9 +197,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 				</div>
 			<?php endforeach; ?>
 		</div>
-		<?php if ( $show_more ): ?>
+		<?php if ( $show_more && 0 < $remaining_reviews ): ?>
 			<div class="cr-show-more">
-				<button class="cr-show-more-button" type="button"><?php echo __( 'Show more', 'customer-reviews-woocommerce' ); ?></button>
+				<button class="cr-show-more-button" type="button">
+					<?php echo sprintf( __( 'Show more reviews (%d)', 'customer-reviews-woocommerce' ), $remaining_reviews ); ?>
+				</button>
 				<span class="cr-show-more-spinner" style="display:none;"></span>
 			</div>
 		<?php else: ?>

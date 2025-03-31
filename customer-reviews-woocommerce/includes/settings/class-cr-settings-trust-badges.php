@@ -327,7 +327,15 @@ if ( ! class_exists( 'Ivole_Trust_Badges' ) ):
 					<?php
 						$shortcode_custom_color = '<a href="https://www.google.com/search?q=color+picker" target="_blank">' . __( 'color', 'customer-reviews-woocommerce' ) . '</a>';
 						/* translators: please keep %1$s, %2$s, %3$s, %4$s, %5$s, and %6$s in the translated string */
-						$shortcode_explanation = sprintf( 'Use %1$s shortcode to display this badge on your site. If the shortcode includes %2$s argument, you can set it to %3$s or %4$s to display or hide border. If the shortcode includes %5$s argument, you can set it to a custom %6$s (in HEX format).', '<code>' . $shortcode . '</code>', '<code>border</code>', '<code>yes</code>', '<code>no</code>', '<code>color</code>', $shortcode_custom_color );
+						$shortcode_explanation = sprintf(
+							__( 'Use %1$s shortcode to display this badge on your site. If the shortcode includes %2$s argument, you can set it to %3$s or %4$s to display or hide border. If the shortcode includes %5$s argument, you can set it to a custom %6$s (in HEX format).', 'customer-reviews-woocommerce' ),
+							'<code>' . $shortcode . '</code>',
+							'<code>border</code>',
+							'<code>yes</code>',
+							'<code>no</code>',
+							'<code>color</code>',
+							$shortcode_custom_color
+						);
 					?>
 					<p class="cr-trustbadge-desc"><?php echo $shortcode_explanation; ?></p>
 					<div class="cr-trustbadgea">

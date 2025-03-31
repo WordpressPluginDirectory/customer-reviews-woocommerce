@@ -751,19 +751,41 @@ if ( ! class_exists( 'CR_Review_Reminder_Settings' ) ):
 							<div class="cr-twocols-main">
 								<ul>
 									<li>
-										<?php esc_html_e( 'Collect reviews locally without third-party verification' ); echo wc_help_tip( 'The complete reviews collection solution hosted on your server' ); ?>
+										<?php
+											esc_html_e( 'Collect reviews locally without third-party verification', 'customer-reviews-woocommerce' );
+											echo wc_help_tip(
+												__( 'The complete reviews collection solution hosted on your server', 'customer-reviews-woocommerce' )
+											);
+										?>
 									</li>
 									<li>
-										<?php esc_html_e( 'Review invitations will be sent by the default mailer from your website' ); echo wc_help_tip( 'The plugin will use the standard \'wp_mail\' function for sending emails in WordPress' ); ?>
+										<?php
+											esc_html_e( 'Review invitations will be sent by the default mailer from your website', 'customer-reviews-woocommerce' );
+											echo wc_help_tip(
+												__( 'The plugin will use the standard \'wp_mail\' function for sending emails in WordPress', 'customer-reviews-woocommerce' )
+											);
+										?>
 									</li>
 									<li>
-										<?php esc_html_e( 'Aggregated review forms will be hosted locally on your server' ); echo wc_help_tip( 'An aggregated review form is a review form that supports collection of reviews for multiple products at the same time.' ); ?>
+										<?php
+											esc_html_e( 'Aggregated review forms will be hosted locally on your server', 'customer-reviews-woocommerce' );
+											echo wc_help_tip(
+												__( 'An aggregated review form is a review form that supports collection of reviews for multiple products at the same time.', 'customer-reviews-woocommerce' )
+											);
+										?>
 									</li>
 									<li>
-										<?php esc_html_e( 'No restrictions on collection of reviews for prohibited product categories' ); echo wc_help_tip( 'Since CusRev does not have to display copies of unverified reviews, there are no restrictions on allowed categories of products' ); ?>
+										<?php
+											esc_html_e( 'No restrictions on collection of reviews for prohibited product categories', 'customer-reviews-woocommerce' );
+											echo wc_help_tip(
+												__( 'Since CusRev does not have to display copies of unverified reviews, there are no restrictions on allowed categories of products', 'customer-reviews-woocommerce' )
+											);
+										?>
 									</li>
 									<li>
-										<?php esc_html_e( 'I understand that visitors of my website are likely to consider unverified reviews to be biased or fake' ); ?>
+										<?php
+											esc_html_e( 'I understand that visitors of my website are likely to consider unverified reviews to be biased or fake', 'customer-reviews-woocommerce' );
+										?>
 									</li>
 								</ul>
 							</div>
@@ -794,13 +816,13 @@ if ( ! class_exists( 'CR_Review_Reminder_Settings' ) ):
 										<?php echo 'Use <a href="https://www.cusrev.com/business/" target="_blank" rel="noopener noreferrer">CusRev</a><img src="' . untrailingslashit( plugin_dir_url( dirname( dirname( __FILE__ ) ) ) ) . '/img/external-link.png" class="cr-product-feed-categories-ext-icon"> for collection and verification of reviews' . wc_help_tip( 'CusRev (Customer Reviews) is a service for businesses that offers a voluntary scheme for verification of reviews submitted by customers.' ); ?>
 									</li>
 									<li>
-										<?php esc_html_e( 'Review invitations will be sent by CusRev on behalf of your store' ); echo wc_help_tip( 'CusRev uses AWS SES (Simple Email Service) for sending emails to ensure their excellent deliverability' ); ?>
+										<?php esc_html_e( 'Review invitations will be sent by CusRev on behalf of your store', 'customer-reviews-woocommerce' ); echo wc_help_tip( 'CusRev uses AWS SES (Simple Email Service) for sending emails to ensure their excellent deliverability' ); ?>
 									</li>
 									<li>
-										<?php esc_html_e( 'Aggregated review forms will be hosted on AWS S3 by CusRev' ); echo wc_help_tip( 'An aggregated review form is a review form that supports collection of reviews for multiple products at the same time.' ); ?>
+										<?php esc_html_e( 'Aggregated review forms will be hosted on AWS S3 by CusRev', 'customer-reviews-woocommerce' ); echo wc_help_tip( 'An aggregated review form is a review form that supports collection of reviews for multiple products at the same time.' ); ?>
 									</li>
 									<li>
-										<?php esc_html_e( 'CusRev is unable to collect and verify reviews for certain products' ); echo wc_help_tip( 'Due to regulatory restrictions, CusRev is unable to collect and verify reviews for prohibited categories of products (e.g., CBD or Kratom)' ); ?>
+										<?php esc_html_e( 'CusRev is unable to collect and verify reviews for certain products', 'customer-reviews-woocommerce' ); echo wc_help_tip( 'Due to regulatory restrictions, CusRev is unable to collect and verify reviews for prohibited categories of products (e.g., CBD or Kratom)' ); ?>
 									</li>
 									<li>
 										<?php echo 'I confirm that I will send review invitations only with consent of customers and agree to CusRev’s <a href="https://www.cusrev.com/terms.html" target="_blank" rel="noopener noreferrer">terms and conditions</a><img src="' . untrailingslashit( plugin_dir_url( dirname( dirname( __FILE__ ) ) ) ) . '/img/external-link.png" class="cr-product-feed-categories-ext-icon">'; ?>

@@ -148,7 +148,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				if ( 0 < $rating ) {
 					/* translators: %s: rating */
 					$label = sprintf( __( 'Rated %s out of 5', 'woocommerce' ), $rating );
-					$html_star_rating = '<div class="crstar-rating" role="img" aria-label="' . esc_attr( $label ) . '">' . CR_Reviews::get_star_rating_html( $rating, 0 ) . '</div>';
+					$html_star_rating = '<div class="crstar-rating-svg" role="img" aria-label="' . esc_attr( $label ) . '">' . CR_Reviews::get_star_rating_svg( $rating, 0, '' ) . '</div>';
 					$product_avatar_name = '';
 
 					if(

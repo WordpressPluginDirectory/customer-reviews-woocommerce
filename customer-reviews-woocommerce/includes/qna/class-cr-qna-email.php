@@ -21,6 +21,8 @@ if ( ! class_exists( 'CR_Qna_Email' ) ) :
 		private $find = array();
 		private $replace = array();
 
+		public static $qna_reply_def_body = "Hi {customer_name},\n\n{user_name} responded to your question about <b>{product_name}</b>. Here is a copy of their response:\n\n<i>{answer}</i>\n\nYou can view <b>{product_name}</b> here:\n\n{product_button}\n\nBest wishes,\n{site_title} Team";
+
 		public function __construct( $name, $language = NULL ) {
 			$this->name = $name;
 			$this->headers[] = 'Content-Type: text/html; charset=UTF-8';
@@ -56,7 +58,7 @@ if ( ! class_exists( 'CR_Qna_Email' ) ) :
 				case 'qna_reply':
 					$this->subject = get_option( 'ivole_email_subject_' . $this->name, 'New Response to Your Question about {product_name}' );
 					$this->heading = get_option( 'ivole_email_heading_' . $this->name, 'New Response to Your Question' );
-					$this->body = get_option( 'ivole_email_body_' . $this->name, "Hi {customer_name},\n\n{user_name} responded to your question about <b>{product_name}</b>. Here is a copy of their response:\n\n<i>{answer}</i>\n\nYou can view <b>{product_name}</b> here:\n\n{product_button}\n\nBest wishes,\n{site_title} Team" );
+					$this->body = get_option( 'ivole_email_body_' . $this->name, self::$qna_reply_def_body );
 					$this->template_name = 'qna-email-reply.php';
 					$from = trim( get_option( 'ivole_email_from_' . $this->name, '' ) );
 					$from_name = trim( get_option( 'ivole_email_from_name_' . $this->name, '' ) );

@@ -494,9 +494,15 @@
 			jQuery.post(cr_ajax_object.ajax_url, grid_data, function(response) {
 				$spinner.hide();
 				$reviews = jQuery(response.html).find(".cr-review-card");
-				if($reviews.length){
+				let showMoreBtn = jQuery(response.html).find(".cr-show-more-button");
+				if ( $reviews.length ) {
 					$this.parents(".cr-reviews-grid").find(".cr-reviews-grid-inner").colcade("append", $reviews);
-					$this.show();
+					if ( showMoreBtn.length ) {
+						$this.text( showMoreBtn.text() );
+						$this.show();
+					} else {
+						$this.hide();
+					}
 				} else {
 					$this.hide();
 				}

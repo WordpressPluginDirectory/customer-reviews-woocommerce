@@ -492,13 +492,6 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 			$one = (float)$this->count_ratings( $product_id, 1 );
 			$one_percent = floor( $one / $all * 100 );
 			$one_rounding = $one / $all * 100 - $one_percent;
-			// $hundred = $five_percent + $four_percent + $three_percent + $two_percent + $one_percent;
-			// if( $hundred < 100 ) {
-			// 	$to_distribute = 100 - $hundred;
-			// 	$roundings = array( '5' => $five_rounding, '4' => $four_rounding, '3' => $three_rounding, '2' => $two_rounding, '1' => $one_rounding );
-			// 	arsort($roundings);
-			// 	error_log( print_r( $roundings, true ) );
-			// }
 			$average = 0;
 			$product = wc_get_product( $product_id );
 			if( $product ) {
@@ -532,7 +525,7 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 			$output .= '<div class="cr-summaryBox-wrap">';
 			$output .= '<div class="cr-overall-rating-wrap">';
 			$output .= '<div class="cr-average-rating"><span>' . number_format_i18n( $average, 1 ) . '</span></div>';
-			$output .= '<div class="cr-average-rating-stars"><div class="crstar-rating"><span style="width:' . ( $average / 5 * 100 ) . '%;"></span></div></div>';
+			$output .= '<div class="cr-average-rating-stars"><div class="crstar-rating-svg" role="img">' . self::get_star_rating_svg( $average, 0, '' ) . '</div></div>';
 			$output .= '<div class="cr-total-rating-count">' . sprintf( _n( 'Based on %s review', 'Based on %s reviews', $all, 'customer-reviews-woocommerce' ), number_format_i18n( $all ) ) . '</div>';
 			if ( $new_reviews_allowed ) {
 				$output .= '<button class="cr-ajax-reviews-add-review" type="button">' . __( 'Add a review', 'woocommerce' ) .'</button>';
@@ -1428,7 +1421,7 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 					$output .= '<img src="' . $pics_prepared[$i][0] . '" alt="' . esc_attr( $pics_prepared[$i][5] ) . '" loading="lazy">';
 				}
 				$output .= '<div class="cr-ajax-reviews-slide-main-comment">';
-				$output .= wc_get_rating_html( $ratingr );
+				$output .= '<div class="crstar-rating-svg" role="img">' . self::get_star_rating_svg( $ratingr, 0, '' ) . '</div>';
 				$output .= '<p><strong class="woocommerce-review__author">' . esc_html( $pics_prepared[$i][1]->comment_author ) .'</strong></p>';
 				$output .= '<time class="woocommerce-review__published-date" datetime="' . esc_attr( mysql2date( 'c', $pics_prepared[$i][1]->comment_date ) ) . '">' . esc_html( mysql2date( wc_date_format(), $pics_prepared[$i][1]->comment_date ) ) . '</time>';
 				// WPML integration for translation of reviews
@@ -1683,22 +1676,6 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 		}
 	}
 
-	public static function get_star_rating_html( $rating, $count = 0 ) {
-		$html = '<span style="width:' . ( ( $rating / 5 ) * 100 ) . '%">';
-
-		if ( 0 < $count ) {
-			/* translators: 1: rating 2: rating count */
-			$html .= sprintf( _n( 'Rated %1$s out of 5 based on %2$s customer rating', 'Rated %1$s out of 5 based on %2$s customer ratings', $count, 'woocommerce' ), '<strong class="rating">' . esc_html( $rating ) . '</strong>', '<span class="rating">' . esc_html( $count ) . '</span>' );
-		} else {
-			/* translators: %s: rating */
-			$html .= sprintf( esc_html__( 'Rated %s out of 5', 'woocommerce' ), '<strong class="rating">' . esc_html( $rating ) . '</strong>' );
-		}
-
-		$html .= '</span>';
-
-		return apply_filters( 'cr_get_star_rating_html', $html, $rating, $count );
-	}
-
 	public function show_nosummary( $product_id ) {
 		$average = 0;
 		$product = wc_get_product( $product_id );
@@ -1765,6 +1742,37 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 
 	public static function get_max_top_images() {
 		return apply_filters( 'cr_topreviews_max_count', 10 );
+	}
+
+	public static function get_star_rating_svg( $rating, $count, $color ) {
+		$templateFile = plugin_dir_path( dirname( dirname( __FILE__ ) ) ) . '/templates/cr-rating-icon.php';
+		$templateFileBg = plugin_dir_path( dirname( dirname( __FILE__ ) ) ) . '/templates/cr-rating-icon-bg.php';
+
+		$inline_icon_style = '';
+		if ( $color ) {
+			$inline_icon_style = 'stroke: ' . $color . ';';
+		}
+		$html = '<div class="cr-rating-icon-base">';
+		for ($i = 0; $i < 5; $i++) {
+			ob_start();
+			include( $templateFileBg );
+			$html .= ob_get_clean();
+		}
+		$html .= '</div>';
+
+		$inline_icon_style = '';
+		if ( $color ) {
+			$inline_icon_style = 'fill: ' . $color . ';';
+		}
+		$html .= '<div class="cr-rating-icon-frnt" style="width:' . ( ( $rating / 5 ) * 100 ) . '%;">';
+		for ($i = 0; $i < 5; $i++) {
+			ob_start();
+			include( $templateFile );
+			$html .= ob_get_clean();
+		}
+		$html .= '</div>';
+
+		return apply_filters( 'cr_get_star_rating_svg', $html, $rating, $count, $color );
 	}
 }
 

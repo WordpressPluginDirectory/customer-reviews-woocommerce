@@ -853,7 +853,7 @@ if (! class_exists('CR_All_Reviews')) :
 			}
 			$output .= '<div class="cr-overall-rating-wrap">';
 			$output .= '<div class="cr-average-rating"><span>' . number_format_i18n( $average, 1 ) . '</span></div>';
-			$output .= '<div class="cr-average-rating-stars"><div class="crstar-rating"><span style="width:'.($average / 5 * 100).'%;"></span></div></div>';
+			$output .= '<div class="cr-average-rating-stars"><div class="crstar-rating-svg" role="img">' . CR_Reviews::get_star_rating_svg( $average, 0, '' ) . '</div></div>';
 			$output .= '<div class="cr-total-rating-count">' . sprintf( _n( 'Based on %s review', 'Based on %s reviews', $all, 'customer-reviews-woocommerce' ), number_format_i18n( $all ) ) . '</div>';
 			$output .= '</div>';
 			$output .= '<div class="cr-summary-separator"><div class="cr-summary-separator-int"></div></div>';

@@ -217,13 +217,13 @@ if ( ! class_exists( 'CR_Settings_Admin_Menu' ) ):
 					}
 					do_action( 'wpml_switch_language', $current_lang );
 				}
-				$ph = 'categories';
-				$label = 'Category';
+				$ph = __( 'Choose categories...', 'customer-reviews-woocommerce' );
+				$label = __( 'Category', 'customer-reviews-woocommerce' );
 			} elseif ($value['id'] == 'ivole_enabled_roles' || $value['id'] == 'ivole_coupon_enabled_roles') {
 				global $wp_roles;
 				$all_options = $wp_roles->get_names();
-				$ph = 'user roles';
-				$label = 'Role';
+				$ph = __( 'Choose user roles...', 'customer-reviews-woocommerce' );
+				$label = __( 'Role', 'customer-reviews-woocommerce' );
 			}
 
 			$selections = (array) WC_Admin_Settings::get_option( $value['id'] );
@@ -234,7 +234,7 @@ if ( ! class_exists( 'CR_Settings_Admin_Menu' ) ):
 					<?php echo $tooltip_html; ?>
 				</th>
 				<td class="forminp">
-					<select multiple="multiple" name="<?php echo esc_attr( $value['id'] ); ?>[]" style="min-width:350px;"  data-placeholder="<?php esc_attr_e( 'Choose '.$ph.'&hellip;', 'customer-reviews-woocommerce' ); ?>" aria-label="<?php esc_attr_e( $label, 'customer-reviews-woocommerce' ) ?>" class="wc-enhanced-select">
+					<select multiple="multiple" name="<?php echo esc_attr( $value['id'] ); ?>[]" style="min-width:350px;"  data-placeholder="<?php echo esc_attr( $ph ); ?>" aria-label="<?php echo esc_attr( $label ); ?>" class="wc-enhanced-select">
 						<option value="" selected="selected"></option>
 						<?php
 						if ( ! empty( $all_options ) ) {
@@ -533,7 +533,7 @@ if ( ! class_exists( 'CR_Settings_Admin_Menu' ) ):
 
 						switch( $_POST['type'] ) {
 							case 'review_reminder':
-								$e = new Ivole_Email();
+								$e = new Ivole_Email( 0, 1 );
 								$result = $e->trigger2( null, $email, false );
 								break;
 							case 'qna_reply':
@@ -541,6 +541,7 @@ if ( ! class_exists( 'CR_Settings_Admin_Menu' ) ):
 								$result = $qe->send_test( $email );
 								break;
 							default:
+								$result = apply_filters( 'cr_settings_send_test', null, $_POST['type'], $email );
 								break;
 						}
 

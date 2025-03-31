@@ -53,9 +53,7 @@ class CR_Reminders_List_Table extends WP_List_Table {
 		}
 
 		foreach ( $crons as $timestamp => $hooks ) {
-			// $timestamp > 1 is to exclude reminders the plugin is currently sending,
-			// these are rescheduled with a timestamp of 1
-			if ( isset( $hooks['ivole_send_reminder'] ) && $timestamp > 1 ) {
+			if ( isset( $hooks['ivole_send_reminder'] ) ) {
 				foreach ( $hooks['ivole_send_reminder'] as $hash => $event ) {
 					$order_id = $event['args'][0];
 
@@ -341,6 +339,19 @@ class CR_Reminders_List_Table extends WP_List_Table {
 	public function column_scheduled( $reminder ) {
 		$local_timestamp = get_date_from_gmt( date( 'Y-m-d H:i:s', $reminder['timestamp'] ), 'Y-M-d H:i:s (T)' );
 		echo esc_html( $local_timestamp );
+		// check if the reminder is overdue and display a message
+		$gmt_time_now = microtime( true );
+		if ( $reminder['timestamp'] < $gmt_time_now ) {
+			echo '<div class="cr-reminder-scheduled-col"><span class="dashicons dashicons-warning"></span>';
+			_e( 'The reminder is overdue', 'customer-reviews-woocommerce' );
+			echo CR_Admin::cr_help_tip(
+				__(
+					'The reminder was not sent as scheduled, which may indicate an issue with WP Cron on this website. Try refreshing the page 2-3 times to see if the issue resolves. If the problem persists, contact your web hosting provider and request that WP Cron be enabled on your website.',
+					'customer-reviews-woocommerce'
+					)
+			);
+			echo '</div>';
+		}
 	}
 
 	public function column_type( $reminder ) {
@@ -377,7 +388,8 @@ class CR_Reminders_List_Table extends WP_List_Table {
 			add_query_arg(
 				array(
 					'action'   => 'sendreminder',
-					'order_id' => $reminder['order_id']
+					'order_id' => $reminder['order_id'],
+					'type'     => $reminder['type']
 				),
 				$url
 			),

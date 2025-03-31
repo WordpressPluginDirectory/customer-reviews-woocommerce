@@ -47,7 +47,8 @@ if ( ! class_exists( 'CR_Emails_Settings' ) ):
 		}
 
 		public function display() {
-			if( in_array( $this->current_section, $this->templates ) ) {
+			$this->templates = apply_filters( 'cr_settings_email_templates', $this->templates );
+			if ( in_array( $this->current_section, $this->templates ) ) {
 				$email_template = new CR_Email_Template( $this->current_section );
 				$email_template->output_fields();
 			} else {
@@ -66,7 +67,8 @@ if ( ! class_exists( 'CR_Emails_Settings' ) ):
 		}
 
 		public function save() {
-			if( in_array( $this->current_section, $this->templates ) ) {
+			$this->templates = apply_filters( 'cr_settings_email_templates', $this->templates );
+			if ( in_array( $this->current_section, $this->templates ) ) {
 				$email_template = new CR_Email_Template( $this->current_section );
 				$email_template->save_fields();
 			}
@@ -105,7 +107,7 @@ if ( ! class_exists( 'CR_Emails_Settings' ) ):
 						<tr>
 							<?php
 							$columns = apply_filters(
-								'woocommerce_email_setting_columns',
+								'cr_email_setting_columns',
 								array(
 									'status'     => '',
 									'name'       => __( 'Email', 'customer-reviews-woocommerce' ),

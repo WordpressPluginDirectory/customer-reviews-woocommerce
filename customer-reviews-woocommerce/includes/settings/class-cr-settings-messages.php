@@ -106,7 +106,7 @@ if ( ! class_exists( 'CR_Messages_Settings' ) ):
 						<tr>
 							<?php
 							$columns = apply_filters(
-								'woocommerce_email_setting_columns',
+								'cr_wa_setting_columns',
 								array(
 									'status' => '',
 									'name' => __( 'WhatsApp Template', 'customer-reviews-woocommerce' ),

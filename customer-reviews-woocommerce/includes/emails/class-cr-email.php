@@ -17,7 +17,7 @@ class Ivole_Email {
 	public $subject;
 	public $form_header;
 	public $form_body;
-	public $template_html;
+	public $email_body;
 	public $from;
 	public $from_name;
 	public $bcc;
@@ -32,18 +32,19 @@ class Ivole_Email {
 	/**
 	 * Constructor.
 	 */
-	public function __construct( $order_id = 0 ) {
-		$this->id               = 'ivole_reminder';
-		$this->heading          = strval( get_option( 'ivole_email_heading', __( 'How did we do?', 'customer-reviews-woocommerce' ) ) );
-		$this->subject          = strval( get_option( 'ivole_email_subject', '[{site_title}] ' . __( 'Review Your Experience with Us', 'customer-reviews-woocommerce' ) ) );
+	public function __construct( $order_id, $sequence ) {
+		$this->id               = apply_filters( 'cr_email_template_id', 'review_reminder', $sequence );
+		$template               = new CR_Email_Template( $this->id );
+		$this->heading          = strval( $template->get_heading() );
+		$this->subject          = strval( $template->get_subject() );
 		$this->form_header      = strval( get_option( 'ivole_form_header', __( 'How did we do?', 'customer-reviews-woocommerce' ) ) );
 		$this->form_body        = strval( get_option( 'ivole_form_body', __( 'Please review your experience with products and services that you purchased at {site_title}.', 'customer-reviews-woocommerce' ) ) );
-		$this->template_html    = self::plugin_path() . '/templates/email.php';
-		$this->from							= get_option( 'ivole_email_from', '' );
-		$this->from_name				= get_option( 'ivole_email_from_name', self::get_blogname() );
-		$this->replyto					= get_option( 'ivole_email_replyto', get_option( 'admin_email' ) );
-		$this->footer						= get_option( 'ivole_email_footer', '' );
-		$this->review_button		= __( 'Review', 'customer-reviews-woocommerce' );
+		$this->email_body       = $template->get_body();
+		$this->from             = get_option( 'ivole_email_from', '' );
+		$this->from_name        = get_option( 'ivole_email_from_name', self::get_blogname() );
+		$this->replyto          = get_option( 'ivole_email_replyto', get_option( 'admin_email' ) );
+		$this->footer           = get_option( 'ivole_email_footer', '' );
+		$this->review_button    = __( 'Review', 'customer-reviews-woocommerce' );
 
 		// fetch language - either from the plugin's option or from WordPress standard locale
 		$this->language = self::fetch_language();
@@ -423,14 +424,21 @@ class Ivole_Email {
 						'el' => get_option( 'ivole_form_color_el', '#1AB394' )
 					),
 					'email' => array(
-						'bg' => get_option( 'ivole_email_color_bg', '#0f9d58' ),
-						'text' => get_option( 'ivole_email_color_text', '#ffffff' )
+						'bg' => get_option(
+							apply_filters( 'cr_settings_email_color_1_id', 'ivole_email_color_bg', $this->id ),
+							'#0f9d58'
+						),
+						'text' => get_option(
+							apply_filters( 'cr_settings_email_color_2_id', 'ivole_email_color_text', $this->id ),
+							'#ffffff'
+						)
 					)
 				),
 				'trackOpens' => ( 'yes' === get_option( 'ivole_track_reminder_open', 'no' ) ? true : false ),
 				'language' => $this->language,
 				'schedule' => $schedule,
-				'liveMode' => $liveMode
+				'liveMode' => $liveMode,
+				'templateId' => $this->id
 			);
 			//check that array of items is not empty
 			if( 1 > count( $data['order']['items'] ) ) {
@@ -508,11 +516,18 @@ class Ivole_Email {
 						'el' => get_option( 'ivole_form_color_el', '#1AB394' )
 					),
 					'email' => array(
-						'bg' => get_option( 'ivole_email_color_bg', '#0f9d58' ),
-						'text' => get_option( 'ivole_email_color_text', '#ffffff' )
+						'bg' => get_option(
+							apply_filters( 'cr_settings_email_color_1_id', 'ivole_email_color_bg', $this->id ),
+							'#0f9d58'
+						),
+						'text' => get_option(
+							apply_filters( 'cr_settings_email_color_2_id', 'ivole_email_color_text', $this->id ),
+							'#ffffff'
+						)
 					)
 				),
-				'language' => $this->language
+				'language' => $this->language,
+				'templateId' => $this->id
 			);
 			$is_test = true;
 		}
@@ -553,11 +568,36 @@ class Ivole_Email {
 	}
 
 	public function get_content() {
-		ob_start();
-		$def_body = self::$default_body;
-		$lang = $this->language;
-		include( $this->template_html );
-		return ob_get_clean();
+		$lang = strtolower( $this->language );
+		$content = $this->email_body;
+		//qTranslate integration
+		if ( function_exists( 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage' ) ) {
+			$content = qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage(
+				wpautop( wp_kses_post( $this->email_body ) )
+			);
+		} else {
+			//WPML and Polylang integration
+			if ( has_filter( 'wpml_translate_single_string' ) && defined( 'ICL_LANGUAGE_CODE' ) && ICL_LANGUAGE_CODE && ! function_exists( 'pll_current_language' ) ) {
+				$content = wpautop(
+					wp_kses_post(
+						apply_filters(
+							'wpml_translate_single_string',
+							$this->email_body,
+							'ivole',
+							apply_filters( 'cr_settings_email_body_id', 'ivole_email_body', $this->id ),
+							$lang
+						)
+					)
+				);
+			} elseif ( function_exists( 'pll_current_language' ) && function_exists( 'pll_translate_string' ) ) {
+				$content = wpautop(
+					wp_kses_post( pll_translate_string( $this->email_body, $lang ) )
+				);
+			} else {
+				$content = wpautop( wp_kses_post( $this->email_body ) );
+			}
+		}
+		return $content;
 	}
 
 	public static function plugin_path() {
@@ -624,17 +664,30 @@ class Ivole_Email {
 	}
 
 	private function map_error_desc( $desc ) {
-		if ( 0 === strcmp( 'Too many review invitations for a single order', $desc ) ) {
+		if (
+			0 === strcmp( 'Too many review invitations for a single order', $desc )
+		) {
 			return __( 'Error: only one review invitation per order is allowed.', 'customer-reviews-woocommerce' ) . ' <a href="https://cusrev.freshdesk.com/support/solutions/articles/43000511299-error-only-one-review-invitation-per-order-is-allowed" target="_blank" rel="noopener noreferrer">' . __( 'View additional information', 'customer-reviews-woocommerce' ) . '</a>.';
-		} elseif ( 0 === strcmp( 'All products were reviewed by this customer', $desc ) ) {
+		} elseif (
+			0 === strcmp( 'All products were reviewed by this customer', $desc )
+		) {
 			return __( 'Error: the customer has already reviewed all products from this order.', 'customer-reviews-woocommerce' );
 		} elseif (
 			0 === strcmp( 'Unable to send reminder to specified email', $desc ) ||
 			0 === strcmp( 'Customer has unsubscribed from emails', $desc )
 		) {
 			return __( 'Error: the customer has unsubscribed from emails.', 'customer-reviews-woocommerce' );
-		} elseif ( 0 === strcmp( 'The customer already reviewed shop or products in the past', $desc ) ) {
+		} elseif (
+			0 === strcmp( 'The customer already reviewed shop or products in the past', $desc )
+		) {
 			return __( 'Error: the customer has already left a review for a different order in the past.', 'customer-reviews-woocommerce' );
+		} elseif (
+			0 === strcmp( 'A review reminder could not be sent because the shop does not exist.', $desc )
+		) {
+			return __(
+				'Error: a review reminder could not be sent using CusRev mailer. Please re-save options on the CusRev.com tab at the plugin\'s settings page.',
+				'customer-reviews-woocommerce'
+			);
 		} else {
 			return $desc;
 		}

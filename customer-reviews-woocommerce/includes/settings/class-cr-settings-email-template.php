@@ -15,7 +15,11 @@ if ( ! class_exists( 'CR_Email_Template' ) ):
 
 		public function __construct( $template_name ) {
 			$this->name = $template_name;
-			$this->template_base = dirname( dirname( dirname( __FILE__ ) ) ) . '/templates/';
+			$this->template_base = apply_filters(
+				'cr_settings_email_template_base',
+				dirname( dirname( dirname( __FILE__ ) ) ) . '/templates/',
+				$this->name
+			);
 		}
 
 		public function get_title() {
@@ -33,7 +37,7 @@ if ( ! class_exists( 'CR_Email_Template' ) ):
 				default:
 					break;
 			}
-			return $title;
+			return apply_filters( 'cr_settings_email_template_title', $title, $this->name );
 		}
 
 		public function get_description() {
@@ -51,7 +55,7 @@ if ( ! class_exists( 'CR_Email_Template' ) ):
 				default:
 					break;
 			}
-			return $description;
+			return apply_filters( 'cr_settings_email_template_description', $description, $this->name );
 		}
 
 		public function is_enabled() {
@@ -78,7 +82,7 @@ if ( ! class_exists( 'CR_Email_Template' ) ):
 				default:
 					break;
 			}
-			return $enabled;
+			return apply_filters( 'cr_settings_email_template_enabled', $enabled, $this->name );
 		}
 
 		public function get_subject() {
@@ -93,11 +97,46 @@ if ( ! class_exists( 'CR_Email_Template' ) ):
 				case 'qna_reply':
 					$subject = get_option( 'ivole_email_subject_' . $this->name, 'New Response to Your Question about {product_name}' );
 					break;
-
 				default:
 					break;
 			}
-			return $subject;
+			return apply_filters( 'cr_settings_email_template_subject', $subject, $this->name );
+		}
+
+		public function get_heading() {
+			$heading = '';
+			switch( $this->name ) {
+				case 'review_reminder':
+					$heading = get_option( 'ivole_email_heading', __( 'How did we do?', 'customer-reviews-woocommerce' ) );
+					break;
+				case 'review_discount':
+					$heading = get_option( 'ivole_email_heading_coupon', __( 'Thank You for Leaving a Review', 'customer-reviews-woocommerce' ) );
+					break;
+				case 'qna_reply':
+					$heading = get_option( 'ivole_email_heading_' . $this->name, 'New Response to Your Question' );
+					break;
+				default:
+					break;
+			}
+			return apply_filters( 'cr_settings_email_template_heading', $heading, $this->name );
+		}
+
+		public function get_body() {
+			$body = '';
+			switch( $this->name ) {
+				case 'review_reminder':
+					$body = get_option( 'ivole_email_body', Ivole_Email::$default_body );
+					break;
+				case 'review_discount':
+					$body = get_option( 'ivole_email_body_coupon', Ivole_Email::$default_body_coupon );
+					break;
+				case 'qna_reply':
+					$body = get_option( 'ivole_email_body_' . $this->name, CR_Qna_Email::$qna_reply_def_body );
+					break;
+				default:
+					break;
+			}
+			return apply_filters( 'cr_settings_email_template_body', $body, $this->name );
 		}
 
 		public function get_from() {
@@ -106,18 +145,7 @@ if ( ! class_exists( 'CR_Email_Template' ) ):
 			switch( $this->name ) {
 				case 'review_reminder':
 				case 'review_discount':
-					$from = get_option( 'ivole_email_from', '' );
-					$from_name = get_option( 'ivole_email_from_name', Ivole_Email::get_blogname() );
-					if( 0 < strlen( $from_name ) && 0 < strlen( $from ) ) {
-						$from = $from_name . ' <' . $from . '>';
-					}
-					if( 0 === strlen( $from ) ) {
-						if( 'cr' === get_option( 'ivole_mailer_review_reminder', 'wp' ) ) {
-							$from = Ivole_Email::get_blogname() . ' via CR <feedback@cusrev.com>';
-						} else {
-							$from = Ivole_Email::get_blogname() . ' <' . apply_filters( 'wp_mail_from', get_option( 'admin_email' ) ) . '>';
-						}
-					}
+					$from = self::get_from_address();
 					break;
 				case 'qna_reply':
 					$from = get_option( 'ivole_email_from_' . $this->name, apply_filters( 'wp_mail_from', get_option( 'admin_email' ) ) );
@@ -132,12 +160,17 @@ if ( ! class_exists( 'CR_Email_Template' ) ):
 				default:
 					break;
 			}
-			return $from;
+			return apply_filters( 'cr_settings_email_template_from', $from, $this->name );
 		}
 
 		public function get_theme_template_file() {
-			$template = $this->get_template_file_name();
-			return get_stylesheet_directory() . '/' . apply_filters( 'cr_template_directory', 'customer-reviews-woocommerce', $template ) . '/' . $template;
+			$file_name = $this->get_template_file_name();
+			$template_file = get_stylesheet_directory() .
+				'/' .
+				apply_filters( 'cr_template_directory', 'customer-reviews-woocommerce', $file_name ) .
+				'/' .
+				$file_name;
+			return $template_file;
 		}
 
 		public function get_template_file_name() {
@@ -155,11 +188,19 @@ if ( ! class_exists( 'CR_Email_Template' ) ):
 				default:
 					break;
 			}
-			return $template;
+			return apply_filters( 'cr_settings_email_file_name', $template, $this->name );
 		}
 
 		private function init_fields() {
-			if( 'review_reminder' === $this->name || 'review_discount' === $this->name ) {
+			if (
+				in_array(
+					$this->name,
+					apply_filters(
+						'cr_settings_email_mailer_id',
+						array( 'review_reminder', 'review_discount' )
+					)
+				)
+			) {
 				$this->mailer = get_option( 'ivole_mailer_review_reminder', 'wp' );
 			} else {
 				$this->mailer = get_option( 'ivole_mailer_' . $this->name, 'wp' );
@@ -188,8 +229,10 @@ if ( ! class_exists( 'CR_Email_Template' ) ):
 					);
 					break;
 				default:
+					$options = array();
 					break;
 			}
+			$options = apply_filters( 'cr_settings_email_mailer_options', $options, $this->name, $verified );
 			$this->fields[5] = array(
 				'title'    => __( 'Mailer', 'customer-reviews-woocommerce' ),
 				'type'     => 'select',
@@ -205,16 +248,15 @@ if ( ! class_exists( 'CR_Email_Template' ) ):
 
 			// From Name
 			switch( $this->name ) {
-				case 'review_reminder':
-				case 'review_discount':
-					$id = 'ivole_email_from_name';
-					$type = $verified ? 'email_from_name' : 'text';
-					break;
 				case 'qna_reply':
 					$id = 'ivole_email_from_name_' . $this->name;
 					$type = 'text';
 					break;
+				case 'review_reminder':
+				case 'review_discount':
 				default:
+					$id = 'ivole_email_from_name';
+					$type = $verified ? 'email_from_name' : 'text';
 					break;
 			}
 			$this->fields[10] = array(
@@ -230,16 +272,15 @@ if ( ! class_exists( 'CR_Email_Template' ) ):
 
 			// From Email
 			switch( $this->name ) {
-				case 'review_reminder':
-				case 'review_discount':
-					$id = 'ivole_email_from';
-					$type = $verified ? 'email_from' : 'email';
-					break;
 				case 'qna_reply':
 					$id = 'ivole_email_from_' . $this->name;
 					$type = 'email';
 					break;
+				case 'review_reminder':
+				case 'review_discount':
 				default:
+					$id = 'ivole_email_from';
+					$type = $verified ? 'email_from' : 'email';
 					break;
 			}
 			$this->fields[15] = array(
@@ -278,17 +319,24 @@ if ( ! class_exists( 'CR_Email_Template' ) ):
 			}
 
 			// Reply-To
-			if( 'review_reminder' === $this->name || 'review_discount' === $this->name ) {
+			if (
+				in_array(
+					$this->name,
+					apply_filters(
+						'cr_settings_email_reply_to',
+						array( 'review_reminder', 'review_discount' )
+					)
+				)
+			) {
 				switch( $this->name ) {
-					case 'review_reminder':
-						$id = 'ivole_email_replyto';
-						$desc = __( 'Add a Reply-To address for emails with reminders. If customers decide to reply to automatic emails, their replies will be sent to this address. It is recommended to use an email address associated with the domain of your site. If you use a free email address (e.g., Gmail or Hotmail), it will increase probability of emails being marked as SPAM.', 'customer-reviews-woocommerce' );
-						break;
 					case 'review_discount':
 						$id = 'ivole_coupon_email_replyto';
 						$desc = __( 'Add a Reply-To address for emails with discount coupons. If customers decide to reply to automatic emails, their replies will be sent to this address.', 'customer-reviews-woocommerce' );
 						break;
+					case 'review_reminder':
 					default:
+						$id = 'ivole_email_replyto';
+						$desc = __( 'Add a Reply-To address for emails with reminders. If customers decide to reply to automatic emails, their replies will be sent to this address. It is recommended to use an email address associated with the domain of your site. If you use a free email address (e.g., Gmail or Hotmail), it will increase probability of emails being marked as SPAM.', 'customer-reviews-woocommerce' );
 						break;
 				}
 				$this->fields[25] = array(
@@ -304,7 +352,15 @@ if ( ! class_exists( 'CR_Email_Template' ) ):
 			}
 
 			// Email for notifications
-			if( 'review_reminder' === $this->name ) {
+			if (
+				in_array(
+					$this->name,
+					apply_filters(
+						'cr_settings_email_bcc',
+						array( 'review_reminder' )
+					)
+				)
+			) {
 				$this->fields[30] = array(
 					'title'    => __( 'Email for Notifications', 'customer-reviews-woocommerce' ),
 					'type'     => 'email',
@@ -332,6 +388,8 @@ if ( ! class_exists( 'CR_Email_Template' ) ):
 					$default = 'New Response to Your Question about {product_name}';
 					break;
 				default:
+					$id = '';
+					$default = '';
 					break;
 			}
 			$this->fields[35] = array(
@@ -339,10 +397,10 @@ if ( ! class_exists( 'CR_Email_Template' ) ):
 				'type' => 'text',
 				'desc_tip' => true,
 				'desc' => __( 'Subject of the email that will be sent to customers.', 'customer-reviews-woocommerce' ),
-				'default' => $default,
+				'default' => apply_filters( 'cr_settings_email_subject_default', $default, $this->name ),
 				'autoload' => false,
 				'class' => 'cr-admin-settings-wide-text',
-				'id' => $id,
+				'id' => apply_filters( 'cr_settings_email_subject_id', $id, $this->name ),
 			);
 
 			// Email Heading
@@ -360,6 +418,8 @@ if ( ! class_exists( 'CR_Email_Template' ) ):
 					$default = 'New Response to Your Question';
 					break;
 				default:
+					$id = '';
+					$default = '';
 					break;
 			}
 			$this->fields[40] = array(
@@ -367,10 +427,10 @@ if ( ! class_exists( 'CR_Email_Template' ) ):
 				'type' => 'text',
 				'desc_tip' => true,
 				'desc' => __( 'Heading of the email that will be sent to customers.', 'customer-reviews-woocommerce' ),
-				'default' => $default,
+				'default' => apply_filters( 'cr_settings_email_heading_default', $default, $this->name ),
 				'autoload' => false,
 				'class' => 'cr-admin-settings-wide-text',
-				'id' => $id,
+				'id' => apply_filters( 'cr_settings_email_heading_id', $id, $this->name ),
 			);
 
 			// Email Body
@@ -402,7 +462,7 @@ if ( ! class_exists( 'CR_Email_Template' ) ):
 					break;
 				case 'qna_reply':
 					$id = 'ivole_email_body_' . $this->name;
-					$default = "Hi {customer_name},\n\n{user_name} responded to your question about <b>{product_name}</b>. Here is a copy of their response:\n\n<i>{answer}</i>\n\nYou can view <b>{product_name}</b> here:\n\n{product_button}\n\nBest wishes,\n{site_title} Team";
+					$default = CR_Qna_Email::$qna_reply_def_body;
 					$variables = array(
 						'<code>{site_title}</code> - ' . __( 'The title of your WordPress website.', 'customer-reviews-woocommerce' ),
 						'<code>{customer_name}</code> - ' . __( 'The full name of the customer who purchased from your store.', 'customer-reviews-woocommerce' ),
@@ -413,21 +473,32 @@ if ( ! class_exists( 'CR_Email_Template' ) ):
 					);
 					break;
 				default:
+					$id = '';
+					$default = '';
+					$variables = array();
 					break;
 			}
 			$this->fields[45] = array(
 				'title'    => __( 'Email Body', 'customer-reviews-woocommerce' ),
 				'type'     => 'htmltext',
 				'desc'     => __( 'Body of the email that will be sent to customers.', 'customer-reviews-woocommerce' ),
-				'id'       => $id,
+				'id'       => apply_filters( 'cr_settings_email_body_id', $id, $this->name ),
 				'desc_tip' => true,
-				'default' => $default,
+				'default' => apply_filters( 'cr_settings_email_body_default', $default, $this->name ),
 				'autoload' => false,
-				'variables' => $variables
+				'variables' => apply_filters( 'cr_settings_email_body_variables', $variables, $this->name ),
 			);
 
 			// Email Footer
-			if( 'review_reminder' === $this->name ) {
+			if (
+				in_array(
+					$this->name,
+					apply_filters(
+						'cr_settings_email_footer',
+						array( 'review_reminder' )
+					)
+				)
+			) {
 				if( 'wp' === $this->mailer ) {
 					$default = 'This email was sent by {site_title}.';
 					$type = 'textarea';
@@ -450,46 +521,68 @@ if ( ! class_exists( 'CR_Email_Template' ) ):
 			}
 
 			// Email Colors
-			if( 'review_reminder' === $this->name || 'review_discount' === $this->name ) {
+			if (
+				in_array(
+					$this->name,
+					apply_filters(
+						'cr_settings_email_colors',
+						array( 'review_reminder', 'review_discount' )
+					)
+				)
+			) {
 				switch( $this->name ) {
 					case 'review_reminder':
 						$id = 'ivole_email_color_bg';
 						$desc = __( 'Background color for heading of the email and review button.', 'customer-reviews-woocommerce' );
+						$class = 'cr_email_color_bg';
 						break;
 					case 'review_discount':
 						$id = 'ivole_email_coupon_color_bg';
 						$desc = __( 'Background color for heading of the email.', 'customer-reviews-woocommerce' );
+						$class = 'cr_email_coupon_color_bg';
 						break;
 					default:
+						$id = '';
+						$desc = '';
+						$class = '';
 						break;
 				}
 				$this->fields[55] = array(
 					'title'    => __( 'Email Color 1', 'customer-reviews-woocommerce' ),
 					'type'     => 'text',
-					'id'       => $id,
+					'id'       => apply_filters( 'cr_settings_email_color_1_id', $id, $this->name ),
 					'default'  => '#0f9d58',
-					'desc'     => $desc,
-					'desc_tip' => true
+					'desc'     => apply_filters( 'cr_settings_email_color_1_desc', $desc, $this->name ),
+					'desc_tip' => true,
+					'autoload' => false,
+					'class'    => apply_filters( 'cr_settings_email_color_1_class', $class, $this->name )
 				);
 				switch( $this->name ) {
 					case 'review_reminder':
 						$id = 'ivole_email_color_text';
 						$desc = __( 'Text color for heading of the email and review button.', 'customer-reviews-woocommerce' );
+						$class = 'cr_email_color_text';
 						break;
 					case 'review_discount':
 						$id = 'ivole_email_coupon_color_text';
 						$desc = __( 'Text color for heading of the email.', 'customer-reviews-woocommerce' );
+						$class = 'cr_email_coupon_color_text';
 						break;
 					default:
+						$id = '';
+						$desc = '';
+						$class = '';
 						break;
 				}
 				$this->fields[60] = array(
 					'title'    => __( 'Email Color 2', 'customer-reviews-woocommerce' ),
 					'type'     => 'text',
-					'id'       => $id,
+					'id'       => apply_filters( 'cr_settings_email_color_2_id', $id, $this->name ),
 					'default'  => '#ffffff',
-					'desc'     => $desc,
-					'desc_tip' => true
+					'desc'     => apply_filters( 'cr_settings_email_color_2_desc', $desc, $this->name ),
+					'desc_tip' => true,
+					'autoload' => false,
+					'class'    => apply_filters( 'cr_settings_email_color_2_class', $class, $this->name )
 				);
 			}
 
@@ -701,6 +794,8 @@ if ( ! class_exists( 'CR_Email_Template' ) ):
 				}
 			}
 			//
+			do_action( 'cr_settings_email_save_fields', $_POST );
+			//
 			$this->init_fields();
 			WC_Admin_Settings::save_fields( $this->fields );
 		}
@@ -732,7 +827,7 @@ if ( ! class_exists( 'CR_Email_Template' ) ):
 			$theme_file = $this->get_theme_template_file();
 			if ( wp_mkdir_p( dirname( $theme_file ) ) && ! file_exists( $theme_file ) ) {
 				// Locate template file.
-				$core_file = $this->template_base . $this->get_template_file_name();;
+				$core_file = $this->template_base . $this->get_template_file_name();
 				// Copy template file.
 				copy( $core_file, $theme_file );
 				?>
@@ -753,6 +848,22 @@ if ( ! class_exists( 'CR_Email_Template' ) ):
 				</div>
 				<?php
 			}
+		}
+
+		public static function get_from_address() {
+			$from = get_option( 'ivole_email_from', '' );
+			$from_name = get_option( 'ivole_email_from_name', Ivole_Email::get_blogname() );
+			if ( 0 < strlen( $from_name ) && 0 < strlen( $from ) ) {
+				$from = $from_name . ' <' . $from . '>';
+			}
+			if ( 0 === strlen( $from ) ) {
+				if ( 'cr' === get_option( 'ivole_mailer_review_reminder', 'wp' ) ) {
+					$from = Ivole_Email::get_blogname() . ' via CR <feedback@cusrev.com>';
+				} else {
+					$from = Ivole_Email::get_blogname() . ' <' . apply_filters( 'wp_mail_from', get_option( 'admin_email' ) ) . '>';
+				}
+			}
+			return $from;
 		}
 
 	}

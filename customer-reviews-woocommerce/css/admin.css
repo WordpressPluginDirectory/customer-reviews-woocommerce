@@ -25,8 +25,6 @@ table.cr-product-feed-categories td.cr-product-feed-categories-td {padding: 1em;
 table.cr-product-feed-categories td.cr-product-feed-categories-td .select2-container {min-width: auto!important;}
 table.cr-product-feed-categories tr.cr-alternate {background-color: #f9f9f9;}
 img.cr-product-feed-categories-ext-icon {height:11px; margin-left:5px;}
-.select2-selection--single {height: 100% !important;}
-.select2-selection__rendered {word-wrap: break-word !important; text-overflow: inherit !important; white-space: normal !important;}
 .ivole-new-settings .subsubsub { text-align: left; }
 .ivole-new-settings table.wc_status_table.cr-product-feed-status td:first-child {width: auto;}
 td.forminp p.cr-admin-shortcodes {margin-top: 0.8em;}
@@ -1390,7 +1388,8 @@ li.select2-results__option {
 }
 .ivole-new-settings table.form-table th label .woocommerce-help-tip,
 .ivole-new-settings table.form-table .cr-send-test-th .woocommerce-help-tip,
-.ivole-new-settings table.form-table th label img.help_tip {
+.ivole-new-settings table.form-table th label img.help_tip,
+.ivole-new-settings table.form-table th .cr-settings-div-label .woocommerce-help-tip {
 	margin: -7px -24px 0 0;
 	position: absolute;
 	right: 0;
@@ -1636,6 +1635,19 @@ li.select2-results__option {
 		}
 	}
 }
+.cr-reminder-scheduled-col {
+	color: #FF4136;
+}
+.cr-reminder-scheduled-col .dashicons {
+	font-size: 15px;
+	width: 15px;
+	height: 15px;
+	vertical-align: text-top;
+	margin-right: 3px;
+}
+.cr-reminder-scheduled-col .cr-help-tip {
+	color: #FF4136;
+}
 .cr-help-tip {
 	color: #666;
 	display: inline-block;
@@ -1666,6 +1678,13 @@ li.select2-results__option {
 	text-align: center;
 	content: "\f223";
 	cursor: help;
+}
+
+.cr-tab-emails .cr-settings-div-label {
+	position: relative;
+	display: block;
+	vertical-align: middle;
+	cursor: default;
 }
 
 #tiptip_holder {

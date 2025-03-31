@@ -38,7 +38,7 @@ if ( ! class_exists( 'CR_Reviews_Rating' ) ) {
 			}
 			// include the template
 			if( $cr_product ) {
-				$cr_stars_style = "color:" . $attributes['color_stars'] . ";";
+				$cr_stars_style = $attributes['color_stars'];
 				$template = wc_locate_template(
 					'cr-shortcode-rating.php',
 					'customer-reviews-woocommerce',

@@ -187,7 +187,7 @@ if ( ! class_exists( 'CR_Manual' ) ) :
 				$schedule = $this->get_schedule( $order );
 
 				$l_msg = '';
-				$e = new Ivole_Email( $order_id );
+				$e = new Ivole_Email( $order_id, 1 );
 				$result = $e->trigger2( $order_id, null, $schedule );
 				// logging
 				$log = new CR_Reminders_Log();

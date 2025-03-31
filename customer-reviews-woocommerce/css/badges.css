@@ -512,6 +512,12 @@
 	height: 13px;
 }
 
+.rtl .cr-badge.badge_size_compact .badge__star-fill-container,
+.rtl .cr-badge.badge--wide-mobile .badge__star-fill-container {
+	left: auto;
+	right: 0;
+}
+
 .cr-badge.badge_size_compact .badge__star-fill-container svg,
 .cr-badge.badge--wide-mobile .badge__star-fill-container svg {
 	height: 13px;

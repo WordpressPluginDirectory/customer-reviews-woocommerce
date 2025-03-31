@@ -149,15 +149,13 @@ if ( ! class_exists( 'CR_Custom_Questions' ) ) :
 									if( $f ) {
 										if ( 2 === $f ) {
 											// slider layout
-											$output .= '<div class="cr-sldr-custom-question"><div class="rating">';
-											$output .= '<div class="crstar-rating">';
-											$output .= '<span style="width:' . esc_attr( ( $this->questions[$i]->value / 5 ) * 100 ) . '%;"></span>';
-											$output .= '</div></div>';
+											$output .= '<div class="cr-sldr-custom-question">';
+											$output .= '<div class="crstar-rating-svg" role="img">' . CR_Reviews::get_star_rating_svg( $this->questions[$i]->value, 0, '' ) . '</div>';
 											$output .= '<div class="cr' . $fr . '-custom-question-rating">' . $title . '</div></div>';
 										} else {
 											// list layout
 											$output .= '<div class="cr' . $fr . '-custom-question-rating-cont"><div class="cr' . $fr . '-custom-question-rating">' . $title . ' :</div>';
-											$output .= wc_get_rating_html( $this->questions[$i]->value ) . '</div>';
+											$output .= '<div class="crstar-rating-svg" role="img">' . CR_Reviews::get_star_rating_svg( $this->questions[$i]->value, 0, '' ) . '</div></div>';
 										}
 									} else {
 										$output .= '<div class="cr' . $fr . '-custom-question-rating-cont"><span class="cr' . $fr . '-custom-question-rating">' . $title . ' :</span>';

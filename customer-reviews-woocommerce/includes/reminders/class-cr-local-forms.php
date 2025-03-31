@@ -128,7 +128,7 @@ if ( ! class_exists( 'CR_Local_Forms' ) ) :
 		}
 
 		private function form_header() {
-			$template = wc_locate_template(
+			$template = CR_Utils::cr_locate_template(
 				self::HEADER_TEMPLATE,
 				'customer-reviews-woocommerce',
 				__DIR__ . '/../../templates/'
@@ -160,7 +160,7 @@ if ( ! class_exists( 'CR_Local_Forms' ) ) :
 		}
 
 		private function form_block( $item ) {
-			$template = wc_locate_template(
+			$template = CR_Utils::cr_locate_template(
 				self::ITEM_BLOCK_TEMPLATE,
 				'customer-reviews-woocommerce',
 				__DIR__ . '/../../templates/'
@@ -215,7 +215,7 @@ if ( ! class_exists( 'CR_Local_Forms' ) ) :
 		}
 
 		private function customer_block() {
-			$template = wc_locate_template(
+			$template = CR_Utils::cr_locate_template(
 				self::CUSTOMER_TEMPLATE,
 				'customer-reviews-woocommerce',
 				__DIR__ . '/../../templates/'
@@ -252,7 +252,7 @@ if ( ! class_exists( 'CR_Local_Forms' ) ) :
 		}
 
 		private function form_footer() {
-			$template = wc_locate_template(
+			$template = CR_Utils::cr_locate_template(
 				self::FOOTER_TEMPLATE,
 				'customer-reviews-woocommerce',
 				__DIR__ . '/../../templates/'
@@ -273,7 +273,7 @@ if ( ! class_exists( 'CR_Local_Forms' ) ) :
 		}
 
 		private function form_error() {
-			$template = wc_locate_template(
+			$template = CR_Utils::cr_locate_template(
 				self::ERROR_TEMPLATE,
 				'customer-reviews-woocommerce',
 				__DIR__ . '/../../templates/'

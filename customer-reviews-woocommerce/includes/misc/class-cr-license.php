@@ -119,8 +119,10 @@ if ( ! class_exists( 'CR_License' ) ) :
 			if( isset( $result->status ) ) {
 				/* translators: %s will be replaced with a domain of the website */
 				WC_Admin_Settings::add_message( sprintf( __( 'License has been successfully registered for \'%s\'.', 'customer-reviews-woocommerce' ), Ivole_Email::get_blogurl() ) );
+				do_action( 'cr_register_license_ok', $result );
 				return;
 			} else if( isset( $result->error ) ) {
+				/* translators: %s will be replaced with a description of the error */
 				WC_Admin_Settings::add_error( sprintf( __( 'License registration error: %s.', 'customer-reviews-woocommerce' ), $result->error ) );
 				return;
 			} else {

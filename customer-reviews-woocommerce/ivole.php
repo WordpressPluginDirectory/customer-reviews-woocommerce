@@ -3,14 +3,14 @@
 Plugin Name: Customer Reviews for WooCommerce
 Description: Customer Reviews for WooCommerce plugin helps you get more customer reviews for your shop by sending automated reminders and coupons.
 Plugin URI: https://wordpress.org/plugins/customer-reviews-woocommerce/
-Version: 5.68.1
+Version: 5.73.1
 Author: CusRev
 Author URI: https://www.cusrev.com/business/
 Text Domain: customer-reviews-woocommerce
 Domain Path: /languages
 Requires at least: 4.5
 WC requires at least: 3.6
-WC tested up to: 9.6
+WC tested up to: 9.7
 License: GPLv3
 
 Customer Reviews for WooCommerce is free software: you can redistribute it and/or modify
@@ -280,6 +280,4 @@ function cr_deactivate_the_plugin() {
 	$feed_reviews = new CR_Google_Shopping_Feed();
 	$feed_reviews->deactivate();
 	update_option( 'ivole_google_generate_xml_feed', 'no' );
-	// deactivate the live mode for verified reviews
-	update_option( 'ivole_verified_live_mode', 'no' );
 }

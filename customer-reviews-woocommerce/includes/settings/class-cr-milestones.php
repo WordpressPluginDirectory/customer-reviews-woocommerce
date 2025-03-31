@@ -23,10 +23,14 @@ if ( ! class_exists( 'CR_Milestones' ) ) :
 			$this->current_milestone = intval( get_option( 'ivole_reviews_milestone', $this->milestone1 ) );
 
 			//count reviews
-			global $wpdb;
-			$reviews_count = $wpdb->get_var( "SELECT COUNT(DISTINCT comment_id) FROM $wpdb->commentmeta WHERE meta_key = 'ivole_order' OR meta_key = 'ivole_order_locl'" );
-			if( $reviews_count ) {
-				$this->num_reviews = $reviews_count;
+			if ( $this->current_milestone < $this->milestone_never ) {
+				global $wpdb;
+				$reviews_count = $wpdb->get_var( "SELECT COUNT(DISTINCT comment_id) FROM $wpdb->commentmeta WHERE meta_key = 'ivole_order' OR meta_key = 'ivole_order_locl' OR meta_key = 'ivole_order_priv' OR meta_key = 'ivole_order_unve'" );
+				if( $reviews_count ) {
+					$this->num_reviews = $reviews_count;
+				}
+			} else {
+				$this->num_reviews = $this->current_milestone;
 			}
 		}
 

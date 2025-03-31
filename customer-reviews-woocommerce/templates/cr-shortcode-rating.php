@@ -23,7 +23,7 @@ if ( 0 <= $rating_count || 0 < $count_answered ) : ?>
 		<?php
 			/* translators: %s: rating */
 			$label = sprintf( __( 'Rated %s out of 5', 'customer-reviews-woocommerce' ), $average );
-			$html_star_rating = '<div class="crstar-rating" style="' . esc_attr( $cr_stars_style ) . '" aria-label="' . esc_attr( $label ) . '">' . CR_Reviews::get_star_rating_html( $average, 0 ) . '</div>';
+			$html_star_rating = '<div class="crstar-rating-svg" role="img" aria-label="' . esc_attr( $label ) . '">' . CR_Reviews::get_star_rating_svg( $average, 0, $cr_stars_style ) . '</div>';
 			echo $html_star_rating;
 		?>
 		<?php

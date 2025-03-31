@@ -53,7 +53,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				</div>
 				<div class="rating-row">
 					<div class="rating">
-						<div class="crstar-rating" style="<?php echo esc_attr( $stars_style ); ?>"><span style="width:<?php echo ($rating / 5) * 100; ?>%;"></span></div>
+						<div class="crstar-rating-svg" role="img"><?php echo CR_Reviews::get_star_rating_svg( $rating, 0, '' ); ?></div>
 					</div>
 					<div class="rating-label">
 						<?php echo $rating . '/5'; ?>

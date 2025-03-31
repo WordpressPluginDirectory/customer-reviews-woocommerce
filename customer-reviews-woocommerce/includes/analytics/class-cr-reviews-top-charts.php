@@ -168,6 +168,7 @@ class CR_Reviews_Top_Charts {
 		// count reviews by source
 		$via_cusrev      = self::count_ratings_by_source( 'ivole_order' );
 		$via_cusrev_priv = self::count_ratings_by_source( 'ivole_order_priv' );
+		$via_cusrev_unve = self::count_ratings_by_source( 'ivole_order_unve' );
 		$via_local       = self::count_ratings_by_source( 'ivole_order_locl' );
 		$via_any         = self::count_ratings_by_source( '' );
 
@@ -176,13 +177,13 @@ class CR_Reviews_Top_Charts {
 		$sources = array(
 			'via_reminders' => (object) array(
 				'label' => __( 'In response to reminders', 'customer-reviews-woocommerce' ),
-				'count' => $via_cusrev + $via_cusrev_priv + $via_local,
+				'count' => $via_cusrev + $via_cusrev_priv + $via_cusrev_unve + $via_local,
 				'part' => 0,
 				'class' => 'chartColor1'
 			),
 			'via_onsite' => (object) array(
 				'label' => __( 'On-site reviews and other', 'customer-reviews-woocommerce' ),
-				'count' => $via_any - $via_cusrev - $via_cusrev_priv - $via_local,
+				'count' => $via_any - $via_cusrev - $via_cusrev_priv - $via_cusrev_unve - $via_local,
 				'part' => 0,
 				'class' => 'chartColor2'
 			)
@@ -320,6 +321,107 @@ class CR_Reviews_Top_Charts {
 						'help' => $reminderSendingHelp,
 						'helpLinks' => $reminderSendingHelpLinks
 					)
+				)
+			)
+		);
+	}
+
+	public static function get_reviews_top_row_refs() {
+		check_ajax_referer( 'cr-reviews-top-row', 'cr_nonce' );
+
+		if ( ! current_user_can( 'manage_woocommerce' ) ) {
+			die( '-2' );
+		}
+
+		$countReferralViews = 0;
+		$countReferralClicks = 0;
+		$referralCountsUpdates = false;
+
+		$licenseKey = get_option( 'ivole_license_key', '' );
+		if ( $licenseKey ) {
+			// check if there are cached stats
+			$cachedFormReferralStats = get_transient( 'cr_form_referrals_stats' );
+			if (
+				false !== $cachedFormReferralStats &&
+				is_object( $cachedFormReferralStats ) &&
+				property_exists( $cachedFormReferralStats, 'views' ) &&
+				property_exists( $cachedFormReferralStats, 'clicks' )
+			) {
+				$countReferralViews = $cachedFormReferralStats->views + 0;
+				$countReferralClicks = $cachedFormReferralStats->clicks + 0;
+				$referralCountsUpdates = true;
+			} else {
+				// there are no cached stats
+				$data = array(
+					'shopDomain' => Ivole_Email::get_blogurl(),
+					'licenseKey' => $licenseKey
+				);
+				$api_url = 'https://api.cusrev.com/v2/track-referrals';
+				$data_string = json_encode($data);
+				$ch = curl_init();
+				curl_setopt( $ch, CURLOPT_URL, $api_url );
+				curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+				curl_setopt( $ch, CURLOPT_CUSTOMREQUEST, "POST" );
+				curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+				curl_setopt( $ch, CURLOPT_HTTPHEADER, array(
+					'Content-Type: application/json',
+					'Content-Length: ' . strlen( $data_string ) )
+				);
+				$result = curl_exec( $ch );
+				$httpcode = curl_getinfo( $ch, CURLINFO_HTTP_CODE );
+				if ( 200 === $httpcode ) {
+					$result = json_decode( $result );
+					if (
+						is_object( $result ) &&
+						property_exists( $result, 'formsReferrals' )
+					) {
+						if (
+							property_exists( $result->formsReferrals, 'countViews' ) &&
+							property_exists( $result->formsReferrals, 'countClicks' )
+						) {
+							$countReferralViews = $result->formsReferrals->countViews + 0;
+							$countReferralClicks = $result->formsReferrals->countClicks + 0;
+							$referralCountsUpdates = true;
+							set_transient(
+								'cr_form_referrals_stats',
+								(object) array(
+									'views' => $countReferralViews,
+									'clicks' => $countReferralClicks
+								),
+								DAY_IN_SECONDS
+							);
+						}
+					}
+				}
+			}
+		} else {
+			die( '-3' );
+		}
+
+		// error handling
+		if ( ! $referralCountsUpdates ) {
+			die( '-4' );
+		}
+
+		wp_send_json(
+			array(
+				'referralViews' => (object) array(
+					'label' => __( 'Views', 'customer-reviews-woocommerce' ),
+					'help' => __( 'The number of times your store\'s products were displayed as recommendations on aggregated review forms.', 'customer-reviews-woocommerce' ),
+					'helpLinks' => (object) array(
+						'link' => 'https://help.cusrev.com/support/solutions/articles/43000592925-product-recommendations-on-review-forms',
+						'label' => __( 'Product Recommendations on Review Forms', 'customer-reviews-woocommerce' )
+					),
+					'count' => html_entity_decode( number_format_i18n( $countReferralViews, 0 ) )
+				),
+				'referralClicks' => (object) array(
+					'label' => __( 'Clicks', 'customer-reviews-woocommerce' ),
+					'help' => __( 'The number of times customers clicked on your store\'s product recommendations shown on aggregated review forms.', 'customer-reviews-woocommerce' ),
+					'helpLinks' => (object) array(
+						'link' => 'https://help.cusrev.com/support/solutions/articles/43000592925-product-recommendations-on-review-forms',
+						'label' => __( 'Product Recommendations on Review Forms', 'customer-reviews-woocommerce' )
+					),
+					'count' => html_entity_decode( number_format_i18n( $countReferralClicks, 0 ) )
 				)
 			)
 		);
