@@ -162,7 +162,7 @@ if ( ! class_exists( 'CR_Identifiers_Product_Feed' ) ):
 					'brand' => ''
 				);
 			}
-			$list_fields = $this->get_product_attributes();
+			$list_fields = CR_Attributes_Product_Feed::get_product_attributes();
 			?>
 			<tr valign="top">
 				<td colspan="2" style="padding-left:0px;padding-right:0px;">
@@ -243,75 +243,6 @@ if ( ! class_exists( 'CR_Identifiers_Product_Feed' ) ):
 			<?php
 		}
 
-		protected function get_product_attributes() {
-			global $wpdb;
-
-			$product_attributes = array(
-				'product_id'   => __( 'Product ID', 'customer-reviews-woocommerce' ),
-				'product_sku'  => __( 'Product SKU', 'customer-reviews-woocommerce' ),
-				'product_name' => __( 'Product Name', 'customer-reviews-woocommerce' )
-			);
-
-			$product_attributes = array_reduce( wc_get_attribute_taxonomies(), function( $attributes, $taxonomy ) {
-				$key = 'attribute_' . $taxonomy->attribute_name;
-				$attributes[$key] = ucfirst( $taxonomy->attribute_label );
-
-				return $attributes;
-			}, $product_attributes );
-
-			$meta_attributes = $wpdb->get_results(
-				"SELECT meta.meta_id, meta.meta_key
-				FROM {$wpdb->postmeta} AS meta, {$wpdb->posts} AS posts
-				WHERE meta.post_id = posts.ID AND posts.post_type LIKE '%product%' AND (
-					meta.meta_key NOT LIKE '\_%'
-					OR meta.meta_key LIKE '\_woosea%'
-					OR meta.meta_key LIKE '\_wpm%' OR meta.meta_key LIKE '\_cr_%' OR meta.meta_key LIKE '\_cpf_%'
-					OR meta.meta_key LIKE '\_yoast%'
-					OR meta.meta_key LIKE '\_alg_ean%'
-					OR meta.meta_key LIKE '\_wpsso_product%'
-					OR meta.meta_key LIKE '\_ts_%'
-					OR meta.meta_key = '_global_unique_id'
-				)
-				GROUP BY meta.meta_key",
-				ARRAY_A
-			);
-
-			if ( is_array( $meta_attributes ) ) {
-				$product_attributes = array_reduce( $meta_attributes, function( $attributes, $meta_attribute ) {
-					// If the meta entry starts with attribute_, then consider it as an attribute
-					if ( 'attribute_' === substr( $meta_attribute['meta_key'], 0, 10 ) ) {
-						$key = $meta_attribute['meta_key'];
-					} else {
-						$key = 'meta_' . $meta_attribute['meta_key'];
-					}
-					$attributes[$key] = ucfirst( str_replace( '_', ' ', $meta_attribute['meta_key'] ) );
-					return $attributes;
-				}, $product_attributes );
-			}
-			$product_attributes['meta__cr_gtin'] = __( 'Product GTIN', 'customer-reviews-woocommerce' );
-			$product_attributes['meta__cr_mpn'] = __( 'Product MPN', 'customer-reviews-woocommerce' );
-			$product_attributes['meta__cr_brand'] = __( 'Product Brand', 'customer-reviews-woocommerce' );
-			$product_attributes['meta__cr_material'] = __( 'Product Material', 'customer-reviews-woocommerce' );
-			$product_attributes['meta__cr_multipack'] = __( 'Product Multipack', 'customer-reviews-woocommerce' );
-			$product_attributes['meta__cr_bundle'] = __( 'Product Bundle', 'customer-reviews-woocommerce' );
-			$product_attributes['meta__global_unique_id'] = __( 'Global Unique ID', 'customer-reviews-woocommerce' );
-
-			$product_attributes['tags_tags'] = __( 'Product Tag', 'customer-reviews-woocommerce' );
-
-			$taxonomies_3rd = array( 'pwb-brand', 'yith_product_brand' );
-			foreach ($taxonomies_3rd as $taxonomy_3rd) {
-				$product_terms = get_terms( array(
-					'taxonomy' => $taxonomy_3rd
-				) );
-				if( $product_terms && !is_wp_error( $product_terms ) ) {
-					$product_attributes['terms_' . $taxonomy_3rd] = $taxonomy_3rd;
-				}
-			}
-
-			natcasesort( $product_attributes );
-
-			return $product_attributes;
-		}
 	}
 
 endif;

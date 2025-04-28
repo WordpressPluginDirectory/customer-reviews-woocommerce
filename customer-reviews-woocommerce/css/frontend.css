@@ -472,6 +472,7 @@ div.iv-comment-image img {
 .cr-reviews-grid .cr-review-form-rating .cr-review-form-rating-cont .cr-review-form-rating-inner {
 	height: 20px;
 	padding: 0 5px;
+	line-height: 0;
 }
 .cr-review-form-rating-overall .cr-review-form-rating .cr-review-form-rating-cont .cr-review-form-rating-inner {
 	height: 30px;
@@ -2223,6 +2224,7 @@ img.ivole-verified-badge-ext-icon {
 .cr-reviews-ajax-reviews .cr-ajax-reviews-nosummary {
 	display: flex;
 	justify-content: space-between;
+	align-items: center;
 	width: 100%;
 }
 .cr-reviews-ajax-reviews .cr-ajax-reviews-nosummary .cr-nosummary-rating-cnt {
@@ -2249,17 +2251,18 @@ img.ivole-verified-badge-ext-icon {
 	margin: 0 15px 0 0;
 }
 .cr-reviews-ajax-reviews .cr-ajax-reviews-nosummary .cr-nosummary-add {
-	margin: 0;
+	margin: 0 0 0 15px;
 	cursor: pointer;
 	background-color: #31856C;
 	color: #ffffff;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	height: 40px;
+	min-height: 40px;
 	text-transform: none;
 	line-height: 20px;
 	font-size: 15px;
+	border: none;
 }
 .cr-reviews-ajax-reviews .cr-ajax-reviews-nosummary .cr-nosummary-add:hover {
 	background-color: #276A56;

@@ -150,12 +150,12 @@ if ( ! class_exists( 'CR_Custom_Questions' ) ) :
 										if ( 2 === $f ) {
 											// slider layout
 											$output .= '<div class="cr-sldr-custom-question">';
-											$output .= '<div class="crstar-rating-svg" role="img">' . CR_Reviews::get_star_rating_svg( $this->questions[$i]->value, 0, '' ) . '</div>';
+											$output .= '<div class="crstar-rating-svg" role="img" aria-label="' . esc_attr( sprintf( __( 'Rated %s out of 5', 'woocommerce' ), $this->questions[$i]->value ) ) . '">' . CR_Reviews::get_star_rating_svg( $this->questions[$i]->value, 0, '' ) . '</div>';
 											$output .= '<div class="cr' . $fr . '-custom-question-rating">' . $title . '</div></div>';
 										} else {
 											// list layout
 											$output .= '<div class="cr' . $fr . '-custom-question-rating-cont"><div class="cr' . $fr . '-custom-question-rating">' . $title . ' :</div>';
-											$output .= '<div class="crstar-rating-svg" role="img">' . CR_Reviews::get_star_rating_svg( $this->questions[$i]->value, 0, '' ) . '</div></div>';
+											$output .= '<div class="crstar-rating-svg" role="img" aria-label="' . esc_attr( sprintf( __( 'Rated %s out of 5', 'woocommerce' ), $this->questions[$i]->value ) ) . '">' . CR_Reviews::get_star_rating_svg( $this->questions[$i]->value, 0, '' ) . '</div></div>';
 										}
 									} else {
 										$output .= '<div class="cr' . $fr . '-custom-question-rating-cont"><span class="cr' . $fr . '-custom-question-rating">' . $title . ' :</span>';

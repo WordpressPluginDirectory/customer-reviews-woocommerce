@@ -62,7 +62,11 @@ $nonce = wp_create_nonce( "cr_product_reviews_" . $cr_product_id );
 			if ( has_filter( 'wpml_object_id' ) ) {
 				if( class_exists( 'WCML_Comments' ) ) {
 					global $woocommerce_wpml;
-					if( $woocommerce_wpml ) :
+					if (
+						$woocommerce_wpml &&
+						isset( $woocommerce_wpml->comments ) &&
+						method_exists( $woocommerce_wpml->comments, 'comments_link' )
+					) :
 						?>
 							<div class="cr-ajax-reviews-wpml-switch">
 								<?php
@@ -70,8 +74,8 @@ $nonce = wp_create_nonce( "cr_product_reviews_" . $cr_product_id );
 								?>
 							</div>
 						<?php
-						// remove the default WPML switch from above the review form
-						remove_action( 'comment_form_before', array( $woocommerce_wpml->comments, 'comments_link' ) );
+					// remove the default WPML switch from above the review form
+					remove_action( 'comment_form_before', array( $woocommerce_wpml->comments, 'comments_link' ) );
 					endif;
 				}
 			}

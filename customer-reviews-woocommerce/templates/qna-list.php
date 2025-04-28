@@ -199,7 +199,7 @@ foreach ($qna as $q) {
 					</div>
 					<div class="cr-review-form-result">
 						<span></span>
-						<button type="button" class="cr-review-form-continue"></button>
+						<button type="button" class="cr-review-form-continue" aria-label="<?php echo esc_attr__( 'Continue', 'customer-reviews-woocommerce' ); ?>"></button>
 					</div>
 				<?php endif; ?>
 			</div>

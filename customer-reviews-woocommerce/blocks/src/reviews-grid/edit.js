@@ -5,8 +5,8 @@
  */
 import { __ } from '@wordpress/i18n';
 import { Disabled, PanelBody, RangeControl, ToggleControl, SelectControl } from '@wordpress/components';
-import { useEffect } from '@wordpress/element'
 import ServerSideRender from '@wordpress/server-side-render';
+import { useRefEffect } from '@wordpress/compose';
 
 import ProductCategoryControl from '../editor-components/product-category-control';
 import ProductsControl from '../editor-components/products-control';
@@ -35,15 +35,17 @@ const { name } = json;
  */
 export default function Edit( { attributes, setAttributes } ) {
 
-	useEffect( () => {
-		//init after render
+	const ref = useRefEffect( ( element ) => {
+		// init after render
+		// set a timer to check if the grid block is loaded and call the colcade library
 		let blockLoadedInterval = setInterval( function() {
-			if( jQuery(".cr-reviews-grid-inner.cr-colcade-loaded").length ) {
+			if( element.getElementsByClassName("cr-reviews-grid-inner cr-colcade-loaded").length ) {
 				clearInterval( blockLoadedInterval );
 			} else {
-				if( jQuery(".cr-reviews-grid-inner").length ) {
-					if (typeof crResizeAllGridItems === "function") {
-						crResizeAllGridItems();
+				let grids = element.getElementsByClassName("cr-reviews-grid-inner");
+				if( grids.length ) {
+					if (typeof crResizeAllGridItemsUtil === "function") {
+						crResizeAllGridItemsUtil(grids);
 					}
 				}
 			}
@@ -52,7 +54,7 @@ export default function Edit( { attributes, setAttributes } ) {
 	}, [attributes] );
 
 	return (
-		<div { ...useBlockProps() }>
+		<div { ...useBlockProps( { ref } ) }>
 			<InspectorControls key="setting">
 				<PanelBody title={ __( 'Review Grid Settings', 'customer-reviews-woocommerce' ) } initialOpen={ true }>
 					<RangeControl
@@ -63,6 +65,8 @@ export default function Edit( { attributes, setAttributes } ) {
 						onChange={ ( newCount ) =>
 							setAttributes( { count: newCount } )
 						}
+						__next40pxDefaultSize
+						__nextHasNoMarginBottom
 					/>
 					<RangeControl
 						label={ __( 'Number of Shop Reviews', 'customer-reviews-woocommerce' ) }
@@ -72,6 +76,8 @@ export default function Edit( { attributes, setAttributes } ) {
 						onChange={ ( newCount_shop_reviews ) =>
 							setAttributes( { count_shop_reviews: newCount_shop_reviews } )
 						}
+						__next40pxDefaultSize
+						__nextHasNoMarginBottom
 					/>
 					<RangeControl
 						label={ __( 'Show More', 'customer-reviews-woocommerce' ) }
@@ -81,6 +87,8 @@ export default function Edit( { attributes, setAttributes } ) {
 						onChange={ ( newShow_more ) =>
 							setAttributes( { show_more: newShow_more } )
 						}
+						__next40pxDefaultSize
+						__nextHasNoMarginBottom
 					/>
 					<RangeControl
 						label={ __( 'Minimum Number of Characters in a Review (0 = Display All Reviews)', 'customer-reviews-woocommerce' ) }
@@ -90,36 +98,44 @@ export default function Edit( { attributes, setAttributes } ) {
 						onChange={ ( newMin_chars ) =>
 							setAttributes( { min_chars: newMin_chars } )
 						}
+						__next40pxDefaultSize
+						__nextHasNoMarginBottom
 					/>
 					<ToggleControl
 						label={ __( 'Show Products', 'customer-reviews-woocommerce' ) }
 						checked={ attributes.show_products }
 						onChange={ () => setAttributes( { show_products: ! attributes.show_products } ) }
+						__nextHasNoMarginBottom
 					/>
 					<ToggleControl
 						label={ __( 'Product Links', 'customer-reviews-woocommerce' ) }
 						checked={ attributes.product_links }
 						onChange={ () => setAttributes( { product_links: ! attributes.product_links } ) }
+						__nextHasNoMarginBottom
 					/>
 					<ToggleControl
 						label={ __( 'Shop Reviews', 'customer-reviews-woocommerce' ) }
 						checked={ attributes.shop_reviews }
 						onChange={ () => setAttributes( { shop_reviews: ! attributes.shop_reviews } ) }
+						__nextHasNoMarginBottom
 					/>
 					<ToggleControl
 						label={ __( 'Inactive Products', 'customer-reviews-woocommerce' ) }
 						checked={ attributes.inactive_products }
 						onChange={ () => setAttributes( { inactive_products: ! attributes.inactive_products } ) }
+						__nextHasNoMarginBottom
 					/>
 					<ToggleControl
 						label={ __( 'Show Rating Bars', 'customer-reviews-woocommerce' ) }
 						checked={ attributes.show_summary_bar }
 						onChange={ () => setAttributes( { show_summary_bar: ! attributes.show_summary_bar } ) }
+						__nextHasNoMarginBottom
 					/>
 					<ToggleControl
 						label={ __( 'Add Review', 'customer-reviews-woocommerce' ) }
 						checked={ attributes.add_review }
 						onChange={ () => setAttributes( { add_review: ! attributes.add_review } ) }
+						__nextHasNoMarginBottom
 					/>
 					<SelectControl
 						label={ __( 'Avatars', 'customer-reviews-woocommerce' ) }
@@ -132,6 +148,8 @@ export default function Edit( { attributes, setAttributes } ) {
 						onChange={ ( newAvatars ) =>
 							setAttributes( { avatars: newAvatars } )
 						}
+						__next40pxDefaultSize
+						__nextHasNoMarginBottom
 					/>
 					<SelectControl
 						label={ __( 'Sort By', 'customer-reviews-woocommerce' ) }
@@ -144,6 +162,8 @@ export default function Edit( { attributes, setAttributes } ) {
 						onChange={ ( newSort_by ) =>
 							setAttributes( { sort_by: newSort_by } )
 						}
+						__next40pxDefaultSize
+						__nextHasNoMarginBottom
 					/>
 					<SelectControl
 						label={ __( 'Sort Order', 'customer-reviews-woocommerce' ) }
@@ -156,6 +176,8 @@ export default function Edit( { attributes, setAttributes } ) {
 						onChange={ ( newSort ) =>
 							setAttributes( { sort: newSort } )
 						}
+						__next40pxDefaultSize
+						__nextHasNoMarginBottom
 					/>
 				</PanelBody>
 				<PanelBody title={ __( 'Product Categories', 'customer-reviews-woocommerce' ) } initialOpen={ false }>

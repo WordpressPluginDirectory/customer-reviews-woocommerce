@@ -2,9 +2,9 @@
 Contributors: ivole
 Tags: woocommerce, review plugin, review reminder, customer reviews, review for discount
 Requires at least: 4.5
-Tested up to: 6.7
+Tested up to: 6.8
 Requires PHP: 7.2
-Stable tag: 5.73.1
+Stable tag: 5.76.1
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl.html
 
@@ -233,6 +233,25 @@ If you would like to change how reviews are sorted on product pages, it is possi
 
 == Changelog ==
 
+= 5.76.1 =
+* Improvement: compatibility of the [cusrev_reviews_grid] block with the latest WordPress Block Editor
+* Improvement: visibility of video thumbnails on iPhones
+* Improvement: better compatibility with third-party themes
+* Bug fix: [cusrev_reviews_grid] block/shortcode could display duplicate reviews in some scenarios
+= 5.76.0 =
+* Bug fix: [cusrev_reviews_grid] block/shortcode could display duplicate reviews in some scenarios
+* Improvement: [cusrev_reviews_grid] block/shortcode compatibility with WPML
+= 5.75.1 =
+* Improvement: an additional WPML compatibility check
+* Improvement: a new action hook for developers to enhance the XML Product Feed with additional fields
+= 5.75.0 =
+* Improvement: import and export reviews utilities support a product SKU field
+* Improvement: accessibility improvements
+* Bug fix: plugin activation bug fix
+= 5.74.0 =
+* Improvement: lazy load attribute for a product image on a product review form
+* Improvement: custom taxonomies for WooCommerce products are available in fields mappings for XML feeds
+* Bug fix: undefined variable in [cusrev_reviews_grid] shortcode
 = 5.73.1 =
 * Reorganization of language files
 = 5.73.0 =

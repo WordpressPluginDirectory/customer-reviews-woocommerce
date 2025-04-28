@@ -276,11 +276,11 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 						$output .= '<div class="cr-comment-video cr-comment-video-ext cr-comment-video-' . $k . '" data-reviewid="' . $comment->comment_ID . '">';
 						$output .= '<div class="cr-video-cont">';
 						$output .= '<video preload="metadata" class="cr-video-a" ';
-						$output .= 'src="' . $pics_v[$i]['url'] . $cr_query;
+						$output .= 'src="' . $pics_v[$i]['url'] . $cr_query . '#t=0.1';
 						$output .= '"></video>';
 						$output .= '<img class="cr-comment-videoicon" src="' . plugin_dir_url( dirname( dirname( __FILE__ ) ) ) . 'img/video.svg" ';
 						$output .= 'alt="' . sprintf( __( 'Video #%1$d from %2$s', 'customer-reviews-woocommerce' ), $k, $comment->comment_author ) . '">';
-						$output .= '<button class="cr-comment-video-close">' . self::get_close_button_svg() . '</button>';
+						$output .= '<button class="cr-comment-video-close" aria-label="' . esc_attr__( 'Close', 'customer-reviews-woocommerce' ) . '">' . self::get_close_button_svg() . '</button>';
 						$output .= '</div></div>';
 						$k++;
 					}
@@ -295,11 +295,11 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 							$temp_comment_content .= '<div class="cr-comment-video cr-comment-video-' . $k . '">';
 							$temp_comment_content .= '<div class="cr-video-cont">';
 							$temp_comment_content .= '<video preload="metadata" class="cr-video-a" ';
-							$temp_comment_content .= 'src="' . $attachmentUrl;
+							$temp_comment_content .= 'src="' . $attachmentUrl . '#t=0.1';
 							$temp_comment_content .= '"></video>';
 							$temp_comment_content .= '<img class="cr-comment-videoicon" src="' . plugin_dir_url( dirname( dirname( __FILE__ ) ) ) . 'img/video.svg" ';
 							$temp_comment_content .= 'alt="' . sprintf( __( 'Video #%1$d from %2$s', 'customer-reviews-woocommerce' ), $k, $comment->comment_author ) . '">';
-							$temp_comment_content .= '<button class="cr-comment-video-close">' . self::get_close_button_svg() . '</button>';
+							$temp_comment_content .= '<button class="cr-comment-video-close" aria-label="' . esc_attr__( 'Close', 'customer-reviews-woocommerce' ) . '">' . self::get_close_button_svg() . '</button>';
 							$temp_comment_content .= '</div></div>';
 							$k++;
 						}
@@ -525,7 +525,7 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 			$output .= '<div class="cr-summaryBox-wrap">';
 			$output .= '<div class="cr-overall-rating-wrap">';
 			$output .= '<div class="cr-average-rating"><span>' . number_format_i18n( $average, 1 ) . '</span></div>';
-			$output .= '<div class="cr-average-rating-stars"><div class="crstar-rating-svg" role="img">' . self::get_star_rating_svg( $average, 0, '' ) . '</div></div>';
+			$output .= '<div class="cr-average-rating-stars"><div class="crstar-rating-svg" role="img" aria-label="' . esc_attr( sprintf( __( 'Rated %s out of 5', 'woocommerce' ), number_format_i18n( $average, 1 ) ) ) . '">' . self::get_star_rating_svg( $average, 0, '' ) . '</div></div>';
 			$output .= '<div class="cr-total-rating-count">' . sprintf( _n( 'Based on %s review', 'Based on %s reviews', $all, 'customer-reviews-woocommerce' ), number_format_i18n( $all ) ) . '</div>';
 			if ( $new_reviews_allowed ) {
 				$output .= '<button class="cr-ajax-reviews-add-review" type="button">' . __( 'Add a review', 'woocommerce' ) .'</button>';
@@ -1401,7 +1401,7 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 			$images_top .= '<div class="cr-ajax-reviews-cus-images-modal-cont">';
 			$images_top .= '<div class="cr-ajax-reviews-cus-images-modal">';
 			$images_top .= '<div class="cr-ajax-reviews-cus-images-hdr">';
-			$images_top .= '<button class="cr-ajax-reviews-cus-images-close">';
+			$images_top .= '<button class="cr-ajax-reviews-cus-images-close" aria-label="' . esc_attr__( 'Close', 'customer-reviews-woocommerce' ) . '">';
 			$images_top .= '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><rect x="0" fill="none" width="20" height="20"/><g><path class="cr-no-icon" d="M12.12 10l3.53 3.53-2.12 2.12L10 12.12l-3.54 3.54-2.12-2.12L7.88 10 4.34 6.46l2.12-2.12L10 7.88l3.54-3.53 2.12 2.12z"/></g></svg>';
 			$images_top .= '</button>';
 			$images_top .= '</div>';
@@ -1421,7 +1421,7 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 					$output .= '<img src="' . $pics_prepared[$i][0] . '" alt="' . esc_attr( $pics_prepared[$i][5] ) . '" loading="lazy">';
 				}
 				$output .= '<div class="cr-ajax-reviews-slide-main-comment">';
-				$output .= '<div class="crstar-rating-svg" role="img">' . self::get_star_rating_svg( $ratingr, 0, '' ) . '</div>';
+				$output .= '<div class="crstar-rating-svg" role="img" aria-label="' . esc_attr( sprintf( __( 'Rated %s out of 5', 'woocommerce' ), $ratingr ) ) . '">' . self::get_star_rating_svg( $ratingr, 0, '' ) . '</div>';
 				$output .= '<p><strong class="woocommerce-review__author">' . esc_html( $pics_prepared[$i][1]->comment_author ) .'</strong></p>';
 				$output .= '<time class="woocommerce-review__published-date" datetime="' . esc_attr( mysql2date( 'c', $pics_prepared[$i][1]->comment_date ) ) . '">' . esc_html( mysql2date( wc_date_format(), $pics_prepared[$i][1]->comment_date ) ) . '</time>';
 				// WPML integration for translation of reviews

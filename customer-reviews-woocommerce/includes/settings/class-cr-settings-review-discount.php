@@ -570,16 +570,22 @@ if ( ! class_exists( 'CR_Review_Discount_Settings' ) ):
 					$cpn['discount_string'],
 					$cpn['discount_type']
 				);
-				if ( is_array( $result ) && count( $result )  > 1 && 2 === $result[0] ) {
-					wp_send_json( array( 'code' => 2, 'message' => $result[1] ) );
-				} elseif( is_array( $result ) && count( $result )  > 1 && 100 === $result[0] ) {
-					wp_send_json( array( 'code' => 100, 'message' => $result[1] ) );
-				} elseif( 0 === $result ) {
+				if ( 0 === $result ) {
 					wp_send_json( array( 'code' => 0, 'message' => '' ) );
-				} elseif( 1 === $result ) {
+				} elseif ( 1 === $result ) {
 					wp_send_json( array( 'code' => 1, 'message' => '' ) );
-				} elseif( 13 === $result ) {
+				} elseif ( 13 === $result ) {
 					wp_send_json( array( 'code' => 13, 'message' => '' ) );
+				} elseif (
+					is_array( $result ) &&
+					1 < count( $result )
+				) {
+					wp_send_json(
+						array(
+							'code' => $result[0],
+							'message' => $result[1]
+						)
+					);
 				}
 			} else {
 				wp_send_json( array( 'code' => 99, 'message' => '' ) );

@@ -451,7 +451,7 @@ if ( ! class_exists( 'CR_Reviews_Slider' ) ) {
 				'cr-reviews-slider',
 				plugins_url( 'js/slick.min.js', dirname( dirname( __FILE__ ) ) ),
 				array( 'jquery' ),
-				'3.119',
+				Ivole::CR_VERSION,
 				true
 			);
 		}

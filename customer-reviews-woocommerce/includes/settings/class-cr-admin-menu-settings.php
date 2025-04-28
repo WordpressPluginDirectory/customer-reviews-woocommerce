@@ -730,24 +730,26 @@ if ( ! class_exists( 'CR_Settings_Admin_Menu' ) ):
 			);
 
 			$license_key = trim( get_option( 'ivole_license_key', '' ) );
-			$download_res = wp_remote_get(
-				$this->download_api . $license_key,
-				array(
-					'timeout' => 10,
-					'headers' => array(
-						'Accept' => 'application/json'
+			if ( $license_key ) {
+				$download_res = wp_remote_get(
+					$this->download_api . $license_key,
+					array(
+						'timeout' => 10,
+						'headers' => array(
+							'Accept' => 'application/json'
+						)
 					)
-				)
-			);
+				);
 
-			if(
-				! is_wp_error( $download_res )
-				&& 200 === wp_remote_retrieve_response_code( $download_res )
-				&& ! empty( wp_remote_retrieve_body( $download_res ) )
-			) {
-				$download_res = json_decode( wp_remote_retrieve_body( $download_res ) );
-				if( 'ok' === $download_res->status ) {
-					$res['url'] = $download_res->downloadUrl;
+				if(
+					! is_wp_error( $download_res )
+					&& 200 === wp_remote_retrieve_response_code( $download_res )
+					&& ! empty( wp_remote_retrieve_body( $download_res ) )
+				) {
+					$download_res = json_decode( wp_remote_retrieve_body( $download_res ) );
+					if( 'ok' === $download_res->status ) {
+						$res['url'] = $download_res->downloadUrl;
+					}
 				}
 			}
 

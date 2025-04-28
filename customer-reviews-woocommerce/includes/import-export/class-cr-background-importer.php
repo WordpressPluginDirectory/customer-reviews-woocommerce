@@ -38,6 +38,7 @@ if ( ! class_exists( 'CR_Background_Importer' ) ) :
 			$review_score_index   = array_search( 'review_score', $columns );
 			$date_index           = array_search( 'date', $columns );
 			$product_id_index     = array_search( 'product_id', $columns );
+			$product_sku_index    = array_search( 'product_sku', $columns );
 			$display_name_index   = array_search( 'display_name', $columns );
 			$email_index          = array_search( 'email', $columns );
 			$order_id_index       = array_search( 'order_id', $columns );
@@ -76,19 +77,71 @@ if ( ! class_exists( 'CR_Background_Importer' ) ) :
 				}
 
 				$product_id = intval( $review[$product_id_index] );
-				if ( $product_id < 1 && -1 !== $product_id ) {
+				$product_sku = trim( strval( $review[$product_sku_index] ) );
+
+				// check that either id or sku was provided
+				if ( ! $product_id && ! $product_sku ) {
 					unset( $reviews[$index] );
 					$results['errors']++;
-					$results['error_list'][] = sprintf( __( 'Line %1$d >> Error: product_id must be a positive number or \'-1\' for shop reviews.', 'customer-reviews-woocommerce' ), $line_number );
+					$results['error_list'][] = sprintf( __( 'Line %1$d >> Error: either product_id or product_sku must be provided for a review.', 'customer-reviews-woocommerce' ), $line_number );
 					continue;
 				}
-				if( -1 !== $product_id ) {
-					$ppp = wc_get_product( $product_id );
-					if( !$ppp || ($ppp && wp_get_post_parent_id( $product_id ) > 0 ) ) {
+
+				if ( $product_id < 1 && -1 !== $product_id ) {
+					// if no valid product_id is available but there is product_sku, try to look up the id by the sku
+					if ( $product_sku ) {
+						$product_id = wc_get_product_id_by_sku( $product_sku );
+						if ( ! $product_id ) {
+							unset( $reviews[$index] );
+	 						$results['errors']++;
+							$results['error_list'][] = sprintf(
+								__( 'Line %1$d >> Error: could not find a product with SKU = %2$s.', 'customer-reviews-woocommerce' ),
+								$line_number,
+								$product_sku
+							);
+	 						continue;
+						} else {
+							$reviews[$index][$product_id_index] = $product_id;
+						}
+					} else {
 						unset( $reviews[$index] );
 						$results['errors']++;
-						$results['error_list'][] = sprintf( __( 'Line %1$d >> Error: product with ID = %2$d doesn\'t exist in this WooCommerce store.', 'customer-reviews-woocommerce' ), $line_number, $product_id );
+						$results['error_list'][] = sprintf( __( 'Line %1$d >> Error: product_id must be a positive number or \'-1\' for shop reviews.', 'customer-reviews-woocommerce' ), $line_number );
 						continue;
+					}
+				}
+				if ( -1 !== $product_id ) {
+					$ppp = wc_get_product( $product_id );
+					if ( ! $ppp || ( $ppp && 0 < wp_get_post_parent_id( $product_id ) ) ) {
+						// if no valid product_id is available but there is product_sku, try to look up the id by the sku
+						if ( $product_sku ) {
+							$product_found = false;
+							$product_id = wc_get_product_id_by_sku( $product_sku );
+							if ( $product_id ) {
+								$ppp = wc_get_product( $product_id );
+								if( $ppp && 0 === wp_get_post_parent_id( $product_id ) ) {
+									$product_found = true;
+								}
+							}
+							if ( $product_found ) {
+								$reviews[$index][$product_id_index] = $product_id;
+							} else {
+								unset( $reviews[$index] );
+								$results['errors']++;
+								$results['error_list'][] = sprintf(
+									__( 'Line %1$d >> Error: product with ID = %2$d or SKU = %3$s doesn\'t exist in this WooCommerce store.', 'customer-reviews-woocommerce' ),
+									$line_number,
+									$product_id,
+									$product_sku
+								);
+								continue;
+							}
+						} else {
+							unset( $reviews[$index] );
+							$results['errors']++;
+							$results['error_list'][] = sprintf( __( 'Line %1$d >> Error: product with ID = %2$d doesn\'t exist in this WooCommerce store.', 'customer-reviews-woocommerce' ), $line_number, $product_id );
+							continue;
+						}
 					}
 				} else {
 					$product_id = $shop_page_id;

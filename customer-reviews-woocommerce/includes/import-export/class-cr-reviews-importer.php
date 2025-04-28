@@ -16,6 +16,7 @@ if (! class_exists('CR_Reviews_Importer')):
 			'review_score',
 			'date',
 			'product_id',
+			'product_sku',
 			'display_name',
 			'email',
 			'order_id',

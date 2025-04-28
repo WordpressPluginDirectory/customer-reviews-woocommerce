@@ -53,7 +53,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				</div>
 				<div class="rating-row">
 					<div class="rating">
-						<div class="crstar-rating-svg" role="img"><?php echo CR_Reviews::get_star_rating_svg( $rating, 0, '' ); ?></div>
+						<div class="crstar-rating-svg" role="img" aria-label="<?php echo esc_attr( sprintf( __( 'Rated %s out of 5', 'woocommerce' ), $rating ) ); ?>"><?php echo CR_Reviews::get_star_rating_svg( $rating, 0, '' ); ?></div>
 					</div>
 					<div class="rating-label">
 						<?php echo $rating . '/5'; ?>

@@ -853,7 +853,8 @@
 		});
 
 		// update star rating on an add-a-review form hover
-		jQuery( ".cr-review-form-rating .cr-review-form-rating-inner" ).hover(
+		jQuery( ".cr-review-form-rating .cr-review-form-rating-inner" ).on(
+			"mouseenter",
 			function() {
 				let rating = parseInt( jQuery( this ).data( "rating" ) );
 				let ratingActv = parseInt( jQuery( this ).closest( ".cr-review-form-rating-cont" ).find( ".cr-review-form-rating-actv" ).data( "rating" ) );
@@ -870,7 +871,9 @@
 					}
 				}
 				jQuery( this ).closest( ".cr-review-form-rating-cont" ).find( ".cr-review-form-rating-nbr" ).text( rating + "/5" );
-			},
+			}
+		).on(
+			"mouseleave",
 			function() {
 				let ratingActv = parseInt( jQuery( this ).closest( ".cr-review-form-rating-cont" ).find( ".cr-review-form-rating-actv" ).data( "rating" ) );
 				if( isNaN( ratingActv ) ) {
@@ -1864,8 +1867,8 @@
 
 })();
 
-function crResizeAllGridItems() {
-	jQuery(".cr-reviews-grid-inner").each( function() {
+function crResizeAllGridItemsUtil(grids) {
+	jQuery(grids).each( function() {
 		if(800 > jQuery(this).width()) {
 			jQuery(this).find(".cr-reviews-grid-col3").addClass("cr-reviews-grid-col-none");
 		}
@@ -1877,6 +1880,13 @@ function crResizeAllGridItems() {
 			items: ".cr-review-card"
 		} );
 	} );
+}
+
+function crResizeAllGridItems() {
+	if ( ! typeof jQuery.fn.colcade === "function" || typeof jQuery.fn.colcade === "undefined" ) {
+		Colcade.makeJQueryPlugin();
+	}
+	crResizeAllGridItemsUtil( jQuery(".cr-reviews-grid-inner") );
 }
 
 function crResizeTrustBadges() {

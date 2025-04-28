@@ -135,7 +135,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</div>
 						<div class="rating-row">
 							<div class="rating">
-								<div class="crstar-rating-svg" role="img"><?php echo CR_Reviews::get_star_rating_svg( $rating, 0, '' ); ?></div>
+								<div class="crstar-rating-svg" role="img" aria-label="<?php echo esc_attr( sprintf( __( 'Rated %s out of 5', 'woocommerce' ), $rating ) ); ?>"><?php echo CR_Reviews::get_star_rating_svg( $rating, 0, '' ); ?></div>
 							</div>
 							<div class="rating-label">
 								<?php echo $rating . '/5'; ?>
@@ -143,7 +143,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</div>
 						<div class="middle-row">
 							<div class="review-content">
-								<?php echo wpautop( wp_kses_post( $review->comment_content ) ); ?>
+								<?php
+									// compatibility with WPML / WCML plugins to translate reviews
+									if ( class_exists( 'WCML\Reviews\Translations\FrontEndHooks' ) ) {
+										if ( method_exists( 'WCML\Reviews\Translations\FrontEndHooks', 'translateReview' ) ) {
+											( new WCML\Reviews\Translations\FrontEndHooks() )->translateReview( $review );
+										}
+									}
+									echo wpautop( wp_kses_post( $review->comment_content ) );
+								?>
 							</div>
 							<?php if ( $order_id && intval( $review->comment_post_ID ) !== intval( $shop_page_id ) ): ?>
 								<div class="verified-review-row">

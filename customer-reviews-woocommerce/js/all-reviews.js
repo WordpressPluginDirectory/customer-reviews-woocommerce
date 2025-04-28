@@ -202,7 +202,7 @@
 								file_html += '<span class="cr-comment-image-detach-spinner"></span></div>';
 								if ( 'video' === file["type"] ) {
 									file_html += '<div class="cr-video-cont">';
-									file_html += '<video preload="metadata" class="cr-video-a" src="' + file["url"] + '"></video>';
+									file_html += '<video preload="metadata" class="cr-video-a" src="' + file["url"] + '#t=0.1"></video>';
 									file_html += '<img class="cr-comment-videoicon" src="' + cr_ajax_object.videoicon + '">';
 									file_html += '<button class="cr-comment-video-close"><span class="dashicons dashicons-no"></span></button>';
 									file_html += '</div></div>';

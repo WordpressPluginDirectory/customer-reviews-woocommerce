@@ -208,8 +208,19 @@ class CR_Email_Coupon {
 		}
 		//error_log( $result );
 		$result = json_decode( $result );
-		if( isset( $result->status ) && $result->status === 'OK' ) {
+		if ( isset( $result->status ) && $result->status === 'OK' ) {
 			return 0;
+		} elseif (
+			'Error' === $result->status &&
+			0 === strcmp( 'A review reminder could not be sent because the shop does not exist.', $result->details )
+		) {
+			return array(
+				101,
+				__(
+					'Error: a review reminder could not be sent using CusRev mailer. Please re-save options on the CusRev.com tab at the plugin\'s settings page.',
+					'customer-reviews-woocommerce'
+				)
+			);
 		} else {
 			return 1;
 		}

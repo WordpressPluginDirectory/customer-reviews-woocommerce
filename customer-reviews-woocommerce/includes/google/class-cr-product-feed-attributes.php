@@ -161,7 +161,7 @@ if ( ! class_exists( 'CR_Attributes_Product_Feed' ) ):
 					'unit_pricing_base_measure' => ''
 				);
 			}
-			$list_fields = $this->get_product_attributes();
+			$list_fields = self::get_product_attributes();
 			?>
 			<tr valign="top">
 				<td colspan="2" style="padding-left:0px;padding-right:0px;">
@@ -300,7 +300,7 @@ if ( ! class_exists( 'CR_Attributes_Product_Feed' ) ):
 			<?php
 		}
 
-		protected function get_product_attributes() {
+		public static function get_product_attributes() {
 			global $wpdb;
 
 			$product_attributes = array(
@@ -309,12 +309,18 @@ if ( ! class_exists( 'CR_Attributes_Product_Feed' ) ):
 				'product_name' => __( 'Product Name', 'customer-reviews-woocommerce' )
 			);
 
-			$product_attributes = array_reduce( wc_get_attribute_taxonomies(), function( $attributes, $taxonomy ) {
+			$wc_attribute_taxonomies = wc_get_attribute_taxonomies();
+			$product_attributes = array_reduce( $wc_attribute_taxonomies, function( $attributes, $taxonomy ) {
 				$key = 'attribute_' . $taxonomy->attribute_name;
 				$attributes[$key] = ucfirst( $taxonomy->attribute_label );
-
 				return $attributes;
 			}, $product_attributes );
+			$wc_attribute_taxonomy_names = array_values(
+				array_map(
+					function( $wc_taxonomy ) { return 'pa_' . $wc_taxonomy->attribute_name; },
+					$wc_attribute_taxonomies
+				)
+			);
 
 			// _woosea           : Product Feed PRO for WooCommerce
 			// _cr               : Customer Reviews for WooCommerce
@@ -370,13 +376,25 @@ if ( ! class_exists( 'CR_Attributes_Product_Feed' ) ):
 
 			$product_attributes['tags_tags'] = __( 'Product Tag', 'customer-reviews-woocommerce' );
 
-			$taxonomies_3rd = array( 'pwb-brand', 'yith_product_brand' );
+			$taxonomies_3rd = get_taxonomies(
+				array(
+					'object_type' => array( 'product' )
+				),
+				'objects'
+			);
 			foreach ($taxonomies_3rd as $taxonomy_3rd) {
-				$product_terms = get_terms( array(
-					'taxonomy' => $taxonomy_3rd
-				) );
-				if( $product_terms && !is_wp_error( $product_terms ) ) {
-					$product_attributes['terms_' . $taxonomy_3rd] = $taxonomy_3rd;
+				// skip Woo taxonomies for product attributes because they have already been included above
+				if ( in_array( $taxonomy_3rd->name, $wc_attribute_taxonomy_names ) ) {
+					continue;
+				}
+				//
+				$product_terms = get_terms( array( 'taxonomy' => $taxonomy_3rd->name ) );
+				if ( $product_terms && ! is_wp_error( $product_terms ) ) {
+					$product_attributes['terms_' . $taxonomy_3rd->name] = sprintf(
+						'Taxonomy %1$s (%2$s)',
+						$taxonomy_3rd->label,
+						$taxonomy_3rd->name
+					);
 				}
 			}
 

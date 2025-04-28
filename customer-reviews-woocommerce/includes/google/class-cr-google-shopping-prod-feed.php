@@ -351,6 +351,8 @@ class CR_Google_Shopping_Prod_Feed {
 				$xml_writer->endElement();
 			}
 
+			do_action( 'cr_gs_product_feed_xml_elements', $xml_writer, $review );
+
 			$xml_writer->endElement(); // </entry>
 		}
 

@@ -437,11 +437,10 @@ if ( ! class_exists( 'CR_Email_Func' ) ) :
 			} else {
 				// CusRev mailer
 				$api_url = 'https://api.cusrev.com/v2/review-reminder';
-				if( $is_test ) {
+				if ( $is_test ) {
 					unset( $data['order']['items'] );
 					$api_url = 'https://api.cusrev.com/v2/test-email';
 				}
-				unset( $data['templateId'] );
 				$data_string = json_encode( $data );
 				//error_log( $data_string );
 				$ch = curl_init();

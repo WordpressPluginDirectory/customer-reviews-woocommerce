@@ -20,11 +20,14 @@ if ( ! class_exists( 'CR_Background_Exporter' ) ) :
 		protected function task( $data ) {
 			$item = $data['item'];
 
+			$product = wc_get_product( $item->ID );
+
 			$row = array();
 			$row[] = $item->comment_content;
 			$row[] = get_comment_meta ( $item->comment_ID, 'rating', true );
 			$row[] = $item->comment_date;
 			$row[] = $item->ID == $data['shop_page_id'] ? -1 : $item->ID;
+			$row[] = $product ? $product->get_sku() : '';
 			$row[] = $item->comment_author;
 			$row[] = $item->comment_author_email;
 			$row[] = get_comment_meta ( $item->comment_ID, 'ivole_order', true );
