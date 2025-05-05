@@ -4,7 +4,7 @@ Tags: woocommerce, review plugin, review reminder, customer reviews, review for 
 Requires at least: 4.5
 Tested up to: 6.8
 Requires PHP: 7.2
-Stable tag: 5.76.1
+Stable tag: 5.77.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl.html
 
@@ -233,6 +233,13 @@ If you would like to change how reviews are sorted on product pages, it is possi
 
 == Changelog ==
 
+= 5.77.0 =
+* Improvement: the option 'No verification' is renamed to 'Self-hosted' with additional explanations provided in the plugin settings
+* Improvement: an improved message with information about XML feed(s) created in the background
+* Improvement: a new filter 'cr_reviews_summbar_rtn_prc' to modify output of rating percentage in a reviews summary bar
+* Improvement: reducing conflict risk between local aggregated review forms and third-party plugins
+= 5.76.2 =
+* Bug fix: JS error related to [cusrev_reviews_grid] block/shortcode
 = 5.76.1 =
 * Improvement: compatibility of the [cusrev_reviews_grid] block with the latest WordPress Block Editor
 * Improvement: visibility of video thumbnails on iPhones
@@ -416,7 +423,7 @@ If you would like to change how reviews are sorted on product pages, it is possi
 * New feature: tracking if customers open aggregated review forms hosted locally
 * Improvement: compatibility with third-party link trackers for aggregated review forms hosted locally
 * Improvement: removal of a dependency on dashicons in video reviews on the frontend
-* Bug fix: WPML compatibility for translation of the 'Review for Discount' email template with the 'No verification' setting
+* Bug fix: WPML compatibility for translation of the 'Review for Discount' email template with the 'Self-hosted' setting
 = 5.45.0 =
 * New feature: an option to track if customers open emails with review invitations sent by a WordPress Mailer
 * Bug fix: video reviews did not display correctly on screens with a landscape orientation

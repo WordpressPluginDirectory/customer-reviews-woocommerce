@@ -144,7 +144,7 @@ if ( ! class_exists( 'CR_Email_Func' ) ) :
 						if ( $stop_word_found ) {
 							$order->add_order_note(
 								sprintf(
-									__( 'CR: %1$s cannot be included in a review invitation because it is related to one of the prohibited categories of products. If you would like to send review invitations for this product, please set the \'Verified Reviews\' option to \'No verification\' in the <a href="%2$s">settings</a>.', 'customer-reviews-woocommerce' ),
+									__( 'CR: %1$s cannot be included in a review invitation because it is related to one of the prohibited categories of products. If you would like to send review invitations for this product, please set the \'Verified Reviews\' option to \'Self-hosted\' in the <a href="%2$s">settings</a>.', 'customer-reviews-woocommerce' ),
 									'\'' . $q_name . '\'',
 									admin_url( 'admin.php?page=cr-reviews-settings&tab=review_reminder' )
 								)
@@ -374,7 +374,7 @@ if ( ! class_exists( 'CR_Email_Func' ) ) :
 				if ( filter_var( $data['email']['replyTo'], FILTER_VALIDATE_EMAIL ) ) {
 					$headers[] = 'Reply-To: ' . $data['email']['replyTo'];
 				}
-				// need to enhance $data with a review button translation that is available only for no verification mode
+				// need to enhance $data with a review button translation that is available only for the self-hosted mode
 				$data['email']['reviewBtn'] = $data_extra['reviewBtn'];
 				//
 				$message = self::get_local_email_template( $data, $is_test );

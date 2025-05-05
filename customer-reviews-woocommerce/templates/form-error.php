@@ -14,7 +14,7 @@ if ( property_exists( $cr_jquery, 'src' ) && $cr_jquery->src ) {
 
 ?>
 <!DOCTYPE html>
-<html <?php language_attributes(); ?>>
+<html <?php CR_Utils::cr_language_attributes(); ?>>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<meta name="robots" content="noindex">

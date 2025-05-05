@@ -123,7 +123,7 @@ if ( ! class_exists( 'CR_Review_Reminder_Settings' ) ):
 			// if Verified Reviews option was changed, check if Mailer and Scheduler options requires an update
 			if( ! empty( $_POST ) && isset( $_POST['ivole_verified_reviews'] ) ) {
 				$licenseKey = trim( get_option( 'ivole_license_key', '' ) );
-				// if there is no license key entered, the plugin should work only with the 'no verification' setting
+				// if there is no license key entered, the plugin should work only with the 'self-hosted' setting
 				if ( ! $licenseKey ) {
 					if ( 'yes' === $_POST['ivole_verified_reviews'] ) {
 						$_POST['ivole_verified_reviews_error'] = true;
@@ -746,7 +746,7 @@ if ( ! class_exists( 'CR_Review_Reminder_Settings' ) ):
 								<path fill-rule="evenodd" clip-rule="evenodd" d="M24.4735 57.6588L38.1044 6.00509L44.7112 18.9641C44.9565 19.4442 45.4291 19.7767 45.9758 19.8531L66.5608 22.7499C67.9378 22.9438 68.487 24.583 67.492 25.522L52.5944 39.579C52.1997 39.9518 52.0183 40.4906 52.1128 41.017L55.6282 60.8656C55.8645 62.1934 54.425 63.2062 53.1921 62.5785L34.7817 53.2088C34.2924 52.9599 33.7073 52.9599 33.218 53.2088L24.4735 57.6588Z" fill="#D1D1D1"/>
 							</svg>
 							<div class="cr-twocols-title">
-								<?php esc_html_e( 'No verification', 'customer-reviews-woocommerce' ) ?>
+								<?php esc_html_e( 'Self-hosted', 'customer-reviews-woocommerce' ) ?>
 							</div>
 							<div class="cr-twocols-main">
 								<ul>
@@ -754,7 +754,7 @@ if ( ! class_exists( 'CR_Review_Reminder_Settings' ) ):
 										<?php
 											esc_html_e( 'Collect reviews locally without third-party verification', 'customer-reviews-woocommerce' );
 											echo wc_help_tip(
-												__( 'The complete reviews collection solution hosted on your server', 'customer-reviews-woocommerce' )
+												__( 'A complete reviews collection solution hosted on your server', 'customer-reviews-woocommerce' )
 											);
 										?>
 									</li>
@@ -768,9 +768,9 @@ if ( ! class_exists( 'CR_Review_Reminder_Settings' ) ):
 									</li>
 									<li>
 										<?php
-											esc_html_e( 'Aggregated review forms will be hosted locally on your server', 'customer-reviews-woocommerce' );
+											esc_html_e( 'Aggregated review forms and on-site review forms will be hosted locally on your server', 'customer-reviews-woocommerce' );
 											echo wc_help_tip(
-												__( 'An aggregated review form is a review form that supports collection of reviews for multiple products at the same time.', 'customer-reviews-woocommerce' )
+												__( 'An aggregated review form is a review form that supports collection of reviews for multiple products at the same time. On-site review forms are normally displayed on product pages. They can also be displayed in other places on your website using shortcodes.', 'customer-reviews-woocommerce' )
 											);
 										?>
 									</li>
@@ -778,13 +778,16 @@ if ( ! class_exists( 'CR_Review_Reminder_Settings' ) ):
 										<?php
 											esc_html_e( 'No restrictions on collection of reviews for prohibited product categories', 'customer-reviews-woocommerce' );
 											echo wc_help_tip(
-												__( 'Since CusRev does not have to display copies of unverified reviews, there are no restrictions on allowed categories of products', 'customer-reviews-woocommerce' )
+												__( 'Since CusRev does not display copies of reviews, there are no restrictions on allowed categories of products', 'customer-reviews-woocommerce' )
 											);
 										?>
 									</li>
 									<li>
 										<?php
-											esc_html_e( 'I understand that visitors of my website are likely to consider unverified reviews to be biased or fake', 'customer-reviews-woocommerce' );
+											esc_html_e( 'A self-hosted review system that is managed and run directly on your own WordPress website', 'customer-reviews-woocommerce' );
+											echo wc_help_tip(
+												__( 'No dependency on third-party review platforms', 'customer-reviews-woocommerce' )
+											);
 										?>
 									</li>
 								</ul>
@@ -814,9 +817,15 @@ if ( ! class_exists( 'CR_Review_Reminder_Settings' ) ):
 								<ul>
 									<li>
 										<?php
-											echo 'Use <a href="https://www.cusrev.com/business/" target="_blank" rel="noopener noreferrer">CusRev</a><img src="' . untrailingslashit( plugin_dir_url( dirname( dirname( __FILE__ ) ) ) ) . '/img/external-link.png" class="cr-product-feed-categories-ext-icon"> for collection and verification of reviews';
+											echo sprintf(
+												esc_html__(
+													'Use %1$s for collection and verification of reviews',
+													'customer-reviews-woocommerce'
+												),
+												'<a href="https://www.cusrev.com/business/" target="_blank" rel="noopener noreferrer">CusRev</a><img src="' . untrailingslashit( plugin_dir_url( dirname( dirname( __FILE__ ) ) ) ) . '/img/external-link.png" class="cr-product-feed-categories-ext-icon">'
+											);
 											echo wc_help_tip(
-												__( 'CusRev (Customer Reviews) is a service for businesses that offers a voluntary scheme for verification of reviews submitted by customers.', 'customer-reviews-woocommerce' )
+												__( 'CusRev (Customer Reviews) is a service for businesses that offers a voluntary scheme for verification of reviews submitted by customers', 'customer-reviews-woocommerce' )
 											);
 										?>
 									</li>
@@ -830,9 +839,9 @@ if ( ! class_exists( 'CR_Review_Reminder_Settings' ) ):
 									</li>
 									<li>
 										<?php
-											esc_html_e( 'Aggregated review forms will be hosted on AWS S3 by CusRev', 'customer-reviews-woocommerce' );
+											esc_html_e( 'Aggregated review forms will be hosted by CusRev while on-site review forms will be hosted on your server', 'customer-reviews-woocommerce' );
 											echo wc_help_tip(
-												__( 'An aggregated review form is a review form that supports collection of reviews for multiple products at the same time.', 'customer-reviews-woocommerce' )
+												__( 'An aggregated review form is a review form that supports collection of reviews for multiple products at the same time. On-site review forms are normally displayed on product pages. They can also be displayed in other places on your website using shortcodes.', 'customer-reviews-woocommerce' )
 											);
 										?>
 									</li>
@@ -845,7 +854,24 @@ if ( ! class_exists( 'CR_Review_Reminder_Settings' ) ):
 										?>
 									</li>
 									<li>
-										<?php echo 'I confirm that I will send review invitations only with consent of customers and agree to CusRev’s <a href="https://www.cusrev.com/terms.html" target="_blank" rel="noopener noreferrer">terms and conditions</a><img src="' . untrailingslashit( plugin_dir_url( dirname( dirname( __FILE__ ) ) ) ) . '/img/external-link.png" class="cr-product-feed-categories-ext-icon">'; ?>
+										<?php
+											esc_html_e( 'Increased store visibility through the CusRev platform and cross-store product recommendations', 'customer-reviews-woocommerce' );
+											echo wc_help_tip(
+												__( 'Gain greater exposure for your store through the CusRev platform, with cross-store product recommendations that help attract new customers', 'customer-reviews-woocommerce' )
+											);
+										?>
+									</li>
+									<li>
+										<?php
+											echo sprintf(
+												/* translators: please keep %1$s and %2$s in the translation - they will be replaced with a link markup */
+												esc_html__(
+													'I confirm that I will send review invitations only with consent of customers and agree to CusRev’s %1$sterms and conditions%2$s'
+												),
+												'<a href="https://www.cusrev.com/terms.html" target="_blank" rel="noopener noreferrer">',
+												'</a><img src="' . untrailingslashit( plugin_dir_url( dirname( dirname( __FILE__ ) ) ) ) . '/img/external-link.png" class="cr-product-feed-categories-ext-icon">'
+											);
+										?>
 									</li>
 								</ul>
 							</div>

@@ -1883,8 +1883,17 @@ function crResizeAllGridItemsUtil(grids) {
 }
 
 function crResizeAllGridItems() {
-	if ( ! typeof jQuery.fn.colcade === "function" || typeof jQuery.fn.colcade === "undefined" ) {
-		Colcade.makeJQueryPlugin();
+	if (
+		typeof Colcade !== "undefined" &&
+		typeof Colcade.makeJQueryPlugin !== "undefined" &&
+		typeof Colcade.makeJQueryPlugin === "function"
+	) {
+		if (
+			! typeof jQuery.fn.colcade === "function" ||
+			typeof jQuery.fn.colcade === "undefined"
+		) {
+			Colcade.makeJQueryPlugin();
+		}
 	}
 	crResizeAllGridItemsUtil( jQuery(".cr-reviews-grid-inner") );
 }

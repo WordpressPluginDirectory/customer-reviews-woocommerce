@@ -34,29 +34,72 @@ if ( ! class_exists( 'CR_Product_Feed_Admin_Menu' ) ):
 				$this->current_tab = $_GET['tab'];
 			}
 
+			if ( isset( $_GET['cr_gen_prod_feed'] ) && 'true' === $_GET['cr_gen_prod_feed'] ) {
+				do_action( 'cr_generate_prod_feed_chunk' );
+			}
+			if ( isset( $_GET['cr_gen_rev_feed'] ) && 'true' === $_GET['cr_gen_rev_feed'] ) {
+				do_action( 'cr_generate_product_reviews_feed_chunk' );
+			}
+
 			add_action( 'admin_init', array( $this, 'save_settings' ) );
-			add_action( 'admin_init', array( $this, 'check_cron' ) );
+			add_action( 'admin_notices', array( $this, 'check_cron' ) );
 			add_action( 'admin_menu', array( $this, 'register_settings_menu' ), 11 );
 			add_action( 'admin_enqueue_scripts', array( $this, 'load_product_feed_css_js' ) );
 		}
 
 		public function check_cron() {
-			if ( current_user_can( 'manage_options' ) ) {
-				// XML Product Feed
-				$cron_options = get_option( 'ivole_product_feed_cron', array('started' => false) );
-				if( $cron_options['started'] ){
-					$offset = ( $cron_options['offset'] < $cron_options['total'] ) ? $cron_options['offset'] : $cron_options['total'];
-					/* translators: please keep %1$s, %2$s, and %3$s in the translation - they will be replaced with the counts of products */
-					WC_Admin_Settings::add_message( sprintf( __( 'XML Product Feed for Google Shopping is being generated in background - products %1$s to %2$s out of %3$s (reload the page to see the latest progress)', 'customer-reviews-woocommerce' ), $cron_options['current'], $offset, $cron_options['total'] ) );
-				}
-				// XML Product Review Feed
-				$review_cron_options = get_option(
-					'ivole_product_reviews_feed_cron',
-					array( 'started' => false )
+			if ( current_user_can( 'manage_options' ) && function_exists( 'get_current_screen' ) ) {
+				$current_screen = get_current_screen();
+				$pages_to_display_message = array(
+					'reviews-0_page_cr-reviews-product-feed'
 				);
-				if( $review_cron_options['started'] ){
-					$review_offset = ( $review_cron_options['offset'] < $review_cron_options['total'] ) ? $review_cron_options['offset'] : $review_cron_options['total'];
-					WC_Admin_Settings::add_message( sprintf( __( 'XML Product Review Feed for Google Shopping is being generated in background - reviews %1$s to %2$s out of %3$s (reload the page to see the latest progress)', 'customer-reviews-woocommerce' ), $review_cron_options['current'], $review_offset, $review_cron_options['total'] ) );
+				if ( in_array( $current_screen->id, $pages_to_display_message ) ) {
+					// XML Product Feed
+					$cron_options = get_option(
+						'ivole_product_feed_cron',
+						array( 'started' => false )
+					);
+					if( $cron_options['started'] ) {
+						$offset = ( $cron_options['offset'] < $cron_options['total'] ) ? $cron_options['offset'] : $cron_options['total'];
+						echo '<div class="updated cr-admin-xml-update-info"><p>';
+						echo esc_html(
+							sprintf(
+								/* translators: please keep %1$s, %2$s, and %3$s in the translation - they will be replaced with the counts of products */
+								__(
+									'XML Product Feed for Google Shopping is being generated in background - products %1$s to %2$s out of %3$s.',
+									'customer-reviews-woocommerce'
+								),
+								$cron_options['current'],
+								$offset,
+								$cron_options['total']
+							)
+						);
+						echo '</p><a class="button button-small" href="' . admin_url( 'admin.php?page=cr-reviews-product-feed&cr_gen_prod_feed=true' ) . '">' . esc_html__( 'Update progress', 'customer-reviews-woocommerce' ) . '</a>';
+						echo '</div>';
+					}
+					// XML Product Review Feed
+					$review_cron_options = get_option(
+						'ivole_product_reviews_feed_cron',
+						array( 'started' => false )
+					);
+					if( $review_cron_options['started'] ){
+						$review_offset = ( $review_cron_options['offset'] < $review_cron_options['total'] ) ? $review_cron_options['offset'] : $review_cron_options['total'];
+						echo '<div class="updated cr-admin-xml-update-info"><p>';
+						echo esc_html(
+							sprintf(
+								/* translators: please keep %1$s, %2$s, and %3$s in the translation - they will be replaced with the counts of products */
+								__(
+									'XML Product Review Feed for Google Shopping is being generated in background - reviews %1$s to %2$s out of %3$s.',
+									'customer-reviews-woocommerce'
+								),
+								$review_cron_options['current'],
+								$review_offset,
+								$review_cron_options['total']
+							)
+						);
+						echo '</p><a class="button button-small" href="' . admin_url( 'admin.php?page=cr-reviews-product-feed&cr_gen_rev_feed=true' ) . '">' . esc_html__( 'Update progress', 'customer-reviews-woocommerce' ) . '</a>';
+						echo '</div>';
+					}
 				}
 				// Check that WP Cron is disabled
 				if ( defined( 'DISABLE_WP_CRON' ) && DISABLE_WP_CRON ) {

@@ -1778,6 +1778,12 @@ li.select2-results__option {
 .tablenav .cr-reminders-log-table-loader.cr-fetch-in-progress {
 	display: inline-block;
 }
+.cr-admin-xml-update-info {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	column-gap: 7px;
+}
 
 @keyframes dashicons-spin {
 	0% {

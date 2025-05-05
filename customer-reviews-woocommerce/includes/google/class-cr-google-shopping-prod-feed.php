@@ -68,13 +68,18 @@ class CR_Google_Shopping_Prod_Feed {
 	}
 
 	public function generate() {
-		if( !$this->is_enabled() ) {
+		if ( !$this->is_enabled() ) {
 			$this->deactivate();
 			return;
 		}
 
+		// exit if creation of the feed hasn't been started
+		if ( ! $this->cron_options['started'] ) {
+			return;
+		}
+
 		// Exit if XML library is not available
-		if( ! class_exists( 'XMLWriter' ) ) {
+		if ( ! class_exists( 'XMLWriter' ) ) {
 			$this->finish_cron( false );
 			WC_Admin_Settings::add_error( __( 'Error: XMLWriter PHP extension could not be found. Please reach out to the hosting support to enable it.', 'customer-reviews-woocommerce' ) );
 			return;
@@ -98,8 +103,8 @@ class CR_Google_Shopping_Prod_Feed {
 				$this->finish_cron( true );
 			} else {
 				$this->finish_cron( false );
+				WC_Admin_Settings::add_error( __( 'Error: no products found for the XML Product Feed. Please check exclusion settings for products and product categories.', 'customer-reviews-woocommerce' ) );
 			}
-			WC_Admin_Settings::add_error( __( 'Error: no products found for the XML Product Feed. Please check exclusion settings for products and product categories.', 'customer-reviews-woocommerce' ) );
 			return;
 		}
 

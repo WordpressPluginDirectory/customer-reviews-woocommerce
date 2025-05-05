@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv3.
 msgid ""
 msgstr ""
-"Project-Id-Version: Customer Reviews for WooCommerce 5.76.0\n"
+"Project-Id-Version: Customer Reviews for WooCommerce 5.77.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/customer-reviews-woocommerce\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-04-24T00:08:20+00:00\n"
+"POT-Creation-Date: 2025-05-04T20:44:40+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 "X-Domain: customer-reviews-woocommerce\n"
@@ -124,7 +124,7 @@ msgstr ""
 #: includes/analytics/class-cr-reminders-log.php:397
 #: includes/reminders/class-cr-manual.php:370
 #: includes/settings/class-cr-settings-emails.php:113
-#: includes/settings/class-cr-settings-review-reminder.php:1199
+#: includes/settings/class-cr-settings-review-reminder.php:1225
 #: templates/cr-review-form.php:114
 #: templates/cr-review-form.php:116
 #: templates/qna-list.php:167
@@ -232,7 +232,7 @@ msgid "Show more reviews (%d)"
 msgstr ""
 
 #: includes/blocks/class-cr-all-reviews.php:857
-#: includes/blocks/class-cr-reviews-grid.php:981
+#: includes/blocks/class-cr-reviews-grid.php:982
 #: includes/reviews/class-cr-reviews.php:529
 msgid "Based on %s review"
 msgid_plural "Based on %s reviews"
@@ -241,8 +241,8 @@ msgstr[1] ""
 
 #: includes/blocks/class-cr-all-reviews.php:870
 #: includes/blocks/class-cr-all-reviews.php:874
-#: includes/blocks/class-cr-reviews-grid.php:994
-#: includes/blocks/class-cr-reviews-grid.php:998
+#: includes/blocks/class-cr-reviews-grid.php:995
+#: includes/blocks/class-cr-reviews-grid.php:999
 #: includes/reviews/class-cr-reviews.php:544
 #: includes/reviews/class-cr-reviews.php:548
 msgid "5 star"
@@ -250,8 +250,8 @@ msgstr ""
 
 #: includes/blocks/class-cr-all-reviews.php:883
 #: includes/blocks/class-cr-all-reviews.php:887
-#: includes/blocks/class-cr-reviews-grid.php:1007
-#: includes/blocks/class-cr-reviews-grid.php:1011
+#: includes/blocks/class-cr-reviews-grid.php:1008
+#: includes/blocks/class-cr-reviews-grid.php:1012
 #: includes/reviews/class-cr-reviews.php:555
 #: includes/reviews/class-cr-reviews.php:559
 msgid "4 star"
@@ -259,8 +259,8 @@ msgstr ""
 
 #: includes/blocks/class-cr-all-reviews.php:896
 #: includes/blocks/class-cr-all-reviews.php:900
-#: includes/blocks/class-cr-reviews-grid.php:1020
-#: includes/blocks/class-cr-reviews-grid.php:1024
+#: includes/blocks/class-cr-reviews-grid.php:1021
+#: includes/blocks/class-cr-reviews-grid.php:1025
 #: includes/reviews/class-cr-reviews.php:566
 #: includes/reviews/class-cr-reviews.php:570
 msgid "3 star"
@@ -268,8 +268,8 @@ msgstr ""
 
 #: includes/blocks/class-cr-all-reviews.php:909
 #: includes/blocks/class-cr-all-reviews.php:913
-#: includes/blocks/class-cr-reviews-grid.php:1033
-#: includes/blocks/class-cr-reviews-grid.php:1037
+#: includes/blocks/class-cr-reviews-grid.php:1034
+#: includes/blocks/class-cr-reviews-grid.php:1038
 #: includes/reviews/class-cr-reviews.php:577
 #: includes/reviews/class-cr-reviews.php:581
 msgid "2 star"
@@ -277,8 +277,8 @@ msgstr ""
 
 #: includes/blocks/class-cr-all-reviews.php:922
 #: includes/blocks/class-cr-all-reviews.php:926
-#: includes/blocks/class-cr-reviews-grid.php:1046
-#: includes/blocks/class-cr-reviews-grid.php:1050
+#: includes/blocks/class-cr-reviews-grid.php:1047
+#: includes/blocks/class-cr-reviews-grid.php:1051
 #: includes/reviews/class-cr-reviews-list-table.php:484
 #: includes/reviews/class-cr-reviews.php:588
 #: includes/reviews/class-cr-reviews.php:592
@@ -286,24 +286,24 @@ msgid "1 star"
 msgstr ""
 
 #: includes/blocks/class-cr-all-reviews.php:938
-#: includes/blocks/class-cr-reviews-grid.php:1063
-#: includes/reviews/class-cr-reviews.php:1703
+#: includes/blocks/class-cr-reviews-grid.php:1064
+#: includes/reviews/class-cr-reviews.php:1673
 #: templates/cr-review-form.php:31
 msgid "Add a review"
 msgstr ""
 
 #: includes/blocks/class-cr-all-reviews.php:1072
-#: includes/reviews/class-cr-reviews.php:1646
+#: includes/reviews/class-cr-reviews.php:1616
 msgid "Sort reviews"
 msgstr ""
 
 #: includes/blocks/class-cr-all-reviews.php:1074
-#: includes/reviews/class-cr-reviews.php:1648
+#: includes/reviews/class-cr-reviews.php:1618
 msgid "Most Recent"
 msgstr ""
 
 #: includes/blocks/class-cr-all-reviews.php:1077
-#: includes/reviews/class-cr-reviews.php:1652
+#: includes/reviews/class-cr-reviews.php:1622
 msgid "Most Helpful"
 msgstr ""
 
@@ -314,7 +314,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: includes/blocks/class-cr-all-reviews.php:1098
-#: includes/blocks/class-cr-reviews-grid.php:1072
+#: includes/blocks/class-cr-reviews-grid.php:1073
 #: includes/reviews/class-cr-reviews.php:604
 msgid "See all %d review"
 msgid_plural "See all %d reviews"
@@ -415,11 +415,11 @@ msgstr ""
 #: includes/reminders/class-cr-local-forms-ajax.php:108
 #: includes/reminders/class-cr-local-forms.php:155
 #: includes/reviews/class-cr-reviews.php:394
-#: includes/reviews/class-cr-reviews.php:1527
+#: includes/reviews/class-cr-reviews.php:1497
 msgid "Error: accepted file types are PNG, JPG, JPEG, GIF, MP4, MPEG, OGG, WEBM, MOV, AVI"
 msgstr ""
 
-#: includes/blocks/class-cr-reviews-grid.php:389
+#: includes/blocks/class-cr-reviews-grid.php:390
 #: includes/blocks/class-cr-reviews-slider.php:257
 #: includes/reviews/class-cr-admin-menu-reviews.php:620
 #: includes/reviews/class-cr-reviews-list-table.php:1220
@@ -427,32 +427,32 @@ msgstr ""
 msgid "Verified owner"
 msgstr ""
 
-#: includes/blocks/class-cr-reviews-grid.php:393
-#: includes/blocks/class-cr-reviews-grid.php:395
-#: includes/blocks/class-cr-reviews-grid.php:400
-#: includes/blocks/class-cr-reviews-grid.php:402
+#: includes/blocks/class-cr-reviews-grid.php:394
+#: includes/blocks/class-cr-reviews-grid.php:396
+#: includes/blocks/class-cr-reviews-grid.php:401
+#: includes/blocks/class-cr-reviews-grid.php:403
 #: includes/blocks/class-cr-reviews-slider.php:261
 #: includes/blocks/class-cr-reviews-slider.php:263
 #: includes/blocks/class-cr-reviews-slider.php:268
 #: includes/blocks/class-cr-reviews-slider.php:270
 #: includes/reviews/class-cr-reviews-list-table.php:665
-#: includes/reviews/class-cr-reviews.php:1138
-#: includes/reviews/class-cr-reviews.php:1140
-#: includes/reviews/class-cr-reviews.php:1196
-#: includes/reviews/class-cr-reviews.php:1198
+#: includes/reviews/class-cr-reviews.php:1108
+#: includes/reviews/class-cr-reviews.php:1110
+#: includes/reviews/class-cr-reviews.php:1166
+#: includes/reviews/class-cr-reviews.php:1168
 msgid "Verified review"
 msgstr ""
 
-#: includes/blocks/class-cr-reviews-grid.php:396
-#: includes/blocks/class-cr-reviews-grid.php:403
+#: includes/blocks/class-cr-reviews-grid.php:397
+#: includes/blocks/class-cr-reviews-grid.php:404
 #: includes/blocks/class-cr-reviews-slider.php:264
 #: includes/blocks/class-cr-reviews-slider.php:271
-#: includes/reviews/class-cr-reviews.php:1149
-#: includes/reviews/class-cr-reviews.php:1207
+#: includes/reviews/class-cr-reviews.php:1119
+#: includes/reviews/class-cr-reviews.php:1177
 msgid "view original"
 msgstr ""
 
-#: includes/blocks/class-cr-reviews-grid.php:1071
+#: includes/blocks/class-cr-reviews-grid.php:1072
 #: includes/reviews/class-cr-reviews.php:603
 msgid "Showing %1$d of %2$d review (%3$d star). "
 msgid_plural "Showing %1$d of %2$d reviews (%3$d star). "
@@ -528,7 +528,7 @@ msgid "An error occurred when sending the discount coupon %s to the customer by 
 msgstr ""
 
 #: includes/emails/class-cr-email-func.php:147
-msgid "CR: %1$s cannot be included in a review invitation because it is related to one of the prohibited categories of products. If you would like to send review invitations for this product, please set the 'Verified Reviews' option to 'No verification' in the <a href=\"%2$s\">settings</a>."
+msgid "CR: %1$s cannot be included in a review invitation because it is related to one of the prohibited categories of products. If you would like to send review invitations for this product, please set the 'Verified Reviews' option to 'Self-hosted' in the <a href=\"%2$s\">settings</a>."
 msgstr ""
 
 #: includes/emails/class-cr-email-func.php:547
@@ -751,27 +751,33 @@ msgid "An error occurred when sending a test message by WhatsApp."
 msgstr ""
 
 #. translators: please keep %1$s, %2$s, and %3$s in the translation - they will be replaced with the counts of products
-#: includes/google/class-cr-admin-menu-product-feed.php:50
-msgid "XML Product Feed for Google Shopping is being generated in background - products %1$s to %2$s out of %3$s (reload the page to see the latest progress)"
+#: includes/google/class-cr-admin-menu-product-feed.php:68
+msgid "XML Product Feed for Google Shopping is being generated in background - products %1$s to %2$s out of %3$s."
 msgstr ""
 
-#: includes/google/class-cr-admin-menu-product-feed.php:59
-msgid "XML Product Review Feed for Google Shopping is being generated in background - reviews %1$s to %2$s out of %3$s (reload the page to see the latest progress)"
+#: includes/google/class-cr-admin-menu-product-feed.php:77
+#: includes/google/class-cr-admin-menu-product-feed.php:100
+msgid "Update progress"
 msgstr ""
 
-#: includes/google/class-cr-admin-menu-product-feed.php:65
+#. translators: please keep %1$s, %2$s, and %3$s in the translation - they will be replaced with the counts of products
+#: includes/google/class-cr-admin-menu-product-feed.php:91
+msgid "XML Product Review Feed for Google Shopping is being generated in background - reviews %1$s to %2$s out of %3$s."
+msgstr ""
+
+#: includes/google/class-cr-admin-menu-product-feed.php:108
 msgid "XML Feeds might not be created correctly because WP Cron is disabled"
 msgstr ""
 
-#: includes/google/class-cr-admin-menu-product-feed.php:75
+#: includes/google/class-cr-admin-menu-product-feed.php:118
 msgid "Integration with Google Services"
 msgstr ""
 
-#: includes/google/class-cr-admin-menu-product-feed.php:76
+#: includes/google/class-cr-admin-menu-product-feed.php:119
 msgid "Google"
 msgstr ""
 
-#: includes/google/class-cr-admin-menu-product-feed.php:141
+#: includes/google/class-cr-admin-menu-product-feed.php:184
 #: includes/google/class-cr-product-feed-reviews.php:31
 #: includes/reviews/class-cr-admin-menu-reviews.php:51
 #: includes/reviews/class-cr-admin-menu-reviews.php:52
@@ -784,24 +790,24 @@ msgstr ""
 msgid "Reviews"
 msgstr ""
 
-#: includes/google/class-cr-admin-menu-product-feed.php:149
+#: includes/google/class-cr-admin-menu-product-feed.php:192
 msgid "Select a category"
 msgstr ""
 
-#: includes/google/class-cr-admin-menu-product-feed.php:150
+#: includes/google/class-cr-admin-menu-product-feed.php:193
 msgid "Select a field"
 msgstr ""
 
-#: includes/google/class-cr-google-shopping-feed.php:382
+#: includes/google/class-cr-google-shopping-feed.php:387
 #: includes/reminders/class-cr-local-forms.php:225
 msgid "Anonymous"
 msgstr ""
 
-#: includes/google/class-cr-google-shopping-prod-feed.php:79
+#: includes/google/class-cr-google-shopping-prod-feed.php:84
 msgid "Error: XMLWriter PHP extension could not be found. Please reach out to the hosting support to enable it."
 msgstr ""
 
-#: includes/google/class-cr-google-shopping-prod-feed.php:102
+#: includes/google/class-cr-google-shopping-prod-feed.php:106
 msgid "Error: no products found for the XML Product Feed. Please check exclusion settings for products and product categories."
 msgstr ""
 
@@ -936,7 +942,7 @@ msgstr ""
 #: includes/google/class-cr-product-feed-categories.php:153
 #: blocks/build/reviews-grid/index.js:12
 #: blocks/build/reviews-slider/index.js:12
-#: blocks/src/reviews-grid/edit.js:161
+#: blocks/src/reviews-grid/edit.js:183
 #: blocks/src/reviews-slider/edit.js:168
 msgid "Product Categories"
 msgstr ""
@@ -2264,12 +2270,12 @@ msgstr ""
 
 #: includes/reminders/class-cr-local-forms.php:183
 #: includes/reviews/class-cr-custom-questions.php:450
-#: includes/reviews/class-cr-reviews.php:1699
+#: includes/reviews/class-cr-reviews.php:1669
 #: includes/settings/class-cr-settings-forms-rating.php:64
 #: includes/settings/class-cr-settings-forms-rating.php:161
 #: blocks/build/reviews-grid/index.js:12
 #: blocks/build/reviews-slider/index.js:12
-#: blocks/src/reviews-grid/edit.js:141
+#: blocks/src/reviews-grid/edit.js:159
 #: blocks/src/reviews-slider/edit.js:149
 msgid "Rating"
 msgstr ""
@@ -2382,7 +2388,7 @@ msgstr ""
 #: includes/reminders/class-cr-manual.php:262
 #: includes/settings/class-cr-settings-email-template.php:29
 #: includes/settings/class-cr-settings-review-reminder.php:54
-#: includes/settings/class-cr-settings-review-reminder.php:1067
+#: includes/settings/class-cr-settings-review-reminder.php:1093
 msgid "Review Reminder"
 msgstr ""
 
@@ -2544,7 +2550,7 @@ msgstr ""
 #: includes/reminders/class-cr-reminders-log-table.php:92
 #: includes/settings/class-cr-settings-forms.php:514
 #: includes/settings/class-cr-settings-forms.php:628
-#: includes/settings/class-cr-settings-review-reminder.php:1157
+#: includes/settings/class-cr-settings-review-reminder.php:1183
 #: templates/reminder-details-admin-page.php:162
 msgid "Type"
 msgstr ""
@@ -2807,7 +2813,7 @@ msgstr ""
 #: blocks/build/reviews-slider/index.js:11
 #: blocks/build/reviews-slider/index.js:12
 #: blocks/src/editor-components/review-tag-control/index.js:106
-#: blocks/src/reviews-grid/edit.js:198
+#: blocks/src/reviews-grid/edit.js:220
 #: blocks/src/reviews-slider/edit.js:205
 msgid "Tags"
 msgstr ""
@@ -2897,7 +2903,7 @@ msgid "A verified copy of this reply was published on %1$s. If this reply is del
 msgstr ""
 
 #: includes/reviews/class-cr-reviews-list-table.php:984
-#: includes/reviews/class-cr-reviews.php:1221
+#: includes/reviews/class-cr-reviews.php:1191
 #: templates/cr-review.php:131
 msgid "Featured Review"
 msgstr ""
@@ -2912,8 +2918,8 @@ msgstr ""
 #: includes/reviews/class-cr-reviews-media-meta-box.php:129
 #: includes/reviews/class-cr-reviews.php:282
 #: includes/reviews/class-cr-reviews.php:301
-#: includes/reviews/class-cr-reviews.php:1301
-#: includes/reviews/class-cr-reviews.php:1315
+#: includes/reviews/class-cr-reviews.php:1271
+#: includes/reviews/class-cr-reviews.php:1285
 #: templates/reviews-grid.php:74
 #: templates/reviews-grid.php:76
 #: templates/reviews-grid.php:87
@@ -2926,7 +2932,7 @@ msgstr ""
 #: includes/reviews/class-cr-reviews-media-meta-box.php:130
 #: includes/reviews/class-cr-reviews.php:283
 #: includes/reviews/class-cr-reviews.php:302
-#: includes/reviews/class-cr-reviews.php:1404
+#: includes/reviews/class-cr-reviews.php:1374
 msgid "Close"
 msgstr ""
 
@@ -3016,33 +3022,33 @@ msgstr ""
 msgid "Add Review Error"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews.php:1150
-#: includes/reviews/class-cr-reviews.php:1208
+#: includes/reviews/class-cr-reviews.php:1120
+#: includes/reviews/class-cr-reviews.php:1178
 msgid "External link"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews.php:1273
-#: includes/reviews/class-cr-reviews.php:1287
+#: includes/reviews/class-cr-reviews.php:1243
+#: includes/reviews/class-cr-reviews.php:1257
 msgid "Image #%1$d from %2$s"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews.php:1329
+#: includes/reviews/class-cr-reviews.php:1299
 msgid "Customer Images"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews.php:1509
+#: includes/reviews/class-cr-reviews.php:1479
 msgid "Error: please solve the CAPTCHA before uploading files"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews.php:1518
+#: includes/reviews/class-cr-reviews.php:1488
 msgid "Error: the file(s) is too large"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews.php:1656
+#: includes/reviews/class-cr-reviews.php:1626
 msgid "Highest Rating"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews.php:1659
+#: includes/reviews/class-cr-reviews.php:1629
 msgid "Lowest Rating"
 msgstr ""
 
@@ -3082,7 +3088,7 @@ msgid "DNS record copied"
 msgstr ""
 
 #: includes/settings/class-cr-admin-menu-settings.php:159
-#: includes/settings/class-cr-settings-review-reminder.php:1024
+#: includes/settings/class-cr-settings-review-reminder.php:1050
 msgid "Enabled"
 msgstr ""
 
@@ -4018,7 +4024,7 @@ msgstr ""
 #: includes/settings/class-cr-settings-forms.php:431
 #: blocks/build/reviews-grid/index.js:12
 #: blocks/build/reviews-slider/index.js:12
-#: blocks/src/reviews-grid/edit.js:253
+#: blocks/src/reviews-grid/edit.js:275
 #: blocks/src/reviews-slider/edit.js:260
 msgid "Stars"
 msgstr ""
@@ -4269,7 +4275,7 @@ msgid "Enable"
 msgstr ""
 
 #: includes/settings/class-cr-settings-review-discount.php:621
-#: includes/settings/class-cr-settings-review-reminder.php:1032
+#: includes/settings/class-cr-settings-review-reminder.php:1058
 #: templates/reminder-details-admin-page.php:151
 #: admin/build/index.js:1
 #: admin/src/Reminders.jsx:35
@@ -4412,7 +4418,7 @@ msgstr ""
 #: includes/settings/class-cr-settings-review-extensions.php:163
 #: blocks/build/reviews-grid/index.js:12
 #: blocks/build/reviews-slider/index.js:12
-#: blocks/src/reviews-grid/edit.js:129
+#: blocks/src/reviews-grid/edit.js:145
 #: blocks/src/reviews-slider/edit.js:137
 msgid "Standard"
 msgstr ""
@@ -4420,7 +4426,7 @@ msgstr ""
 #: includes/settings/class-cr-settings-review-extensions.php:164
 #: blocks/build/reviews-grid/index.js:12
 #: blocks/build/reviews-slider/index.js:12
-#: blocks/src/reviews-grid/edit.js:128
+#: blocks/src/reviews-grid/edit.js:144
 #: blocks/src/reviews-slider/edit.js:136
 msgid "Initials"
 msgstr ""
@@ -4855,7 +4861,7 @@ msgid "A license key (either Free or Pro) is required for security purposes to e
 msgstr ""
 
 #: includes/settings/class-cr-settings-review-reminder.php:749
-msgid "No verification"
+msgid "Self-hosted"
 msgstr ""
 
 #: includes/settings/class-cr-settings-review-reminder.php:755
@@ -4863,7 +4869,7 @@ msgid "Collect reviews locally without third-party verification"
 msgstr ""
 
 #: includes/settings/class-cr-settings-review-reminder.php:757
-msgid "The complete reviews collection solution hosted on your server"
+msgid "A complete reviews collection solution hosted on your server"
 msgstr ""
 
 #: includes/settings/class-cr-settings-review-reminder.php:763
@@ -4875,12 +4881,12 @@ msgid "The plugin will use the standard 'wp_mail' function for sending emails in
 msgstr ""
 
 #: includes/settings/class-cr-settings-review-reminder.php:771
-msgid "Aggregated review forms will be hosted locally on your server"
+msgid "Aggregated review forms and on-site review forms will be hosted locally on your server"
 msgstr ""
 
 #: includes/settings/class-cr-settings-review-reminder.php:773
-#: includes/settings/class-cr-settings-review-reminder.php:835
-msgid "An aggregated review form is a review form that supports collection of reviews for multiple products at the same time."
+#: includes/settings/class-cr-settings-review-reminder.php:844
+msgid "An aggregated review form is a review form that supports collection of reviews for multiple products at the same time. On-site review forms are normally displayed on product pages. They can also be displayed in other places on your website using shortcodes."
 msgstr ""
 
 #: includes/settings/class-cr-settings-review-reminder.php:779
@@ -4888,63 +4894,79 @@ msgid "No restrictions on collection of reviews for prohibited product categorie
 msgstr ""
 
 #: includes/settings/class-cr-settings-review-reminder.php:781
-msgid "Since CusRev does not have to display copies of unverified reviews, there are no restrictions on allowed categories of products"
+msgid "Since CusRev does not display copies of reviews, there are no restrictions on allowed categories of products"
 msgstr ""
 
 #: includes/settings/class-cr-settings-review-reminder.php:787
-msgid "I understand that visitors of my website are likely to consider unverified reviews to be biased or fake"
+msgid "A self-hosted review system that is managed and run directly on your own WordPress website"
 msgstr ""
 
-#: includes/settings/class-cr-settings-review-reminder.php:811
+#: includes/settings/class-cr-settings-review-reminder.php:789
+msgid "No dependency on third-party review platforms"
+msgstr ""
+
+#: includes/settings/class-cr-settings-review-reminder.php:814
 #: includes/trust-badge/class-cr-trust-badge.php:170
 msgid "Independently verified"
 msgstr ""
 
-#: includes/settings/class-cr-settings-review-reminder.php:819
-msgid "CusRev (Customer Reviews) is a service for businesses that offers a voluntary scheme for verification of reviews submitted by customers."
+#: includes/settings/class-cr-settings-review-reminder.php:821
+msgid "Use %1$s for collection and verification of reviews"
 msgstr ""
 
-#: includes/settings/class-cr-settings-review-reminder.php:825
+#: includes/settings/class-cr-settings-review-reminder.php:828
+msgid "CusRev (Customer Reviews) is a service for businesses that offers a voluntary scheme for verification of reviews submitted by customers"
+msgstr ""
+
+#: includes/settings/class-cr-settings-review-reminder.php:834
 msgid "Review invitations will be sent by CusRev on behalf of your store"
 msgstr ""
 
-#: includes/settings/class-cr-settings-review-reminder.php:827
+#: includes/settings/class-cr-settings-review-reminder.php:836
 msgid "CusRev uses AWS SES (Simple Email Service) for sending emails to ensure their excellent deliverability"
 msgstr ""
 
-#: includes/settings/class-cr-settings-review-reminder.php:833
-msgid "Aggregated review forms will be hosted on AWS S3 by CusRev"
+#: includes/settings/class-cr-settings-review-reminder.php:842
+msgid "Aggregated review forms will be hosted by CusRev while on-site review forms will be hosted on your server"
 msgstr ""
 
-#: includes/settings/class-cr-settings-review-reminder.php:841
+#: includes/settings/class-cr-settings-review-reminder.php:850
 msgid "CusRev is unable to collect and verify reviews for certain products"
 msgstr ""
 
-#: includes/settings/class-cr-settings-review-reminder.php:843
+#: includes/settings/class-cr-settings-review-reminder.php:852
 msgid "Due to regulatory restrictions, CusRev is unable to collect and verify reviews for prohibited categories of products (e.g., CBD or Kratom)"
 msgstr ""
 
-#: includes/settings/class-cr-settings-review-reminder.php:944
+#: includes/settings/class-cr-settings-review-reminder.php:858
+msgid "Increased store visibility through the CusRev platform and cross-store product recommendations"
+msgstr ""
+
+#: includes/settings/class-cr-settings-review-reminder.php:860
+msgid "Gain greater exposure for your store through the CusRev platform, with cross-store product recommendations that help attract new customers"
+msgstr ""
+
+#: includes/settings/class-cr-settings-review-reminder.php:970
 msgid "<strong>CR Cron could not be enabled because no license key was entered. A license key (free or pro) is required to use CR Cron.</strong>"
 msgstr ""
 
-#: includes/settings/class-cr-settings-review-reminder.php:1025
+#: includes/settings/class-cr-settings-review-reminder.php:1051
 msgid "Enable automatic follow-up emails with an invitation to submit a review."
 msgstr ""
 
-#: includes/settings/class-cr-settings-review-reminder.php:1028
+#: includes/settings/class-cr-settings-review-reminder.php:1054
 msgid "Delay (Days)"
 msgstr ""
 
-#: includes/settings/class-cr-settings-review-reminder.php:1029
+#: includes/settings/class-cr-settings-review-reminder.php:1055
 msgid "If automatic review reminders are enabled, review invitations will be sent N days after order status is changed to the value specified in the field below. N is a sending delay (in days) that needs to be defined here."
 msgstr ""
 
-#: includes/settings/class-cr-settings-review-reminder.php:1033
+#: includes/settings/class-cr-settings-review-reminder.php:1059
 msgid "A channel for sending review invitations to customers. For example, by email."
 msgstr ""
 
-#: includes/settings/class-cr-settings-review-reminder.php:1160
+#: includes/settings/class-cr-settings-review-reminder.php:1186
 #: templates/cr-review-form.php:105
 #: templates/cr-review-form.php:107
 #: templates/qna-list.php:158
@@ -4952,7 +4974,7 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
-#: includes/settings/class-cr-settings-review-reminder.php:1163
+#: includes/settings/class-cr-settings-review-reminder.php:1189
 msgid "Value"
 msgstr ""
 
@@ -5846,7 +5868,7 @@ msgid "Details about the reason why this review reminder was canceled"
 msgstr ""
 
 #: templates/reminder-details-admin-page.php:143
-msgid "An indicator showing whether this review reminder was sent with the independently verified or no verification setting"
+msgid "An indicator showing whether this review reminder was sent with the independently verified or self-hosted setting"
 msgstr ""
 
 #: templates/reminder-details-admin-page.php:154
@@ -5957,7 +5979,7 @@ msgstr ""
 
 #: templates/reviews-slider.php:73
 #: blocks/build/reviews-grid/index.js:12
-#: blocks/src/reviews-grid/edit.js:77
+#: blocks/src/reviews-grid/edit.js:83
 msgid "Show More"
 msgstr ""
 
@@ -6110,210 +6132,210 @@ msgid "All selected tags"
 msgstr ""
 
 #: blocks/build/reviews-grid/index.js:12
-#: blocks/src/reviews-grid/edit.js:57
+#: blocks/src/reviews-grid/edit.js:59
 msgid "Review Grid Settings"
 msgstr ""
 
 #: blocks/build/reviews-grid/index.js:12
 #: blocks/build/reviews-slider/index.js:12
-#: blocks/src/reviews-grid/edit.js:59
+#: blocks/src/reviews-grid/edit.js:61
 #: blocks/src/reviews-slider/edit.js:58
 msgid "Number of Reviews"
 msgstr ""
 
 #: blocks/build/reviews-grid/index.js:12
 #: blocks/build/reviews-slider/index.js:12
-#: blocks/src/reviews-grid/edit.js:68
+#: blocks/src/reviews-grid/edit.js:72
 #: blocks/src/reviews-slider/edit.js:67
 msgid "Number of Shop Reviews"
 msgstr ""
 
 #: blocks/build/reviews-grid/index.js:12
 #: blocks/build/reviews-slider/index.js:12
-#: blocks/src/reviews-grid/edit.js:86
+#: blocks/src/reviews-grid/edit.js:94
 #: blocks/src/reviews-slider/edit.js:94
 msgid "Minimum Number of Characters in a Review (0 = Display All Reviews)"
 msgstr ""
 
 #: blocks/build/reviews-grid/index.js:12
 #: blocks/build/reviews-slider/index.js:12
-#: blocks/src/reviews-grid/edit.js:95
+#: blocks/src/reviews-grid/edit.js:105
 #: blocks/src/reviews-slider/edit.js:103
 msgid "Show Products"
 msgstr ""
 
 #: blocks/build/reviews-grid/index.js:12
 #: blocks/build/reviews-slider/index.js:12
-#: blocks/src/reviews-grid/edit.js:100
+#: blocks/src/reviews-grid/edit.js:111
 #: blocks/src/reviews-slider/edit.js:108
 msgid "Product Links"
 msgstr ""
 
 #: blocks/build/reviews-grid/index.js:12
 #: blocks/build/reviews-slider/index.js:12
-#: blocks/src/reviews-grid/edit.js:105
+#: blocks/src/reviews-grid/edit.js:117
 #: blocks/src/reviews-slider/edit.js:113
 msgid "Shop Reviews"
 msgstr ""
 
 #: blocks/build/reviews-grid/index.js:12
 #: blocks/build/reviews-slider/index.js:12
-#: blocks/src/reviews-grid/edit.js:110
+#: blocks/src/reviews-grid/edit.js:123
 #: blocks/src/reviews-slider/edit.js:118
 msgid "Inactive Products"
 msgstr ""
 
 #: blocks/build/reviews-grid/index.js:12
-#: blocks/src/reviews-grid/edit.js:115
+#: blocks/src/reviews-grid/edit.js:129
 msgid "Show Rating Bars"
 msgstr ""
 
 #: blocks/build/reviews-grid/index.js:12
-#: blocks/src/reviews-grid/edit.js:120
+#: blocks/src/reviews-grid/edit.js:135
 msgid "Add Review"
 msgstr ""
 
 #: blocks/build/reviews-grid/index.js:12
 #: blocks/build/reviews-slider/index.js:12
-#: blocks/src/reviews-grid/edit.js:125
+#: blocks/src/reviews-grid/edit.js:141
 #: blocks/src/reviews-slider/edit.js:133
 msgid "Avatars"
 msgstr ""
 
 #: blocks/build/reviews-grid/index.js:12
 #: blocks/build/reviews-slider/index.js:12
-#: blocks/src/reviews-grid/edit.js:130
+#: blocks/src/reviews-grid/edit.js:146
 #: blocks/src/reviews-slider/edit.js:138
 msgid "No avatars"
 msgstr ""
 
 #: blocks/build/reviews-grid/index.js:12
 #: blocks/build/reviews-slider/index.js:12
-#: blocks/src/reviews-grid/edit.js:137
+#: blocks/src/reviews-grid/edit.js:155
 #: blocks/src/reviews-slider/edit.js:145
 msgid "Sort By"
 msgstr ""
 
 #: blocks/build/reviews-grid/index.js:12
 #: blocks/build/reviews-slider/index.js:12
-#: blocks/src/reviews-grid/edit.js:140
+#: blocks/src/reviews-grid/edit.js:158
 #: blocks/src/reviews-slider/edit.js:148
 msgid "Date"
 msgstr ""
 
 #: blocks/build/reviews-grid/index.js:12
-#: blocks/src/reviews-grid/edit.js:142
+#: blocks/src/reviews-grid/edit.js:160
 msgid "Media"
 msgstr ""
 
 #: blocks/build/reviews-grid/index.js:12
 #: blocks/build/reviews-slider/index.js:12
-#: blocks/src/reviews-grid/edit.js:149
+#: blocks/src/reviews-grid/edit.js:169
 #: blocks/src/reviews-slider/edit.js:156
 msgid "Sort Order"
 msgstr ""
 
 #: blocks/build/reviews-grid/index.js:12
 #: blocks/build/reviews-slider/index.js:12
-#: blocks/src/reviews-grid/edit.js:152
+#: blocks/src/reviews-grid/edit.js:172
 #: blocks/src/reviews-slider/edit.js:159
 msgid "Ascending"
 msgstr ""
 
 #: blocks/build/reviews-grid/index.js:12
 #: blocks/build/reviews-slider/index.js:12
-#: blocks/src/reviews-grid/edit.js:153
+#: blocks/src/reviews-grid/edit.js:173
 #: blocks/src/reviews-slider/edit.js:160
 msgid "Descending"
 msgstr ""
 
 #: blocks/build/reviews-grid/index.js:12
 #: blocks/build/reviews-slider/index.js:12
-#: blocks/src/reviews-grid/edit.js:154
+#: blocks/src/reviews-grid/edit.js:174
 #: blocks/src/reviews-slider/edit.js:161
 msgid "Random"
 msgstr ""
 
 #: blocks/build/reviews-grid/index.js:12
 #: blocks/build/reviews-slider/index.js:12
-#: blocks/src/reviews-grid/edit.js:163
+#: blocks/src/reviews-grid/edit.js:185
 #: blocks/src/reviews-slider/edit.js:170
 msgid "Select which product categories to show reviews for."
 msgstr ""
 
 #: blocks/build/reviews-grid/index.js:12
 #: blocks/build/reviews-slider/index.js:12
-#: blocks/src/reviews-grid/edit.js:174
+#: blocks/src/reviews-grid/edit.js:196
 #: blocks/src/reviews-slider/edit.js:181
 msgid "Products"
 msgstr ""
 
 #: blocks/build/reviews-grid/index.js:12
 #: blocks/build/reviews-slider/index.js:12
-#: blocks/src/reviews-grid/edit.js:176
+#: blocks/src/reviews-grid/edit.js:198
 #: blocks/src/reviews-slider/edit.js:183
 msgid "Select which products to show reviews for."
 msgstr ""
 
 #: blocks/build/reviews-grid/index.js:12
 #: blocks/build/reviews-slider/index.js:12
-#: blocks/src/reviews-grid/edit.js:186
+#: blocks/src/reviews-grid/edit.js:208
 #: blocks/src/reviews-slider/edit.js:193
 msgid "Product Tags"
 msgstr ""
 
 #: blocks/build/reviews-grid/index.js:12
 #: blocks/build/reviews-slider/index.js:12
-#: blocks/src/reviews-grid/edit.js:188
+#: blocks/src/reviews-grid/edit.js:210
 #: blocks/src/reviews-slider/edit.js:195
 msgid "Select which product tags to show reviews for."
 msgstr ""
 
 #: blocks/build/reviews-grid/index.js:12
 #: blocks/build/reviews-slider/index.js:12
-#: blocks/src/reviews-grid/edit.js:200
+#: blocks/src/reviews-grid/edit.js:222
 #: blocks/src/reviews-slider/edit.js:207
 msgid "Select which tags to show reviews for."
 msgstr ""
 
 #: blocks/build/reviews-grid/index.js:12
 #: blocks/build/reviews-slider/index.js:12
-#: blocks/src/reviews-grid/edit.js:210
+#: blocks/src/reviews-grid/edit.js:232
 #: blocks/src/reviews-slider/edit.js:217
 msgid "Colors"
 msgstr ""
 
 #: blocks/build/reviews-grid/index.js:12
 #: blocks/build/reviews-slider/index.js:12
-#: blocks/src/reviews-grid/edit.js:213
+#: blocks/src/reviews-grid/edit.js:235
 #: blocks/src/reviews-slider/edit.js:220
 msgid "External Border"
 msgstr ""
 
 #: blocks/build/reviews-grid/index.js:12
 #: blocks/build/reviews-slider/index.js:12
-#: blocks/src/reviews-grid/edit.js:221
+#: blocks/src/reviews-grid/edit.js:243
 #: blocks/src/reviews-slider/edit.js:228
 msgid "Review Card Border"
 msgstr ""
 
 #: blocks/build/reviews-grid/index.js:12
 #: blocks/build/reviews-slider/index.js:12
-#: blocks/src/reviews-grid/edit.js:229
+#: blocks/src/reviews-grid/edit.js:251
 #: blocks/src/reviews-slider/edit.js:236
 msgid "Background"
 msgstr ""
 
 #: blocks/build/reviews-grid/index.js:12
 #: blocks/build/reviews-slider/index.js:12
-#: blocks/src/reviews-grid/edit.js:237
+#: blocks/src/reviews-grid/edit.js:259
 #: blocks/src/reviews-slider/edit.js:244
 msgid "Review Card Background"
 msgstr ""
 
 #: blocks/build/reviews-grid/index.js:12
 #: blocks/build/reviews-slider/index.js:12
-#: blocks/src/reviews-grid/edit.js:245
+#: blocks/src/reviews-grid/edit.js:267
 #: blocks/src/reviews-slider/edit.js:252
 msgid "Product Area Background"
 msgstr ""

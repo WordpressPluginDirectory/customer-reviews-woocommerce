@@ -543,55 +543,55 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 			if( $five > 0 ) {
 				$output .= '<td class="ivole-histogramCell1"><span class="ivole-histogram-a" data-rating="5">' . __( '5 star', 'customer-reviews-woocommerce' ) . '</span></td>';
 				$output .= '<td class="ivole-histogramCell2"><div class="ivole-histogram-a" data-rating="5"><div class="ivole-meter"><div class="ivole-meter-bar" style="width: ' . $five_percent . '%">' . $five_percent . '</div></div></div></td>';
-				$output .= '<td class="ivole-histogramCell3"><span class="ivole-histogram-a" data-rating="5">' . (string)$five_percent . '%</span></td>';
+				$output .= '<td class="ivole-histogramCell3"><span class="ivole-histogram-a" data-rating="5">' . apply_filters( 'cr_reviews_summbar_rtn_prc', $five_percent . '%', (int)$five, 5 ) . '</span></td>';
 			} else {
 				$output .= '<td class="ivole-histogramCell1">' . __( '5 star', 'customer-reviews-woocommerce' ) . '</td>';
 				$output .= '<td class="ivole-histogramCell2"><div class="ivole-meter"><div class="ivole-meter-bar" style="width: ' . $five_percent . '%"></div></div></td>';
-				$output .= '<td class="ivole-histogramCell3">' . (string)$five_percent . '%</td>';
+				$output .= '<td class="ivole-histogramCell3">' . apply_filters( 'cr_reviews_summbar_rtn_prc', $five_percent . '%', (int)$five, 5 ) . '</td>';
 			}
 			$output .= '</tr>';
 			$output .= '<tr class="ivole-histogramRow">';
 			if( $four > 0 ) {
 				$output .= '<td class="ivole-histogramCell1"><span class="ivole-histogram-a" data-rating="4">' . __( '4 star', 'customer-reviews-woocommerce' ) . '</span></td>';
 				$output .= '<td class="ivole-histogramCell2"><div class="ivole-histogram-a" data-rating="4"><div class="ivole-meter"><div class="ivole-meter-bar" style="width: ' . $four_percent . '%">' . $four_percent . '</div></div></div></td>';
-				$output .= '<td class="ivole-histogramCell3"><span class="ivole-histogram-a" data-rating="4">' . (string)$four_percent . '%</span></td>';
+				$output .= '<td class="ivole-histogramCell3"><span class="ivole-histogram-a" data-rating="4">' . apply_filters( 'cr_reviews_summbar_rtn_prc', $four_percent . '%', (int)$four, 4 ) . '</span></td>';
 			} else {
 				$output .= '<td class="ivole-histogramCell1">' . __( '4 star', 'customer-reviews-woocommerce' ) . '</td>';
 				$output .= '<td class="ivole-histogramCell2"><div class="ivole-meter"><div class="ivole-meter-bar" style="width: ' . $four_percent . '%"></div></div></td>';
-				$output .= '<td class="ivole-histogramCell3">' . (string)$four_percent . '%</td>';
+				$output .= '<td class="ivole-histogramCell3">' . apply_filters( 'cr_reviews_summbar_rtn_prc', $four_percent . '%', (int)$four, 4 ) . '</td>';
 			}
 			$output .= '</tr>';
 			$output .= '<tr class="ivole-histogramRow">';
 			if( $three > 0 ) {
 				$output .= '<td class="ivole-histogramCell1"><span class="ivole-histogram-a" data-rating="3">' . __( '3 star', 'customer-reviews-woocommerce' ) . '</span></td>';
 				$output .= '<td class="ivole-histogramCell2"><div class="ivole-histogram-a" data-rating="3"><div class="ivole-meter"><div class="ivole-meter-bar" style="width: ' . $three_percent . '%">' . $three_percent .'</div></div></div></td>';
-				$output .= '<td class="ivole-histogramCell3"><span class="ivole-histogram-a" data-rating="3">' . (string)$three_percent . '%</span></td>';
+				$output .= '<td class="ivole-histogramCell3"><span class="ivole-histogram-a" data-rating="3">' . apply_filters( 'cr_reviews_summbar_rtn_prc', $three_percent . '%', (int)$three, 3 ) . '</span></td>';
 			} else {
 				$output .= '<td class="ivole-histogramCell1">' . __( '3 star', 'customer-reviews-woocommerce' ) . '</td>';
 				$output .= '<td class="ivole-histogramCell2"><div class="ivole-meter"><div class="ivole-meter-bar" style="width: ' . $three_percent . '%"></div></div></td>';
-				$output .= '<td class="ivole-histogramCell3">' . (string)$three_percent . '%</td>';
+				$output .= '<td class="ivole-histogramCell3">' . apply_filters( 'cr_reviews_summbar_rtn_prc', $three_percent . '%', (int)$three, 3 ) . '</td>';
 			}
 			$output .= '</tr>';
 			$output .= '<tr class="ivole-histogramRow">';
 			if( $two > 0 ) {
 				$output .= '<td class="ivole-histogramCell1"><span class="ivole-histogram-a" data-rating="2">' . __( '2 star', 'customer-reviews-woocommerce' ) . '</span></td>';
 				$output .= '<td class="ivole-histogramCell2"><div class="ivole-histogram-a" data-rating="2"><div class="ivole-meter"><div class="ivole-meter-bar" style="width: ' . $two_percent . '%">' . $two_percent . '</div></div></div></td>';
-				$output .= '<td class="ivole-histogramCell3"><span class="ivole-histogram-a" data-rating="2">' . (string)$two_percent . '%</span></td>';
+				$output .= '<td class="ivole-histogramCell3"><span class="ivole-histogram-a" data-rating="2">' . apply_filters( 'cr_reviews_summbar_rtn_prc', $two_percent . '%', (int)$two, 2 ) . '</span></td>';
 			} else {
 				$output .= '<td class="ivole-histogramCell1">' . __( '2 star', 'customer-reviews-woocommerce' ) . '</td>';
 				$output .= '<td class="ivole-histogramCell2"><div class="ivole-meter"><div class="ivole-meter-bar" style="width: ' . $two_percent . '%"></div></div></td>';
-				$output .= '<td class="ivole-histogramCell3">' . (string)$two_percent . '%</td>';
+				$output .= '<td class="ivole-histogramCell3">' . apply_filters( 'cr_reviews_summbar_rtn_prc', $two_percent . '%', (int)$two, 2 ) . '</td>';
 			}
 			$output .= '</tr>';
 			$output .= '<tr class="ivole-histogramRow">';
 			if( $one > 0 ) {
 				$output .= '<td class="ivole-histogramCell1"><span class="ivole-histogram-a" data-rating="1">' . __( '1 star', 'customer-reviews-woocommerce' ) . '</span></td>';
 				$output .= '<td class="ivole-histogramCell2"><div class="ivole-histogram-a" data-rating="1"><div class="ivole-meter"><div class="ivole-meter-bar" style="width: ' . $one_percent . '%">' . $one_percent . '</div></div></div></td>';
-				$output .= '<td class="ivole-histogramCell3"><span class="ivole-histogram-a" data-rating="1">' . (string)$one_percent . '%</span></td>';
+				$output .= '<td class="ivole-histogramCell3"><span class="ivole-histogram-a" data-rating="1">' . apply_filters( 'cr_reviews_summbar_rtn_prc', $one_percent . '%', (int)$one, 1 ) . '</span></td>';
 			} else {
 				$output .= '<td class="ivole-histogramCell1">' . __( '1 star', 'customer-reviews-woocommerce' ) . '</td>';
 				$output .= '<td class="ivole-histogramCell2"><div class="ivole-meter"><div class="ivole-meter-bar" style="width: ' . $one_percent . '%"></div></div></td>';
-				$output .= '<td class="ivole-histogramCell3">' . (string)$one_percent . '%</td>';
+				$output .= '<td class="ivole-histogramCell3">' . apply_filters( 'cr_reviews_summbar_rtn_prc', $one_percent . '%', (int)$one, 1 ) . '</td>';
 			}
 			$output .= '</tr>';
 			$output .= '</tbody>';
@@ -1066,36 +1066,6 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 			//clear W3TC after voting
 			if( function_exists( 'w3tc_flush_post' ) ) {
 				w3tc_flush_post( $product_id );
-			}
-			if( Ivole::is_curl_installed() ) {
-				$order_id = get_comment_meta( $comment_id, 'ivole_order', true );
-				$order = wc_get_order( $order_id );
-				if ( $order_id && $order ) {
-					$secret_key = $order->get_meta( 'ivole_secret_key', true );
-					if( '' !== $secret_key ) {
-						$data = array(
-							'token' => '164592f60fbf658711d47b2f55a1bbba',
-							'secretKey' => $secret_key,
-							'shop' => array( 'domain' => Ivole_Email::get_blogurl(),
-							'orderId' => $order_id,
-							'productId' => $product_id ),
-							'upvotes' => $votes['upvotes'],
-							'downvotes' => $votes['total'] - $votes['upvotes']
-						);
-						$api_url = 'https://z4jhozi8lc.execute-api.us-east-1.amazonaws.com/v1/review-vote';
-						$data_string = json_encode( $data );
-						$ch = curl_init();
-						curl_setopt( $ch, CURLOPT_URL, $api_url );
-						curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-						curl_setopt( $ch, CURLOPT_CUSTOMREQUEST, "POST" );
-						curl_setopt( $ch, CURLOPT_POSTFIELDS, $data_string );
-						curl_setopt( $ch, CURLOPT_HTTPHEADER, array(
-							'Content-Type: application/json',
-							'Content-Length: ' . strlen( $data_string ) )
-						);
-						$result = curl_exec( $ch );
-					}
-				}
 			}
 			return $votes;
 		}

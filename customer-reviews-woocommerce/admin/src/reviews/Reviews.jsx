@@ -309,7 +309,7 @@ function Reviews({ nonce, referrals }) {
     } else if ( -3 == refsSWR.data ) {
       referralsCardContent = <Text size="xs" mt={10}>No license key was found in the plugin settings.</Text>;
     } else if ( -4 == refsSWR.data ) {
-      referralsCardContent = <Text size="xs" mt={10}>Product referrals statistics could not be retrieved.</Text>;
+      referralsCardContent = <Text size="xs" mt={10}>Product recommendation statistics could not be retrieved.</Text>;
     } else {
       referralsCardContent = (
         <Group justify="space-evenly" mt={10}>

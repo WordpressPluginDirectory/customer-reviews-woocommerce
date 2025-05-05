@@ -83,13 +83,18 @@ class CR_Google_Shopping_Feed {
 	* @since 3.47
 	*/
 	public function generate() {
-		if( !$this->is_enabled() ) {
+		if ( !$this->is_enabled() ) {
 			$this->deactivate();
 			return;
 		}
 
+		// exit if creation of the feed hasn't been started
+		if ( ! $this->cron_options['started'] ) {
+			return;
+		}
+
 		// Exit if XML library is not available
-		if( ! class_exists( 'XMLWriter' ) ) {
+		if ( ! class_exists( 'XMLWriter' ) ) {
 			$this->finish_cron( false );
 			return;
 		}

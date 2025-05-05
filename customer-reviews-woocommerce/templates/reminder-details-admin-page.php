@@ -140,7 +140,7 @@
 									<?php echo esc_html__( 'Verification', 'customer-reviews-woocommerce' ); ?>
 								</td>
 								<td class="cr-reminder-details-help">
-									<?php echo CR_Admin::cr_help_tip( __( 'An indicator showing whether this review reminder was sent with the independently verified or no verification setting', 'customer-reviews-woocommerce' ) ); ?>
+									<?php echo CR_Admin::cr_help_tip( __( 'An indicator showing whether this review reminder was sent with the independently verified or self-hosted setting', 'customer-reviews-woocommerce' ) ); ?>
 								</td>
 								<td>
 									<?php echo esc_html( $reminder_verification ); ?>
