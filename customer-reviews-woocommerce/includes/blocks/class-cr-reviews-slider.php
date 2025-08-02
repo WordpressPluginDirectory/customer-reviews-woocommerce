@@ -140,6 +140,15 @@ if ( ! class_exists( 'CR_Reviews_Slider' ) ) {
 
 			if ( function_exists( 'pll_current_language' ) ) {
 				// Polylang compatibility
+				if ( apply_filters( 'cr_reviews_polylang_merge', true ) ) {
+					foreach ( $post_ids as $product_id ) {
+						$translationIds = PLL()->model->post->get_translations( $product_id );
+						foreach ( $translationIds as $key => $translationID ) {
+							$post_ids[] = intval( $translationID );
+						}
+					}
+					$args['post__in'] = $post_ids;
+				}
 				$args['lang'] = '';
 			} elseif ( has_filter( 'wpml_current_language' ) ) {
 				// WPML compatibility
@@ -278,7 +287,7 @@ if ( ! class_exists( 'CR_Reviews_Slider' ) ) {
 			$card_style = "border-color:" . $attributes['color_brdr'] . ";";
 			$card_style .= "background-color:" . $attributes['color_bcrd'] . ";";
 			$product_style = "background-color:" . $attributes['color_pr_bcrd'] . ";";
-			$stars_style = "color:" . $attributes['color_stars'] . ";";
+			$stars_style = $attributes['color_stars'];
 			$max_chars = $attributes['max_chars'];
 			$responsive_slides_to_show = $attributes['slides_to_show'] > 1 ? 2 : 1;
 
@@ -353,97 +362,92 @@ if ( ! class_exists( 'CR_Reviews_Slider' ) ) {
 		}
 
 		public function render_reviews_slider_shortcode( $attributes ) {
-			$shortcode_enabled = get_option( 'ivole_reviews_shortcode', 'no' );
-			if( $shortcode_enabled === 'no' ) {
-				return;
-			} else {
-				// Convert shortcode attributes
-				$attributes = shortcode_atts( array(
-					'slides_to_show' => 3,
-					'count' => 5,
-					'show_products' => true,
-					'product_links' => true,
-					'sort_by' => 'date',
-					'sort' => 'DESC',
-					'categories' => array(),
-					'products' => 'current',
-					'color_ex_brdr' => '#ebebeb',
-					'color_brdr' => '#ebebeb',
-					'color_ex_bcrd' => '',
-					'color_bcrd' => '#fbfbfb',
-					'color_pr_bcrd' => '#f2f2f2',
-					'color_stars' => '#6bba70',
-					'shop_reviews' => 'false',
-					'count_shop_reviews' => 1,
-					'inactive_products' => false,
-					'autoplay' => false,
-					'avatars' => 'initials',
-					'max_chars' => 0,
-					'product_tags' => array(),
-					'tags' => array(),
-					'min_chars' => 0,
-					'show_dots' => true,
-				), $attributes, 'cusrev_reviews_slider' );
+			// Convert shortcode attributes
+			$attributes = shortcode_atts( array(
+				'slides_to_show' => 3,
+				'count' => 5,
+				'show_products' => true,
+				'product_links' => true,
+				'sort_by' => 'date',
+				'sort' => 'DESC',
+				'categories' => array(),
+				'products' => 'current',
+				'color_ex_brdr' => '#ebebeb',
+				'color_brdr' => '#ebebeb',
+				'color_ex_bcrd' => '',
+				'color_bcrd' => '#fbfbfb',
+				'color_pr_bcrd' => '#f2f2f2',
+				'color_stars' => '#FFBC00',
+				'shop_reviews' => 'false',
+				'count_shop_reviews' => 1,
+				'inactive_products' => false,
+				'autoplay' => false,
+				'avatars' => 'initials',
+				'max_chars' => 0,
+				'product_tags' => array(),
+				'tags' => array(),
+				'min_chars' => 0,
+				'show_dots' => true,
+			), $attributes, 'cusrev_reviews_slider' );
 
-				$attributes['slides_to_shows'] = absint( $attributes['slides_to_show'] ) >= absint( $attributes['count'] ) ? absint( $attributes['count'] ) : absint( $attributes['slides_to_show'] );
-				$attributes['count'] = absint( $attributes['count'] );
-				$attributes['show_products'] = ( $attributes['show_products'] !== 'false' && boolval( $attributes['count'] ) );
-				$attributes['product_links'] = ( $attributes['product_links'] !== 'false' );
-				$attributes['shop_reviews'] = ( $attributes['shop_reviews'] !== 'false' && boolval( $attributes['count_shop_reviews'] ) );
-				$attributes['count_shop_reviews'] = absint( $attributes['count_shop_reviews'] );
-				$attributes['inactive_products'] = ( $attributes['inactive_products'] === 'true' );
-				$attributes['autoplay'] = ( $attributes['autoplay'] === 'true' );
-				$attributes['max_chars'] = absint( $attributes['max_chars'] );
-				$attributes['min_chars'] = intval( $attributes['min_chars'] );
-				$attributes['show_dots'] = ( $attributes['show_dots'] !== 'false' );
-				if( $attributes['min_chars'] < 0 ) {
-					$attributes['min_chars'] = 0;
-				}
+			$attributes['slides_to_shows'] = absint( $attributes['slides_to_show'] ) >= absint( $attributes['count'] ) ? absint( $attributes['count'] ) : absint( $attributes['slides_to_show'] );
+			$attributes['count'] = absint( $attributes['count'] );
+			$attributes['show_products'] = ( $attributes['show_products'] !== 'false' && boolval( $attributes['count'] ) );
+			$attributes['product_links'] = ( $attributes['product_links'] !== 'false' );
+			$attributes['shop_reviews'] = ( $attributes['shop_reviews'] !== 'false' && boolval( $attributes['count_shop_reviews'] ) );
+			$attributes['count_shop_reviews'] = absint( $attributes['count_shop_reviews'] );
+			$attributes['inactive_products'] = ( $attributes['inactive_products'] === 'true' );
+			$attributes['autoplay'] = ( $attributes['autoplay'] === 'true' );
+			$attributes['max_chars'] = absint( $attributes['max_chars'] );
+			$attributes['min_chars'] = intval( $attributes['min_chars'] );
+			$attributes['show_dots'] = ( $attributes['show_dots'] !== 'false' );
+			if( $attributes['min_chars'] < 0 ) {
+				$attributes['min_chars'] = 0;
+			}
 
-				if ( ! is_array( $attributes['categories'] ) ) {
-					$attributes['categories'] = array_filter( array_map( 'trim', explode( ',', $attributes['categories'] ) ) );
-				}
+			if ( ! is_array( $attributes['categories'] ) ) {
+				$attributes['categories'] = array_filter( array_map( 'trim', explode( ',', $attributes['categories'] ) ) );
+			}
 
-				if (
-					is_string( $attributes['products'] ) &&
-					'current' === trim( strtolower( $attributes['products'] ) )
-				) {
-					if ( is_product() ) {
-						$product = wc_get_product();
-						if ( is_object( $product ) ) {
-							$id = $product->get_id();
-							$attributes['products'] = array( $id );
-						} else {
-							$attributes['products'] = array();
-						}
+			if (
+				is_string( $attributes['products'] ) &&
+				'current' === trim( strtolower( $attributes['products'] ) )
+			) {
+				if ( is_product() ) {
+					$product = wc_get_product();
+					if ( is_object( $product ) ) {
+						$id = $product->get_id();
+						$attributes['products'] = array( $id );
 					} else {
 						$attributes['products'] = array();
 					}
-				} elseif ( ! is_array( $attributes['products'] ) ) {
-					$products = str_replace( ' ', '', $attributes['products'] );
-					$products = explode( ',', $products );
-					$products = array_filter( $products, 'is_numeric' );
-					$products = array_map( 'intval', $products );
-
-					$attributes['products'] = $products;
 				} else {
 					$attributes['products'] = array();
 				}
+			} elseif ( ! is_array( $attributes['products'] ) ) {
+				$products = str_replace( ' ', '', $attributes['products'] );
+				$products = explode( ',', $products );
+				$products = array_filter( $products, 'is_numeric' );
+				$products = array_map( 'intval', $products );
 
-				if( $attributes['slides_to_shows'] <= 0 ) {
-					$attributes['slides_to_shows'] = 1;
-				}
-
-				if( ! empty( $attributes['product_tags'] ) ) {
-					$attributes['product_tags'] = array_filter( array_map( 'trim', explode( ',', $attributes['product_tags'] ) ) );
-				}
-
-				if ( ! empty( $attributes['tags'] ) ) {
-					$attributes['tags'] = array_filter( array_map( 'trim', explode( ',', $attributes['tags'] ) ) );
-				}
-
-				return $this->render_reviews_slider( $attributes );
+				$attributes['products'] = $products;
+			} else {
+				$attributes['products'] = array();
 			}
+
+			if( $attributes['slides_to_shows'] <= 0 ) {
+				$attributes['slides_to_shows'] = 1;
+			}
+
+			if( ! empty( $attributes['product_tags'] ) ) {
+				$attributes['product_tags'] = array_filter( array_map( 'trim', explode( ',', $attributes['product_tags'] ) ) );
+			}
+
+			if ( ! empty( $attributes['tags'] ) ) {
+				$attributes['tags'] = array_filter( array_map( 'trim', explode( ',', $attributes['tags'] ) ) );
+			}
+
+			return $this->render_reviews_slider( $attributes );
 		}
 
 		public function register_slider_script() {

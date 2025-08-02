@@ -226,7 +226,7 @@ class CR_Reviews_Top_Charts {
 			} else {
 				$reviewReminderIcon = 'IconLockFilled';
 				$reviewReminderHelp = __(
-					'Review reminders are configured to invite customers to review their orders using aggregated review forms hosted on CusRev.com. These reviews are collected in "Private" mode, which means they will only be displayed on your website but not on CusRev.com. The "Private" mode is intended for setting up and testing the integration of the plugin with CusRev.com. You can adjust this configuration in the plugin settings.',
+					'Review reminders are configured to invite customers to review their orders using aggregated review forms hosted on CusRev.com. These reviews are collected in "Test" mode, which means they will only be displayed on your website but not on CusRev.com. The "Test" mode is intended for setting up and testing the integration of the plugin with CusRev.com. You can adjust this configuration in the plugin settings.',
 					'customer-reviews-woocommerce'
 				);
 			}

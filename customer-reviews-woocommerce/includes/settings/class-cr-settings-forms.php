@@ -197,6 +197,7 @@ if ( ! class_exists( 'CR_Forms_Settings' ) ) :
 					}
 				}
 				WC_Admin_Settings::save_fields( $this->settings );
+				CR_Local_Forms::delete_old_forms();
 			}
 		}
 
@@ -412,7 +413,7 @@ if ( ! class_exists( 'CR_Forms_Settings' ) ) :
 					'desc_tip' => true,
 					'autoload' => false
 				),
-				105 => array(
+				110 => array(
 					'type' => 'sectionend',
 					'id'   => 'cr_options_aggregated_forms'
 				)
@@ -441,6 +442,16 @@ if ( ! class_exists( 'CR_Forms_Settings' ) ) :
 					'desc'    => __( 'Enable geolocation on aggregated review forms. Customers will have an option to indicate where they are from. For example, "England, United Kingdom".', 'customer-reviews-woocommerce' ),
 					'desc_tip'    => __( 'Automatic geolocation on review forms.', 'customer-reviews-woocommerce' ),
 					'css'     => 'display:none;',
+					'autoload' => false
+				);
+			} else {
+				// and some features of review forms are available only for local forms
+				$this->settings[105] = array(
+					'title'   => __( 'Expiry Period', 'customer-reviews-woocommerce' ),
+					'type'    => 'number',
+					'id'      => 'ivole_form_expiry_period',
+					'default' => 0,
+					'desc_tip' => __( 'Aggregated review forms will be automatically deleted after the specified number of days, or kept indefinitely if set to 0.', 'customer-reviews-woocommerce' ),
 					'autoload' => false
 				);
 			}

@@ -81,9 +81,7 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 					add_action( 'wp_enqueue_scripts', array( $this, 'cr_style_2' ), 11 );
 				}
 			}
-			if( 'yes' === $this->ivole_reviews_histogram || 'yes' === get_option( 'ivole_reviews_shortcode', 'no' ) ) {
-				add_action( 'init', array( $this, 'add_query_var' ), 20 );
-			}
+			add_action( 'init', array( $this, 'add_query_var' ), 20 );
 			if (
 				'yes' === $this->ivole_reviews_histogram ||
 				'yes' === $this->ivole_ajax_reviews ||
@@ -120,7 +118,7 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 			add_action( 'woocommerce_before_single_product', array( $this, 'custom_avatars' ) );
 			add_filter( 'cr_review_form_before_comment', array( 'CR_Custom_Questions', 'review_form_questions' ) );
 			add_action( 'wp_insert_comment', array( 'CR_Custom_Questions', 'submit_onsite_questions' ) );
-			add_action( 'comment_post', array( $this, 'clear_trustbadge_cache' ), 10, 3 );
+			add_action( 'comment_post', array( $this, 'action_after_review_added' ), 10, 3 );
 			add_action( 'cr_review_form_rating', array( 'CR_Custom_Questions', 'review_form_rating' ) );
 			// standard WooCommerce review template
 			add_action( 'woocommerce_review_after_comment_text', array( $this, 'display_incentivized_badge' ), 8 );
@@ -243,8 +241,10 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 						if ( isset( $pics[$i]['url'] ) ) {
 							$output .= '<div class="iv-comment-image cr-comment-image-ext" data-reviewid="' . $comment->comment_ID . '">';
 							$output .= '<a href="' . $pics[$i]['url'] . $cr_query . '" class="cr-comment-a" rel="nofollow"><img src="' .
-							$pics[$i]['url'] . $cr_query . '" alt="' . sprintf( __( 'Image #%1$d from ', 'customer-reviews-woocommerce' ), $k ) .
-							$comment->comment_author . '" loading="lazy"></a>';
+							$pics[$i]['url'] . $cr_query . '" alt="' .
+							esc_attr(
+								sprintf( __( 'Image #%1$d from %2$s', 'customer-reviews-woocommerce' ), $k, $comment->comment_author )
+							) . '" loading="lazy"></a>';
 							$output .= '</div>';
 							$k++;
 						}
@@ -260,8 +260,10 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 							$temp_comment_content .= '<div class="iv-comment-image">';
 							$temp_comment_content .= '<a href="' . $attachmentSrc[0] . '" class="cr-comment-a"><img src="' .
 							$attachmentSrc[0] . '" width="' . $attachmentSrc[1] . '" height="' . $attachmentSrc[2] .
-							'" alt="' . sprintf( __( 'Image #%1$d from ', 'customer-reviews-woocommerce' ), $k ) .
-							$comment->comment_author . '" loading="lazy"></a>';
+							'" alt="' .
+							esc_attr(
+								sprintf( __( 'Image #%1$d from %2$s', 'customer-reviews-woocommerce' ), $k, $comment->comment_author )
+							) . '" loading="lazy"></a>';
 							$temp_comment_content .= '</div>';
 							$k++;
 						}
@@ -279,7 +281,10 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 						$output .= 'src="' . $pics_v[$i]['url'] . $cr_query . '#t=0.1';
 						$output .= '"></video>';
 						$output .= '<img class="cr-comment-videoicon" src="' . plugin_dir_url( dirname( dirname( __FILE__ ) ) ) . 'img/video.svg" ';
-						$output .= 'alt="' . sprintf( __( 'Video #%1$d from %2$s', 'customer-reviews-woocommerce' ), $k, $comment->comment_author ) . '">';
+						$output .= 'alt="' .
+						esc_attr(
+							sprintf( __( 'Video #%1$d from %2$s', 'customer-reviews-woocommerce' ), $k, $comment->comment_author )
+						) . '">';
 						$output .= '<button class="cr-comment-video-close" aria-label="' . esc_attr__( 'Close', 'customer-reviews-woocommerce' ) . '">' . self::get_close_button_svg() . '</button>';
 						$output .= '</div></div>';
 						$k++;
@@ -298,7 +303,10 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 							$temp_comment_content .= 'src="' . $attachmentUrl . '#t=0.1';
 							$temp_comment_content .= '"></video>';
 							$temp_comment_content .= '<img class="cr-comment-videoicon" src="' . plugin_dir_url( dirname( dirname( __FILE__ ) ) ) . 'img/video.svg" ';
-							$temp_comment_content .= 'alt="' . sprintf( __( 'Video #%1$d from %2$s', 'customer-reviews-woocommerce' ), $k, $comment->comment_author ) . '">';
+							$temp_comment_content .= 'alt="' .
+							esc_attr(
+								sprintf( __( 'Video #%1$d from %2$s', 'customer-reviews-woocommerce' ), $k, $comment->comment_author )
+							) . '">';
 							$temp_comment_content .= '<button class="cr-comment-video-close" aria-label="' . esc_attr__( 'Close', 'customer-reviews-woocommerce' ) . '">' . self::get_close_button_svg() . '</button>';
 							$temp_comment_content .= '</div></div>';
 							$k++;
@@ -1308,7 +1316,7 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 				$output .= '<div class="cr-comment-image-top">';
 				if ( 1 === $pics_prepared[$i][4] ) {
 					// video
-					$output .= '<video class="cr-comment-image-top-item" preload="metadata" data-slide="' . $i . '" src="' . $pics_prepared[$i][0] . '"></video>';
+					$output .= '<video class="cr-comment-image-top-item" preload="metadata" data-slide="' . $i . '" src="' . $pics_prepared[$i][0] . '#t=0.1"></video>';
 					$output .= '<img class="cr-comment-videoicon" src="' . plugin_dir_url( dirname( dirname( __FILE__ ) ) ) . 'img/video.svg" ';
 					$output .= 'alt="' . esc_attr( $pics_prepared[$i][5] ) . '">';
 				} else {
@@ -1382,7 +1390,7 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 				if ( 1 === $pics_prepared[$i][4] ) {
 					// video
 					$output .= '<div class="cr-ajax-reviews-video">';
-					$output .= '<video preload="metadata" data-slide="' . $i . '" src="' . $pics_prepared[$i][0] . '"></video>';
+					$output .= '<video preload="metadata" data-slide="' . $i . '" src="' . $pics_prepared[$i][0] . '#t=0.1"></video>';
 					$output .= '<img class="cr-comment-videoicon" src="' . plugin_dir_url( dirname( dirname( __FILE__ ) ) ) . 'img/video.svg" ';
 					$output .= 'alt="' . esc_attr( $pics_prepared[$i][5] ) . '">';
 					$output .= '</div>';
@@ -1411,7 +1419,7 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 				$output = '<div class="cr-ajax-reviews-slide-nav">';
 				if ( 1 === $pics_prepared[$i][4] ) {
 					// video
-					$output .= '<video preload="metadata" data-slide="' . $i . '" src="' . $pics_prepared[$i][0] . '"></video>';
+					$output .= '<video preload="metadata" data-slide="' . $i . '" src="' . $pics_prepared[$i][0] . '#t=0.1"></video>';
 					$output .= '<img class="cr-comment-videoicon" src="' . plugin_dir_url( dirname( dirname( __FILE__ ) ) ) . 'img/video.svg" ';
 					$output .= 'alt="' . esc_attr( $pics_prepared[$i][5] ) . '">';
 				} else {
@@ -1467,7 +1475,7 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 		);
 		if( check_ajax_referer( 'cr-upload-images-frontend', 'cr_nonce', false ) ) {
 			// check captcha
-			if( self::is_captcha_enabled() ) {
+			if ( self::is_captcha_enabled() && ! is_user_logged_in() ) {
 				$captcha_is_wrong = true;
 				if( isset( $_POST['cr_captcha'] ) && $_POST['cr_captcha'] ) {
 					if( $this->ping_captcha( strval( $_POST['cr_captcha'] ) ) ) {
@@ -1595,6 +1603,7 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 				'comment' => $comment,
 				'args'    => $args,
 				'depth'   => $depth,
+				'cr_plugin_dir_url' => plugin_dir_url( dirname( dirname( __FILE__ ) ) )
 			),
 			'customer-reviews-woocommerce',
 			dirname( dirname( dirname( __FILE__ ) ) ) . '/templates/'
@@ -1634,7 +1643,7 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 		<?php
 	}
 
-	public function clear_trustbadge_cache( $comment_id, $comment_approved, $commentdata ) {
+	public function action_after_review_added( $comment_id, $comment_approved, $commentdata ) {
 		if (
 			$commentdata &&
 			is_array( $commentdata ) &&
@@ -1643,6 +1652,36 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 		) {
 			// clear store stats for Trust Badges
 			delete_option( 'ivole_store_stats' );
+
+			// check if a review for discount needs to be triggered
+			$review_meta = get_comment_meta( $comment_id, '', false );
+			$review_from_aggregated = false;
+			if ( $review_meta && is_array( $review_meta ) ) {
+				$review_meta = array_keys( $review_meta );
+				$aggregated_form_meta = array(
+					'ivole_order',
+					'ivole_order_priv',
+					'ivole_order_unve',
+					'ivole_order_locl'
+				);
+				if ( array_intersect( $review_meta, $aggregated_form_meta ) ) {
+					$review_from_aggregated = true;
+				}
+			}
+			if ( ! $review_from_aggregated ) {
+				$customer_email = isset( $commentdata['comment_author_email'] ) ? $commentdata['comment_author_email'] : '';
+				if ( $customer_email ) {
+					$ec = new CR_Email_Coupon( 0 );
+					$ec->maybe_send_coupon(
+						$comment_id, // id of the review
+						0, // count of media files uploaded with the review
+						'onsite', // scenario when a review is submitted via an on-site review form
+						$customer_email, // email of the reviewer
+						get_user_by( 'email', $customer_email ), // WordPress user ID
+						isset( $commentdata['comment_author'] ) ? $commentdata['comment_author'] : '' // name of the reviewer
+					);
+				}
+			}
 		}
 	}
 

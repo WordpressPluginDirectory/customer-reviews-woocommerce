@@ -4,7 +4,7 @@ Tags: woocommerce, review plugin, review reminder, customer reviews, review for 
 Requires at least: 4.5
 Tested up to: 6.8
 Requires PHP: 7.2
-Stable tag: 5.77.0
+Stable tag: 5.81.1
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl.html
 
@@ -20,7 +20,7 @@ Enhance the standard WooCommerce reviews with extra features, and reassure custo
 
 The **Customer Reviews for WooCommerce** plugin helps you increase engagement, build loyalty, improve SEO, and get more sales with social proof.
 
-**Localized to 30 languages and installed on over 70,000 stores!**
+**Localized to 30 languages and installed on over 80,000 stores!**
 
 The plugin includes an optional integration with an external service to verify customer reviews. **CusRev** collects reviews from customers and verifies their authenticity.
 
@@ -188,7 +188,7 @@ https://www.youtube.com/watch?v=VCLsYu4wp8M
 1. Make sure that WooCommerce plugin is installed and activated. If it is not installed, please install [WooCommerce](https://wordpress.org/plugins/woocommerce/). Our plugin will not work without WooCommerce.
 2. Upload the plugin files to the `/wp-content/plugins` directory, or install the plugin through the WordPress 'Plugins' screen directly.
 3. Activate the plugin through the 'Plugins' screen in WordPress
-4. Go the Reviews > Settings in WordPress admin area to configure the plugin
+4. Go to the Reviews > Settings in WordPress admin area to configure the plugin
 
 == Frequently Asked Questions ==
 
@@ -233,6 +233,40 @@ If you would like to change how reviews are sorted on product pages, it is possi
 
 == Changelog ==
 
+= 5.81.1 =
+* Bug fix: SQL injection prevention
+= 5.81.0 =
+* Improvement: self-hosted aggregated review forms improvements for RTL languages
+* Bug fix: vulnerability prevention
+= 5.80.2 =
+* Improvement: check that an order exists when cancelling review reminders
+* Improvement: shortcodes to show Polylang reviews in all languages
+* Improvement: 'Private' mode is renamed to 'Test' mode to match the wording used in the CusRev dashboard
+* Bug fix: PHP warning about missing product categories
+* Bug fix: deletion of reminder log entries did not work
+= 5.80.1 =
+* Improvement: Polylang compatibility
+* Improvement: WPML Multicurrency compatibility for local aggregated review forms
+* Bug fix: a table for local forms could not be created for new websites
+= 5.80.0 =
+* New feature: a setting to expire local aggregated review forms after a specified number of days
+* Bug fix: 'color_stars' parameter did not work in [cusrev_reviews_grid] and [cusrev_reviews_slider] shortcodes
+= 5.79.0 =
+* Improvement: removal of the checkbox to enable/disable shortcodes to avoid confusion
+* Improvement: compatibility with websites that have disabled threaded comments
+* Bug fix: unnecessary captcha verification for logged-in users on upload of media files
+= 5.78.1 =
+* Improvement: CSS rules to improve compatibility with different browsers
+* Improvement: visibility of video thumbnails on iPhones
+* Bug fix: undefined variable warning in the Reviews Grid shortcode
+= 5.78.0 =
+* New feature: an option to send discount coupons to customers who posted reviews using on-site review forms
+* Improvement: additional information in error messages about invalid phone numbers for WhatsApp review invitations
+* Improvement: visibility of video thumbnails on iPhones in the 'Customer Images' section
+* Bug fix: a message with information about the progress of  XML feeds creation was not displayed in some scenarios
+= 5.77.1 =
+* Improvement: an error message when third-party plugins interfere with submission of reviews via on-site review forms
+* Improvement: removal of the 'plugin_dir_url' function from the template files to prevent an issue with broken links when templates are overridden in a child theme
 = 5.77.0 =
 * Improvement: the option 'No verification' is renamed to 'Self-hosted' with additional explanations provided in the plugin settings
 * Improvement: an improved message with information about XML feed(s) created in the background

@@ -71,23 +71,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 					$counter_icons_html = '';
 					if ( 0 < $count_customer_videos ) {
 						// if there are videos, use the 1st one as a cover
-						$customer_images_html .= '<video preload="metadata" class="image-row-vid" src="' . esc_url( $customer_videos[$vid_idx] ) . '" data-crmedia="vid" data-crtitle="' . sprintf( __( 'Video #%1$d from %2$s', 'customer-reviews-woocommerce' ), $vid_idx + 1, $review->comment_author ) . '"></video>';
-						$customer_images_html .= '<img class="cr-comment-videoicon" src="' . plugin_dir_url( dirname( __FILE__ ) ) . 'img/video.svg" ';
-						$customer_images_html .= 'alt="' . sprintf( __( 'Video #%1$d from %2$s', 'customer-reviews-woocommerce' ), $vid_idx + 1, $review->comment_author ) . '">';
+						$customer_images_html .= '<video preload="metadata" class="image-row-vid" src="' . esc_url( $customer_videos[$vid_idx] ) . '#t=0.1" data-crmedia="vid" data-crtitle="' . esc_attr( sprintf( __( 'Video #%1$d from %2$s', 'customer-reviews-woocommerce' ), $vid_idx + 1, $review->comment_author ) ) . '"></video>';
+						$customer_images_html .= '<img class="cr-comment-videoicon" src="' . CR_Utils::cr_get_plugin_dir_url() . 'img/video.svg" ';
+						$customer_images_html .= 'alt="' . esc_attr( sprintf( __( 'Video #%1$d from %2$s', 'customer-reviews-woocommerce' ), $vid_idx + 1, $review->comment_author ) ) . '">';
 						$vid_idx++;
 						// add a video counter icon
 						$counter_icons_html .= '<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="cr-grid-icon-counter-video"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M15 10l4.553 -2.276a1 1 0 0 1 1.447 .894v6.764a1 1 0 0 1 -1.447 .894l-4.553 -2.276v-4z" /><path d="M3 6m0 2a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2z" /></svg>';
 						$counter_icons_html .= '<span>' . esc_html( $count_customer_videos ) . '</span>';
 					} else {
 						// otherwise, use the 1st picture as a cover
-						$customer_images_html .= '<img class="image-row-img" src="' . esc_url( $customer_images[$pic_idx] ) . '" alt="' . sprintf( __( 'Image #%1$d from ', 'customer-reviews-woocommerce' ), $pic_idx + 1 ) . $review->comment_author . '" loading="lazy" data-crmedia="pic">';
+						$customer_images_html .= '<img class="image-row-img" src="' . esc_url( $customer_images[$pic_idx] ) . '" alt="' .
+						esc_attr( sprintf( __( 'Image #%1$d from %2$s', 'customer-reviews-woocommerce' ), $pic_idx + 1, $review->comment_author ) ) . '" loading="lazy" data-crmedia="pic">';
 						$pic_idx++;
 					}
 					for( $j=$vid_idx; $j < $count_customer_videos; $j++ ) {
-						$customer_images_html .= '<video preload="metadata" class="image-row-vid image-row-vid-none" src="' . esc_url( $customer_videos[$j] )  . '" data-crmedia="vid" data-crtitle="' . sprintf( __( 'Video #%1$d from %2$s', 'customer-reviews-woocommerce' ), $vid_idx + 1, $review->comment_author ) . '"></video>';
+						$customer_images_html .= '<video preload="metadata" class="image-row-vid image-row-vid-none" src="' . esc_url( $customer_videos[$j] )  . '#t=0.1" data-crmedia="vid" data-crtitle="' . esc_attr( sprintf( __( 'Video #%1$d from %2$s', 'customer-reviews-woocommerce' ), $vid_idx + 1, $review->comment_author ) ) . '"></video>';
 					}
 					for( $j=$pic_idx; $j < $count_customer_images; $j++ ) {
-						$customer_images_html .= '<img class="image-row-img image-row-img-none" src="' . esc_url( $customer_images[$j] ) . '" alt="' . sprintf( __( 'Image #%1$d from ', 'customer-reviews-woocommerce' ), $j+1 ) . $review->comment_author . '" data-crmedia="pic">';
+						$customer_images_html .= '<img class="image-row-img image-row-img-none" src="' . esc_url( $customer_images[$j] ) . '" alt="' . esc_attr( sprintf( __( 'Image #%1$d from %2$s', 'customer-reviews-woocommerce' ), $j+1, $review->comment_author ) ) . '" data-crmedia="pic">';
 					}
 					$customer_images_html .= '<div class="media-row-count">';
 					$customer_images_html .= $counter_icons_html;
@@ -115,14 +116,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 									<?php
 									echo esc_html( $author );
 									if( $country_code ) {
-										echo '<img src="' . plugin_dir_url( dirname( __FILE__ ) ) . 'img/flags/' . $country_code . '.svg" class="ivole-grid-country-icon" width="20" height="15" alt="' . $country_code . '">';
+										echo '<img src="' . CR_Utils::cr_get_plugin_dir_url() . 'img/flags/' . $country_code . '.svg" class="ivole-grid-country-icon" width="20" height="15" alt="' . $country_code . '">';
 									}
 									?>
 								</div>
 								<?php
 								if( 'yes' === get_option( 'woocommerce_review_rating_verification_label' ) && wc_review_is_from_verified_owner( $review->comment_ID ) ) {
 									echo '<div class="reviewer-verified">';
-									echo '<img class="cr-reviewer-verified" src="' . plugin_dir_url( dirname( __FILE__ ) ) . 'img/verified.svg' . '" alt="' . $verified_text . '" width="22" height="22" loading="lazy" />';
+									echo '<img class="cr-reviewer-verified" src="' . CR_Utils::cr_get_plugin_dir_url() . 'img/verified.svg' . '" alt="' . $verified_text . '" width="22" height="22" loading="lazy" />';
 									echo $verified_text;
 									echo '</div>';
 								} else {
@@ -135,7 +136,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</div>
 						<div class="rating-row">
 							<div class="rating">
-								<div class="crstar-rating-svg" role="img" aria-label="<?php echo esc_attr( sprintf( __( 'Rated %s out of 5', 'woocommerce' ), $rating ) ); ?>"><?php echo CR_Reviews::get_star_rating_svg( $rating, 0, '' ); ?></div>
+								<div class="crstar-rating-svg" role="img" aria-label="<?php echo esc_attr( sprintf( __( 'Rated %s out of 5', 'woocommerce' ), $rating ) ); ?>"><?php echo CR_Reviews::get_star_rating_svg( $rating, 0, $stars_style ); ?></div>
 							</div>
 							<div class="rating-label">
 								<?php echo $rating . '/5'; ?>

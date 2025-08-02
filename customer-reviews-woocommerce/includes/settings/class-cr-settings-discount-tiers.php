@@ -626,15 +626,30 @@ if ( ! class_exists( 'CR_Discount_Tiers' ) ):
 			return $table;
 		}
 
-		public static function get_coupon( $media_count ) {
+		public static function get_coupon( $media_count, $scenario ) {
 			$coupon_settings = CR_Review_Discount_Settings::get_review_discounts();
+			$setting_index = 0;
+			switch( $scenario ) {
+				case 'aggregated':
+					$setting_index = 0;
+					break;
+				case 'onsite':
+					$setting_index = 1;
+					break;
+				default:
+					break;
+			}
 
 			$coupon = array(
 				'is_enabled' => false
 			);
 
-			if ( 0 < count( $coupon_settings ) && $coupon_settings[0]['enabled'] ) {
-				$coupon['channel'] = $coupon_settings[0]['channel'];
+			if (
+				0 < count( $coupon_settings ) &&
+				isset( $coupon_settings[$setting_index] ) &&
+				$coupon_settings[$setting_index]['enabled']
+			) {
+				$coupon['channel'] = $coupon_settings[$setting_index]['channel'];
 				$s = self::read_coupon_tiers_table();
 				if( $s and is_array( $s ) ) {
 					$tier_w_coupon = 0;

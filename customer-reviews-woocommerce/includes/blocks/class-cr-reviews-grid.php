@@ -32,11 +32,6 @@ if ( ! class_exists( 'CR_Reviews_Grid' ) ) {
 			add_action( 'wp_ajax_cr_fetch_product_tags', array( $this, 'fetch_product_tags' ) );
 			add_action( 'wp_ajax_ivole_show_more_grid_reviews', array( $this, 'show_more_reviews' ) );
 			add_action( 'wp_ajax_nopriv_ivole_show_more_grid_reviews', array( $this, 'show_more_reviews' ) );
-			if ( class_exists( 'WP_Block_Editor_Context' ) ) {
-				add_filter( 'block_editor_settings_all', array( $this, 'add_block_editor_settings' ), 10, 2 );
-			} else {
-				add_filter( 'block_editor_settings', array( $this, 'add_block_editor_settings' ), 10, 2 );
-			}
 		}
 
 		/**
@@ -222,6 +217,15 @@ if ( ! class_exists( 'CR_Reviews_Grid' ) ) {
 
 			if ( function_exists( 'pll_current_language' ) ) {
 				// Polylang compatibility
+				if ( apply_filters( 'cr_reviews_polylang_merge', true ) ) {
+					foreach ( $post_ids as $product_id ) {
+						$translationIds = PLL()->model->post->get_translations( $product_id );
+						foreach ( $translationIds as $key => $translationID ) {
+							$post_ids[] = intval( $translationID );
+						}
+					}
+					$args['post__in'] = $post_ids;
+				}
 				$args['lang'] = '';
 			} elseif ( has_filter( 'wpml_current_language' ) ) {
 				// WPML compatibility
@@ -292,6 +296,7 @@ if ( ! class_exists( 'CR_Reviews_Grid' ) ) {
 				}
 			}
 
+			$shop_page_id = wc_get_page_id( 'shop' );
 			$shop_page_ids = CR_Reviews_List_Table::get_shop_page();
 			$args_s = null;
 			if( true === $attributes['shop_reviews'] ) {
@@ -411,7 +416,7 @@ if ( ! class_exists( 'CR_Reviews_Grid' ) ) {
 			$card_style = "border-color:" . $attributes['color_brdr'] . ";";
 			$card_style .= "background-color:" . $attributes['color_bcrd'] . ";";
 			$product_style = "background-color:" . $attributes['color_pr_bcrd'] . ";";
-			$stars_style = "color:" . $attributes['color_stars'] . ";";
+			$stars_style = $attributes['color_stars'];
 
 			$id = uniqid( 'cr-reviews-grid-' );
 
@@ -475,112 +480,107 @@ if ( ! class_exists( 'CR_Reviews_Grid' ) ) {
 		}
 
 		public function render_reviews_grid_shortcode( $attributes ) {
-			$shortcode_enabled = get_option( 'ivole_reviews_shortcode', 'no' );
-			if( $shortcode_enabled === 'no' ) {
-				return;
-			} else {
-				// Convert shortcode attributes to block attributes
-				$attributes = shortcode_atts( array(
-					'count' => 3,
-					'show_products' => true,
-					'product_links' => true,
-					'sort_by' => 'date',
-					'sort' => 'DESC',
-					'categories' => array(),
-					'products' => 'current',
-					'color_ex_brdr' => '#ebebeb',
-					'color_brdr' => '#ebebeb',
-					'color_ex_bcrd' => '',
-					'color_bcrd' => '#ffffff',
-					'color_pr_bcrd' => '#f4f4f4',
-					'color_stars' => '#FFD707',
-					'shop_reviews' => 'false',
-					'count_shop_reviews' => 1,
-					'inactive_products' => 'false',
-					'avatars' => 'initials',
-					'show_more' => 0,
-					'count_total' => 0,
-					'product_tags' => [],
-					'tags' => [],
-					'min_chars' => 0,
-					'show_summary_bar' => 'false',
-					'add_review' => 'false',
-					'comment__not_in' => []
-				), $attributes, 'cusrev_reviews_grid' );
+			// Convert shortcode attributes to block attributes
+			$attributes = shortcode_atts( array(
+				'count' => 3,
+				'show_products' => true,
+				'product_links' => true,
+				'sort_by' => 'date',
+				'sort' => 'DESC',
+				'categories' => array(),
+				'products' => 'current',
+				'color_ex_brdr' => '#ebebeb',
+				'color_brdr' => '#ebebeb',
+				'color_ex_bcrd' => '',
+				'color_bcrd' => '#ffffff',
+				'color_pr_bcrd' => '#f4f4f4',
+				'color_stars' => '#FFBC00',
+				'shop_reviews' => 'false',
+				'count_shop_reviews' => 1,
+				'inactive_products' => 'false',
+				'avatars' => 'initials',
+				'show_more' => 0,
+				'count_total' => 0,
+				'product_tags' => [],
+				'tags' => [],
+				'min_chars' => 0,
+				'show_summary_bar' => 'false',
+				'add_review' => 'false',
+				'comment__not_in' => []
+			), $attributes, 'cusrev_reviews_grid' );
 
-				$attributes['count'] = absint( $attributes['count'] );
-				$attributes['show_products'] = ( $attributes['show_products'] !== 'false' && boolval( $attributes['count'] ) );
-				$attributes['product_links'] = ( $attributes['product_links'] !== 'false' );
-				$attributes['shop_reviews'] = ( $attributes['shop_reviews'] !== 'false' && boolval( $attributes['count_shop_reviews'] ) );
-				$attributes['count_shop_reviews'] = absint( $attributes['count_shop_reviews'] );
-				$attributes['inactive_products'] = ( $attributes['inactive_products'] === 'true' );
-				$attributes['show_more'] = absint( $attributes['show_more'] );
-				$attributes['count_total'] = absint( $attributes['count_total'] );
-				$attributes['min_chars'] = intval( $attributes['min_chars'] );
-				$attributes['show_summary_bar'] = ( $attributes['show_summary_bar'] === 'true' );
-				if( $attributes['min_chars'] < 0 ) {
-					$attributes['min_chars'] = 0;
-				}
+			$attributes['count'] = absint( $attributes['count'] );
+			$attributes['show_products'] = ( $attributes['show_products'] !== 'false' && boolval( $attributes['count'] ) );
+			$attributes['product_links'] = ( $attributes['product_links'] !== 'false' );
+			$attributes['shop_reviews'] = ( $attributes['shop_reviews'] !== 'false' && boolval( $attributes['count_shop_reviews'] ) );
+			$attributes['count_shop_reviews'] = absint( $attributes['count_shop_reviews'] );
+			$attributes['inactive_products'] = ( $attributes['inactive_products'] === 'true' );
+			$attributes['show_more'] = absint( $attributes['show_more'] );
+			$attributes['count_total'] = absint( $attributes['count_total'] );
+			$attributes['min_chars'] = intval( $attributes['min_chars'] );
+			$attributes['show_summary_bar'] = ( $attributes['show_summary_bar'] === 'true' );
+			if( $attributes['min_chars'] < 0 ) {
+				$attributes['min_chars'] = 0;
+			}
 
-				if ( ! is_array( $attributes['categories'] ) ) {
-					$attributes['categories'] = array_filter( array_map( 'trim', explode( ',', $attributes['categories'] ) ) );
-				}
+			if ( ! is_array( $attributes['categories'] ) ) {
+				$attributes['categories'] = array_filter( array_map( 'trim', explode( ',', $attributes['categories'] ) ) );
+			}
 
-				if (
-					is_string( $attributes['products'] ) &&
-					'current' === trim( strtolower( $attributes['products'] ) )
-				) {
-					if ( is_product() ) {
-						$product = wc_get_product();
-						if ( is_object( $product ) ) {
-							$id = $product->get_id();
-							$attributes['products'] = array( $id );
-						} else {
-							$attributes['products'] = array();
-						}
+			if (
+				is_string( $attributes['products'] ) &&
+				'current' === trim( strtolower( $attributes['products'] ) )
+			) {
+				if ( is_product() ) {
+					$product = wc_get_product();
+					if ( is_object( $product ) ) {
+						$id = $product->get_id();
+						$attributes['products'] = array( $id );
 					} else {
 						$attributes['products'] = array();
 					}
-				} elseif ( ! is_array( $attributes['products'] ) ) {
-					$products = str_replace( ' ', '', $attributes['products'] );
-					$products = explode( ',', $products );
-					$products = array_filter( $products, 'is_numeric' );
-					$products = array_map( 'intval', $products );
-
-					$attributes['products'] = $products;
 				} else {
-					$attributes['products'] = array_map( 'intval', $attributes['products'] );
+					$attributes['products'] = array();
 				}
+			} elseif ( ! is_array( $attributes['products'] ) ) {
+				$products = str_replace( ' ', '', $attributes['products'] );
+				$products = explode( ',', $products );
+				$products = array_filter( $products, 'is_numeric' );
+				$products = array_map( 'intval', $products );
 
-				if(
-					! empty( $attributes['product_tags'] ) &&
-			 		! is_array( $attributes['product_tags'] )
-				) {
-					$attributes['product_tags'] = array_filter( array_map( 'trim', explode( ',', $attributes['product_tags'] ) ) );
-				}
-
-				if(
-					! empty( $attributes['tags'] ) &&
-			 		! is_array( $attributes['tags'] )
-				) {
-					$attributes['tags'] = array_filter( array_map( 'trim', explode( ',', $attributes['tags'] ) ) );
-				}
-
-				if ( 'true' === $attributes['add_review'] ) {
-					$product_id = CR_All_Reviews::is_it_a_product_page();
-					if ( $product_id ) {
-						$attributes['add_review'] = $product_id;
-					} else {
-						$attributes['add_review'] = true;
-					}
-				} elseif ( is_numeric( $attributes['add_review'] ) ) {
-					$attributes['add_review'] = intval( $attributes['add_review'] );
-				} else {
-					$attributes['add_review'] = false;
-				}
-
-				return $this->render_reviews_grid( $attributes );
+				$attributes['products'] = $products;
+			} else {
+				$attributes['products'] = array_map( 'intval', $attributes['products'] );
 			}
+
+			if(
+				! empty( $attributes['product_tags'] ) &&
+		 		! is_array( $attributes['product_tags'] )
+			) {
+				$attributes['product_tags'] = array_filter( array_map( 'trim', explode( ',', $attributes['product_tags'] ) ) );
+			}
+
+			if(
+				! empty( $attributes['tags'] ) &&
+		 		! is_array( $attributes['tags'] )
+			) {
+				$attributes['tags'] = array_filter( array_map( 'trim', explode( ',', $attributes['tags'] ) ) );
+			}
+
+			if ( 'true' === $attributes['add_review'] ) {
+				$product_id = CR_All_Reviews::is_it_a_product_page();
+				if ( $product_id ) {
+					$attributes['add_review'] = $product_id;
+				} else {
+					$attributes['add_review'] = true;
+				}
+			} elseif ( is_numeric( $attributes['add_review'] ) ) {
+				$attributes['add_review'] = intval( $attributes['add_review'] );
+			} else {
+				$attributes['add_review'] = false;
+			}
+
+			return $this->render_reviews_grid( $attributes );
 		}
 
 		/**
@@ -1181,13 +1181,6 @@ if ( ! class_exists( 'CR_Reviews_Grid' ) ) {
 				}
 			}
 			return $avatar;
-		}
-
-		public function add_block_editor_settings( $settings, $p ) {
-			$settings['cusrev'] = array(
-				'reviews_shortcodes' => ( get_option( 'ivole_reviews_shortcode', 'no' ) !== 'no' )
-			);
-			return $settings;
 		}
 
 	}

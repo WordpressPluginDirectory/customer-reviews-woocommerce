@@ -8,6 +8,7 @@ if ( ! class_exists( 'CR_Local_Forms' ) ) :
 
 	class CR_Local_Forms {
 		private $form_id;
+		private $order_id;
 		private $items;
 		private $customer_email;
 		private $customer_name;
@@ -43,6 +44,7 @@ if ( ! class_exists( 'CR_Local_Forms' ) ) :
 				$this->display_name = $record->displayName;
 				$this->form_header = $record->formHeader;
 				$this->form_body = $record->formBody;
+				$this->order_id = $record->orderId;
 				$this->items = json_decode( $record->items );
 				$this->cr_form_color1 = get_option( 'ivole_form_color_bg', '#2C5E66' );
 				$this->cr_form_color2 = get_option( 'ivole_form_color_text', '#FFFFFF' );
@@ -58,7 +60,7 @@ if ( ! class_exists( 'CR_Local_Forms' ) ) :
 					$this->extra = '';
 				}
 				// delete media files uploaded with test reviews
-				if( self::TEST_FORM === $this->form_id ) {
+				if( self::TEST_FORM === $this->form_id && $this->items ) {
 					foreach( $this->items as $key => $item ) {
 						if( property_exists( $item, 'media' ) ) {
 							if( $item->media && is_array( $item->media ) ) {
@@ -182,10 +184,24 @@ if ( ! class_exists( 'CR_Local_Forms' ) ) :
 				// otherwise product item
 				$cr_form_item_rating_name = __( 'Rating', 'customer-reviews-woocommerce' );
 				$cr_form_item_image = $item->image;
+				// WPML Multi-currency compatibility
+				$price_args = array();
+				if ( self::TEST_FORM !== $this->form_id ) {
+					if ( has_filter( 'wpml_translate_single_string' ) && ! function_exists( 'pll_get_post' ) ) {
+						$order_obj = wc_get_order( $this->order_id );
+						if ( $order_obj ) {
+							$currency = $order_obj->get_currency();
+							if ( $currency ) {
+								$price_args['currency'] = $currency;
+							}
+						}
+					}
+				}
+				//
 				if ( isset( $item->pricePerItem ) ) {
-					$cr_form_item_price = CR_Email_Func::cr_price( $item->pricePerItem );
+					$cr_form_item_price = CR_Email_Func::cr_price( $item->pricePerItem, $price_args );
 				} else {
-					$cr_form_item_price = CR_Email_Func::cr_price( $item->price );
+					$cr_form_item_price = CR_Email_Func::cr_price( $item->price, $price_args );
 				}
 				$cr_form_media_enabled = ( 'yes' === get_option( 'ivole_form_attach_media', 'no' ) ? true : false );
 				if( property_exists( $item, 'media' ) ) {
@@ -284,6 +300,9 @@ if ( ! class_exists( 'CR_Local_Forms' ) ) :
 			$cr_form_id = $this->form_id;
 			$cr_form_header = __( 'Error', 'customer-reviews-woocommerce' );
 			$cr_form_desc = __( 'The order contains no items for review. Please reach out to the website administrator for assistance.', 'customer-reviews-woocommerce' );
+			if ( 0 < get_option( 'ivole_form_expiry_period', 0 ) ) {
+				$cr_form_desc = __( 'Oops! This review form isn’t available - it may have expired or the order has nothing to review.', 'customer-reviews-woocommerce' );
+			}
 			$cr_form_color1 = $this->cr_form_color1;
 			$cr_form_color2 = $this->cr_form_color2;
 			$cr_form_color3 = $this->cr_form_color3;
@@ -314,8 +333,10 @@ if ( ! class_exists( 'CR_Local_Forms' ) ) :
 								`items` text DEFAULT NULL,
 								`language` varchar(10) DEFAULT NULL,
 								`extra` text DEFAULT NULL,
+								`dateCreated` datetime DEFAULT NULL,
 								PRIMARY KEY (`formId`),
-								KEY `orderId_index` (`orderId`)
+								KEY `orderId_index` (`orderId`),
+								KEY `dateCreated_index` (`dateCreated`)
 							) CHARACTER SET 'utf8mb4';" ) ) {
 						return array( 'code' => 1, 'text' => 'Table ' . $table_name . ' could not be created' );
 					}
@@ -330,6 +351,32 @@ if ( ! class_exists( 'CR_Local_Forms' ) ) :
 			}
 			if( ! $wpdb->get_var( $wpdb->prepare( "SHOW COLUMNS FROM `$table_name` LIKE %s", 'extra' ) ) ) {
 				$wpdb->query( "ALTER TABLE `$table_name` ADD `extra` text DEFAULT NULL;" );
+			}
+			// add 'dateCreated' column if doesn't exist
+			if( ! $wpdb->get_var( $wpdb->prepare( "SHOW COLUMNS FROM `$table_name` LIKE %s", 'dateCreated' ) ) ) {
+				$wpdb->query( "ALTER TABLE `$table_name` ADD `dateCreated` datetime DEFAULT NULL;" );
+				$wpdb->query( "ALTER TABLE `$table_name` ADD INDEX `dateCreated_index` (`dateCreated`);" );
+				$wpdb->update(
+					$table_name,
+					array(
+						'dateCreated' => gmdate( 'Y-m-d H:i:s' )
+					),
+					array(
+						'dateCreated' => null
+					)
+				);
+			}
+
+			// cleanup old review forms
+			$expiry_period = intval( get_option( 'ivole_form_expiry_period', 0 ) );
+			if ( 0 < $expiry_period ) {
+				$expiry_date = gmdate( 'Y-m-d H:i:s', time() - $expiry_period * DAY_IN_SECONDS );
+				$wpdb->query(
+					$wpdb->prepare(
+						"DELETE FROM `$table_name` WHERE `dateCreated` <= %s LIMIT 100",
+						$expiry_date
+					)
+				);
 			}
 
 			// if store reviews are enabed, add a special item to the items array
@@ -353,7 +400,8 @@ if ( ! class_exists( 'CR_Local_Forms' ) ) :
 				'formHeader' => $header,
 				'formBody' => $body,
 				'items' => json_encode( $items ),
-				'language' => $language
+				'language' => $language,
+				'dateCreated' => gmdate('Y-m-d H:i:s')
 			);
 			$insert_args = apply_filters(
 				'cr_local_form_insert',
@@ -422,6 +470,49 @@ if ( ! class_exists( 'CR_Local_Forms' ) ) :
 				$located = plugins_url( '/css/form.css', dirname( dirname( __FILE__ ) ) );
 			}
 			return $located . '?ver=' . Ivole::CR_VERSION;
+		}
+
+		public static function delete_old_forms() {
+			$expiry_period = intval( get_option( 'ivole_form_expiry_period', 0 ) );
+			if ( 0 < $expiry_period ) {
+				// check if the table exists
+				global $wpdb;
+				$table_name = $wpdb->prefix . self::FORMS_TABLE;
+				$name_check = $wpdb->get_var( $wpdb->prepare( "SHOW TABLES LIKE %s", $table_name ) );
+				if ( $name_check !== $table_name ) {
+					// check if the database converted the table name to lowercase
+					$table_name_l = strtolower( $table_name );
+					if ( $name_check !== $table_name_l ) {
+						// the table with forms does not exist, there is nothing to delete
+						return;
+					} else {
+						$table_name = $name_check;
+					}
+				}
+				// the table exists
+				// add 'dateCreated' column if doesn't exist
+				if( ! $wpdb->get_var( $wpdb->prepare( "SHOW COLUMNS FROM `$table_name` LIKE %s", 'dateCreated' ) ) ) {
+					$wpdb->query( "ALTER TABLE `$table_name` ADD `dateCreated` datetime DEFAULT NULL;" );
+					$wpdb->query( "ALTER TABLE `$table_name` ADD INDEX `dateCreated_index` (`dateCreated`);" );
+					$wpdb->update(
+						$table_name,
+						array(
+							'dateCreated' => gmdate( 'Y-m-d H:i:s' )
+						),
+						array(
+							'dateCreated' => null
+						)
+					);
+				}
+				// delete old forms
+				$expiry_date = gmdate( 'Y-m-d H:i:s', time() - $expiry_period * DAY_IN_SECONDS );
+				$wpdb->query(
+					$wpdb->prepare(
+						"DELETE FROM `$table_name` WHERE `dateCreated` <= %s LIMIT 100",
+						$expiry_date
+					)
+				);
+			}
 		}
 
 	}

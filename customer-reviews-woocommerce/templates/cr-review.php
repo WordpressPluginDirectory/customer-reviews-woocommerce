@@ -93,7 +93,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 										} else {
 											$country_desc = $country['code'];
 										}
-										echo '<img src="' . plugin_dir_url( dirname( __FILE__ ) ) . 'img/flags/' . $country['code'] . '.svg" class="ivole-review-country-icon" alt="' . $country['code'] . '" title="' . $country_desc . '">';
+										echo '<img src="' . $cr_plugin_dir_url . 'img/flags/' . $country['code'] . '.svg" class="ivole-review-country-icon" alt="' . $country['code'] . '" title="' . $country_desc . '">';
 									}
 								}
 								?>

@@ -1033,6 +1033,12 @@
 						data: cr_data,
 						context: jQuery( this ),
 						success: function( response ) {
+							if ( ! Object.hasOwn( response, 'button' ) ) {
+								response.button = 'OK';
+							}
+							if ( ! Object.hasOwn( response, 'description' ) ) {
+								response.description = 'An unexpected error that could be caused by a third-party plugin';
+							}
 							this.closest( ".cr-review-form-wrap" ).removeClass( "cr-review-form-submitting" );
 							this.closest( ".cr-review-form-wrap" ).addClass( "cr-review-form-res" );
 							this.closest( ".cr-review-form-wrap" ).find( ".cr-review-form-result span" ).html( response.description );

@@ -295,9 +295,18 @@ class CR_Wtsap {
 
 			// check if customer phone number is valid
 			$vldtr = new CR_Phone_Vldtr();
+			$tmp_phone = $this->phone;
 			$this->phone = $vldtr->parse_phone_number( $this->phone, $this->phone_country );
 			if ( ! $this->phone ) {
-				return array( 6, 'Error: no valid phone numbers found in the order' );
+				return array(
+					6,
+					sprintf(
+						'Error: no valid phone numbers found in the order %1$s (%2$s, %3$s)',
+						$order_id,
+						$this->phone_country,
+						$tmp_phone
+					)
+				);
 			}
 
 			$secret_key = $order->get_meta( 'ivole_secret_key', true );
@@ -512,9 +521,18 @@ class CR_Wtsap {
 
 			// check if customer phone number is valid
 			$vldtr = new CR_Phone_Vldtr();
+			$tmp_phone = $this->phone;
 			$this->phone = $vldtr->parse_phone_number( $this->phone, $this->phone_country );
 			if ( ! $this->phone ) {
-				return array( 6, 'Error: no valid phone numbers found in the order' );
+				return array(
+					6,
+					sprintf(
+						'Error: no valid phone numbers found in the order %1$s (%2$s, %3$s)',
+						$order_id,
+						$this->phone_country,
+						$tmp_phone
+					)
+				);
 			}
 
 			return array( 0, $this->phone );
@@ -560,7 +578,7 @@ class CR_Wtsap {
 		$billing_country = apply_filters( 'woocommerce_get_base_location', get_option( 'woocommerce_default_country' ) );
 		$shipping_country = apply_filters( 'woocommerce_get_base_location', get_option( 'woocommerce_default_country' ) );
 
-		if( method_exists( $order, 'get_billing_phone' ) ) {
+		if ( $order && method_exists( $order, 'get_billing_phone' ) ) {
 			$temp_country = $order->get_billing_country();
 			if( strlen( $temp_country ) > 0 ) {
 				$billing_country = $temp_country;

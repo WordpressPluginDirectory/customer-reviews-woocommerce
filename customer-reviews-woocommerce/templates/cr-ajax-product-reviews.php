@@ -88,6 +88,7 @@ $nonce = wp_create_nonce( "cr_product_reviews_" . $cr_product_id );
 						'woocommerce_product_review_list_args',
 						array(
 							'callback' => array( 'CR_Reviews', 'callback_comments' ),
+							'max_depth' => 5,
 							'reverse_top_level' => false,
 							'per_page' => $cr_per_page,
 							'page' => 1,

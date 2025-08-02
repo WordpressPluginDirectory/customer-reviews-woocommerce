@@ -41,7 +41,8 @@ if ( ! class_exists( 'CR_Shortcodes_Settings' ) ):
 
 		public function display() {
 			$this->init_settings();
-
+			global $hide_save_button;
+			$hide_save_button = true;
 			WC_Admin_Settings::output_fields( $this->settings );
 		}
 
@@ -57,13 +58,6 @@ if ( ! class_exists( 'CR_Shortcodes_Settings' ) ):
 					'type'  => 'title',
 					'desc'  => __( 'The plugin provides several shortcodes and Gutenberg blocks that you can use to display reviews in various places on your website. You can find the list of available shortcodes and their parameters below.', 'customer-reviews-woocommerce' ),
 					'id'    => 'cr_options_shortcodes'
-				),
-				array(
-					'title'   => __( 'Reviews Shortcodes', 'customer-reviews-woocommerce' ),
-					'desc'    => __( 'Enable shortcodes and Gutenberg blocks', 'customer-reviews-woocommerce' ),
-					'id'      => 'ivole_reviews_shortcode',
-					'default' => 'no',
-					'type'    => 'checkbox'
 				),
 				array(
 					'id'      => 'ivole_reviews_shortcode_desc',
@@ -111,7 +105,7 @@ if ( ! class_exists( 'CR_Shortcodes_Settings' ) ):
 			'<p class="cr-admin-shortcodes-large"><code>[cusrev_reviews_grid]</code></p>' .
 			'<p>' . __( 'Use this shortcode to display a grid of reviews on any page or post. Here are the default parameters of the shortcode:', 'customer-reviews-woocommerce' ) . '</p>' .
 			'<p class="cr-admin-shortcodes"><code>[cusrev_reviews_grid count="3" show_products="true" product_links="true" sort_by="date" sort="DESC" categories="" product_tags="" tags="" ' .
-			'products="current" color_ex_brdr="#ebebeb" color_brdr="#ebebeb" color_ex_bcrd="" color_bcrd="#ffffff" color_pr_bcrd="#f4f4f4" color_stars="#FFD707" ' .
+			'products="current" color_ex_brdr="#ebebeb" color_brdr="#ebebeb" color_ex_bcrd="" color_bcrd="#ffffff" color_pr_bcrd="#f4f4f4" color_stars="#FFBC00" ' .
 			'shop_reviews="false" count_shop_reviews="1" inactive_products="false" avatars="initials" show_more="0" min_chars="0" show_summary_bar="false" add_review="false"]</code></p>' .
 			'<p class="cr-admin-shortcodes"><b>' . __( 'Parameters:', 'customer-reviews-woocommerce' ) . '</b></p>' .
 			'<ul>' .
@@ -144,7 +138,7 @@ if ( ! class_exists( 'CR_Shortcodes_Settings' ) ):
 			'<p class="cr-admin-shortcodes-large"><code>[cusrev_reviews_slider]</code></p>' .
 			'<p>' . __( 'Use this shortcode to display a slider with reviews on any page or post. Here are the default parameters of the shortcode:', 'customer-reviews-woocommerce' ) . '</p>' .
 			'<p class="cr-admin-shortcodes"><code>[cusrev_reviews_slider count="5" slides_to_show="3" show_products="true" product_links="true" sort_by="date" sort="DESC" categories="" product_tags="" tags="" ' .
-			'products="current" color_ex_brdr="#ebebeb" color_brdr="#ebebeb" color_ex_bcrd="" color_bcrd="#ffffff" color_pr_bcrd="#f4f4f4" color_stars="#FFD707" shop_reviews="false" count_shop_reviews="1" inactive_products="false" autoplay="false" avatars="initials" max_chars="0" min_chars="0" show_dots="true"]</code></p>' .
+			'products="current" color_ex_brdr="#ebebeb" color_brdr="#ebebeb" color_ex_bcrd="" color_bcrd="#ffffff" color_pr_bcrd="#f4f4f4" color_stars="#FFBC00" shop_reviews="false" count_shop_reviews="1" inactive_products="false" autoplay="false" avatars="initials" max_chars="0" min_chars="0" show_dots="true"]</code></p>' .
 			'<p class="cr-admin-shortcodes"><b>' . __( 'Parameters:', 'customer-reviews-woocommerce' ) . '</b></p>' .
 			'<ul>' .
 			'<li>' . sprintf( __( '%1$s argument defines the number of product reviews to show. It is recommended to keep it between %2$s and %3$s. If you do not want to show product reviews, set it to %4$s and enable shop reviews (see the parameters below).', 'customer-reviews-woocommerce' ), '<code>count</code>', '<code>"0"</code>', '<code>"5"</code>', '<code>"0"</code>' ) . '</li>' .

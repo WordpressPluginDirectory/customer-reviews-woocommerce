@@ -45,6 +45,10 @@ if ( ! class_exists( 'CR_Utils' ) ) :
 			echo $output;
 		}
 
+		public static function cr_get_plugin_dir_url() {
+			return plugin_dir_url( dirname( dirname( __FILE__ ) ) );
+		}
+
 	}
 
 endif;

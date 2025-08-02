@@ -236,7 +236,13 @@ class Ivole_Email {
 			$order_currency = '';
 			$order_items = array();
 			$user = NULL;
-			$shipping_country = apply_filters( 'woocommerce_get_base_location', get_option( 'woocommerce_default_country' ) );
+			$default_country = self::get_country_only(
+				apply_filters(
+					'woocommerce_get_base_location',
+					get_option( 'woocommerce_default_country' )
+				)
+			);
+			$shipping_country = $default_country;
 			$temp_shipping_country = '';
 			if( method_exists( $order, 'get_billing_email' ) ) {
 				// Woocommerce version 3.0 or later
@@ -253,7 +259,7 @@ class Ivole_Email {
 				$order_currency = $order->get_currency();
 				$temp_shipping_country = $order->get_shipping_country();
 				if( strlen( $temp_shipping_country ) > 0 ) {
-					$shipping_country = $temp_shipping_country;
+					$shipping_country = self::get_country_only( $temp_shipping_country );
 				}
 
 				$price_args = array( 'currency' => $order_currency );
@@ -387,9 +393,11 @@ class Ivole_Email {
 			}
 
 			$data = array(
-				'shop' => array( "name" => self::get_blogname(),
-			 		'domain' => self::get_blogurl(),
-				 	'country' => apply_filters( 'woocommerce_get_base_location', get_option( 'woocommerce_default_country' ) ) ),
+				'shop' => array(
+					"name" => self::get_blogname(),
+					'domain' => self::get_blogurl(),
+					'country' => $default_country
+				),
 				'email' => array( 'to' => $this->to,
 					'from' => strval( $this->from ),
 					'fromText' => $this->from_name,
@@ -781,6 +789,15 @@ class Ivole_Email {
 		$lang = CR_Email_Func::cr_map_language( $lang );
 
 		return $lang;
+	}
+
+	public static function get_country_only( $country ) {
+		// check if the country code also includes a state code, return only the country code
+		$arr = explode( ':', $country );
+		if ( is_array( $arr ) && 0 < count( $arr ) ){
+			return $arr[0];
+		}
+		return $country;
 	}
 
 }

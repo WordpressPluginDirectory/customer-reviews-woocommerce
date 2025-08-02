@@ -63,6 +63,7 @@ if ( ! class_exists( 'CR_Endpoint' ) ) :
 					$customer_email = '';
 					$local_reviews_notif = array();
 					$reviews = array();
+					$wpml_current_lang = '';
 
 					//check if registered customers option is used
 					$registered_customers = false;
@@ -146,31 +147,30 @@ if ( ! class_exists( 'CR_Endpoint' ) ) :
 								$shop_custom_questions = new CR_Custom_Questions();
 								$shop_custom_questions->parse_shop_questions( $body2->order );
 
-								//WPML integration
-								//wc_get_page_id returns shop page ID in the default WPML site language
-								//If a review was submitted in a language different from the default one, it is necessary to get shop page ID for the non-default language
-								$wpml_current_lang = '';
-								if ( has_filter( 'wpml_object_id' ) ) {
-									$wpml_order_language = $order->get_meta( 'wpml_language', true );
-									$shop_page_id = apply_filters( 'wpml_object_id', $shop_page_id, 'page', true, $wpml_order_language );
-									//switch the current WPML site language to the language of the order because
-									//call to get_comments (below) returns only comments for shop page in the current WPML language
-									$wpml_current_lang = apply_filters( 'wpml_current_language', null );
-									do_action( 'wpml_switch_language', $wpml_order_language );
-								}
-								if ( has_filter( 'wpml_object_id' ) ) {
-									if( class_exists( 'WCML_Comments' ) ) {
-										global $woocommerce_wpml;
-										if( $woocommerce_wpml ) {
-											remove_action( 'added_comment_meta', array( $woocommerce_wpml->comments, 'maybe_duplicate_comment_rating' ), 10, 4 );
-										}
-									}
-								}
 								// Polylang integration
 								if ( function_exists( 'pll_get_post' ) && function_exists( 'pll_get_post_language' ) ) {
 									$polylang_order_language = pll_get_post_language( $order_id );
-									if( $polylang_order_language ) {
+									if ( $polylang_order_language ) {
 										$shop_page_id = pll_get_post( $shop_page_id, $polylang_order_language  );
+									}
+								} else {
+									// WPML integration
+									// wc_get_page_id returns shop page ID in the default WPML site language
+									// If a review was submitted in a language different from the default one, it is necessary to get shop page ID for the non-default language
+									if ( has_filter( 'wpml_object_id' ) ) {
+										$wpml_order_language = $order->get_meta( 'wpml_language', true );
+										$shop_page_id = apply_filters( 'wpml_object_id', $shop_page_id, 'page', true, $wpml_order_language );
+										//switch the current WPML site language to the language of the order because
+										//call to get_comments (below) returns only comments for shop page in the current WPML language
+										$wpml_current_lang = apply_filters( 'wpml_current_language', null );
+										do_action( 'wpml_switch_language', $wpml_order_language );
+										//
+										if( class_exists( 'WCML_Comments' ) ) {
+											global $woocommerce_wpml;
+											if( $woocommerce_wpml ) {
+												remove_action( 'added_comment_meta', array( $woocommerce_wpml->comments, 'maybe_duplicate_comment_rating' ), 10, 4 );
+											}
+										}
 									}
 								}
 
@@ -272,15 +272,13 @@ if ( ! class_exists( 'CR_Endpoint' ) ) :
 										return new WP_REST_Response( 'Review creation error 3', 500 );
 									}
 								}
-								//WPML integration
-								if ( has_filter( 'wpml_object_id' ) ) {
+								// WPML integration
+								if ( has_filter( 'wpml_object_id' ) && ! function_exists( 'pll_get_post' ) ) {
 									do_action( 'wpml_switch_language', $wpml_current_lang );
-								}
-								//WPML integration
-								if ( has_filter( 'wpml_object_id' ) ) {
-									if( class_exists( 'WCML_Comments' ) ) {
+									//
+									if ( class_exists( 'WCML_Comments' ) ) {
 										global $woocommerce_wpml;
-										if( $woocommerce_wpml ) {
+										if ( $woocommerce_wpml ) {
 											add_action( 'added_comment_meta', array( $woocommerce_wpml->comments, 'maybe_duplicate_comment_rating' ), 10, 4 );
 										}
 									}
@@ -353,23 +351,23 @@ if ( ! class_exists( 'CR_Endpoint' ) ) :
 
 								$order_item_product_id = intval( $body2->order->items[$i]->id );
 
-								//WPML integration
-								//The order contains product ID of the product in the default WPML site language
-								//If a review was submitted in a language different from the default one, it is necessary to get product ID for the non-default language
-								$wpml_current_lang = '';
-								if ( has_filter( 'wpml_object_id' ) ) {
-									$wpml_order_language = $order->get_meta( 'wpml_language', true );
-									$order_item_product_id = apply_filters( 'wpml_object_id', $order_item_product_id, 'product', true, $wpml_order_language );
-									//switch the current WPML site language to the language of the order because
-									//call to get_comments (below) returns only comments for products in the current WPML language
-									$wpml_current_lang = apply_filters( 'wpml_current_language', null );
-									do_action( 'wpml_switch_language', $wpml_order_language );
-								}
 								// Polylang integration
 								if ( function_exists( 'pll_get_post' ) && function_exists( 'pll_get_post_language' ) ) {
 									$polylang_order_language = pll_get_post_language( $order_id );
-									if( $polylang_order_language ) {
+									if ( $polylang_order_language ) {
 										$order_item_product_id = pll_get_post( $order_item_product_id, $polylang_order_language  );
+									}
+								} else {
+									// WPML integration
+									// The order contains product ID of the product in the default WPML site language
+									// If a review was submitted in a language different from the default one, it is necessary to get product ID for the non-default language
+									if ( has_filter( 'wpml_object_id' ) ) {
+										$wpml_order_language = $order->get_meta( 'wpml_language', true );
+										$order_item_product_id = apply_filters( 'wpml_object_id', $order_item_product_id, 'product', true, $wpml_order_language );
+										//switch the current WPML site language to the language of the order because
+										//call to get_comments (below) returns only comments for products in the current WPML language
+										$wpml_current_lang = apply_filters( 'wpml_current_language', null );
+										do_action( 'wpml_switch_language', $wpml_order_language );
 									}
 								}
 
@@ -509,7 +507,7 @@ if ( ! class_exists( 'CR_Endpoint' ) ) :
 									}
 								}
 								// WPML integration
-								if ( has_filter( 'wpml_object_id' ) ) {
+								if ( has_filter( 'wpml_object_id' ) && ! function_exists( 'pll_get_post' ) ) {
 									do_action( 'wpml_switch_language', $wpml_current_lang );
 								}
 							}
@@ -533,7 +531,7 @@ if ( ! class_exists( 'CR_Endpoint' ) ) :
 						return new WP_REST_Response( '', 200 );
 					}
 					// send a coupon to the customer
-					$coupon = CR_Discount_Tiers::get_coupon( $media_count_total );
+					$coupon = CR_Discount_Tiers::get_coupon( $media_count_total, 'aggregated' );
 					if ( $coupon['is_enabled'] ) {
 						//qTranslate integration
 						$lang = $order->get_meta( '_user_language', true );

@@ -38,7 +38,6 @@ if (! class_exists('CR_Ajax_Reviews')) :
 			$post_in = array();
 			if( function_exists( 'pll_current_language' ) && function_exists( 'PLL' )  && apply_filters( 'cr_reviews_polylang_merge', true ) ) {
 				// Polylang integration
-				global $polylang;
 				$translationIds = PLL()->model->post->get_translations( $product_id );
 				foreach ( $translationIds as $key => $translationID ) {
 					$post_in[] = $translationID;
@@ -295,6 +294,7 @@ if (! class_exists('CR_Ajax_Reviews')) :
 						'woocommerce_product_review_list_args',
 						array(
 							'callback' => array( 'CR_Reviews', 'callback_comments' ),
+							'max_depth' => 5,
 							'reverse_top_level' => false,
 							'per_page' => self::$per_page,
 							'page' => $page,
@@ -374,6 +374,7 @@ if (! class_exists('CR_Ajax_Reviews')) :
 							'woocommerce_product_review_list_args',
 							array(
 								'callback' => array( 'CR_Reviews', 'callback_comments' ),
+								'max_depth' => 5,
 								'reverse_top_level' => false,
 								'per_page' => self::$per_page,
 								'page' => 1,
@@ -443,6 +444,7 @@ if (! class_exists('CR_Ajax_Reviews')) :
 							'woocommerce_product_review_list_args',
 							array(
 								'callback' => array( 'CR_Reviews', 'callback_comments' ),
+								'max_depth' => 5,
 								'reverse_top_level' => false,
 								'per_page' => self::$per_page,
 								'page' => 1,
@@ -492,8 +494,7 @@ if (! class_exists('CR_Ajax_Reviews')) :
 			$post_in = array();
 
 			if( function_exists( 'pll_current_language' ) && function_exists( 'PLL' ) && apply_filters( 'cr_reviews_polylang_merge', true ) ) {
-				//Polylang integration
-				global $polylang;
+				// Polylang integration
 				$translationIds = PLL()->model->post->get_translations( $product_id );
 				foreach ( $translationIds as $key => $translationID ) {
 					$post_in[] = $translationID;

@@ -637,11 +637,18 @@ if ( ! class_exists( 'CR_Review_Discount_Settings' ) ):
 							<?php
 								$count = 0;
 								foreach ( $review_discounts as $coupon_message ) {
+									if ( 'onsite' === $coupon_message['type'] ) {
+										add_filter( 'cr_available_channels', array( self::class, 'onsite_available_channels' ), 100, 1 );
+									} else {
+										remove_filter( 'cr_available_channels', array( self::class, 'onsite_available_channels' ), 100 );
+									}
 									echo '<tr class="cr-rev-disc-table-tr">';
 									foreach ( $columns as $key => $column ) {
 										switch ( $key ) {
 											case 'review_discount':
-												echo '<td>' . __( 'Review for Discount', 'customer-reviews-woocommerce' ) . '</td>';
+												echo '<td>' . self::get_label_based_on_type( $coupon_message['type'] );
+												echo '<input type="hidden" name="' . esc_attr( $field['type'] . '_type_' . $count ) . '"';
+												echo ' value="' . esc_attr( $coupon_message['type'] ) . '" /></td>';
 												break;
 											case 'enabled':
 												echo '<td><input type="checkbox" id="';
@@ -671,7 +678,7 @@ if ( ! class_exists( 'CR_Review_Discount_Settings' ) ):
 		}
 
 		public static function get_max_coupon_messages() {
-			return apply_filters( 'cr_max_coupon_messages', 1 );
+			return apply_filters( 'cr_max_coupon_messages', 2 );
 		}
 
 		public function save_review_discount( $value, $option, $raw_value ) {
@@ -681,6 +688,7 @@ if ( ! class_exists( 'CR_Review_Discount_Settings' ) ):
 				for ( $i=0; $i < $max_coupon_messages; $i++ ) {
 					if ( isset( $_POST[$option['type'] . '_channel_' . $i] ) ) {
 						$review_discounts[] = array(
+							'type' => strval( $_POST[$option['type'] . '_type_' . $i] ),
 							'enabled' => ( isset( $_POST[$option['type'] . '_enabled_' . $i] ) ? true : false ),
 							'channel' => strval( $_POST[$option['type'] . '_channel_' . $i] )
 						);
@@ -698,25 +706,50 @@ if ( ! class_exists( 'CR_Review_Discount_Settings' ) ):
 			$review_discounts = get_option( 'ivole_coupon_enable', 'no' );
 			if ( is_array( $review_discounts ) && 0 < count( $review_discounts ) ) {
 				$ret = array();
+				$iterator = 0;
 				foreach( $review_discounts as $review_discount ) {
 					if (
 						isset( $review_discount['enabled'] ) &&
 						isset( $review_discount['channel'] )
 					) {
+						if ( ! isset( $review_discount['type'] ) ) {
+							// compatibility for upgrades from older versions of the plugin
+							if ( 0 === $iterator ) {
+								$review_discount['type'] = 'aggregated';
+							} else {
+								$review_discount['type'] = 'onsite';
+							}
+						}
 						$ret[] = array(
+							'type' => strval( $review_discount['type'] ),
 							'enabled' => boolval( $review_discount['enabled'] ),
 							'channel' => strval( $review_discount['channel'] )
 						);
 					}
+					$iterator++;
 				}
-				if ( 0 === count( $review_discounts ) ) {
+				if ( 0 === count( $ret ) ) {
+					// compatibility for upgrades from older versions of the plugin
 					$ret = self::get_default_coupons_setting();
+				} elseif ( 1 === count( $ret ) ) {
+					// compatibility for upgrades from older versions of the plugin
+					$ret[] = array(
+						'type' => 'onsite',
+						'enabled' => false,
+						'channel' => 'email'
+					);
 				}
 				return $ret;
 			} else {
 				return array(
 					array(
+						'type' => 'aggregated',
 						'enabled' => ( 'yes' === $review_discounts ? true : false ),
+						'channel' => 'email'
+					),
+					array(
+						'type' => 'onsite',
+						'enabled' => false,
 						'channel' => 'email'
 					)
 				);
@@ -897,6 +930,36 @@ if ( ! class_exists( 'CR_Review_Discount_Settings' ) ):
 				'lbl' => __( 'Reviewer received an unconditional discount coupon on future purchases', 'customer-reviews-woocommerce' )
 			);
 			return get_option( 'ivole_incentivized_badge', $default_setting );
+		}
+
+		public static function get_label_based_on_type( $type ) {
+			$description = '';
+			switch( $type ) {
+				case 'aggregated':
+					$description = __( 'Aggregated review form', 'customer-reviews-woocommerce' );
+					$help_tip = __( 'Reviews submitted via aggregated review forms', 'customer-reviews-woocommerce' );
+					$description .= '<span class="woocommerce-help-tip" data-tip="' . esc_attr( $help_tip ) . '"></span>';
+					break;
+				case 'onsite':
+					$description = __( 'On-site review form', 'customer-reviews-woocommerce' );
+					$help_tip = __( 'Reviews submitted via on-site review forms', 'customer-reviews-woocommerce' );
+					$description .= '<span class="woocommerce-help-tip" data-tip="' . esc_attr( $help_tip ) . '"></span>';
+					break;
+				default:
+					break;
+			}
+			return $description;
+		}
+
+		public static function onsite_available_channels( $channels ) {
+			// keep only the email channel
+			$channels = array(
+				array(
+					'id' => 'email',
+					'desc' => __( 'Email', 'customer-reviews-woocommerce' )
+				)
+			);
+			return $channels;
 		}
 
 	}

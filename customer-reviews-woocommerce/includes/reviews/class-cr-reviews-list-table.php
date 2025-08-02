@@ -673,8 +673,8 @@ class CR_Reviews_List_Table extends WP_List_Table {
 			} else {
 				$comment->cr_order = get_comment_meta( $comment->comment_ID, 'ivole_order_priv', true );
 				if ( $comment->cr_order ) {
-					// reviews collected via CusRev in the Private mode
-					$comment->via_cr = esc_html( __( 'via CR (Private)', 'customer-reviews-woocommerce' ) );
+					// reviews collected via CusRev in the Test mode
+					$comment->via_cr = esc_html( __( 'via CR (Test)', 'customer-reviews-woocommerce' ) );
 				} else {
 					$comment->cr_order = get_comment_meta( $comment->comment_ID, 'ivole_order_unve', true );
 					if ( $comment->cr_order ) {
@@ -1029,8 +1029,10 @@ class CR_Reviews_List_Table extends WP_List_Table {
 					if ( isset( $pics[$i]['url'] ) ) {
 						echo '<div class="iv-comment-image">';
 						echo '<a href="' . $pics[$i]['url'] . $cr_query . '" class="cr-comment-a" rel="nofollow"><img src="' .
-						$pics[$i]['url'] . $cr_query . '" alt="' . sprintf( __( 'Image #%1$d from ', 'customer-reviews-woocommerce' ), $k ) .
-						$comment->comment_author . '"></a>';
+						$pics[$i]['url'] . $cr_query . '" alt="' .
+						esc_attr(
+							sprintf( __( 'Image #%1$d from %2$s', 'customer-reviews-woocommerce' ), $k, $comment->comment_author )
+						) . '"></a>';
 						echo '</div>';
 						$k++;
 					}
@@ -1048,8 +1050,10 @@ class CR_Reviews_List_Table extends WP_List_Table {
 						$temp_comment_content_flag = true;
 						$temp_comment_content .= '<div class="iv-comment-image">';
 						$temp_comment_content .= '<a href="' . $attachmentUrl . '" class="cr-comment-a"><img src="' .
-						$attachmentUrl . '" alt="' . sprintf( __( 'Image #%1$d from ', 'customer-reviews-woocommerce' ), $k ) .
-						$comment->comment_author . '" /></a>';
+						$attachmentUrl . '" alt="' .
+						esc_attr(
+							sprintf( __( 'Image #%1$d from %2$s', 'customer-reviews-woocommerce' ), $k, $comment->comment_author )
+						) . '" /></a>';
 						$temp_comment_content .= '</div>';
 						$k++;
 					}
@@ -1070,7 +1074,9 @@ class CR_Reviews_List_Table extends WP_List_Table {
 					echo 'src="' . $pics_v[$i]['url'] . $cr_query . '#t=0.1';
 					echo '"></video>';
 					echo '<img class="cr-comment-videoicon" src="' . plugin_dir_url( dirname( dirname( __FILE__ ) ) ) . 'img/video.svg" ';
-					echo 'alt="' . sprintf( __( 'Video #%1$d from %2$s', 'customer-reviews-woocommerce' ), $k, $comment->comment_author ) . '">';
+					echo 'alt="' . esc_attr(
+						sprintf( __( 'Video #%1$d from %2$s', 'customer-reviews-woocommerce' ), $k, $comment->comment_author )
+					) . '">';
 					echo '<button class="cr-comment-video-close" aria-label="' . esc_attr__( 'Close', 'customer-reviews-woocommerce' ) . '">' . CR_Reviews::get_close_button_svg() . '</button>';
 					echo '</div></div>';
 					$k++;
@@ -1092,7 +1098,9 @@ class CR_Reviews_List_Table extends WP_List_Table {
 						$temp_comment_content .= 'src="' . $attachmentUrl . '#t=0.1';
 						$temp_comment_content .= '"></video>';
 						$temp_comment_content .= '<img class="cr-comment-videoicon" src="' . plugin_dir_url( dirname( dirname( __FILE__ ) ) ) . 'img/video.svg" ';
-						$temp_comment_content .= 'alt="' . sprintf( __( 'Video #%1$d from %2$s', 'customer-reviews-woocommerce' ), $k, $comment->comment_author ) . '">';
+						$temp_comment_content .= 'alt="' . esc_attr(
+							sprintf( __( 'Video #%1$d from %2$s', 'customer-reviews-woocommerce' ), $k, $comment->comment_author )
+						) . '">';
 						$temp_comment_content .= '<button class="cr-comment-video-close" aria-label="' . esc_attr__( 'Close', 'customer-reviews-woocommerce' ) . '">' . CR_Reviews::get_close_button_svg() . '</button>';
 						$temp_comment_content .= '</div></div>';
 						$k++;

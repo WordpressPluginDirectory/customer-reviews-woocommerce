@@ -189,7 +189,7 @@ if( $cr_current_user instanceof WP_User ) {
 		<div class="cr-review-form-buttons">
 			<button type="button" class="cr-review-form-submit">
 				<span><?php _e( 'Submit', 'customer-reviews-woocommerce' ); ?></span>
-				<img src="<?php echo plugin_dir_url( dirname( __FILE__ ) ) . 'img/spinner-dots.svg'; ?>" alt="Loading" />
+				<img src="<?php echo CR_Utils::cr_get_plugin_dir_url() . 'img/spinner-dots.svg'; ?>" alt="Loading" />
 			</button>
 			<button type="button" class="cr-review-form-cancel">
 				<?php _e( 'Cancel', 'customer-reviews-woocommerce' ); ?>

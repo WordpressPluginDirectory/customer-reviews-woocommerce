@@ -88,6 +88,9 @@ if (! class_exists('CR_All_Reviews')) :
 					$products = array_map( 'intval', $products );
 
 					$attributes['products'] = $products;
+				} else {
+					$products = array_map( 'intval', $attributes['products'] );
+					$attributes['products'] = $products;
 				}
 			}
 
@@ -293,6 +296,14 @@ if (! class_exists('CR_All_Reviews')) :
 				}
 				if ( function_exists( 'pll_current_language' ) ) {
 					// Polylang compatibility
+					if ( apply_filters( 'cr_reviews_polylang_merge', true ) ) {
+						foreach ( $this->shortcode_atts['products'] as $product_id ) {
+							$translationIds = PLL()->model->post->get_translations( $product_id );
+							foreach ( $translationIds as $key => $translationID ) {
+								$this->shortcode_atts['products'][] = intval( $translationID );
+							}
+						}
+					}
 					$args['lang'] = '';
 				} elseif ( has_filter( 'wpml_current_language' ) ) {
 					// WPML compatibility
@@ -495,6 +506,7 @@ if (! class_exists('CR_All_Reviews')) :
 			}
 			$return .= wp_list_comments( apply_filters('ivole_product_review_list_args', array(
 				'callback' => array( 'CR_Reviews', 'callback_comments' ),
+				'max_depth' => 5,
 				'page'  => 1,
 				'per_page' => $per_page,
 				'reverse_top_level' => false,
@@ -603,6 +615,7 @@ if (! class_exists('CR_All_Reviews')) :
 			}
 			$html .= wp_list_comments( apply_filters( 'ivole_product_review_list_args', array(
 				'callback' => array( 'CR_Reviews', 'callback_comments' ),
+				'max_depth' => 5,
 				'page'  => 1,
 				'per_page' => $per_page,
 				'reverse_top_level' => false,

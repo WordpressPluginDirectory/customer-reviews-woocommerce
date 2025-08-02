@@ -413,6 +413,104 @@ class CR_Email_Coupon {
 		}
 	}
 
+	public function maybe_send_coupon( $rvw_id, $media_count, $scenario, $customer_email, $customer_user, $customer_name ) {
+		$coupon = CR_Discount_Tiers::get_coupon( $media_count, $scenario );
+		if ( $coupon['is_enabled'] ) {
+			$roles_are_ok = true;
+			if ( 'roles' === $coupon['cr_coupon_enable_for_role'] && $customer_user ) {
+				$roles = $customer_user->roles;
+				$enabled_roles = is_array( $coupon['cr_coupon_enabled_roles'] ) ? $coupon['cr_coupon_enabled_roles'] : array();
+				$intersection = array_intersect( $enabled_roles, $roles );
+				if ( count( $intersection ) < 1 ) {
+					//the customer does not have roles for which discount coupons are enabled
+					$roles_are_ok = false;
+				}
+			}
+			if ( $roles_are_ok ) {
+				if ( 'static' === $coupon['cr_coupon_type'] ) {
+					$coupon_id = $coupon['cr_existing_coupon'];
+				} else {
+					$coupon_id = $this->generate_coupon( $customer_email, 0, $coupon );
+					// compatibility with W3 Total Cache plugin
+					// clear DB cache to read properties of the coupon
+					if( function_exists( 'w3tc_dbcache_flush' ) ) {
+						w3tc_dbcache_flush();
+					}
+				}
+				if (
+					0 < $coupon_id &&
+					'shop_coupon' === get_post_type( $coupon_id ) &&
+					'publish' === get_post_status( $coupon_id )
+				) {
+					$coupon_code = get_post_field( 'post_title', $coupon_id );
+					$discount_type = get_post_meta( $coupon_id, 'discount_type', true );
+					$discount_amount = get_post_meta( $coupon_id, 'coupon_amount', true );
+					$discount_string = "";
+					if (
+						'percent' === $discount_type &&
+						0 < $discount_amount
+					) {
+						$discount_string = $discount_amount . '%';
+					} elseif(
+						0 < $discount_amount
+					) {
+						$discount_string = trim(
+							strip_tags(
+								CR_Email_Func::cr_price(
+									$discount_amount,
+									array(
+										'currency' => get_option( 'woocommerce_currency' )
+									)
+								)
+							)
+						);
+					}
+
+					$cus_name = trim( $customer_name );
+					$cus_last_name = ( strpos($cus_name, ' ' ) === false ) ? '' : preg_replace( '#.*\s([\w-]*)$#', '$1', $cus_name );
+					$cus_first_name = trim( preg_replace( '#'.preg_quote( $cus_last_name, '#' ).'#', '', $cus_name ) );
+
+					if ( 'wa' === $coupon['channel'] ) {
+						$wa = new CR_Wtsap( 0 );
+						$coupon_res = $wa->send_coupon(
+							$cus_first_name,
+							$cus_last_name,
+							$cus_name,
+							$coupon_code,
+							$discount_string,
+							$customer_email,
+							0,		// a dummy order id
+							'', 	// a dummy order date
+							'', 	// a dummy order currency
+							null, // a dummy order object
+							$discount_type,
+							$discount_amount
+						);
+					} else {
+						$coupon_res = $this->trigger_coupon(
+							$cus_first_name,
+							$cus_last_name,
+							$cus_name,
+							$coupon_code,
+							$discount_string,
+							$customer_email,
+							0,		// a dummy order id
+							'', 	// a dummy order date
+							'', 	// a dummy order currency
+							null, // a dummy order object
+							$discount_type,
+							$discount_amount
+						);
+					}
+
+					if ( 0 === $coupon_res[0] ) {
+						update_comment_meta( $rvw_id, 'cr_coupon_code', $coupon_code );
+					}
+				}
+			}
+		}
+	}
+
 }
 
 endif;

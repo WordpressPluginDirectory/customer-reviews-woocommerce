@@ -96,6 +96,9 @@
 	max-width: none;
 	margin-bottom: 6px;
 }
+.cr-rtl .cr-form-description {
+	text-align: right;
+}
 .cr-form-item-container {
 	position: relative;
 	margin: 0 -32px;
@@ -466,6 +469,10 @@
 	margin-top: 20px;
 	margin-bottom: 20px;
 	cursor: pointer;
+}
+.cr-rtl .cr-form-customer-name-option {
+	margin-left: 15px;
+	margin-right: 0;
 }
 .cr-form-customer-name-option.cr-form-active-name > span {
 	color: #ffffff;

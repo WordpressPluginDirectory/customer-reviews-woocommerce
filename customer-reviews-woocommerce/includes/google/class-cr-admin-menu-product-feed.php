@@ -50,10 +50,7 @@ if ( ! class_exists( 'CR_Product_Feed_Admin_Menu' ) ):
 		public function check_cron() {
 			if ( current_user_can( 'manage_options' ) && function_exists( 'get_current_screen' ) ) {
 				$current_screen = get_current_screen();
-				$pages_to_display_message = array(
-					'reviews-0_page_cr-reviews-product-feed'
-				);
-				if ( in_array( $current_screen->id, $pages_to_display_message ) ) {
+				if ( false !== strpos( $current_screen->id, 'cr-reviews-product-feed' ) ) {
 					// XML Product Feed
 					$cron_options = get_option(
 						'ivole_product_feed_cron',

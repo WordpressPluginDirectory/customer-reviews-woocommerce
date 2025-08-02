@@ -3,14 +3,14 @@
 Plugin Name: Customer Reviews for WooCommerce
 Description: Customer Reviews for WooCommerce plugin helps you get more customer reviews for your shop by sending automated reminders and coupons.
 Plugin URI: https://wordpress.org/plugins/customer-reviews-woocommerce/
-Version: 5.77.0
+Version: 5.81.1
 Author: CusRev
 Author URI: https://www.cusrev.com/business/
 Text Domain: customer-reviews-woocommerce
 Domain Path: /languages
 Requires at least: 4.5
 WC requires at least: 3.6
-WC tested up to: 9.8
+WC tested up to: 10.0
 License: GPLv3
 
 Customer Reviews for WooCommerce is free software: you can redistribute it and/or modify
@@ -115,15 +115,9 @@ if (
 
 add_shortcode( 'cusrev_reviews', 'ivole_reviews_shortcode' );
 
-function ivole_reviews_shortcode( $atts, $content )
-{
-	$shortcode_enabled = get_option( 'ivole_reviews_shortcode', 'no' );
-	if( $shortcode_enabled === 'no' ) {
-		return;
-	} else {
-		extract( shortcode_atts( array( 'comment_file' => '/comments.php' ), $atts ) );
-		$content = ivole_return_comment_form( $comment_file );
-	}
+function ivole_reviews_shortcode( $atts, $content ) {
+	extract( shortcode_atts( array( 'comment_file' => '/comments.php' ), $atts ) );
+	$content = ivole_return_comment_form( $comment_file );
 	return $content;
 }
 

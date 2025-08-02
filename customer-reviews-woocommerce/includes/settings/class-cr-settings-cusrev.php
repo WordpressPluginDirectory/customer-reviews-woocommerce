@@ -260,18 +260,18 @@ if ( ! class_exists( 'CR_CusRev_Settings' ) ):
 								<rect x="47" y="51" width="6" height="14" rx="3" fill="#7B79E1"/>
 							</svg>
 							<div class="cr-twocols-title">
-								<?php esc_html_e( 'Private mode' ) ?>
+								<?php esc_html_e( 'Test mode' ) ?>
 							</div>
 							<div class="cr-twocols-main">
 								<ul>
 									<li>
-										<?php echo 'Reviews received in the Private mode will not be published on <a href="https://www.cusrev.com" target="_blank" rel="noopener noreferrer">CusRev.com</a><img src="' . untrailingslashit( plugin_dir_url( dirname( dirname( __FILE__ ) ) ) ) . '/img/external-link.png" class="cr-product-feed-categories-ext-icon">' . wc_help_tip( 'A review is considered to be received in the Private mode if it was left in response to a review invitation (reminder) sent while the Private mode was enabled.' ); ?>
+										<?php echo 'Reviews received in the Test mode will not be published on <a href="https://www.cusrev.com" target="_blank" rel="noopener noreferrer">CusRev.com</a><img src="' . untrailingslashit( plugin_dir_url( dirname( dirname( __FILE__ ) ) ) ) . '/img/external-link.png" class="cr-product-feed-categories-ext-icon">' . wc_help_tip( 'A review is considered to be received in the Test mode if it was left in response to a review invitation (reminder) sent while the Test mode was enabled.' ); ?>
 									</li>
 									<li>
-										<?php echo 'The Private mode should be used for setting up and testing integration of the plugin with CusRev' . wc_help_tip( 'The Private mode is enabled by default. Use it to test the review submission process and make sure that reviews are successfully posted from aggregated review forms to your website.' ); ?>
+										<?php echo 'The Test mode should be used for setting up and testing integration of the plugin with CusRev' . wc_help_tip( 'The Test mode is enabled by default. Use it to test the review submission process and make sure that reviews are successfully posted from aggregated review forms to your website.' ); ?>
 									</li>
 									<li>
-										<?php echo 'You can create any dummy reviews in the Private mode, and they will never be published on <a href="https://www.cusrev.com" target="_blank" rel="noopener noreferrer">CusRev.com</a><img src="' . untrailingslashit( plugin_dir_url( dirname( dirname( __FILE__ ) ) ) ) . '/img/external-link.png" class="cr-product-feed-categories-ext-icon">' . wc_help_tip( 'Reviews received in the Private mode will still be published on your website, so make sure to delete any dummy reviews after testing.' ); ?>
+										<?php echo 'You can create any dummy reviews in the Test mode, and they will never be published on <a href="https://www.cusrev.com" target="_blank" rel="noopener noreferrer">CusRev.com</a><img src="' . untrailingslashit( plugin_dir_url( dirname( dirname( __FILE__ ) ) ) ) . '/img/external-link.png" class="cr-product-feed-categories-ext-icon">' . wc_help_tip( 'Reviews received in the Test mode will still be published on your website, so make sure to delete any dummy reviews after testing.' ); ?>
 									</li>
 								</ul>
 							</div>

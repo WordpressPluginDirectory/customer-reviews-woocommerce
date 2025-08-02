@@ -29,184 +29,189 @@ if ( ! class_exists( 'CR_Email_Func' ) ) :
 			$static_brand = trim( get_option( 'ivole_google_brand_static', '' ) );
 			// get order items
 			$items_return = array();
-			$items = $order->get_items();
-			// check if taxes should be included in line items prices
-			$tax_display = get_option( 'woocommerce_tax_display_cart' );
-			$inc_tax = false;
-			if ( 'excl' == $tax_display ) {
+			if ( $order ) {
+				$items = $order->get_items();
+				// check if taxes should be included in line items prices
+				$tax_display = get_option( 'woocommerce_tax_display_cart' );
 				$inc_tax = false;
-			} else {
-				$inc_tax = true;
-			}
-			$mailer = get_option( 'ivole_mailer_review_reminder', 'cr' );
-
-			foreach ( $items as $item_id => $item ) {
-				// a filter to optionally exclude some items from being added to a review form
-				if ( apply_filters( 'cr_exclude_order_item', false, $order, $item ) ) {
-					continue;
+				if ( 'excl' == $tax_display ) {
+					$inc_tax = false;
+				} else {
+					$inc_tax = true;
 				}
+				$mailer = get_option( 'ivole_mailer_review_reminder', 'cr' );
 
-				$categories = get_the_terms( $item['product_id'], 'product_cat' );
-				// check if an item needs to be skipped because none of categories it belongs to has been enabled for reminders
-				if( $enabled_for === 'categories' ) {
-					$skip = true;
-					foreach ( $categories as $category_id => $category ) {
-						if( in_array( $category->term_id, $enabled_categories ) ) {
-							$skip = false;
-							break;
-						}
-					}
-					if( $skip ) {
-						continue;
-					}
-				}
-				if ( apply_filters( 'woocommerce_order_item_visible', true, $item ) && $item['product_id'] ) {
-					// create WC_Product to use its function for getting name of the product
-					$prod_main_temp = wc_get_product( $item['product_id'] );
-					if( $item['variation_id'] ) {
-						$prod_temp = new WC_Product_Variation( $item['variation_id'] );
-					} else {
-						$prod_temp = new WC_Product( $item['product_id'] );
-					}
-					$image = wp_get_attachment_image_url( $prod_main_temp->get_image_id(), 'full', false );
-					if ( ! $image ) {
-						$image = '';
-					}
-					$q_name = $prod_main_temp->get_title();
-					$price_per_item = floatval( wc_get_price_to_display( $prod_temp ) );
-
-					// qTranslate integration
-					if ( function_exists( 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage' ) ) {
-						$q_name = qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage( $q_name );
-					}
-
-					// WPML integration
-					if ( has_filter( 'translate_object_id' ) && ! function_exists( 'pll_get_post' ) ) {
-						$wpml_current_language = $order->get_meta( 'wpml_language', true );
-						$translated_product_id = apply_filters( 'translate_object_id', $item['product_id'], 'product', true, $wpml_current_language );
-						$q_name = get_the_title( $translated_product_id );
-						// WPML Multi-currency
-						if ( $currency ) {
-							$price_per_item_changed = false;
-							if( get_post_meta( $item['product_id'], '_wcml_custom_prices_status', true ) ) {
-								$price_per_item_currency = get_post_meta( $item['product_id'], '_price_' . strtoupper( $currency ), true );
-								if( $price_per_item_currency ) {
-									$price_per_item = floatval( $price_per_item_currency );
-									$price_per_item_changed = true;
-								}
-							} else {
-								if( has_filter( 'wcml_raw_price_amount' ) ) {
-									$price_per_item = apply_filters( 'wcml_raw_price_amount', floatval( $prod_temp->get_price() ), $currency );
-									$price_per_item_changed = true;
-								}
-							}
-							if( $price_per_item_changed ) {
-								if( $inc_tax ) {
-									$price_per_item = floatval( wc_get_price_including_tax( $prod_temp, array( 'qty' => 1, 'price' => $price_per_item ) ) );
-								} else {
-									$price_per_item = floatval( wc_get_price_excluding_tax( $prod_temp, array( 'qty' => 1, 'price' => $price_per_item ) ) );
-								}
-							}
-						}
-					}
-
-					// Polylang integration
-					if ( function_exists( 'pll_get_post' ) && function_exists( 'pll_default_language' ) ) {
-						$polylang_default_language = pll_default_language();
-						$default_product_id = pll_get_post( $item['product_id'], $polylang_default_language );
-						if( $default_product_id ) {
-							$item['product_id'] = $default_product_id;
-						}
-					}
-
-					$q_name = strip_tags( $q_name );
-
-					// check if name of the product is empty (this could happen if a product was deleted)
-					if( strlen( $q_name ) === 0 ) {
+				foreach ( $items as $item_id => $item ) {
+					// a filter to optionally exclude some items from being added to a review form
+					if ( apply_filters( 'cr_exclude_order_item', false, $order, $item ) ) {
 						continue;
 					}
 
-					// a proactive check if the product belongs to prohibited categories
-					if ( 'cr' === $mailer ) {
-						$stop_words = array( 'kratom', 'cbd', 'cannabis', 'marijuana', 'kush' );
-						if ( function_exists( 'mb_strtolower' ) ) {
-							$name_lowercase = mb_strtolower( $q_name );
-						} else {
-							$name_lowercase = strtolower( $q_name );
-						}
-						$stop_word_found = false;
-						foreach ( $stop_words as $word ) {
-							if ( false !== strpos( $name_lowercase, $word ) ) {
-								$stop_word_found = true;
-								break;
+					$categories = get_the_terms( $item['product_id'], 'product_cat' );
+					// check if an item needs to be skipped because none of categories it belongs to has been enabled for reminders
+					if( $enabled_for === 'categories' ) {
+						$skip = true;
+						if ( $categories && is_array( $categories ) ) {
+							foreach ( $categories as $category_id => $category ) {
+								if( in_array( $category->term_id, $enabled_categories ) ) {
+									$skip = false;
+									break;
+								}
 							}
 						}
-						if ( $stop_word_found ) {
-							$order->add_order_note(
-								sprintf(
-									__( 'CR: %1$s cannot be included in a review invitation because it is related to one of the prohibited categories of products. If you would like to send review invitations for this product, please set the \'Verified Reviews\' option to \'Self-hosted\' in the <a href="%2$s">settings</a>.', 'customer-reviews-woocommerce' ),
-									'\'' . $q_name . '\'',
-									admin_url( 'admin.php?page=cr-reviews-settings&tab=review_reminder' )
-								)
-							);
+						if( $skip ) {
 							continue;
 						}
 					}
+					if ( apply_filters( 'woocommerce_order_item_visible', true, $item ) && $item['product_id'] ) {
+						// create WC_Product to use its function for getting name of the product
+						$prod_main_temp = wc_get_product( $item['product_id'] );
+						if( $item['variation_id'] ) {
+							$prod_temp = new WC_Product_Variation( $item['variation_id'] );
+						} else {
+							$prod_temp = new WC_Product( $item['product_id'] );
+						}
+						$image = wp_get_attachment_image_url( $prod_main_temp->get_image_id(), 'full', false );
+						if ( ! $image ) {
+							$image = '';
+						}
+						$q_name = $prod_main_temp->get_title();
+						$price_per_item = floatval( wc_get_price_to_display( $prod_temp ) );
 
-					// check if we have several variations of the same product in our order
-					// review requests should be sent only once per each product
-					$same_product_exists = false;
-					for($i = 0; $i < sizeof( $items_return ); $i++ ) {
-						if( isset( $items_return[$i]['id'] ) && $item['product_id'] === $items_return[$i]['id'] ) {
-							$same_product_exists = true;
-							$items_return[$i]['price'] += $order->get_line_total( $item, $inc_tax );
+						// qTranslate integration
+						if ( function_exists( 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage' ) ) {
+							$q_name = qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage( $q_name );
 						}
-					}
-					if( !$same_product_exists ) {
-						$tags = array();
-						$cats = array();
-						$idens = array();
-						// save native WooCommerce categories associated with the product as tags
-						// save mapping of native WooCommerce categories to Google taxonomy as categories
-						foreach ($categories as $category) {
-							$tags[] = $category->name;
-							if( isset( $categories_mapping[$category->term_id] ) && $categories_mapping[$category->term_id] > 0 ) {
-								$cats[] = $categories_mapping[$category->term_id];
-							}
-						}
-						$tags = array_values( array_unique( $tags ) );
-						$cats = array_values( array_unique( $cats ) );
-						// read product identifiers (gtin, mpn, brand)
-						if( is_array( $identifiers ) ) {
-							if( isset( $identifiers['gtin'] ) ) {
-								$idens['gtin'] = CR_Google_Shopping_Prod_Feed::get_field( $identifiers['gtin'], $prod_main_temp );
-							}
-							if( isset( $identifiers['mpn'] ) ) {
-								$idens['mpn'] = CR_Google_Shopping_Prod_Feed::get_field( $identifiers['mpn'], $prod_main_temp );
-							}
-							if( isset( $identifiers['brand'] ) ) {
-								$idens['brand'] = CR_Google_Shopping_Prod_Feed::get_field( $identifiers['brand'], $prod_main_temp );
-								if( !$idens['brand'] ) {
-									$idens['brand'] = strval( $static_brand );
+
+						// WPML integration
+						if ( has_filter( 'translate_object_id' ) && ! function_exists( 'pll_get_post' ) ) {
+							$wpml_current_language = $order->get_meta( 'wpml_language', true );
+							$translated_product_id = apply_filters( 'translate_object_id', $item['product_id'], 'product', true, $wpml_current_language );
+							$q_name = get_the_title( $translated_product_id );
+							// WPML Multi-currency
+							if ( $currency ) {
+								$price_per_item_changed = false;
+								if( get_post_meta( $item['product_id'], '_wcml_custom_prices_status', true ) ) {
+									$price_per_item_currency = get_post_meta( $item['product_id'], '_price_' . strtoupper( $currency ), true );
+									if( $price_per_item_currency ) {
+										$price_per_item = floatval( $price_per_item_currency );
+										$price_per_item_changed = true;
+									}
+								} else {
+									if( has_filter( 'wcml_raw_price_amount' ) ) {
+										$price_per_item = apply_filters( 'wcml_raw_price_amount', floatval( $prod_temp->get_price() ), $currency );
+										$price_per_item_changed = true;
+									}
+								}
+								if( $price_per_item_changed ) {
+									if( $inc_tax ) {
+										$price_per_item = floatval( wc_get_price_including_tax( $prod_temp, array( 'qty' => 1, 'price' => $price_per_item ) ) );
+									} else {
+										$price_per_item = floatval( wc_get_price_excluding_tax( $prod_temp, array( 'qty' => 1, 'price' => $price_per_item ) ) );
+									}
 								}
 							}
 						}
-						$items_return[] = array( 'id' => $item['product_id'], 'name' => $q_name, 'price' => $order->get_line_total( $item, $inc_tax ),
-						'pricePerItem' => $price_per_item, 'image' => $image, 'tags' => $tags, 'categories' => $cats, 'identifiers' => $idens );
+
+						// Polylang integration
+						if ( function_exists( 'pll_get_post' ) && function_exists( 'pll_default_language' ) ) {
+							$polylang_default_language = pll_default_language();
+							$default_product_id = pll_get_post( $item['product_id'], $polylang_default_language );
+							if( $default_product_id ) {
+								$item['product_id'] = $default_product_id;
+							}
+						}
+
+						$q_name = strip_tags( $q_name );
+
+						// check if name of the product is empty (this could happen if a product was deleted)
+						if( strlen( $q_name ) === 0 ) {
+							continue;
+						}
+
+						// a proactive check if the product belongs to prohibited categories
+						if ( 'cr' === $mailer ) {
+							$stop_words = array( 'kratom', 'cbd', 'cannabis', 'marijuana', 'kush' );
+							if ( function_exists( 'mb_strtolower' ) ) {
+								$name_lowercase = mb_strtolower( $q_name );
+							} else {
+								$name_lowercase = strtolower( $q_name );
+							}
+							$stop_word_found = false;
+							foreach ( $stop_words as $word ) {
+								if ( false !== strpos( $name_lowercase, $word ) ) {
+									$stop_word_found = true;
+									break;
+								}
+							}
+							if ( $stop_word_found ) {
+								$order->add_order_note(
+									sprintf(
+										__( 'CR: %1$s cannot be included in a review invitation because it is related to one of the prohibited categories of products. If you would like to send review invitations for this product, please set the \'Verified Reviews\' option to \'Self-hosted\' in the <a href="%2$s">settings</a>.', 'customer-reviews-woocommerce' ),
+										'\'' . $q_name . '\'',
+										admin_url( 'admin.php?page=cr-reviews-settings&tab=review_reminder' )
+									)
+								);
+								continue;
+							}
+						}
+
+						// check if we have several variations of the same product in our order
+						// review requests should be sent only once per each product
+						$same_product_exists = false;
+						for($i = 0; $i < sizeof( $items_return ); $i++ ) {
+							if( isset( $items_return[$i]['id'] ) && $item['product_id'] === $items_return[$i]['id'] ) {
+								$same_product_exists = true;
+								$items_return[$i]['price'] += $order->get_line_total( $item, $inc_tax );
+							}
+						}
+						if( !$same_product_exists ) {
+							$tags = array();
+							$cats = array();
+							$idens = array();
+							// save native WooCommerce categories associated with the product as tags
+							// save mapping of native WooCommerce categories to Google taxonomy as categories
+							if ( $categories && is_array( $categories ) ) {
+								foreach ($categories as $category) {
+									$tags[] = $category->name;
+									if( isset( $categories_mapping[$category->term_id] ) && $categories_mapping[$category->term_id] > 0 ) {
+										$cats[] = $categories_mapping[$category->term_id];
+									}
+								}
+							}
+							$tags = array_values( array_unique( $tags ) );
+							$cats = array_values( array_unique( $cats ) );
+							// read product identifiers (gtin, mpn, brand)
+							if( is_array( $identifiers ) ) {
+								if( isset( $identifiers['gtin'] ) ) {
+									$idens['gtin'] = CR_Google_Shopping_Prod_Feed::get_field( $identifiers['gtin'], $prod_main_temp );
+								}
+								if( isset( $identifiers['mpn'] ) ) {
+									$idens['mpn'] = CR_Google_Shopping_Prod_Feed::get_field( $identifiers['mpn'], $prod_main_temp );
+								}
+								if( isset( $identifiers['brand'] ) ) {
+									$idens['brand'] = CR_Google_Shopping_Prod_Feed::get_field( $identifiers['brand'], $prod_main_temp );
+									if( !$idens['brand'] ) {
+										$idens['brand'] = strval( $static_brand );
+									}
+								}
+							}
+							$items_return[] = array( 'id' => $item['product_id'], 'name' => $q_name, 'price' => $order->get_line_total( $item, $inc_tax ),
+							'pricePerItem' => $price_per_item, 'image' => $image, 'tags' => $tags, 'categories' => $cats, 'identifiers' => $idens );
+						}
 					}
 				}
-			}
-			// check if free products should be excluded
-			if( 'yes' == get_option( 'ivole_exclude_free_products', 'no' ) ) {
-				$items_return_excl_free = array();
-				foreach ($items_return as $item_return) {
-					if( $item_return['price'] > 0 ) {
-						$items_return_excl_free[] = $item_return;
+				// check if free products should be excluded
+				if( 'yes' == get_option( 'ivole_exclude_free_products', 'no' ) ) {
+					$items_return_excl_free = array();
+					foreach ($items_return as $item_return) {
+						if( $item_return['price'] > 0 ) {
+							$items_return_excl_free[] = $item_return;
+						}
 					}
+					return $items_return_excl_free;
 				}
-				return $items_return_excl_free;
 			}
-			//error_log( print_r( $items_return, true) );
 			return $items_return;
 		}
 
@@ -470,7 +475,8 @@ if ( ! class_exists( 'CR_Email_Func' ) ) :
 
 		public static function send_email_coupon( $data, $is_test ) {
 			$mailer = get_option( 'ivole_mailer_review_reminder', 'cr' );
-			if( 'wp' === $mailer ) {
+			// use WP mailer if it is configured in the settings or the coupon is for a review posted via an on-site review form and there is no order number
+			if ( 'wp' === $mailer || ! $data['order']['id'] ) {
 				$headers = ['Content-Type: text/html; charset=UTF-8'];
 				if ( filter_var( $data['email']['from'], FILTER_VALIDATE_EMAIL ) ) {
 					$headers[] = 'From: ' . $data['email']['fromText'] . ' <' . $data['email']['from'] . '>';

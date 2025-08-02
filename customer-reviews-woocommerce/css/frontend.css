@@ -25,6 +25,7 @@ p.cr-comment-video-text { margin-bottom: 0.5em; font-size: 0.9em; }
 	border: 1px solid #e4e1e3;
 	filter: brightness(100%);
 	box-sizing: content-box;
+	position: relative;
 }
 .cr-comment-image-top:hover {
 	filter: brightness(95%);
@@ -1050,7 +1051,7 @@ div.iv-comment-image img {
 div.ivole-summaryBox {
 	margin-bottom: 2rem;
 }
-.cr-histogramTable {
+.cr-summaryBox-wrap .cr-histogramTable {
 	margin-bottom: 0px;
 	border-collapse: collapse;
 	border: 0px;
@@ -3044,6 +3045,7 @@ img.ivole-verified-badge-ext-icon {
 	display: flex;
 	flex-direction: column;
 	height: 100%;
+	box-sizing: border-box;
 }
 
 .cr-reviews-grid .breaker {
@@ -3176,13 +3178,15 @@ img.ivole-verified-badge-ext-icon {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+	row-gap: 7px;
 }
 
 .cr-reviews-grid .cr-review-card .top-row .reviewer .reviewer-verified,
 .cr-reviews-slider .cr-review-card .top-row .reviewer .reviewer-verified {
 	display: flex;
 	align-items: center;
-	line-height: 20px
+	line-height: 1.2;
+	font-size: 16px;
 }
 
 .cr-reviews-grid .cr-review-card .top-row .rating .datetime,
@@ -3197,9 +3201,8 @@ img.ivole-verified-badge-ext-icon {
 	font-style: normal;
 	font-weight: bold;
 	font-size: 18px;
-	line-height: 23px;
+	line-height: 1.2;
 	color: #203741;
-	height: 50%;
 	display: flex;
 	align-items: center;
 }
@@ -3221,10 +3224,9 @@ img.ivole-verified-badge-ext-icon {
 	letter-spacing: 0em;
 	text-align: left;
 	color: #18B394;
-	height: 50%;
 	display: flex;
 	align-items: center;
-	margin: 5px 0 0 0;
+	margin: 0;
 }
 
 .cr-reviews-grid .cr-review-card .top-row .reviewer .reviewer-verified .cr-reviewer-verified,
@@ -3279,6 +3281,7 @@ img.ivole-verified-badge-ext-icon {
 	flex-shrink: 0;
 	margin-right: 16px;
 	position: relative;
+	display: flex;
 }
 
 .cr-reviews-grid .cr-review-card .top-row .review-thumbnail img,
@@ -3644,6 +3647,11 @@ img.ivole-verified-badge-ext-icon {
 	background: transparent;
 }
 
+.cr-reviews-slider .slick-arrow.slick-prev:not(:hover),
+.cr-reviews-slider .slick-arrow.slick-next:not(:hover) {
+	background: transparent;
+}
+
 .cr-reviews-slider .slick-prev:hover,
 .cr-reviews-slider .slick-prev:focus,
 .cr-reviews-slider .slick-next:hover,
@@ -3774,6 +3782,10 @@ img.ivole-verified-badge-ext-icon {
 	color: transparent;
 	border: 0;
 	outline: none;
+	background: transparent;
+}
+.cr-reviews-slider .slick-dots li button:not(:hover),
+.cr-ajax-reviews-cus-images-modal .cr-reviews-slider .slick-dots li button:not(:hover) {
 	background: transparent;
 }
 .cr-reviews-slider .slick-dots li button:hover,
