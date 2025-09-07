@@ -209,7 +209,7 @@ if (! class_exists('CR_Reviews_Importer')):
 
 			$file = fopen($file_path, 'r');
 			// detect delimiter
-			$delimiter = $this->detect_delimiter( $file );
+			$delimiter = self::detect_delimiter( $file );
 			set_transient( 'cr_csv_delimiter', $delimiter, DAY_IN_SECONDS );
 			$columns = fgetcsv( $file, 0, $delimiter );
 			// check for Byte Order Mark present in UTF8 files
@@ -295,7 +295,7 @@ if (! class_exists('CR_Reviews_Importer')):
 			return self::$columns;
 		}
 
-		protected function detect_delimiter( $file_pointer ) {
+		public static function detect_delimiter( $file_pointer ) {
 			$delimiters = array(
 				';' => 0,
 				',' => 0,

@@ -68,6 +68,8 @@ require_once( __DIR__ . '/includes/import-export/class-cr-reviews-importer.php' 
 require_once( __DIR__ . '/includes/import-export/class-cr-admin-menu-import.php' );
 require_once( __DIR__ . '/includes/import-export/class-cr-export-reviews.php' );
 require_once( __DIR__ . '/includes/import-export/class-cr-reviews-exporter.php' );
+require_once( __DIR__ . '/includes/import-export/class-cr-import-qna.php' );
+require_once( __DIR__ . '/includes/import-export/class-cr-export-qna.php' );
 require_once( __DIR__ . '/includes/tags/class-cr-admin-menu-tags.php' );
 require_once( __DIR__ . '/includes/tags/class-cr-tags.php' );
 require_once( __DIR__ . '/includes/trust-badge/class-cr-trust-badge.php' );
@@ -82,7 +84,7 @@ require_once( __DIR__ . '/includes/analytics/class-cr-reminders-log.php' );
 require_once( __DIR__ . '/includes/analytics/class-cr-reviews-top-charts.php' );
 
 class Ivole {
-	const CR_VERSION = '5.81.1';
+	const CR_VERSION = '5.82.0';
 
 	public function __construct() {
 		if( function_exists( 'wc' ) ) {
@@ -141,6 +143,8 @@ class Ivole {
 				new CR_Attributes_Product_Feed( $product_feed_admin_menu );
 				new CR_Reviews_Product_Feed( $product_feed_admin_menu );
 				new CR_Export_Reviews( $import_admin_menu );
+				new CR_Import_Qna( $import_admin_menu );
+				new CR_Export_Qna( $import_admin_menu );
 
 				$this->add_plugin_row_meta();
 			}

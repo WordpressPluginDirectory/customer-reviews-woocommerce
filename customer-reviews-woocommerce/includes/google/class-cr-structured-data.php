@@ -38,9 +38,8 @@ if ( ! class_exists( 'CR_StructuredData' ) ) :
 
 		public function filter_woocommerce_structured_data_review( $markup, $comment ) {
 			$pics = get_comment_meta( $comment->comment_ID, 'ivole_review_image' );
-			$pics_n = count( $pics );
+			$pics_n = ( is_array( $pics ) ? count( $pics ) : 0 );
 			if( $pics_n > 0 ) {
-				//error_log( print_r( $comment, true ) );
 				$markup['associatedMedia']  = array();
 				for( $i = 0; $i < $pics_n; $i ++) {
 					$markup['associatedMedia'][]  = array(

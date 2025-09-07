@@ -34,7 +34,7 @@ class CR_Export_Reviews {
     protected $settings;
 
     public function __construct( $admin_menu ) {
-        $this->menu_slug = 'ivole-reviews-import';
+        $this->menu_slug = 'cr-import-export';
 
         $this->admin_menu = $admin_menu;
 
@@ -53,7 +53,7 @@ class CR_Export_Reviews {
     }
 
     public function register_tab( $tabs ) {
-        $tabs[$this->tab] = __( 'Export', 'customer-reviews-woocommerce' );
+        $tabs[$this->tab] = __( 'Export Reviews', 'customer-reviews-woocommerce' );
         return $tabs;
     }
 
@@ -151,7 +151,7 @@ class CR_Export_Reviews {
 
     public function include_scripts() {
         if( $this->is_this_page() ) {
-            wp_register_script( 'cr-export-reviews', plugins_url('js/admin-export.js', dirname( dirname( __FILE__ ) ) ), ['jquery'] );
+            wp_register_script( 'cr-export-reviews', plugins_url('js/admin-export.js', dirname( dirname( __FILE__ ) ) ), ['jquery'], Ivole::CR_VERSION );
 
             wp_localize_script( 'cr-export-reviews', 'CrExportStrings', array(
                 'exporting' => __( 'Export is in progress (%s/%s completed)', 'customer-reviews-woocommerce' ),
@@ -162,7 +162,8 @@ class CR_Export_Reviews {
                 'result_started' => __( 'Started: %s', 'customer-reviews-woocommerce' ),
                 'result_finished' => __( 'Finished: %s', 'customer-reviews-woocommerce' ),
                 'result_cancelled' => __( 'Cancelled: %s', 'customer-reviews-woocommerce' ),
-                'result_imported' => __( '%d review(s) successfully exported', 'customer-reviews-woocommerce' ),
+                'result_exported' => __( '%d review(s) successfully exported', 'customer-reviews-woocommerce' ),
+                'result_qna_exported' => __( '%d question(s) and/or answer(s) successfully exported', 'customer-reviews-woocommerce' )
             ));
 
             wp_enqueue_script( 'cr-export-reviews' );

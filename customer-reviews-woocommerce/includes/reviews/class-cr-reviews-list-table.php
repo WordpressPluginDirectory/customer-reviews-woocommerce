@@ -1015,10 +1015,10 @@ class CR_Reviews_List_Table extends WP_List_Table {
 		$pics_local = get_comment_meta( $comment->comment_ID, 'ivole_review_image2' );
 		$pics_v = get_comment_meta( $comment->comment_ID, 'ivole_review_video' );
 		$pics_v_local = get_comment_meta( $comment->comment_ID, 'ivole_review_video2' );
-		$pics_n = count( $pics );
-		$pics_local_n = count( $pics_local );
-		$pics_v_n = count( $pics_v );
-		$pics_v_local_n = count( $pics_v_local );
+		$pics_n = ( is_array( $pics ) ? count( $pics ) : 0 );
+		$pics_local_n = ( is_array( $pics_local ) ? count( $pics_local ) : 0 );
+		$pics_v_n = ( is_array( $pics_v ) ? count( $pics_v ) : 0 );
+		$pics_v_local_n = ( is_array( $pics_v_local ) ? count( $pics_v_local ) : 0 );
 		$cr_query = '?crsrc=wp';
 		if ( 0 < $pics_n || 0 < $pics_local_n || 0 < $pics_v_n || 0 < $pics_v_local_n ) {
 			echo '<div class="cr-comment-images cr-comment-videos">';

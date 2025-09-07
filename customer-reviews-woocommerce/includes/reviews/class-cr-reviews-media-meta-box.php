@@ -37,10 +37,10 @@ if ( ! class_exists( 'CR_Reviews_Media_Meta_Box' ) ) :
 			$pics_local = get_comment_meta( $comment->comment_ID, CR_Reviews::REVIEWS_META_LCL_IMG );
 			$pics_v = get_comment_meta( $comment->comment_ID, CR_Reviews::REVIEWS_META_VID );
 			$pics_v_local = get_comment_meta( $comment->comment_ID, CR_Reviews::REVIEWS_META_LCL_VID );
-			$pics_n = count( $pics );
-			$pics_local_n = count( $pics_local );
-			$pics_v_n = count( $pics_v );
-			$pics_v_local_n = count( $pics_v_local );
+			$pics_n = ( is_array( $pics ) ? count( $pics ) : 0 );
+			$pics_local_n = ( is_array( $pics_local ) ? count( $pics_local ) : 0 );
+			$pics_v_n = ( is_array( $pics_v ) ? count( $pics_v ) : 0 );
+			$pics_v_local_n = ( is_array( $pics_v_local ) ? count( $pics_v_local ) : 0 );
 			$k_image = 1;
 			$k_video = 1;
 			$cr_query = '?crsrc=wp';
@@ -154,7 +154,7 @@ if ( ! class_exists( 'CR_Reviews_Media_Meta_Box' ) ) :
 			$uploadMedia = '<div class="cr-upload-local-images">';
 			$uploadMedia .= '<label for="review_image" class="cr-upload-local-images-status">';
 			$uploadMedia .= __( 'Upload images or videos', 'customer-reviews-woocommerce' );
-			$uploadMedia .= '</label><input type="file" accept="image/*, video/*" multiple="multiple" name="review_image_' . $comment->comment_ID . '[]" id="review_image" />';
+			$uploadMedia .= '</label><input type="file" capture="environment" accept="image/*, video/*" multiple="multiple" name="review_image_' . $comment->comment_ID . '[]" id="review_image" />';
 			$uploadMedia .= '<input type="button" class="cr-upload-local-images-btn button button-secondary" value="' .
 			__( 'Upload', 'customer-reviews-woocommerce' ) . '" data-postid="' . $comment->comment_post_ID .
 			'" data-commentid="' . $comment->comment_ID . '" data-nonce="' . wp_create_nonce( 'cr-upload-images' ) . '"/>';

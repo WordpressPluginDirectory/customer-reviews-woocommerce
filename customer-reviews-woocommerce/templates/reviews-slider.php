@@ -66,6 +66,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<div class="review-content">
 						<div class="review-text">
 						<?php
+						// compatibility with WPML / WCML plugins to translate reviews
+						if ( class_exists( 'WCML\Reviews\Translations\FrontEndHooks' ) ) {
+							if ( method_exists( 'WCML\Reviews\Translations\FrontEndHooks', 'translateReview' ) ) {
+								( new WCML\Reviews\Translations\FrontEndHooks() )->translateReview( $review );
+							}
+						}
 						$clear_content = wp_strip_all_tags( $review->comment_content );
 						if( $max_chars && mb_strlen( $clear_content ) > $max_chars ) {
 							$less_content = wp_kses_post( mb_substr( $clear_content, 0, $max_chars ) );
@@ -113,7 +119,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					if( 'publish' === $product->get_status() ):
 						?>
 						<div class="review-product" style="<?php echo esc_attr( $product_style ); ?>">
-							<div class="product-thumbnail">
+							<div class="cr-product-thumbnail">
 								<?php echo $product->get_image( 'woocommerce_gallery_thumbnail' ); ?>
 							</div>
 							<div class="product-title">

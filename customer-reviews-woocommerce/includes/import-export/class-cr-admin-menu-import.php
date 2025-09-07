@@ -29,7 +29,7 @@ class CR_Import_Admin_Menu {
     protected $tab;
 
     public function __construct() {
-        $this->menu_slug = 'ivole-reviews-import';
+        $this->menu_slug = 'cr-import-export';
 
         $this->page_url = add_query_arg( array(
             'page' => $this->menu_slug
@@ -44,7 +44,6 @@ class CR_Import_Admin_Menu {
         add_filter( 'cr_import_export_tabs', array( $this, 'register_tab' ) );
         add_action( 'admin_menu', array( $this, 'register_import_menu' ), 11 );
         add_action( 'admin_init', array( $this, 'handle_template_download' ) );
-        add_action( 'admin_print_scripts', array( $this, 'print_scripts' ) );
         add_action( 'admin_enqueue_scripts', array( $this, 'include_scripts' ) );
     }
 
@@ -60,7 +59,7 @@ class CR_Import_Admin_Menu {
     }
 
     public function register_tab( $tabs ) {
-        $tabs[$this->tab] = __( 'Import', 'customer-reviews-woocommerce' );
+        $tabs[$this->tab] = __( 'Import Reviews', 'customer-reviews-woocommerce' );
         return $tabs;
     }
 
@@ -110,7 +109,7 @@ class CR_Import_Admin_Menu {
 
         ?>
             <div class="ivole-import-container" data-nonce="<?php echo wp_create_nonce( 'cr_import_page' ); ?>">
-                <h2><?php echo _e( 'Import Reviews from CSV File', 'customer-reviews-woocommerce' ); ?></h2>
+                <h2><?php echo _e( 'Import Reviews from CSV', 'customer-reviews-woocommerce' ); ?></h2>
                 <p><?php
                   _e( 'A utility to import reviews from a CSV file. Use it in three steps. ', 'customer-reviews-woocommerce' );
                   echo '<ol><li>';
@@ -124,8 +123,8 @@ class CR_Import_Admin_Menu {
                 <div id="ivole-import-upload-steps">
                     <div class="ivole-import-step">
                         <h3 class="ivole-step-title"><?php _e( 'Step 1: Download template', 'customer-reviews-woocommerce' ); ?></h3>
-                        <a href="<?php echo esc_url( $download_template_url ); ?>" target="_blank">
-                            <div class="button button-secondary"><?php _e( 'Download', 'customer-reviews-woocommerce' ); ?></div>
+                        <a class="button button-secondary" href="<?php echo esc_url( $download_template_url ); ?>" target="_blank">
+                            <?php _e( 'Download', 'customer-reviews-woocommerce' ); ?>
                         </a>
                     </div>
 
@@ -202,58 +201,108 @@ class CR_Import_Admin_Menu {
      * Generates a CSV template file and sends it to the browser
      */
     public function handle_template_download() {
-        if( isset( $_GET['action'] ) && $_GET['action'] === 'ivole-download-import-template' ) {
+        if (
+          isset( $_GET['action'] ) &&
+          in_array( $_GET['action'], array( 'ivole-download-import-template', 'cr-download-import-qna-template' ) )
+        ) {
             // Ensure a valid nonce has been provided
             if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( $_GET['_wpnonce'], 'download_csv_template' ) ) {
                 wp_die( sprintf( __( 'Failed to download template: invalid nonce. <a href="%s">Return to settings</a>', 'customer-reviews-woocommerce' ), $this->page_url ) );
             }
 
-            $template_data = array(
-                array(
-                    'review_content',
-                    'review_score',
-                    'date',
-                    'product_id',
-                    'product_sku',
-                    'display_name',
-                    'email',
-                    'order_id',
-                    'media'
-                ),
-                array(
-                    __( 'This product is great!', 'customer-reviews-woocommerce' ),
-                    '5',
-                    '2018-07-01 15:30:05',
-                    12,
-                    'sku-123',
-                    __( 'Example Customer', 'customer-reviews-woocommerce' ),
-                    'example.customer@mail.com',
-                    '',
-                    'https://www.example.com/image-1.jpeg,https://www.example.com/image-2.jpeg,https://www.example.com/video-1.mp4'
-                ),
-                array(
-                    __( 'This product is not so great.', 'customer-reviews-woocommerce' ),
-                    '1',
-                    '2017-04-15 09:54:32',
-                    22,
-                    'sku-456',
-                    __( 'Sample Customer', 'customer-reviews-woocommerce' ),
-                    'sample.customer@mail.com',
-                    '',
-                    ''
-                ),
-                array(
-                    __( 'This is a shop review. Note that the product_id is -1 and product_sku is blank. Customer service is good!', 'customer-reviews-woocommerce' ),
-                    '4',
-                    '2017-04-18 10:24:43',
-                    -1,
-                    '',
-                    __( 'Sample Customer', 'customer-reviews-woocommerce' ),
-                    'sample.customer@mail.com',
-                    '',
-                    ''
-                )
-            );
+            if ( 'cr-download-import-qna-template' === $_GET['action'] ) {
+              $template_data = array(
+                  array(
+                      'qna_id',
+                      'qna_content',
+                      'qna_parent',
+                      'date',
+                      'product_id',
+                      'product_sku',
+                      'display_name',
+                      'email'
+                  ),
+                  array(
+                      '1',
+                      __( 'Does this t-shirt shrink after washing?', 'customer-reviews-woocommerce' ),
+                      '',
+                      '2025-04-01 15:30:05',
+                      '22',
+                      '',
+                      __( 'Example Customer', 'customer-reviews-woocommerce' ),
+                      'example.customer@mail.com'
+                  ),
+                  array(
+                      '2',
+                      __( 'The t-shirt is made from pre-shrunk cotton, so it holds its size well after washing.', 'customer-reviews-woocommerce' ),
+                      '1',
+                      '2025-04-02 10:22:07',
+                      '22',
+                      '',
+                      __( 'Sample Store Manager', 'customer-reviews-woocommerce' ),
+                      'sample.store.manager@mail.com'
+                  ),
+                  array(
+                      '3',
+                      __( 'To keep the best fit, we recommend washing in cold water and air drying, as this helps minimize any natural fabric shrinkage over time.', 'customer-reviews-woocommerce' ),
+                      '1',
+                      '2025-05-18 17:24:43',
+                      '',
+                      'sku-24',
+                      __( 'Another Store Manager', 'customer-reviews-woocommerce' ),
+                      'another.store.manager@mail.com'
+                  )
+              );
+              $file_name = 'qna-import-template.csv';
+            } else {
+              $template_data = array(
+                  array(
+                      'review_content',
+                      'review_score',
+                      'date',
+                      'product_id',
+                      'product_sku',
+                      'display_name',
+                      'email',
+                      'order_id',
+                      'media'
+                  ),
+                  array(
+                      __( 'This product is great!', 'customer-reviews-woocommerce' ),
+                      '5',
+                      '2018-07-01 15:30:05',
+                      12,
+                      'sku-123',
+                      __( 'Example Customer', 'customer-reviews-woocommerce' ),
+                      'example.customer@mail.com',
+                      '',
+                      'https://www.example.com/image-1.jpeg,https://www.example.com/image-2.jpeg,https://www.example.com/video-1.mp4'
+                  ),
+                  array(
+                      __( 'This product is not so great.', 'customer-reviews-woocommerce' ),
+                      '1',
+                      '2017-04-15 09:54:32',
+                      22,
+                      'sku-456',
+                      __( 'Sample Customer', 'customer-reviews-woocommerce' ),
+                      'sample.customer@mail.com',
+                      '',
+                      ''
+                  ),
+                  array(
+                      __( 'This is a shop review. Note that the product_id is -1 and product_sku is blank. Customer service is good!', 'customer-reviews-woocommerce' ),
+                      '4',
+                      '2017-04-18 10:24:43',
+                      -1,
+                      '',
+                      __( 'Sample Customer', 'customer-reviews-woocommerce' ),
+                      'sample.customer@mail.com',
+                      '',
+                      ''
+                  )
+              );
+              $file_name = 'review-import-template.csv';
+            }
 
             $stdout = fopen( 'php://output', 'w' );
             $length = 0;
@@ -264,7 +313,7 @@ class CR_Import_Admin_Menu {
 
             header( 'Content-Description: File Transfer' );
             header( 'Content-Type: application/octet-stream' );
-            header( 'Content-Disposition: attachment; filename="review-import-template.csv"' );
+            header( 'Content-Disposition: attachment; filename="' . $file_name . '"' );
             header( 'Content-Transfer-Encoding: binary' );
             header( 'Connection: Keep-Alive' );
             header( 'Expires: 0' );
@@ -276,139 +325,31 @@ class CR_Import_Admin_Menu {
         }
     }
 
-    public function print_scripts() {
-        if ( $this->is_this_page() ) {
-            ?>
-            <style>
-            .ivole-import-container {
-                color: #555555;
-            }
-
-            .ivole-import-container .ivole-import-step {
-                padding-bottom: 15px;
-            }
-
-            .ivole-import-container .ivole-import-step .ivole-step-title {
-                font-weight: normal;
-            }
-
-            #ivole-import-status {
-                display: none;
-            }
-
-            #ivole-import-status.status-error, #cr-export-results .status-error{
-                color:#ca4a1f;
-            }
-
-            #ivole-upload-container table td {
-                vertical-align: top;
-                padding: 5px 20px 0px 0px;
-            }
-
-            #ivole-import-progress, #cr-export-progress {
-                max-width: 700px;
-                margin: 40px auto;
-                display: none;
-                text-align: center;
-            }
-
-            #ivole-import-progress h2, #cr-export-progress h2 {
-                text-align: center;
-                font-weight: normal;
-            }
-
-            #ivole-import-progress progress, #cr-export-progress progress {
-                width: 100%;
-                height: 42px;
-                margin: 0 auto 24px;
-                display: block;
-                -webkit-appearance: none;
-                background: #ffffff;
-                border: 2px solid #eee;
-                border-radius: 4px;
-                padding: 0;
-                box-shadow: 0 1px 0px 0 rgba(255, 255, 255, 0.2);
-            }
-
-            #ivole-import-progress progress::-webkit-progress-bar, #cr-export-progress progress::-webkit-progress-bar {
-                background: transparent none;
-                border: 0;
-                border-radius: 4px;
-                padding: 0;
-                box-shadow: none;
-            }
-
-            #ivole-import-progress progress::-webkit-progress-value, #cr-export-progress progress::-webkit-progress-value {
-                border-radius: 3px;
-                box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.4);
-                background: #A46497;
-                background: linear-gradient( top, #A46497, #66405F ), #A46497;
-                transition: width 1s ease;
-            }
-
-            #ivole-import-progress progress::-moz-progress-bar, #cr-export-progress progress::-moz-progress-bar {
-                border-radius: 3px;
-                box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.4);
-                background: #A46497;
-                background: linear-gradient( top, #A46497, #66405F ), #A46497;
-                transition: width 1s ease;
-            }
-
-            #ivole-import-progress progress::-ms-fill, #cr-export-progress progress::-ms-fill{
-                border-radius: 3px;
-                box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.4);
-                background: #A46497;
-                background: linear-gradient( to bottom, #A46497, #66405F ), #A46497;
-                transition: width 1s ease;
-            }
-
-            #ivole-import-results, #cr-export-results {
-                display: none;
-            }
-
-            #cr-export-results {
-                max-width:700px;
-                margin:0 auto;
-                text-align:center;
-            }
-
-            #ivole-import-results p, #cr-export-results p {
-                font-size: 15px;
-            }
-
-            #ivole-import-cancel, #cr-export-cancel {
-                font-size: 15px;
-                line-height: 32px;
-                height: 34px;
-                padding: 0 20px 1px;
-            }
-            </style>
-            <?php
-        }
-    }
-
     public function include_scripts() {
         if ( $this->is_this_page() ) {
-            wp_register_script( 'ivole-admin-import', plugins_url( 'js/admin-import.js', dirname( dirname( __FILE__ ) ) ), [ 'wp-plupload', 'media', 'jquery' ] );
-
-            wp_localize_script( 'ivole-admin-import', 'ivoleImporterStrings', array(
-                'uploading'        => __( 'Upload progress: %s%', 'customer-reviews-woocommerce' ),
-                'importing'        => __( 'Import is in progress (%s/%s completed)', 'customer-reviews-woocommerce' ),
-                'filelist_empty'   => __( 'No file selected', 'customer-reviews-woocommerce' ),
-                'cancelling'       => __( 'Cancelling', 'customer-reviews-woocommerce' ),
-                'cancel'           => __( 'Cancel', 'customer-reviews-woocommerce' ),
-                'upload_cancelled' => __( 'Upload Cancelled', 'customer-reviews-woocommerce' ),
-                'upload_failed'    => __( 'Upload Failed', 'customer-reviews-woocommerce' ),
-                'result_started'   => __( 'Started: %s', 'customer-reviews-woocommerce' ),
-                'result_finished'  => __( 'Finished: %s', 'customer-reviews-woocommerce' ),
-                'result_cancelled' => __( 'Cancelled: %s', 'customer-reviews-woocommerce' ),
-                'result_imported'  => __( '%d review(s) successfully uploaded', 'customer-reviews-woocommerce' ),
-                'result_skipped'   => __( '%d duplicate review(s) skipped', 'customer-reviews-woocommerce' ),
-                'result_errors'    => __( '%d error(s)', 'customer-reviews-woocommerce' )
+            wp_register_script( 'cr-admin-import', plugins_url( 'js/admin-import.js', dirname( dirname( __FILE__ ) ) ), [ 'wp-plupload', 'media', 'jquery' ], Ivole::CR_VERSION );
+            wp_localize_script( 'cr-admin-import', 'ivoleImporterStrings', array(
+                'uploading'          => __( 'Upload progress: %s%', 'customer-reviews-woocommerce' ),
+                'importing'          => __( 'Import is in progress (%s/%s completed)', 'customer-reviews-woocommerce' ),
+                'filelist_empty'     => __( 'No file selected', 'customer-reviews-woocommerce' ),
+                'cancelling'         => __( 'Cancelling', 'customer-reviews-woocommerce' ),
+                'cancel'             => __( 'Cancel', 'customer-reviews-woocommerce' ),
+                'upload_cancelled'   => __( 'Upload Cancelled', 'customer-reviews-woocommerce' ),
+                'upload_failed'      => __( 'Upload Failed', 'customer-reviews-woocommerce' ),
+                'result_started'     => __( 'Started: %s', 'customer-reviews-woocommerce' ),
+                'result_finished'    => __( 'Finished: %s', 'customer-reviews-woocommerce' ),
+                'result_cancelled'   => __( 'Cancelled: %s', 'customer-reviews-woocommerce' ),
+                'result_imported'    => __( '%d review(s) successfully uploaded', 'customer-reviews-woocommerce' ),
+                'result_skipped'     => __( '%d duplicate review(s) skipped', 'customer-reviews-woocommerce' ),
+                'result_errors'      => __( '%d error(s)', 'customer-reviews-woocommerce' ),
+                'result_q_imported'  => __( '%d question(s) successfully uploaded', 'customer-reviews-woocommerce' ),
+                'result_a_imported'  => __( '%d answer(s) successfully uploaded', 'customer-reviews-woocommerce' ),
+                'result_q_skipped'   => __( '%d duplicate question(s) skipped', 'customer-reviews-woocommerce' ),
+                'result_a_skipped'   => __( '%d duplicate answer(s) skipped', 'customer-reviews-woocommerce' )
             ) );
-
             wp_enqueue_media();
-            wp_enqueue_script( 'ivole-admin-import' );
+            wp_enqueue_script( 'cr-admin-import' );
+            wp_enqueue_style( 'cr-import-export-css', plugins_url( 'css/import-export.css', dirname( dirname( __FILE__) ) ), array(), Ivole::CR_VERSION );
         }
     }
 

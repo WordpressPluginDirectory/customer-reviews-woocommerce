@@ -121,7 +121,7 @@ jQuery(document).ready(function() {
 
             jQuery('#cr-export-result-started').html(CrExportStrings.result_started.replace('%s', start_date.toLocaleDateString() + ' ' + start_date.toLocaleTimeString()));
             jQuery('#cr-export-result-finished').html(CrExportStrings.result_finished.replace('%s', end_date.toLocaleDateString() + ' ' + end_date.toLocaleTimeString()));
-            if(data.status !== "cancelled") jQuery('#cr-export-result-exported').html(CrExportStrings.result_imported.replace('%d', data.reviews.exported));
+            if(data.status !== "cancelled") jQuery('#cr-export-result-exported').html(CrExportStrings.result_exported.replace('%d', data.reviews.exported));
 
             setTimeout(function() {
                 jQuery('#cr-export-progress').hide();
@@ -210,5 +210,89 @@ jQuery(document).ready(function() {
         }
     };
 
+    let crQnaExporter = {
+      init: function() {
+        jQuery('#cr-export-qna-button').on('click', function(event) {
+          event.preventDefault();
+          let startDate = new Date();
+          jQuery('#cr-export-qna-result-started').html(
+            CrExportStrings.result_started.replace('%s', startDate.toLocaleDateString() + ' ' + startDate.toLocaleTimeString())
+          );
+          jQuery('#cr-export-qna').hide();
+          jQuery('#cr-export-qna-progress').show();
+          crQnaExporter.exportNextChunk( 0, 0 );
+        });
+        jQuery('#cr-export-qna-cancel').on('click', function(event) {
+          event.preventDefault();
+          jQuery('#cr-export-qna-cancel').data('cancelled', 1);
+          jQuery('#cr-export-qna-cancel').prop('disabled', true);
+          jQuery('#cr-export-qna-cancel').html(CrExportStrings.cancelling);
+        });
+        jQuery('#cr-export-qna-download').on('click', function(event) {
+          jQuery('#cr-export-qna-result-exported').data( 'qnacount', 0 );
+          jQuery('#cr-export-qna-text').html( CrExportStrings.exporting_init );
+          jQuery('#cr-export-qna-progress-bar').val(0);
+          jQuery("#cr-export-qna-results").delay(3000).hide(0);
+          jQuery("#cr-export-qna").delay(3000).show(0);
+        } );
+      },
+
+      exportNextChunk: function( offset, total ) {
+        if ( jQuery('#cr-export-qna-cancel').data('cancelled') ) {
+          jQuery('#cr-export-qna-result-status').html(CrExportStrings.export_cancelled);
+          crQnaExporter.completeOrCancelledUI();
+          return;
+        }
+        jQuery.post(
+          ajaxurl,
+          {
+            'action': 'cr_qna_export_chunk',
+            'nonce': jQuery('#cr-export-qna-button').data('nonce'),
+            'offset': offset,
+            'total': total
+          },
+          function( res ) {
+            if ( ! res.success ) {
+              jQuery('#cr-export-qna-result-status').html(res.data.message);
+              crQnaExporter.completeOrCancelledUI();
+            } else {
+              // update progress
+              let percentage = Math.floor( ( res.offset / res.total ) * 100);
+              jQuery('#cr-export-qna-progress-bar').val(percentage);
+              jQuery('#cr-export-qna-text').html(
+                CrExportStrings.exporting.replace('%s', res.offset).replace('%s', res.total)
+              );
+              // update stats
+              jQuery('#cr-export-qna-result-exported').data(
+                'qnacount',
+                res.offset
+              );
+              // either completed
+              if ( res.lastChunk ) {
+                crQnaExporter.completeOrCancelledUI();
+                jQuery("#cr-export-qna-download").show();
+              } else {
+                // or process the next chunk
+                crQnaExporter.exportNextChunk( res.offset, res.total );
+              }
+            }
+          }
+        );
+      },
+
+      completeOrCancelledUI: function() {
+        let endDate = new Date();
+        jQuery('#cr-export-qna-result-finished').html(
+          CrExportStrings.result_finished.replace('%s', endDate.toLocaleDateString() + ' ' + endDate.toLocaleTimeString())
+        );
+        jQuery('#cr-export-qna-result-exported').html(
+          CrExportStrings.result_qna_exported.replace('%d', jQuery('#cr-export-qna-result-exported').data('qnacount'))
+        );
+        jQuery('#cr-export-qna-progress').hide();
+        jQuery("#cr-export-qna-results").show();
+      }
+    }
+
     crExporter.init();
+    crQnaExporter.init();
 });

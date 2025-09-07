@@ -264,7 +264,7 @@ if ( ! class_exists( 'CR_Diagnostics_Admin_Menu' ) ):
 							else :
 							?>
 								<mark class="error"><span class="dashicons dashicons-warning"></span>
-									<?php _e( 'Product ratings will not be diplayed because WooCommerce product reviews are disabled.', 'customer-reviews-woocommerce' ); ?>
+									<?php _e( 'Product ratings will not be displayed because WooCommerce product reviews are disabled.', 'customer-reviews-woocommerce' ); ?>
 								</mark>
 							<?php
 							endif;

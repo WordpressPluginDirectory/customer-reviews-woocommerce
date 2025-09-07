@@ -194,6 +194,7 @@ if ( ! class_exists( 'CR_Qna_Admin_Menu' ) ):
 				);
 				wp_enqueue_script( 'cr-all-reviews' );
 				wp_enqueue_script( 'cr_select2_admin_js', plugins_url( 'js/select2.min.js', dirname( dirname( __FILE__ ) ) ) );
+				wp_enqueue_script( 'cr-tiptip', plugins_url( 'js/jquery.tipTip.minified.js' , dirname( dirname( __FILE__ ) ) ), array(), Ivole::CR_VERSION, false );
 				wp_enqueue_style( 'cr-admin-css', plugins_url( 'css/admin.css', dirname( dirname( __FILE__) ) ), array(), Ivole::CR_VERSION );
 			}
 			if( 'comment.php' === $hook ) {

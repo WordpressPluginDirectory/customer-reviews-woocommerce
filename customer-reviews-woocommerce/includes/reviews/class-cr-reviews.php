@@ -132,7 +132,7 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 			$html_field_attachment = '<div class="cr-upload-local-images"><div class="cr-upload-images-preview"></div>';
 			$html_field_attachment .= '<label for="cr_review_image" class="cr-upload-images-status">';
 			$html_field_attachment .= sprintf( __( 'Upload up to %d images or videos', 'customer-reviews-woocommerce' ), $this->limit_file_count );
-			$html_field_attachment .= '</label><input type="file" accept="image/*, video/*" multiple="multiple" name="review_image_';
+			$html_field_attachment .= '</label><input type="file" capture="environment" accept="image/*, video/*" multiple="multiple" name="review_image_';
 			$html_field_attachment .= $post_id . '[]" id="cr_review_image" data-nonce="' . wp_create_nonce( 'cr-upload-images-frontend' );
 			$html_field_attachment .= '" data-postid="' . $post_id . '" />';
 			$html_field_attachment .= '</div>';
@@ -228,10 +228,10 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 			$pics_local = get_comment_meta( $comment->comment_ID, self::REVIEWS_META_LCL_IMG );
 			$pics_v = get_comment_meta( $comment->comment_ID, self::REVIEWS_META_VID );
 			$pics_v_local = get_comment_meta( $comment->comment_ID, self::REVIEWS_META_LCL_VID );
-			$pics_n = count( $pics );
-			$pics_local_n = count( $pics_local );
-			$pics_v_n = count( $pics_v );
-			$pics_v_local_n = count( $pics_v_local );
+			$pics_n = ( is_array( $pics ) ? count( $pics ) : 0 );
+			$pics_local_n = ( is_array( $pics_local ) ? count( $pics_local ) : 0 );
+			$pics_v_n = ( is_array( $pics_v ) ? count( $pics_v ) : 0 );
+			$pics_v_local_n = ( is_array( $pics_v_local ) ? count( $pics_v_local ) : 0 );
 			$cr_query = '?crsrc=wp';
 			if( 0 < $pics_n || 0 < $pics_local_n || 0 < $pics_v_n || 0 < $pics_v_local_n ) {
 				$output .= '<div class="cr-comment-images cr-comment-videos">';
@@ -1235,10 +1235,10 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 			$pics_local = get_comment_meta( $comment->comment_ID, self::REVIEWS_META_LCL_IMG );
 			$pics_v = get_comment_meta( $comment->comment_ID, self::REVIEWS_META_VID );
 			$pics_v_local = get_comment_meta( $comment->comment_ID, self::REVIEWS_META_LCL_VID );
-			$pics_n = count( $pics );
-			$pics_local_n = count( $pics_local );
-			$pics_v_n = count( $pics_v );
-			$pics_v_local_n = count( $pics_v_local );
+			$pics_n = ( is_array( $pics ) ? count( $pics ) : 0 );
+			$pics_local_n = ( is_array( $pics_local ) ? count( $pics_local ) : 0 );
+			$pics_v_n = ( is_array( $pics_v ) ? count( $pics_v ) : 0 );
+			$pics_v_local_n = ( is_array( $pics_v_local ) ? count( $pics_v_local ) : 0 );
 			$img_label_counter = 1;
 			for( $i = 0; $i < $pics_n; $i ++) {
 				if ( isset( $pics[$i]['url'] ) ) {

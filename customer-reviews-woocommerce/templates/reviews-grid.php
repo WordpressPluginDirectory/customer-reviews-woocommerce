@@ -187,7 +187,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 							if( 'publish' === $product->get_status() ):
 								?>
 								<div class="review-product" style="<?php echo esc_attr( $product_style ); ?>">
-									<div class="product-thumbnail">
+									<div class="cr-product-thumbnail">
 										<?php echo $product->get_image( 'woocommerce_gallery_thumbnail' ); ?>
 									</div>
 									<div class="product-title">

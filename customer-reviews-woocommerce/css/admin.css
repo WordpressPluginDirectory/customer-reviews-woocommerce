@@ -1373,6 +1373,9 @@ li.select2-results__option {
 	position: relative;
 	padding-right: 24px;
 }
+.cr-tab-shortcodes.ivole-new-settings table.form-table th {
+	display: none;
+}
 .ivole-new-settings table.form-table th.cr-snd-dlay-table-narrow {
 	width: 140px;
 }

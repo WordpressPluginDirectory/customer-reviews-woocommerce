@@ -4,7 +4,7 @@ Tags: woocommerce, review plugin, review reminder, customer reviews, review for 
 Requires at least: 4.5
 Tested up to: 6.8
 Requires PHP: 7.2
-Stable tag: 5.81.1
+Stable tag: 5.82.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl.html
 
@@ -160,17 +160,17 @@ There's nothing more reassuring to customers than having their questions answere
 * Generate an XML feed with product reviews for Google Shopping
 * Show star ratings in Google Shopping search results
 
-=== ⬇ Import and Export Reviews ===
+=== ⬇ Import and Export ===
 
-Want to add product reviews from external websites? No problemo.
+Want to add reviews or questions and answers from external websites? No problemo.
 
-Just use the import reviews feature, which automatically creates reviews in WooCommerce based on a CSV file.
+Just use the import reviews feature, which automatically creates reviews in WooCommerce based on a CSV file. Or use the import Q&A feature to upload product questions and answers from a CSV file.
 
-Similarly, you can export WooCommerce reviews to a CSV file.
+Similarly, you can export WooCommerce reviews or questions and answers to a CSV file.
 
 * Import / export product and store reviews
-* Import reviews with images and videos
-* Export reviews with images and videos
+* Import / export reviews with images and videos
+* Import / export questions and answers (Q&A)
 
 === Quick and Easy Set-Up ===
 
@@ -233,6 +233,12 @@ If you would like to change how reviews are sorted on product pages, it is possi
 
 == Changelog ==
 
+= 5.82.0 =
+* New feature: import questions and answers from CSV
+* New feature: export questions and answers to CSV
+* Improvement: improved compatibility of [cusrev_reviews_slider] shortcode with WPML to display translated reviews
+= 5.81.2 =
+* Improvement: compatibility with Android browsers to allow customers to open their camera and capture media files for their reviews
 = 5.81.1 =
 * Bug fix: SQL injection prevention
 = 5.81.0 =

@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv3.
 msgid ""
 msgstr ""
-"Project-Id-Version: Customer Reviews for WooCommerce 5.81.0\n"
+"Project-Id-Version: Customer Reviews for WooCommerce 5.82.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/customer-reviews-woocommerce\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-07-27T16:05:33+00:00\n"
+"POT-Creation-Date: 2025-09-06T22:13:12+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 "X-Domain: customer-reviews-woocommerce\n"
@@ -34,27 +34,27 @@ msgstr ""
 msgid "https://www.cusrev.com/business/"
 msgstr ""
 
-#: class-ivole.php:169
+#: class-ivole.php:173
 msgid "View CusRev documentation"
 msgstr ""
 
-#: class-ivole.php:169
+#: class-ivole.php:173
 msgid "Docs"
 msgstr ""
 
-#: class-ivole.php:170
+#: class-ivole.php:174
 msgid "Visit community forums"
 msgstr ""
 
-#: class-ivole.php:170
+#: class-ivole.php:174
 msgid "Community support"
 msgstr ""
 
-#: class-ivole.php:180
+#: class-ivole.php:184
 msgid "View Customer Reviews settings"
 msgstr ""
 
-#: class-ivole.php:180
+#: class-ivole.php:184
 #: includes/settings/class-cr-admin-menu-settings.php:67
 #: includes/settings/class-cr-admin-menu-settings.php:68
 msgid "Settings"
@@ -215,15 +215,15 @@ msgstr ""
 msgid "The number of times customers clicked on your store's product recommendations shown on aggregated review forms."
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:493
-#: includes/blocks/class-cr-all-reviews.php:534
+#: includes/blocks/class-cr-all-reviews.php:496
+#: includes/blocks/class-cr-all-reviews.php:537
 #: templates/cr-ajax-product-reviews.php:124
 #: templates/reviews-grid.php:223
 msgid "Sorry, no reviews match your current selections"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:529
-#: includes/blocks/class-cr-all-reviews.php:636
+#: includes/blocks/class-cr-all-reviews.php:532
+#: includes/blocks/class-cr-all-reviews.php:639
 #: includes/reviews/class-cr-ajax-reviews.php:315
 #: includes/reviews/class-cr-ajax-reviews.php:395
 #: includes/reviews/class-cr-ajax-reviews.php:468
@@ -232,7 +232,7 @@ msgstr ""
 msgid "Show more reviews (%d)"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:867
+#: includes/blocks/class-cr-all-reviews.php:870
 #: includes/blocks/class-cr-reviews-grid.php:982
 #: includes/reviews/class-cr-reviews.php:537
 msgid "Based on %s review"
@@ -240,8 +240,8 @@ msgid_plural "Based on %s reviews"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/blocks/class-cr-all-reviews.php:880
-#: includes/blocks/class-cr-all-reviews.php:884
+#: includes/blocks/class-cr-all-reviews.php:883
+#: includes/blocks/class-cr-all-reviews.php:887
 #: includes/blocks/class-cr-reviews-grid.php:995
 #: includes/blocks/class-cr-reviews-grid.php:999
 #: includes/reviews/class-cr-reviews.php:552
@@ -249,8 +249,8 @@ msgstr[1] ""
 msgid "5 star"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:893
-#: includes/blocks/class-cr-all-reviews.php:897
+#: includes/blocks/class-cr-all-reviews.php:896
+#: includes/blocks/class-cr-all-reviews.php:900
 #: includes/blocks/class-cr-reviews-grid.php:1008
 #: includes/blocks/class-cr-reviews-grid.php:1012
 #: includes/reviews/class-cr-reviews.php:563
@@ -258,8 +258,8 @@ msgstr ""
 msgid "4 star"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:906
-#: includes/blocks/class-cr-all-reviews.php:910
+#: includes/blocks/class-cr-all-reviews.php:909
+#: includes/blocks/class-cr-all-reviews.php:913
 #: includes/blocks/class-cr-reviews-grid.php:1021
 #: includes/blocks/class-cr-reviews-grid.php:1025
 #: includes/reviews/class-cr-reviews.php:574
@@ -267,8 +267,8 @@ msgstr ""
 msgid "3 star"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:919
-#: includes/blocks/class-cr-all-reviews.php:923
+#: includes/blocks/class-cr-all-reviews.php:922
+#: includes/blocks/class-cr-all-reviews.php:926
 #: includes/blocks/class-cr-reviews-grid.php:1034
 #: includes/blocks/class-cr-reviews-grid.php:1038
 #: includes/reviews/class-cr-reviews.php:585
@@ -276,8 +276,8 @@ msgstr ""
 msgid "2 star"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:932
-#: includes/blocks/class-cr-all-reviews.php:936
+#: includes/blocks/class-cr-all-reviews.php:935
+#: includes/blocks/class-cr-all-reviews.php:939
 #: includes/blocks/class-cr-reviews-grid.php:1047
 #: includes/blocks/class-cr-reviews-grid.php:1051
 #: includes/reviews/class-cr-reviews-list-table.php:484
@@ -286,35 +286,35 @@ msgstr ""
 msgid "1 star"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:948
+#: includes/blocks/class-cr-all-reviews.php:951
 #: includes/blocks/class-cr-reviews-grid.php:1064
 #: includes/reviews/class-cr-reviews.php:1712
 #: templates/cr-review-form.php:31
 msgid "Add a review"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1082
+#: includes/blocks/class-cr-all-reviews.php:1085
 #: includes/reviews/class-cr-reviews.php:1625
 msgid "Sort reviews"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1084
+#: includes/blocks/class-cr-all-reviews.php:1087
 #: includes/reviews/class-cr-reviews.php:1627
 msgid "Most Recent"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1087
+#: includes/blocks/class-cr-all-reviews.php:1090
 #: includes/reviews/class-cr-reviews.php:1631
 msgid "Most Helpful"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1102
+#: includes/blocks/class-cr-all-reviews.php:1105
 msgid "%d star"
 msgid_plural "%d stars"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/blocks/class-cr-all-reviews.php:1108
+#: includes/blocks/class-cr-all-reviews.php:1111
 #: includes/blocks/class-cr-reviews-grid.php:1073
 #: includes/reviews/class-cr-reviews.php:612
 msgid "See all %d review"
@@ -322,37 +322,37 @@ msgid_plural "See all %d reviews"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/blocks/class-cr-all-reviews.php:1126
+#: includes/blocks/class-cr-all-reviews.php:1129
 msgid "%d-%d of %d review (%s). %s"
 msgid_plural "%d-%d of %d reviews (%s). %s"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/blocks/class-cr-all-reviews.php:1135
+#: includes/blocks/class-cr-all-reviews.php:1138
 msgid "%d-%d of %d review"
 msgid_plural "%d-%d of %d reviews"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/blocks/class-cr-all-reviews.php:1144
+#: includes/blocks/class-cr-all-reviews.php:1147
 msgid "0 of 0 reviews (%s). %s"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1149
+#: includes/blocks/class-cr-all-reviews.php:1152
 msgid "0 of 0 reviews"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1160
+#: includes/blocks/class-cr-all-reviews.php:1163
 #: includes/reminders/class-cr-local-forms.php:225
 #: templates/cr-ajax-product-reviews.php:145
 msgid "Add photos or video to your review"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1200
+#: includes/blocks/class-cr-all-reviews.php:1203
 msgid "Data validation error"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1201
+#: includes/blocks/class-cr-all-reviews.php:1204
 #: includes/qna/class-cr-admin-menu-qna.php:190
 #: includes/qna/class-cr-qna.php:179
 #: includes/reminders/class-cr-manual.php:397
@@ -360,36 +360,36 @@ msgstr ""
 msgid "OK"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1208
+#: includes/blocks/class-cr-all-reviews.php:1211
 #: templates/cr-review-form.php:78
 msgid "Currently, we are not accepting new reviews"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1232
+#: includes/blocks/class-cr-all-reviews.php:1235
 #: templates/cr-review-form.php:61
 msgid "You must be logged in to post a review"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1262
+#: includes/blocks/class-cr-all-reviews.php:1265
 msgid "Only customers who have purchased this product may leave a review. Please use the same email address as in your order for this product."
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1286
+#: includes/blocks/class-cr-all-reviews.php:1289
 msgid "Your review could not be added"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1287
+#: includes/blocks/class-cr-all-reviews.php:1290
 #: includes/qna/class-cr-admin-menu-qna.php:189
 #: includes/qna/class-cr-qna.php:181
 #: includes/reviews/class-cr-admin-menu-reviews.php:248
 msgid "Try again"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1288
+#: includes/blocks/class-cr-all-reviews.php:1291
 msgid "Your review has been successfully added"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1289
+#: includes/blocks/class-cr-all-reviews.php:1292
 #: includes/qna/class-cr-qna.php:182
 #: templates/cr-review-form.php:201
 #: templates/qna-list.php:202
@@ -397,22 +397,22 @@ msgstr ""
 msgid "Continue"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1316
+#: includes/blocks/class-cr-all-reviews.php:1319
 msgid "Error: no shop page configured in WooCommerce settings (WooCommerce > Settings > Products > Shop page)"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1318
+#: includes/blocks/class-cr-all-reviews.php:1321
 msgid "Error: no product with ID %d found"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1358
+#: includes/blocks/class-cr-all-reviews.php:1361
 #: includes/reminders/class-cr-local-forms-ajax.php:99
 #: includes/reminders/class-cr-local-forms.php:156
 #: includes/reviews/class-cr-reviews.php:404
 msgid "The file cannot be uploaded because its size exceeds the limit of %d MB"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1367
+#: includes/blocks/class-cr-all-reviews.php:1370
 #: includes/reminders/class-cr-local-forms-ajax.php:108
 #: includes/reminders/class-cr-local-forms.php:157
 #: includes/reviews/class-cr-reviews.php:402
@@ -1378,19 +1378,19 @@ msgstr ""
 msgid "Enable the option to add \"identifier_exists = no\" in Google Shopping feed for this variation."
 msgstr ""
 
-#: includes/google/class-cr-structured-data.php:48
+#: includes/google/class-cr-structured-data.php:47
 msgid "Image #%1$d from "
 msgstr ""
 
-#: includes/google/class-cr-structured-data.php:124
+#: includes/google/class-cr-structured-data.php:123
 msgid "GTIN: "
 msgstr ""
 
-#: includes/google/class-cr-structured-data.php:149
+#: includes/google/class-cr-structured-data.php:148
 msgid "MPN: "
 msgstr ""
 
-#: includes/google/class-cr-structured-data.php:159
+#: includes/google/class-cr-structured-data.php:158
 msgid "Brand: "
 msgstr ""
 
@@ -1400,81 +1400,92 @@ msgid_plural "Once in %d days"
 msgstr[0] ""
 msgstr[1] ""
 
+#: includes/import-export/class-cr-admin-menu-import.php:53
 #: includes/import-export/class-cr-admin-menu-import.php:54
-#: includes/import-export/class-cr-admin-menu-import.php:55
 msgid "Import / Export"
 msgstr ""
 
-#: includes/import-export/class-cr-admin-menu-import.php:63
-msgid "Import"
+#: includes/import-export/class-cr-admin-menu-import.php:62
+msgid "Import Reviews"
 msgstr ""
 
-#: includes/import-export/class-cr-admin-menu-import.php:113
-msgid "Import Reviews from CSV File"
+#: includes/import-export/class-cr-admin-menu-import.php:112
+msgid "Import Reviews from CSV"
 msgstr ""
 
-#: includes/import-export/class-cr-admin-menu-import.php:115
+#: includes/import-export/class-cr-admin-menu-import.php:114
 msgid "A utility to import reviews from a CSV file. Use it in three steps. "
 msgstr ""
 
-#: includes/import-export/class-cr-admin-menu-import.php:117
+#: includes/import-export/class-cr-admin-menu-import.php:116
 msgid "Start with downloading the template for entry of reviews."
 msgstr ""
 
-#: includes/import-export/class-cr-admin-menu-import.php:119
+#: includes/import-export/class-cr-admin-menu-import.php:118
 msgid "Enter reviews to be imported in the template and save it (select CSV UTF-8 format if using MS Excel). Make sure to provide valid product IDs that exist on your WooCommerce site. To import general shop reviews (not related to any particular product), use -1 as a product ID. Please keep the column 'order_id' blank unless you are importing a file created with the export utility of this plugin."
 msgstr ""
 
-#: includes/import-export/class-cr-admin-menu-import.php:121
+#: includes/import-export/class-cr-admin-menu-import.php:120
 msgid "Finally, upload the template and run import."
 msgstr ""
 
-#: includes/import-export/class-cr-admin-menu-import.php:126
+#: includes/import-export/class-cr-admin-menu-import.php:125
 msgid "Step 1: Download template"
 msgstr ""
 
-#: includes/import-export/class-cr-admin-menu-import.php:128
+#: includes/import-export/class-cr-admin-menu-import.php:127
+#: includes/import-export/class-cr-export-qna.php:63
+#: includes/import-export/class-cr-export-qna.php:83
 #: includes/import-export/class-cr-export-reviews.php:77
 #: includes/import-export/class-cr-export-reviews.php:97
+#: includes/import-export/class-cr-import-qna.php:93
 #: includes/reviews/class-cr-reviews-media-download.php:31
 #: includes/settings/class-cr-settings-license.php:143
 msgid "Download"
 msgstr ""
 
-#: includes/import-export/class-cr-admin-menu-import.php:133
+#: includes/import-export/class-cr-admin-menu-import.php:132
 msgid "Step 2: Enter reviews into the template"
 msgstr ""
 
-#: includes/import-export/class-cr-admin-menu-import.php:137
+#: includes/import-export/class-cr-admin-menu-import.php:136
 msgid "Step 3: Upload template with your reviews"
 msgstr ""
 
-#: includes/import-export/class-cr-admin-menu-import.php:147
-#: includes/import-export/class-cr-admin-menu-import.php:397
+#: includes/import-export/class-cr-admin-menu-import.php:146
+#: includes/import-export/class-cr-admin-menu-import.php:334
+#: includes/import-export/class-cr-import-qna.php:105
 msgid "No file selected"
 msgstr ""
 
-#: includes/import-export/class-cr-admin-menu-import.php:154
+#: includes/import-export/class-cr-admin-menu-import.php:153
+#: includes/import-export/class-cr-import-qna.php:112
 msgid "Choose File"
 msgstr ""
 
-#: includes/import-export/class-cr-admin-menu-import.php:158
+#: includes/import-export/class-cr-admin-menu-import.php:157
+#: includes/import-export/class-cr-import-qna.php:117
 msgid "Maximum size: %s"
 msgstr ""
 
-#: includes/import-export/class-cr-admin-menu-import.php:165
+#: includes/import-export/class-cr-admin-menu-import.php:164
+#: includes/import-export/class-cr-import-qna.php:125
 #: includes/reviews/class-cr-reviews-media-meta-box.php:159
 msgid "Upload"
 msgstr ""
 
-#: includes/import-export/class-cr-admin-menu-import.php:177
+#: includes/import-export/class-cr-admin-menu-import.php:176
+#: includes/import-export/class-cr-import-qna.php:134
 msgid "Import is in progress"
 msgstr ""
 
-#: includes/import-export/class-cr-admin-menu-import.php:180
-#: includes/import-export/class-cr-admin-menu-import.php:399
+#: includes/import-export/class-cr-admin-menu-import.php:179
+#: includes/import-export/class-cr-admin-menu-import.php:336
+#: includes/import-export/class-cr-export-qna.php:73
+#: includes/import-export/class-cr-export-qna.php:151
 #: includes/import-export/class-cr-export-reviews.php:87
 #: includes/import-export/class-cr-export-reviews.php:159
+#: includes/import-export/class-cr-import-qna.php:137
 #: includes/qna/class-cr-admin-menu-qna.php:187
 #: includes/reminders/class-cr-manual.php:391
 #: includes/reminders/class-cr-reminders-list-table.php:194
@@ -1490,102 +1501,145 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: includes/import-export/class-cr-admin-menu-import.php:184
+#: includes/import-export/class-cr-admin-menu-import.php:183
+#: includes/import-export/class-cr-import-qna.php:141
 msgid "Upload Completed"
 msgstr ""
 
-#: includes/import-export/class-cr-admin-menu-import.php:191
+#: includes/import-export/class-cr-admin-menu-import.php:190
 msgid "Details:"
 msgstr ""
 
-#: includes/import-export/class-cr-admin-menu-import.php:194
+#: includes/import-export/class-cr-admin-menu-import.php:193
+#: includes/import-export/class-cr-import-qna.php:153
 msgid "New Upload"
 msgstr ""
 
-#: includes/import-export/class-cr-admin-menu-import.php:208
+#: includes/import-export/class-cr-admin-menu-import.php:210
 msgid "Failed to download template: invalid nonce. <a href=\"%s\">Return to settings</a>"
 msgstr ""
 
-#: includes/import-export/class-cr-admin-menu-import.php:224
-msgid "This product is great!"
+#: includes/import-export/class-cr-admin-menu-import.php:227
+msgid "Does this t-shirt shrink after washing?"
 msgstr ""
 
-#: includes/import-export/class-cr-admin-menu-import.php:229
+#: includes/import-export/class-cr-admin-menu-import.php:232
+#: includes/import-export/class-cr-admin-menu-import.php:276
 msgid "Example Customer"
 msgstr ""
 
-#: includes/import-export/class-cr-admin-menu-import.php:235
+#: includes/import-export/class-cr-admin-menu-import.php:237
+msgid "The t-shirt is made from pre-shrunk cotton, so it holds its size well after washing."
+msgstr ""
+
+#: includes/import-export/class-cr-admin-menu-import.php:242
+msgid "Sample Store Manager"
+msgstr ""
+
+#: includes/import-export/class-cr-admin-menu-import.php:247
+msgid "To keep the best fit, we recommend washing in cold water and air drying, as this helps minimize any natural fabric shrinkage over time."
+msgstr ""
+
+#: includes/import-export/class-cr-admin-menu-import.php:252
+msgid "Another Store Manager"
+msgstr ""
+
+#: includes/import-export/class-cr-admin-menu-import.php:271
+msgid "This product is great!"
+msgstr ""
+
+#: includes/import-export/class-cr-admin-menu-import.php:282
 msgid "This product is not so great."
 msgstr ""
 
-#: includes/import-export/class-cr-admin-menu-import.php:240
-#: includes/import-export/class-cr-admin-menu-import.php:251
+#: includes/import-export/class-cr-admin-menu-import.php:287
+#: includes/import-export/class-cr-admin-menu-import.php:298
 msgid "Sample Customer"
 msgstr ""
 
-#: includes/import-export/class-cr-admin-menu-import.php:246
+#: includes/import-export/class-cr-admin-menu-import.php:293
 msgid "This is a shop review. Note that the product_id is -1 and product_sku is blank. Customer service is good!"
 msgstr ""
 
-#: includes/import-export/class-cr-admin-menu-import.php:395
+#: includes/import-export/class-cr-admin-menu-import.php:332
 msgid "Upload progress: %s%"
 msgstr ""
 
-#: includes/import-export/class-cr-admin-menu-import.php:396
+#: includes/import-export/class-cr-admin-menu-import.php:333
 msgid "Import is in progress (%s/%s completed)"
 msgstr ""
 
-#: includes/import-export/class-cr-admin-menu-import.php:398
+#: includes/import-export/class-cr-admin-menu-import.php:335
+#: includes/import-export/class-cr-export-qna.php:150
 #: includes/import-export/class-cr-export-reviews.php:158
 msgid "Cancelling"
 msgstr ""
 
-#: includes/import-export/class-cr-admin-menu-import.php:400
+#: includes/import-export/class-cr-admin-menu-import.php:337
 msgid "Upload Cancelled"
 msgstr ""
 
-#: includes/import-export/class-cr-admin-menu-import.php:401
+#: includes/import-export/class-cr-admin-menu-import.php:338
 msgid "Upload Failed"
 msgstr ""
 
-#: includes/import-export/class-cr-admin-menu-import.php:402
+#: includes/import-export/class-cr-admin-menu-import.php:339
+#: includes/import-export/class-cr-export-qna.php:154
 #: includes/import-export/class-cr-export-reviews.php:162
 msgid "Started: %s"
 msgstr ""
 
-#: includes/import-export/class-cr-admin-menu-import.php:403
+#: includes/import-export/class-cr-admin-menu-import.php:340
+#: includes/import-export/class-cr-export-qna.php:155
 #: includes/import-export/class-cr-export-reviews.php:163
 msgid "Finished: %s"
 msgstr ""
 
-#: includes/import-export/class-cr-admin-menu-import.php:404
+#: includes/import-export/class-cr-admin-menu-import.php:341
+#: includes/import-export/class-cr-export-qna.php:156
 #: includes/import-export/class-cr-export-reviews.php:164
 msgid "Cancelled: %s"
 msgstr ""
 
-#: includes/import-export/class-cr-admin-menu-import.php:405
+#: includes/import-export/class-cr-admin-menu-import.php:342
 msgid "%d review(s) successfully uploaded"
 msgstr ""
 
-#: includes/import-export/class-cr-admin-menu-import.php:406
+#: includes/import-export/class-cr-admin-menu-import.php:343
 msgid "%d duplicate review(s) skipped"
 msgstr ""
 
-#: includes/import-export/class-cr-admin-menu-import.php:407
+#: includes/import-export/class-cr-admin-menu-import.php:344
 msgid "%d error(s)"
 msgstr ""
 
-#: includes/import-export/class-cr-admin-menu-import.php:447
+#: includes/import-export/class-cr-admin-menu-import.php:345
+msgid "%d question(s) successfully uploaded"
+msgstr ""
+
+#: includes/import-export/class-cr-admin-menu-import.php:346
+msgid "%d answer(s) successfully uploaded"
+msgstr ""
+
+#: includes/import-export/class-cr-admin-menu-import.php:347
+msgid "%d duplicate question(s) skipped"
+msgstr ""
+
+#: includes/import-export/class-cr-admin-menu-import.php:348
+msgid "%d duplicate answer(s) skipped"
+msgstr ""
+
+#: includes/import-export/class-cr-admin-menu-import.php:388
 msgid "The loopback request to your site failed. This means that import of reviews will not be working as expected. If you would like to use the import utility, please contact your hosting provider and request them to enable loopback requests for your site."
 msgstr ""
 
 #. translators: 1: The HTTP response code. 2: The error message returned.
-#: includes/import-export/class-cr-admin-menu-import.php:450
+#: includes/import-export/class-cr-admin-menu-import.php:391
 msgid "Error: [%1$s] %2$s"
 msgstr ""
 
 #. translators: %d: The HTTP response code returned.
-#: includes/import-export/class-cr-admin-menu-import.php:463
+#: includes/import-export/class-cr-admin-menu-import.php:404
 msgid "The loopback request returned an unexpected http status code, %d. This means that import of reviews will not be working as expected. If you would like to use the import utility, please contact your hosting provider and request them to enable loopback requests for your site."
 msgstr ""
 
@@ -1598,10 +1652,12 @@ msgid "Export failed: Cannot identify process/progress"
 msgstr ""
 
 #: includes/import-export/class-cr-background-importer.php:59
+#: includes/import-export/class-cr-import-qna.php:477
 msgid "Line %1$d >> Error: no data for this review."
 msgstr ""
 
 #: includes/import-export/class-cr-background-importer.php:67
+#: includes/import-export/class-cr-import-qna.php:485
 msgid "Line %1$d >> Error: incorrect file format. Only %2$d column(s) found. Please open the input file in a text editor (e.g., in Notepad on Windows) and verify that columns are correctly separated by commas."
 msgstr ""
 
@@ -1614,6 +1670,7 @@ msgid "Line %1$d >> Error: either product_id or product_sku must be provided for
 msgstr ""
 
 #: includes/import-export/class-cr-background-importer.php:98
+#: includes/import-export/class-cr-import-qna.php:505
 msgid "Line %1$d >> Error: could not find a product with SKU = %2$s."
 msgstr ""
 
@@ -1630,14 +1687,17 @@ msgid "Line %1$d >> Error: product with ID = %2$d doesn't exist in this WooComme
 msgstr ""
 
 #: includes/import-export/class-cr-background-importer.php:154
+#: includes/import-export/class-cr-import-qna.php:568
 msgid "Line %1$d >> Error: display name cannot be empty."
 msgstr ""
 
 #: includes/import-export/class-cr-background-importer.php:165
+#: includes/import-export/class-cr-import-qna.php:582
 msgid "Line %1$d >> Error: email address includes invalid characters."
 msgstr ""
 
 #: includes/import-export/class-cr-background-importer.php:167
+#: includes/import-export/class-cr-import-qna.php:587
 msgid "Line %1$d >> Error: %2$s is not a valid email address."
 msgstr ""
 
@@ -1674,21 +1734,101 @@ msgstr ""
 msgid "Line %1$d >> A media file could not be imported due to its type."
 msgstr ""
 
-#: includes/import-export/class-cr-export-reviews.php:56
+#: includes/import-export/class-cr-export-qna.php:39
+msgid "Export Q & A"
+msgstr ""
+
+#: includes/import-export/class-cr-export-qna.php:58
 #: includes/import-export/class-cr-export-reviews.php:72
 msgid "Export"
 msgstr ""
 
+#: includes/import-export/class-cr-export-qna.php:69
+#: includes/import-export/class-cr-export-qna.php:148
 #: includes/import-export/class-cr-export-reviews.php:83
 msgid "Export is in progress"
 msgstr ""
 
+#: includes/import-export/class-cr-export-qna.php:78
 #: includes/import-export/class-cr-export-reviews.php:92
 msgid "Export Completed"
 msgstr ""
 
+#: includes/import-export/class-cr-export-qna.php:95
 #: includes/import-export/class-cr-export-reviews.php:107
 msgid "Failed to download: invalid nonce. <a href=\"%s\">Return to settings</a>"
+msgstr ""
+
+#: includes/import-export/class-cr-export-qna.php:125
+msgid "A utility to export questions and answers to a CSV file. Use the Export button to start export of Questions and Answers. Use the Download button to download the last export."
+msgstr ""
+
+#: includes/import-export/class-cr-export-qna.php:127
+msgid "A utility to export questions and answers to a CSV file."
+msgstr ""
+
+#: includes/import-export/class-cr-export-qna.php:131
+msgid "Export Questions and Answers to CSV"
+msgstr ""
+
+#: includes/import-export/class-cr-export-qna.php:149
+#: includes/import-export/class-cr-export-reviews.php:157
+msgid "Export is in progress (%s/%s completed)"
+msgstr ""
+
+#: includes/import-export/class-cr-export-qna.php:152
+#: includes/import-export/class-cr-export-reviews.php:160
+msgid "Export Cancelled"
+msgstr ""
+
+#: includes/import-export/class-cr-export-qna.php:153
+#: includes/import-export/class-cr-export-reviews.php:161
+msgid "Export Failed"
+msgstr ""
+
+#: includes/import-export/class-cr-export-qna.php:157
+msgid "%d question(s) and answer(s) successfully exported"
+msgstr ""
+
+#: includes/import-export/class-cr-export-qna.php:158
+#: includes/import-export/class-cr-export-reviews.php:166
+msgid "%d question(s) and/or answer(s) successfully exported"
+msgstr ""
+
+#: includes/import-export/class-cr-export-qna.php:183
+#: includes/import-export/class-cr-import-qna.php:177
+#: includes/import-export/class-cr-import-qna.php:350
+#: includes/import-export/class-cr-reviews-importer.php:43
+msgid "Permission denied"
+msgstr ""
+
+#: includes/import-export/class-cr-export-qna.php:194
+#: includes/import-export/class-cr-import-qna.php:189
+#: includes/import-export/class-cr-import-qna.php:361
+#: includes/import-export/class-cr-reviews-exporter.php:57
+#: includes/import-export/class-cr-reviews-importer.php:55
+#: includes/settings/class-cr-admin-menu-settings.php:518
+#: includes/settings/class-cr-admin-menu-settings.php:578
+#: includes/settings/class-cr-admin-menu-settings.php:646
+#: includes/settings/class-cr-settings-review-discount.php:539
+msgid "Error: nonce expired, please reload the page and try again"
+msgstr ""
+
+#: includes/import-export/class-cr-export-qna.php:211
+#: includes/import-export/class-cr-reviews-exporter.php:76
+msgid "Export failed: Could not create a folder in %s. Please check folder permissions."
+msgstr ""
+
+#: includes/import-export/class-cr-export-qna.php:239
+msgid "Export failed: Could not read Q & A from the database."
+msgstr ""
+
+#: includes/import-export/class-cr-export-qna.php:259
+msgid "Export failed: Could not open the file '%s' for writing."
+msgstr ""
+
+#: includes/import-export/class-cr-export-reviews.php:56
+msgid "Export Reviews"
 msgstr ""
 
 #: includes/import-export/class-cr-export-reviews.php:134
@@ -1703,65 +1843,132 @@ msgstr ""
 msgid "Export Reviews to CSV File"
 msgstr ""
 
-#: includes/import-export/class-cr-export-reviews.php:157
-msgid "Export is in progress (%s/%s completed)"
-msgstr ""
-
-#: includes/import-export/class-cr-export-reviews.php:160
-msgid "Export Cancelled"
-msgstr ""
-
-#: includes/import-export/class-cr-export-reviews.php:161
-msgid "Export Failed"
-msgstr ""
-
 #: includes/import-export/class-cr-export-reviews.php:165
 msgid "%d review(s) successfully exported"
 msgstr ""
 
-#: includes/import-export/class-cr-reviews-exporter.php:57
-#: includes/import-export/class-cr-reviews-importer.php:55
-#: includes/settings/class-cr-admin-menu-settings.php:518
-#: includes/settings/class-cr-admin-menu-settings.php:578
-#: includes/settings/class-cr-admin-menu-settings.php:646
-#: includes/settings/class-cr-settings-review-discount.php:539
-msgid "Error: nonce expired, please reload the page and try again"
+#: includes/import-export/class-cr-import-qna.php:47
+msgid "Import Q & A"
 msgstr ""
 
-#: includes/import-export/class-cr-reviews-exporter.php:76
-msgid "Export failed: Could not create a folder in %s. Please check folder permissions."
+#: includes/import-export/class-cr-import-qna.php:59
+msgid "Import Questions & Answers from CSV"
+msgstr ""
+
+#: includes/import-export/class-cr-import-qna.php:62
+msgid "You can use this tool to import questions and answers in three steps:"
+msgstr ""
+
+#: includes/import-export/class-cr-import-qna.php:65
+msgid "Download the template"
+msgstr ""
+
+#: includes/import-export/class-cr-import-qna.php:67
+msgid "Get the CSV template for entering your questions and answers"
+msgstr ""
+
+#: includes/import-export/class-cr-import-qna.php:70
+msgid "Fill in the template"
+msgstr ""
+
+#: includes/import-export/class-cr-import-qna.php:72
+msgid "Add your questions and answers to the template and save the file (if using MS Excel, choose CSV UTF-8 format)"
+msgstr ""
+
+#: includes/import-export/class-cr-import-qna.php:75
+msgid "Make sure to enter valid product IDs that exist on your WooCommerce site"
+msgstr ""
+
+#: includes/import-export/class-cr-import-qna.php:78
+msgid "Alternatively, you can use page or post IDs if you want to import questions and answers for non-product pages"
+msgstr ""
+
+#: includes/import-export/class-cr-import-qna.php:83
+msgid "Upload and import"
+msgstr ""
+
+#: includes/import-export/class-cr-import-qna.php:85
+msgid "Upload the completed template and run the import process"
+msgstr ""
+
+#: includes/import-export/class-cr-import-qna.php:91
+msgid "Step 1: Download the template"
+msgstr ""
+
+#: includes/import-export/class-cr-import-qna.php:98
+msgid "Step 2: Fill in the template"
+msgstr ""
+
+#: includes/import-export/class-cr-import-qna.php:102
+msgid "Step 3: Upload and import"
+msgstr ""
+
+#: includes/import-export/class-cr-import-qna.php:150
+msgid "Error details:"
+msgstr ""
+
+#: includes/import-export/class-cr-import-qna.php:201
+#: includes/import-export/class-cr-reviews-importer.php:67
+msgid "No file was uploaded"
+msgstr ""
+
+#: includes/import-export/class-cr-import-qna.php:217
+#: includes/import-export/class-cr-reviews-importer.php:83
+msgid "The uploaded file is not a valid CSV file"
+msgstr ""
+
+#: includes/import-export/class-cr-import-qna.php:284
+#: includes/import-export/class-cr-reviews-importer.php:207
+msgid "Cannot read CSV file"
+msgstr ""
+
+#: includes/import-export/class-cr-import-qna.php:315
+msgid "Invalid or missing column headers detected in the CSV file. Refer to the Step 1 template for the correct format."
+msgstr ""
+
+#: includes/import-export/class-cr-import-qna.php:334
+#: includes/import-export/class-cr-reviews-importer.php:248
+msgid "The CSV file contains no reviews"
+msgstr ""
+
+#: includes/import-export/class-cr-import-qna.php:436
+msgid "Error: could not open the import file"
+msgstr ""
+
+#: includes/import-export/class-cr-import-qna.php:494
+msgid "Line %1$d >> Error: either product_id or product_sku must be provided."
+msgstr ""
+
+#: includes/import-export/class-cr-import-qna.php:516
+msgid "Line %1$d >> Error: product_id must be a positive number or '-1' for general Q & A about a shop."
+msgstr ""
+
+#: includes/import-export/class-cr-import-qna.php:541
+msgid "Line %1$d >> Error: products, posts or pages with ID = %2$d and products with SKU = %3$s don't exist on this WordPress site."
+msgstr ""
+
+#: includes/import-export/class-cr-import-qna.php:552
+msgid "Line %1$d >> Error: products, posts or pages with ID = %2$d don't exist on this WordPress site."
+msgstr ""
+
+#: includes/import-export/class-cr-import-qna.php:666
+msgid "Line %1$d >> Error: Duplicate question or answer."
+msgstr ""
+
+#: includes/import-export/class-cr-import-qna.php:708
+msgid "Line %1$d >> Error: A matching question with ID %2$d could not be found."
 msgstr ""
 
 #: includes/import-export/class-cr-reviews-exporter.php:142
 msgid "Failed to start background exporter, please disable Basic Auth and retry"
 msgstr ""
 
-#: includes/import-export/class-cr-reviews-importer.php:43
-msgid "Permission denied"
-msgstr ""
-
-#: includes/import-export/class-cr-reviews-importer.php:67
-msgid "No file was uploaded"
-msgstr ""
-
-#: includes/import-export/class-cr-reviews-importer.php:83
-msgid "The uploaded file is not a valid CSV file"
-msgstr ""
-
 #: includes/import-export/class-cr-reviews-importer.php:179
 msgid "Failed to start background importer, please disable Basic Auth and retry"
 msgstr ""
 
-#: includes/import-export/class-cr-reviews-importer.php:207
-msgid "Cannot read CSV file"
-msgstr ""
-
 #: includes/import-export/class-cr-reviews-importer.php:235
 msgid "The CSV file contains invalid or missing column headings, please refer to the template in step 1"
-msgstr ""
-
-#: includes/import-export/class-cr-reviews-importer.php:248
-msgid "The CSV file contains no reviews"
 msgstr ""
 
 #: includes/misc/class-cr-admin-menu-diagnostics.php:41
@@ -1910,7 +2117,7 @@ msgid "The plugin is based on the standard WooCommerce product reviews. Please m
 msgstr ""
 
 #: includes/misc/class-cr-admin-menu-diagnostics.php:267
-msgid "Product ratings will not be diplayed because WooCommerce product reviews are disabled."
+msgid "Product ratings will not be displayed because WooCommerce product reviews are disabled."
 msgstr ""
 
 #: includes/misc/class-cr-admin-menu-diagnostics.php:284
@@ -2005,7 +2212,7 @@ msgstr ""
 msgid "Downloading of media file(s) was cancelled."
 msgstr ""
 
-#: includes/qna/class-cr-admin-menu-qna.php:233
+#: includes/qna/class-cr-admin-menu-qna.php:234
 msgid "Reply to Question"
 msgstr ""
 
@@ -5992,18 +6199,18 @@ msgid "Are you sure you want to delete selected log record(s)?"
 msgstr ""
 
 #: templates/reviews-grid.php:167
-#: templates/reviews-slider.php:93
+#: templates/reviews-slider.php:99
 msgctxt "%s = human-readable time difference"
 msgid "%s ago"
 msgstr ""
 
-#: templates/reviews-slider.php:73
+#: templates/reviews-slider.php:79
 #: blocks/build/reviews-grid/index.js:12
 #: blocks/src/reviews-grid/edit.js:83
 msgid "Show More"
 msgstr ""
 
-#: templates/reviews-slider.php:74
+#: templates/reviews-slider.php:80
 msgid "Show Less"
 msgstr ""
 
