@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv3.
 msgid ""
 msgstr ""
-"Project-Id-Version: Customer Reviews for WooCommerce 5.82.0\n"
+"Project-Id-Version: Customer Reviews for WooCommerce 5.83.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/customer-reviews-woocommerce\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-09-06T22:13:12+00:00\n"
+"POT-Creation-Date: 2025-09-14T20:30:38+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 "X-Domain: customer-reviews-woocommerce\n"
@@ -90,7 +90,7 @@ msgstr ""
 #: includes/google/class-cr-product-fields.php:256
 #: includes/misc/class-cr-admin-menu-diagnostics.php:248
 #: includes/misc/class-cr-admin-menu-diagnostics.php:340
-#: includes/qna/class-cr-admin-menu-qna.php:185
+#: includes/qna/class-cr-admin-menu-qna.php:194
 #: includes/reminders/class-cr-manual.php:380
 #: includes/reminders/class-cr-manual.php:403
 #: includes/reviews/class-cr-admin-menu-reviews.php:244
@@ -108,7 +108,7 @@ msgstr ""
 #: includes/google/class-cr-product-fields.php:257
 #: includes/misc/class-cr-admin-menu-diagnostics.php:253
 #: includes/misc/class-cr-admin-menu-diagnostics.php:340
-#: includes/qna/class-cr-admin-menu-qna.php:186
+#: includes/qna/class-cr-admin-menu-qna.php:195
 #: includes/reminders/class-cr-manual.php:381
 #: includes/reminders/class-cr-manual.php:404
 #: includes/reviews/class-cr-admin-menu-reviews.php:245
@@ -280,7 +280,7 @@ msgstr ""
 #: includes/blocks/class-cr-all-reviews.php:939
 #: includes/blocks/class-cr-reviews-grid.php:1047
 #: includes/blocks/class-cr-reviews-grid.php:1051
-#: includes/reviews/class-cr-reviews-list-table.php:484
+#: includes/reviews/class-cr-reviews-list-table.php:474
 #: includes/reviews/class-cr-reviews.php:596
 #: includes/reviews/class-cr-reviews.php:600
 msgid "1 star"
@@ -353,7 +353,7 @@ msgid "Data validation error"
 msgstr ""
 
 #: includes/blocks/class-cr-all-reviews.php:1204
-#: includes/qna/class-cr-admin-menu-qna.php:190
+#: includes/qna/class-cr-admin-menu-qna.php:199
 #: includes/qna/class-cr-qna.php:179
 #: includes/reminders/class-cr-manual.php:397
 #: includes/reviews/class-cr-admin-menu-reviews.php:249
@@ -379,7 +379,7 @@ msgid "Your review could not be added"
 msgstr ""
 
 #: includes/blocks/class-cr-all-reviews.php:1290
-#: includes/qna/class-cr-admin-menu-qna.php:189
+#: includes/qna/class-cr-admin-menu-qna.php:198
 #: includes/qna/class-cr-qna.php:181
 #: includes/reviews/class-cr-admin-menu-reviews.php:248
 msgid "Try again"
@@ -423,7 +423,7 @@ msgstr ""
 #: includes/blocks/class-cr-reviews-grid.php:395
 #: includes/blocks/class-cr-reviews-slider.php:266
 #: includes/reviews/class-cr-admin-menu-reviews.php:620
-#: includes/reviews/class-cr-reviews-list-table.php:1228
+#: includes/reviews/class-cr-reviews-list-table.php:1218
 #: templates/cr-review.php:116
 msgid "Verified owner"
 msgstr ""
@@ -436,7 +436,7 @@ msgstr ""
 #: includes/blocks/class-cr-reviews-slider.php:272
 #: includes/blocks/class-cr-reviews-slider.php:277
 #: includes/blocks/class-cr-reviews-slider.php:279
-#: includes/reviews/class-cr-reviews-list-table.php:665
+#: includes/reviews/class-cr-reviews-list-table.php:655
 #: includes/reviews/class-cr-reviews.php:1116
 #: includes/reviews/class-cr-reviews.php:1118
 #: includes/reviews/class-cr-reviews.php:1174
@@ -587,7 +587,7 @@ msgstr ""
 
 #: includes/emails/class-cr-email.php:47
 #: includes/misc/class-cr-wpml.php:12
-#: includes/reviews/class-cr-reviews-list-table.php:448
+#: includes/reviews/class-cr-reviews-list-table.php:438
 msgid "Review"
 msgstr ""
 
@@ -1486,7 +1486,7 @@ msgstr ""
 #: includes/import-export/class-cr-export-reviews.php:87
 #: includes/import-export/class-cr-export-reviews.php:159
 #: includes/import-export/class-cr-import-qna.php:137
-#: includes/qna/class-cr-admin-menu-qna.php:187
+#: includes/qna/class-cr-admin-menu-qna.php:196
 #: includes/reminders/class-cr-manual.php:391
 #: includes/reminders/class-cr-reminders-list-table.php:194
 #: includes/reminders/class-cr-reminders-list-table.php:399
@@ -2121,8 +2121,8 @@ msgid "Product ratings will not be displayed because WooCommerce product reviews
 msgstr ""
 
 #: includes/misc/class-cr-admin-menu-diagnostics.php:284
-#: includes/qna/class-cr-qna-list-table.php:375
-#: includes/reviews/class-cr-reviews-list-table.php:452
+#: includes/qna/class-cr-qna-list-table.php:365
+#: includes/reviews/class-cr-reviews-list-table.php:442
 msgid "Product"
 msgstr ""
 
@@ -2177,72 +2177,84 @@ msgstr ""
 msgid "License registration error #99"
 msgstr ""
 
-#: includes/qna/class-cr-admin-menu-qna.php:35
-#: includes/qna/class-cr-admin-menu-qna.php:36
+#: includes/qna/class-cr-admin-menu-qna.php:37
+#: includes/qna/class-cr-admin-menu-qna.php:38
 #: includes/qna/class-cr-qna.php:39
 #: includes/qna/class-cr-settings-qna.php:34
 #: templates/qna-tab.php:23
 msgid "Q & A"
 msgstr ""
 
-#: includes/qna/class-cr-admin-menu-qna.php:183
+#: includes/qna/class-cr-admin-menu-qna.php:192
 #: includes/reviews/class-cr-admin-menu-reviews.php:242
 msgid "Uploading..."
 msgstr ""
 
-#: includes/qna/class-cr-admin-menu-qna.php:184
+#: includes/qna/class-cr-admin-menu-qna.php:193
 #: includes/reviews/class-cr-admin-menu-reviews.php:243
 #: includes/reviews/class-cr-reviews-media-meta-box.php:98
 #: includes/reviews/class-cr-reviews-media-meta-box.php:127
 msgid "Detach?"
 msgstr ""
 
-#: includes/qna/class-cr-admin-menu-qna.php:188
+#: includes/qna/class-cr-admin-menu-qna.php:197
 #: includes/reviews/class-cr-admin-menu-reviews.php:247
 msgid "Downloading..."
 msgstr ""
 
-#: includes/qna/class-cr-admin-menu-qna.php:191
+#: includes/qna/class-cr-admin-menu-qna.php:200
 #: includes/reviews/class-cr-admin-menu-reviews.php:250
 msgid "Cancelling..."
 msgstr ""
 
-#: includes/qna/class-cr-admin-menu-qna.php:192
+#: includes/qna/class-cr-admin-menu-qna.php:201
 #: includes/reviews/class-cr-admin-menu-reviews.php:251
 msgid "Downloading of media file(s) was cancelled."
 msgstr ""
 
-#: includes/qna/class-cr-admin-menu-qna.php:234
+#: includes/qna/class-cr-admin-menu-qna.php:245
 msgid "Reply to Question"
 msgstr ""
 
-#: includes/qna/class-cr-qna-list-table.php:183
+#: includes/qna/class-cr-qna-list-table.php:173
 msgid "No questions / answers awaiting moderation."
 msgstr ""
 
-#: includes/qna/class-cr-qna-list-table.php:185
+#: includes/qna/class-cr-qna-list-table.php:175
 msgid "No questions / answers found."
 msgstr ""
 
-#: includes/qna/class-cr-qna-list-table.php:370
+#: includes/qna/class-cr-qna-list-table.php:360
 #: includes/reminders/class-cr-reminders-list-table.php:210
 #: includes/reminders/class-cr-reminders-log-table.php:91
-#: includes/reviews/class-cr-reviews-list-table.php:447
+#: includes/reviews/class-cr-reviews-list-table.php:437
 msgid "Customer"
 msgstr ""
 
-#: includes/qna/class-cr-qna-list-table.php:372
+#: includes/qna/class-cr-qna-list-table.php:362
 msgid "Question / Answer"
 msgstr ""
 
-#: includes/qna/class-cr-qna-list-table.php:378
-#: includes/reviews/class-cr-reviews-list-table.php:455
+#: includes/qna/class-cr-qna-list-table.php:368
+#: includes/reviews/class-cr-reviews-list-table.php:445
 msgid "Submitted On"
 msgstr ""
 
-#: includes/qna/class-cr-qna-list-table.php:612
-#: includes/reviews/class-cr-reviews-list-table.php:869
+#: includes/qna/class-cr-qna-list-table.php:602
+#: includes/reviews/class-cr-reviews-list-table.php:859
 msgid "In reply to %s"
+msgstr ""
+
+#: includes/qna/class-cr-qna-list-table.php:613
+msgid "ID: %s"
+msgstr ""
+
+#: includes/qna/class-cr-qna-list-table.php:619
+msgid "This is the internal reference number for a question"
+msgstr ""
+
+#: includes/qna/class-cr-qna-list-table.php:623
+msgid "This is the internal reference number for an answer"
 msgstr ""
 
 #: includes/qna/class-cr-qna.php:43
@@ -2893,44 +2905,44 @@ msgstr ""
 #: includes/reviews/class-cr-admin-menu-reviews.php:573
 #: includes/reviews/class-cr-admin-menu-reviews.php:580
 #: includes/reviews/class-cr-admin-menu-reviews.php:582
-#: includes/reviews/class-cr-reviews-list-table.php:885
-#: includes/reviews/class-cr-reviews-list-table.php:887
-#: includes/reviews/class-cr-reviews-list-table.php:902
-#: includes/reviews/class-cr-reviews-list-table.php:904
-#: includes/reviews/class-cr-reviews-list-table.php:919
-#: includes/reviews/class-cr-reviews-list-table.php:921
-#: includes/reviews/class-cr-reviews-list-table.php:936
-#: includes/reviews/class-cr-reviews-list-table.php:938
+#: includes/reviews/class-cr-reviews-list-table.php:875
+#: includes/reviews/class-cr-reviews-list-table.php:877
+#: includes/reviews/class-cr-reviews-list-table.php:892
+#: includes/reviews/class-cr-reviews-list-table.php:894
+#: includes/reviews/class-cr-reviews-list-table.php:909
+#: includes/reviews/class-cr-reviews-list-table.php:911
+#: includes/reviews/class-cr-reviews-list-table.php:926
+#: includes/reviews/class-cr-reviews-list-table.php:928
 msgid "CusRev portal"
 msgstr ""
 
 #: includes/reviews/class-cr-admin-menu-reviews.php:557
-#: includes/reviews/class-cr-reviews-list-table.php:892
+#: includes/reviews/class-cr-reviews-list-table.php:882
 msgid "A verified copy of this reply was published on %s"
 msgstr ""
 
 #: includes/reviews/class-cr-admin-menu-reviews.php:566
-#: includes/reviews/class-cr-reviews-list-table.php:909
+#: includes/reviews/class-cr-reviews-list-table.php:899
 msgid "This reply was originally posted on %s. If this copy of the reply is edited, the original reply will NOT be updated. Only the customer can edit the original reply on CusRev portal."
 msgstr ""
 
 #: includes/reviews/class-cr-admin-menu-reviews.php:575
-#: includes/reviews/class-cr-reviews-list-table.php:926
+#: includes/reviews/class-cr-reviews-list-table.php:916
 msgid "This reply was originally posted on %s. This copy of the reply was modified and might be different from the original published on CusRev portal."
 msgstr ""
 
 #: includes/reviews/class-cr-admin-menu-reviews.php:584
-#: includes/reviews/class-cr-reviews-list-table.php:943
+#: includes/reviews/class-cr-reviews-list-table.php:933
 msgid "A verified copy published on %s could not be updated because it is not the last reply for the review. The verified copy might be different from this reply."
 msgstr ""
 
 #: includes/reviews/class-cr-admin-menu-reviews.php:587
-#: includes/reviews/class-cr-reviews-list-table.php:949
+#: includes/reviews/class-cr-reviews-list-table.php:939
 msgid "Reply could not be published to CusRev portal. Error "
 msgstr ""
 
 #: includes/reviews/class-cr-admin-menu-reviews.php:608
-#: includes/reviews/class-cr-reviews-list-table.php:1231
+#: includes/reviews/class-cr-reviews-list-table.php:1221
 #: templates/cr-review.php:119
 #: templates/reviews-grid.php:131
 #: templates/reviews-slider.php:48
@@ -2939,7 +2951,7 @@ msgstr ""
 
 #: includes/reviews/class-cr-admin-menu-reviews.php:627
 #: includes/reviews/class-cr-admin-menu-reviews.php:636
-#: includes/reviews/class-cr-reviews-list-table.php:1214
+#: includes/reviews/class-cr-reviews-list-table.php:1204
 #: templates/cr-review.php:104
 msgid "Store manager"
 msgstr ""
@@ -2949,12 +2961,12 @@ msgid "This reply was originally posted on CusRev portal. This copy of the reply
 msgstr ""
 
 #: includes/reviews/class-cr-admin-menu-reviews.php:672
-#: includes/reviews/class-cr-reviews-list-table.php:793
+#: includes/reviews/class-cr-reviews-list-table.php:783
 msgid "Feature"
 msgstr ""
 
 #: includes/reviews/class-cr-admin-menu-reviews.php:678
-#: includes/reviews/class-cr-reviews-list-table.php:795
+#: includes/reviews/class-cr-reviews-list-table.php:785
 msgid "Unfeature"
 msgstr ""
 
@@ -3001,16 +3013,16 @@ msgstr ""
 msgid "ID of the current user is not set"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews-list-table.php:224
+#: includes/reviews/class-cr-reviews-list-table.php:214
 msgid "No reviews found."
 msgstr ""
 
-#: includes/reviews/class-cr-reviews-list-table.php:365
-#: includes/reviews/class-cr-reviews-list-table.php:812
+#: includes/reviews/class-cr-reviews-list-table.php:355
+#: includes/reviews/class-cr-reviews-list-table.php:802
 msgid "Unverify"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews-list-table.php:449
+#: includes/reviews/class-cr-reviews-list-table.php:439
 #: includes/tags/class-cr-admin-menu-tags.php:62
 #: blocks/build/reviews-grid/index.js:11
 #: blocks/build/reviews-grid/index.js:12
@@ -3022,102 +3034,102 @@ msgstr ""
 msgid "Tags"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews-list-table.php:477
+#: includes/reviews/class-cr-reviews-list-table.php:467
 msgid "Featured product reviews"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews-list-table.php:478
+#: includes/reviews/class-cr-reviews-list-table.php:468
 msgid "Product reviews"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews-list-table.php:479
+#: includes/reviews/class-cr-reviews-list-table.php:469
 msgid "Featured store reviews"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews-list-table.php:480
+#: includes/reviews/class-cr-reviews-list-table.php:470
 msgid "Store reviews"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews-list-table.php:485
+#: includes/reviews/class-cr-reviews-list-table.php:475
 msgid "2 stars"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews-list-table.php:486
+#: includes/reviews/class-cr-reviews-list-table.php:476
 msgid "3 stars"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews-list-table.php:487
+#: includes/reviews/class-cr-reviews-list-table.php:477
 msgid "4 stars"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews-list-table.php:488
+#: includes/reviews/class-cr-reviews-list-table.php:478
 msgid "5 stars"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews-list-table.php:492
+#: includes/reviews/class-cr-reviews-list-table.php:482
 msgid "Filter by review type"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews-list-table.php:496
+#: includes/reviews/class-cr-reviews-list-table.php:486
 msgid "All review types"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews-list-table.php:544
+#: includes/reviews/class-cr-reviews-list-table.php:534
 msgid "Filter by rating"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews-list-table.php:548
+#: includes/reviews/class-cr-reviews-list-table.php:538
 msgid "All ratings"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews-list-table.php:666
-#: includes/reviews/class-cr-reviews-list-table.php:682
+#: includes/reviews/class-cr-reviews-list-table.php:656
+#: includes/reviews/class-cr-reviews-list-table.php:672
 msgid "via CR"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews-list-table.php:672
+#: includes/reviews/class-cr-reviews-list-table.php:662
 msgid "via CR (Local)"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews-list-table.php:677
+#: includes/reviews/class-cr-reviews-list-table.php:667
 msgid "via CR (Test)"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews-list-table.php:890
+#: includes/reviews/class-cr-reviews-list-table.php:880
 msgid "A verified copy of this reply was published on %1$s. If this reply is deleted, the verified copy will remain published. If this reply is edited, the verified copy will be updated. The page with verified copies of reviews and replies to reviews for your shop on CusRev portal can be completely hidden by disabling Trust Badges in the %2$s."
 msgstr ""
 
-#: includes/reviews/class-cr-reviews-list-table.php:895
-#: includes/reviews/class-cr-reviews-list-table.php:946
+#: includes/reviews/class-cr-reviews-list-table.php:885
+#: includes/reviews/class-cr-reviews-list-table.php:936
 msgid "A copy of this reply was published on CusRev portal"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews-list-table.php:907
-#: includes/reviews/class-cr-reviews-list-table.php:924
+#: includes/reviews/class-cr-reviews-list-table.php:897
+#: includes/reviews/class-cr-reviews-list-table.php:914
 msgid "This reply was originally posted on %1$s. If this copy of the reply is deleted, the original on CusRev portal will remain published. If this copy is edited, the original reply will NOT be updated. Only the customer can edit the original reply on CusRev portal. The page with verified copies of reviews and replies to reviews for your shop on CusRev portal can be completely hidden by disabling Trust Badges in the %2$s."
 msgstr ""
 
-#: includes/reviews/class-cr-reviews-list-table.php:912
-#: includes/reviews/class-cr-reviews-list-table.php:929
+#: includes/reviews/class-cr-reviews-list-table.php:902
+#: includes/reviews/class-cr-reviews-list-table.php:919
 msgid "This reply was originally posted on CusRev portal"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews-list-table.php:941
+#: includes/reviews/class-cr-reviews-list-table.php:931
 msgid "A verified copy of this reply was published on %1$s. If this reply is deleted, the verified copy will remain published. The page with verified copies of reviews and replies to reviews for your shop on CusRev portal can be completely hidden by disabling Trust Badges in the %2$s."
 msgstr ""
 
-#: includes/reviews/class-cr-reviews-list-table.php:984
+#: includes/reviews/class-cr-reviews-list-table.php:974
 #: includes/reviews/class-cr-reviews.php:1199
 #: templates/cr-review.php:131
 msgid "Featured Review"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews-list-table.php:999
+#: includes/reviews/class-cr-reviews-list-table.php:989
 msgid "This review was submitted in response to a review invitation sent for the order %s"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews-list-table.php:1034
-#: includes/reviews/class-cr-reviews-list-table.php:1055
+#: includes/reviews/class-cr-reviews-list-table.php:1024
+#: includes/reviews/class-cr-reviews-list-table.php:1045
 #: includes/reviews/class-cr-reviews-media-meta-box.php:56
 #: includes/reviews/class-cr-reviews-media-meta-box.php:104
 #: includes/reviews/class-cr-reviews.php:246
@@ -3129,8 +3141,8 @@ msgstr ""
 msgid "Image #%1$d from %2$s"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews-list-table.php:1078
-#: includes/reviews/class-cr-reviews-list-table.php:1102
+#: includes/reviews/class-cr-reviews-list-table.php:1068
+#: includes/reviews/class-cr-reviews-list-table.php:1092
 #: includes/reviews/class-cr-reviews-media-meta-box.php:74
 #: includes/reviews/class-cr-reviews-media-meta-box.php:138
 #: includes/reviews/class-cr-reviews.php:286
@@ -3143,8 +3155,8 @@ msgstr ""
 msgid "Video #%1$d from %2$s"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews-list-table.php:1080
-#: includes/reviews/class-cr-reviews-list-table.php:1104
+#: includes/reviews/class-cr-reviews-list-table.php:1070
+#: includes/reviews/class-cr-reviews-list-table.php:1094
 #: includes/reviews/class-cr-reviews-media-meta-box.php:76
 #: includes/reviews/class-cr-reviews-media-meta-box.php:140
 #: includes/reviews/class-cr-reviews.php:288
@@ -3153,7 +3165,7 @@ msgstr ""
 msgid "Close"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews-list-table.php:1155
+#: includes/reviews/class-cr-reviews-list-table.php:1145
 msgid "Add a tag"
 msgstr ""
 

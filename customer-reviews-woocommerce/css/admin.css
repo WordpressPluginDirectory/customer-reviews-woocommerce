@@ -32,7 +32,7 @@ td.forminp .cr-admin-shortcodes-large {margin-top: 1.5em;}
 td.forminp .cr-admin-shortcodes-large code {font-size: 1.2em;}
 td.forminp.cr-admin-shortcodes-td ul {line-height: 1.6em;}
 .cr-reviews-list-table .column-qna_type {width: 22px;}
-.cr-reviews-list-table #the-comment-list .column-qna_type {vertical-align: middle;}
+.cr-reviews-list-table #the-comment-list .column-qna_type {vertical-align: top;}
 .cr-upload-local-images label {display: block; margin-bottom: 6px; padding: 3px 5px;}
 .cr-upload-local-images label.cr-upload-local-images-status-error {background-color: #FF4136;}
 .cr-upload-local-images label.cr-upload-local-images-status-warning {background-color: #FFDC00;}
@@ -630,6 +630,7 @@ li.select2-results__option {
 .cr-all-reviews-rating {
 	margin-bottom: 0.6em;
 }
+.cr-qna-admin-details,
 .cr-all-reviews-details {
 	font-size: 11px;
 	line-height: 12px;
@@ -641,6 +642,10 @@ li.select2-results__option {
 		height: 12px;
 		font-size: 12px;
 	}
+}
+.cr_qna .cr-qna-admin-details,
+.cr_qna p.cr-qna-admin-reply {
+	margin-top: 0;
 }
 .cr-settings-manage-button.button {
 	vertical-align: middle;

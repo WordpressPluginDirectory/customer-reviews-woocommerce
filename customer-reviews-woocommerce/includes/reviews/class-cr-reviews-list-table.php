@@ -34,10 +34,6 @@ class CR_Reviews_List_Table extends WP_List_Table {
 
 		$post_id = isset( $_REQUEST['p'] ) ? absint( $_REQUEST['p'] ) : 0;
 
-		if ( get_option( 'show_avatars' ) ) {
-			add_filter( 'comment_author', array( $this, 'floated_admin_avatar' ), 10, 2 );
-		}
-
 		$this->ivole_verified_page = get_option( 'ivole_reviews_verified_page', Ivole_Email::get_blogdomain() );
 		$this->cr_ajax_enabled = ( 'yes' === get_option( 'ivole_ajax_reviews', 'no' ) ? true : false );
 		$this->cust_avatars = $args['avatars'];
@@ -48,12 +44,6 @@ class CR_Reviews_List_Table extends WP_List_Table {
 			'ajax'     => true,
 			'screen'   => isset( $args['screen'] ) ? $args['screen'] : null,
 		) );
-	}
-
-	public function floated_admin_avatar( $name, $comment_ID ) {
-		$comment = get_comment( $comment_ID );
-		$avatar = get_avatar( $comment, 32, 'mystery' );
-		return "$avatar $name";
 	}
 
 	/**

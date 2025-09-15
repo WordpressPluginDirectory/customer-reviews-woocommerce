@@ -11,12 +11,10 @@ if ( ! class_exists( 'WP_List_Table' ) ) {
 class CR_Qna_List_Table extends WP_List_Table {
 
 	public $checkbox = true;
-
 	public $pending_count = array();
-
 	public $extra_items;
-
 	private $user_can;
+	private $cust_avatars = 'standard';
 
 	/**
 	* Constructor.
@@ -34,9 +32,7 @@ class CR_Qna_List_Table extends WP_List_Table {
 
 		$post_id = isset( $_REQUEST['p'] ) ? absint( $_REQUEST['p'] ) : 0;
 
-		if ( get_option( 'show_avatars' ) ) {
-			add_filter( 'comment_author', array( $this, 'floated_admin_avatar' ), 10, 2 );
-		}
+		$this->cust_avatars = $args['avatars'];
 
 		parent::__construct( array(
 			'plural'   => 'comments',
@@ -44,12 +40,6 @@ class CR_Qna_List_Table extends WP_List_Table {
 			'ajax'     => true,
 			'screen'   => isset( $args['screen'] ) ? $args['screen'] : null,
 		) );
-	}
-
-	public function floated_admin_avatar( $name, $comment_ID ) {
-		$comment = get_comment( $comment_ID );
-		$avatar = get_avatar( $comment, 32, 'mystery' );
-		return "$avatar $name";
 	}
 
 	/**
@@ -607,7 +597,7 @@ class CR_Qna_List_Table extends WP_List_Table {
 			if ( $parent ) {
 				$parent_link = esc_url( get_comment_link( $parent ) );
 				$name = get_comment_author( $parent );
-				echo '<p>';
+				echo '<p class="cr-qna-admin-reply">';
 				printf(
 					__( 'In reply to %s', 'customer-reviews-woocommerce' ),
 					'<a href="' . $parent_link . '">' . $name . '</a>'
@@ -616,19 +606,24 @@ class CR_Qna_List_Table extends WP_List_Table {
 			}
 		}
 		?>
-		<div>
-			<span class="star-rating">
-				<?php
-				if( $comment->rating > 0 ):
-					for ( $i = 1; $i < 6; $i++ ):
-						$class = ( $i <= $comment->rating ) ? 'filled': 'empty';
-						?>
-						<span class="dashicons dashicons-star-<?php echo $class; ?>"></span>
-						<?php
-					endfor;
-				endif;
-				?>
-			</span>
+		<div class="cr-qna-admin-details">
+			<?php
+				echo esc_html(
+					sprintf(
+						__( 'ID: %s', 'customer-reviews-woocommerce' ),
+						$comment->comment_ID
+					)
+				);
+				if ( 0 == $comment->comment_parent ) {
+					echo CR_Admin::cr_help_tip(
+						__( 'This is the internal reference number for a question', 'customer-reviews-woocommerce' )
+					);
+				} else {
+					echo CR_Admin::cr_help_tip(
+						__( 'This is the internal reference number for an answer', 'customer-reviews-woocommerce' )
+					);
+				}
+			?>
 		</div>
 		<?php
 		comment_text( $comment );
@@ -664,6 +659,9 @@ class CR_Qna_List_Table extends WP_List_Table {
 			$author_url_display = wp_html_excerpt( $author_url_display, 49, '&hellip;' );
 		}
 
+		if ( 'hidden' !== $this->cust_avatars ) {
+			echo '<div class="cr-admin-avatar">' . get_avatar( $comment, 32, '' ) . '</div>';
+		}
 		echo "<strong>"; comment_author( $comment ); echo '</strong><br />';
 		if ( ! empty( $author_url_display ) ) {
 			printf( '<a href="%s">%s</a><br />', esc_url( $author_url ), esc_html( $author_url_display ) );
