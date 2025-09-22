@@ -860,7 +860,13 @@ if ( ! class_exists( 'CR_Review_Discount_Settings' ) ):
 			} else {
 				return array(
 					'code' => 96,
-					'message' => __( 'Please re-save settings and try again', 'customer-reviews-woocommerce' )
+					'message' => sprintf(
+						__(
+							'Test email could not be sent because settings for discounts are not saved; please save them on the <a href="%s">Review for Discount</a> page and then try again.',
+							'customer-reviews-woocommerce'
+						),
+						admin_url( 'admin.php?page=cr-reviews-settings&tab=review_discount' )
+					)
 				);
 			}
 		}

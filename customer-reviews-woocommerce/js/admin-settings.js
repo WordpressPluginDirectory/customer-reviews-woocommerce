@@ -92,6 +92,8 @@
 					jQuery('#ivole_test_email_status').text('Error: cannot connect to the email server (' + response.message + ').');
 				} else if ( response.code === 13 ) {
 					jQuery('#ivole_test_email_status').text('Error: "Email Subject" is empty. Please enter a string for the subject line of emails.');
+				} else if ( response.code === 96 ) {
+					jQuery('#ivole_test_email_status').html( response.message );
 				} else if ( response.code === 97 ) {
 					jQuery('#ivole_test_email_status').text('Error: "Shop Name" is empty. Please enter name of your shop in the corresponding field.');
 				} else if ( response.code === 99 ) {

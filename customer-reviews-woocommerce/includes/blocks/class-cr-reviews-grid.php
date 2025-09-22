@@ -1090,7 +1090,7 @@ if ( ! class_exists( 'CR_Reviews_Grid' ) ) {
 
 			if ( $args && is_array( $args ) ) {
 				$args['count'] = true;
-				$args['type__not_in'] = 'cr_qna';
+				$args['type__not_in'] = array( 'cr_qna' );
 				$args['parent'] = 0;
 				unset($args['meta_query']);
 
@@ -1108,7 +1108,7 @@ if ( ! class_exists( 'CR_Reviews_Grid' ) ) {
 
 			if ( $args_shop && is_array( $args_shop ) ) {
 				$args_shop['count'] = true;
-				$args_shop['type__not_in'] = 'cr_qna';
+				$args_shop['type__not_in'] = array( 'cr_qna' );
 				$args_shop['parent'] = 0;
 				unset($args_shop['meta_query']);
 

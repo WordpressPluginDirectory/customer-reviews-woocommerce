@@ -394,7 +394,7 @@ if (! class_exists('CR_Trust_Badge')) :
 						'status' => 'approve',
 						'parent' => 0,
 						'count' => true,
-						'type__not_in' => 'cr_qna'
+						'type__not_in' => array( 'cr_qna' )
 					);
 					if ( function_exists( 'pll_current_language' ) ) {
 						// Polylang compatibility - Trust Basdges should display count of reviews in all languages
@@ -428,7 +428,7 @@ if (! class_exists('CR_Trust_Badge')) :
 						'post__in'     => CR_Reviews_List_Table::get_shop_page(),
 						'meta_key'    => 'rating',
 						'count'       => true,
-						'type__not_in' => 'cr_qna'
+						'type__not_in' => array( 'cr_qna' )
 					);
 					$sto_revs = array();
 					for( $i = 1; $i < 6; $i++ ) {

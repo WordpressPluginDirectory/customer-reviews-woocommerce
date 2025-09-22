@@ -348,7 +348,7 @@ class CR_Reviews_List_Table extends WP_List_Table {
 			'post_status' => 'publish',
 			'status' => $status,
 			'meta_key' => 'ivole_order',
-			'type__not_in' => 'cr_qna',
+			'type__not_in' => array( 'cr_qna' ),
 			'count' => true
 		);
 		if( 0 < get_comments( $args ) ) {

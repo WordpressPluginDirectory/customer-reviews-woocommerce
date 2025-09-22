@@ -192,7 +192,7 @@ if (! class_exists('CR_All_Reviews')) :
 					'status'       => 'approve',
 					'orderby'      => 'comment_date_gmt',
 					'order'        => $this->shortcode_atts['sort'],
-					'type__not_in' => 'cr_qna',
+					'type__not_in' => array( 'cr_qna' ),
 					'offset'       => $this->page * $limit_per_page,
 					'cache_domain' => $this->get_cache_domain()
 				);
@@ -726,7 +726,7 @@ if (! class_exists('CR_All_Reviews')) :
 					'status'       => 'approve',
 					'parent'       => 0,
 					'count'        => true,
-					'type__not_in' => 'cr_qna',
+					'type__not_in' => array( 'cr_qna' ),
 					'comment__in'  => $comment_in,
 					'meta_key'     => 'rating',
 					'cache_domain' => $this->get_cache_domain()

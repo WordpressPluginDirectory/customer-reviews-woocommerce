@@ -436,13 +436,27 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 		}
 	}
 	public function validate_captcha( $commentdata ) {
-		if( is_admin() && current_user_can( 'edit_posts' ) ) {
+		if ( is_admin() && current_user_can( 'edit_posts' ) ) {
 			return $commentdata;
 		}
-		if( 'cr_qna' !== $commentdata['comment_type'] ) {
-			if( get_post_type( $commentdata['comment_post_ID'] ) === 'product' ) {
-				if( !$this->ping_captcha() ) {
-					wp_die( __( 'reCAPTCHA vertification failed and your review cannot be saved.', 'customer-reviews-woocommerce' ), __( 'Add Review Error', 'customer-reviews-woocommerce' ), array( 'back_link' => true ) );
+		if ( 'cr_qna' !== $commentdata['comment_type'] ) {
+			if ( get_post_type( $commentdata['comment_post_ID'] ) === 'product' ) {
+				if ( !$this->ping_captcha() ) {
+					if ( 'yes' === get_option( 'ivole_ajax_reviews', 'no' ) ) {
+						wp_send_json(
+							array(
+								'code' => 7,
+								'description' => __( 'reCAPTCHA vertification failed and your review cannot be saved', 'customer-reviews-woocommerce' ),
+								'button' => __( 'OK', 'customer-reviews-woocommerce' )
+							)
+						);
+					} else {
+						wp_die(
+							__( 'reCAPTCHA vertification failed and your review cannot be saved', 'customer-reviews-woocommerce' ),
+							__( 'Add Review Error', 'customer-reviews-woocommerce' ),
+							array( 'back_link' => true )
+						);
+					}
 				}
 			}
 		}
@@ -671,7 +685,7 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 			'status' => 'approve',
 			'parent' => 0,
 			'count' => true,
-			'type__not_in' => 'cr_qna'
+			'type__not_in' => array( 'cr_qna' )
 		);
 		if( 0 === $rating ) {
 			$args['meta_query'][] = array(

@@ -196,6 +196,27 @@ if ( ! class_exists( 'CR_Forms_Settings' ) ) :
 						$_POST['ivole_form_color_text'] = '#ffffff';
 					}
 				}
+				// validate that both reCAPTCHA site and secret keys are populated
+				if (
+					! empty( $_POST ) &&
+					isset( $_POST['ivole_captcha_site_key'] )  &&
+					isset( $_POST['ivole_captcha_secret_key'] )
+				) {
+					if (
+						(
+							trim( $_POST['ivole_captcha_site_key'] ) &&
+							! trim( $_POST['ivole_captcha_secret_key'] )
+						) ||
+						(
+							! trim( $_POST['ivole_captcha_site_key'] ) &&
+							trim( $_POST['ivole_captcha_secret_key'] )
+						)
+					) {
+						WC_Admin_Settings::add_error(
+							__( 'Error: Both the Site key and the Secret key are required for reCAPTCHA to function properly', 'customer-reviews-woocommerce' )
+						);
+					}
+				}
 				WC_Admin_Settings::save_fields( $this->settings );
 				CR_Local_Forms::delete_old_forms();
 			}

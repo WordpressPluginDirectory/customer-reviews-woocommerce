@@ -164,7 +164,7 @@ if (! class_exists('CR_Ajax_Reviews')) :
 				}
 			}
 			// exclude qna
-			$args['type__not_in'] = 'cr_qna';
+			$args['type__not_in'] = array( 'cr_qna' );
 
 			// get the reviews based on the prepared query
 			$reviews_tmp = get_comments( $args );
@@ -218,7 +218,7 @@ if (! class_exists('CR_Ajax_Reviews')) :
 					'orderby' => 'comment_date_gmt',
 					'order' => 'DESC',
 					'parent__in' => $reviews_ids,
-					'type__not_in' => 'cr_qna'
+					'type__not_in' => array( 'cr_qna' )
 				);
 				// loop to check for nested comments (replies to replies)
 				$fetch_more_replies = true;

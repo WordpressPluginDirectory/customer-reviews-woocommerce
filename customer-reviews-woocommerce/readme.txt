@@ -4,7 +4,7 @@ Tags: woocommerce, review plugin, review reminder, customer reviews, review for 
 Requires at least: 4.5
 Tested up to: 6.8
 Requires PHP: 7.2
-Stable tag: 5.83.0
+Stable tag: 5.83.3
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl.html
 
@@ -233,6 +233,13 @@ If you would like to change how reviews are sorted on product pages, it is possi
 
 == Changelog ==
 
+= 5.83.3 =
+* Improvement: new error message if discount settings are not saved before testing review-for-discount emails
+* Bug fix: a log table for review reminders was not created on new installations of the plugin
+= 5.83.2 =
+* Improvement: an additional error message when reCAPTCHA is not configured correctly
+= 5.83.1 =
+* Improved compatibility with LearnDash plugin
 = 5.83.0 =
 * Minor UI improvements for Q & A screen in the admin console
 = 5.82.0 =
