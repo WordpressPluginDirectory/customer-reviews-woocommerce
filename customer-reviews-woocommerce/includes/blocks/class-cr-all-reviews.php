@@ -673,12 +673,10 @@ if (! class_exists('CR_All_Reviews')) :
 				$assets_version = Ivole::CR_VERSION;
 				$disable_lightbox = 'yes' === get_option( 'ivole_disable_lightbox', 'no' ) ? true : false;
 				// Load gallery scripts on product pages only if supported.
-				if ( 'yes' === get_option( 'ivole_attach_image', 'no' ) || 'yes' === get_option( 'ivole_form_attach_media', 'no' ) ) {
-					if ( ! $disable_lightbox ) {
-						$this->enqueue_wc_script( 'photoswipe-ui-default' );
-						$this->enqueue_wc_style( 'photoswipe-default-skin' );
-						add_action( 'wp_footer', array( $this, 'cr_photoswipe' ) );
-					}
+				if ( ! $disable_lightbox ) {
+					$this->enqueue_wc_script( 'photoswipe-ui-default' );
+					$this->enqueue_wc_style( 'photoswipe-default-skin' );
+					add_action( 'wp_footer', array( $this, 'cr_photoswipe' ) );
 				}
 
 				wp_register_style( 'cr-frontend-css', plugins_url( '/css/frontend.css', dirname( dirname( __FILE__ ) ) ), array(), $assets_version, 'all' );

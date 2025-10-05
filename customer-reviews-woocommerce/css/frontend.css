@@ -104,6 +104,14 @@ div.iv-comment-image img {
 .cr-all-reviews-shortcode .cr-comment-images, .cr-comment-videos {
 	margin: 0;
 }
+.cr-all-reviews-shortcode .comment_container .avatar {
+	position: absolute;
+	float: left;
+	padding: 0;
+	top: 0;
+	left: 0;
+	margin: 0;
+}
 .cr-comment-videos .cr-comment-video .cr-comment-video-close {
 	display: none;
 }

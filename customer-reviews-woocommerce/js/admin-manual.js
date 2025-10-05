@@ -19,8 +19,14 @@ jQuery(document).ready(function($) {
 				}
 				// also remove any previous menu elements from other orders
 				jQuery('.cr-send-menu').remove();
+				//
+				let sendButtonHTML = jQuery( CrManualStrings.send_button );
+				// remove the copy link nodes if not self-hosted
+				if ( jQuery(this).hasClass( 'cr-whatsapp-api' ) ) {
+					sendButtonHTML.find( '.cr-send-link' ).remove();
+				}
 				// add the menu
-				jQuery(this).after( CrManualStrings.send_button );
+				jQuery(this).after( sendButtonHTML );
 				let menu = jQuery(this).parent().find('.cr-send-menu');
 				// position it unless the screen size is too small
 				if ( 450 < jQuery( window ).width() ) {
@@ -56,6 +62,14 @@ jQuery(document).ready(function($) {
 				if ( jQuery(this).hasClass( 'cr-whatsapp-api' ) ) {
 					menu.addClass('cr-send-menu-wa-api');
 				}
+				// add a tooltip for the link option
+				jQuery(this).parent().find( '.cr-send-link' ).tipTip( {
+					fadeIn: 50,
+					fadeOut: 50,
+					delay: 200,
+					keepAlive: true,
+					attribute: 'data-tip',
+				} );
 				return;
 			}
 			// if there is no WhatsApp option, get nonce from the URL
@@ -157,6 +171,20 @@ jQuery(document).ready(function($) {
 			crSendReminderEmail( this, orderID, nonce );
 		}
 		jQuery( this ).closest( '.cr-send-menu' ).remove();
+		return false;
+	} );
+	// copy a link from the dropdown menu
+	jQuery( '.wp-list-table' ).on( 'click', '.cr-send-link', function(e) {
+		e.preventDefault();
+		if ( jQuery( this ).hasClass( 'cr-send-menu-lk1' ) ) {
+			// sending is already in progress
+			return;
+		}
+		let orderID = jQuery(this).closest( '.cr-send-menu' ).data( 'orderid' );
+		let nonce = jQuery(this).closest( '.cr-send-menu' ).data( 'nonce' );
+		if ( orderID ) {
+			crCopyReviewFormLink( this, orderID, nonce );
+		}
 		return false;
 	} );
 	// yes response to the WhatsApp consent
@@ -276,5 +304,61 @@ jQuery(document).ready(function($) {
 	function crReminderWaFeedback( ref ) {
 		ref.closest( '.cr-send-menu' ).removeClass( 'cr-send-menu-wa2' );
 		ref.closest( '.cr-send-menu' ).addClass( 'cr-send-menu-wa3' );
+	}
+	// a function to copy a link to an aggregated review form
+	function crCopyReviewFormLink( ref, orderID, nonce ) {
+		jQuery( ref ).closest( '.cr-send-menu' ).removeClass( 'cr-send-menu-lk-error' );
+		jQuery( ref ).closest( '.cr-send-menu' ).addClass( 'cr-send-menu-lk1' );
+		let data = {
+			'action': 'cr_manual_review_reminder_link',
+			'order_id': orderID,
+			'nonce': nonce
+		};
+		jQuery.post( {
+			url: ajaxurl,
+			data: data,
+			context: ref,
+			success: function( response ) {
+				if ( 0 === response.code ) {
+					navigator.clipboard.writeText( response.message )
+					.then(() => {
+						jQuery(this).closest( '.cr-send-menu' ).removeClass( 'cr-send-menu-lk1' );
+						jQuery(this).closest( '.cr-send-menu' ).addClass( 'cr-send-menu-lk-copied' );
+						// add a tooltip with the success message
+						jQuery(this).closest( '.cr-send-menu' ).find( '.cr-send-link-copied' ).tipTip( {
+							fadeIn: 50,
+							fadeOut: 50,
+							delay: 200,
+							keepAlive: true,
+							content: CrManualStrings.link_copied,
+						} );
+					})
+					.catch( err => {
+						jQuery(this).closest( '.cr-send-menu' ).removeClass( 'cr-send-menu-lk1' );
+						jQuery(this).closest( '.cr-send-menu' ).addClass( 'cr-send-menu-lk-error' );
+						// add a tooltip with the error description
+						jQuery(this).closest( '.cr-send-menu' ).find( '.cr-send-link-error' ).tipTip( {
+							fadeIn: 50,
+							fadeOut: 50,
+							delay: 200,
+							keepAlive: true,
+							content: err,
+						} );
+					} );
+				} else {
+					jQuery(this).closest( '.cr-send-menu' ).removeClass( 'cr-send-menu-lk1' );
+					jQuery(this).closest( '.cr-send-menu' ).addClass( 'cr-send-menu-lk-error' );
+					// add a tooltip with the error description
+					jQuery(this).closest( '.cr-send-menu' ).find( '.cr-send-link-error' ).tipTip( {
+						fadeIn: 50,
+						fadeOut: 50,
+						delay: 200,
+						keepAlive: true,
+						content: response.message,
+					} );
+				}
+			},
+			dataType: "json"
+		} );
 	}
 });

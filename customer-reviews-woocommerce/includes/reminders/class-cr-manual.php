@@ -46,6 +46,7 @@ if ( ! class_exists( 'CR_Manual' ) ) :
 			add_action( 'wp_ajax_cr_manual_review_reminder_wa', array( $this, 'manual_wa_review_reminder' ) );
 			add_action( 'wp_ajax_cr_manual_review_reminder_wa_api', array( $this, 'manual_wa_review_reminder_api' ) );
 			add_action( 'wp_ajax_cr_manual_review_reminder_conf', array( $this, 'manual_review_reminder_conf' ) );
+			add_action( 'wp_ajax_cr_manual_review_reminder_link', array( $this, 'manual_review_reminder_link' ) );
 			add_action( 'admin_enqueue_scripts', array( $this, 'include_scripts' ) );
 		}
 
@@ -374,6 +375,22 @@ if ( ! class_exists( 'CR_Manual' ) ) :
 				$send_button .= __( 'WhatsApp', 'customer-reviews-woocommerce' );
 				$send_button .= '<span class="dashicons dashicons-whatsapp"></span></li>';
 				//
+				$send_button .= '<li class="cr-send-link" data-tip="' . esc_attr__( 'Copy a link to an aggregated review form for this order.', 'customer-reviews-woocommerce' ) . '">';
+				$send_button .= __( 'Link', 'customer-reviews-woocommerce' );
+				$send_button .= '<span class="dashicons dashicons-admin-links"></span></li>';
+				//
+				$send_button .= '<li class="cr-send-link cr-send-link-copying">';
+				$send_button .= __( 'Copying...', 'customer-reviews-woocommerce' );
+				$send_button .= '<span class="dashicons dashicons-admin-links"></span></li>';
+				//
+				$send_button .= '<li class="cr-send-link cr-send-link-error">';
+				$send_button .= __( 'Error', 'customer-reviews-woocommerce' );
+				$send_button .= '<span class="dashicons dashicons-admin-links"></span></li>';
+				//
+				$send_button .= '<li class="cr-send-link cr-send-link-copied">';
+				$send_button .= __( 'Copied', 'customer-reviews-woocommerce' );
+				$send_button .= '<span class="dashicons dashicons-admin-links"></span></li>';
+				//
 				$send_button .= '<li class="cr-send-wa-cons"><span class="cr-send-wa-cons-msg">';
 				$send_button .= __( 'Has the customer provided a consent to receive a review invitation?', 'customer-reviews-woocommerce' );
 				$send_button .= '</span><span class="cr-send-wa-cons-btn">';
@@ -410,6 +427,7 @@ if ( ! class_exists( 'CR_Manual' ) ) :
 					'syncing' => __( 'Syncing...', 'customer-reviews-woocommerce' ),
 					'error_code_1' => __( 'Error code 1', 'customer-reviews-woocommerce' ),
 					'error_code_2' => __( 'Error code 2 (%s).', 'customer-reviews-woocommerce' ),
+					'link_copied' => __( 'Link to the aggregated review form copied. Paste it where you need it.', 'customer-reviews-woocommerce' ),
 					'send_button' => $send_button
 				));
 
@@ -697,6 +715,107 @@ if ( ! class_exists( 'CR_Manual' ) ) :
 						'code' => 0,
 						'order_id' => $order_id,
 						'message' => $msg
+					)
+				);
+			}
+		}
+
+		public function manual_review_reminder_link() {
+			if ( isset( $_POST['order_id'] ) ) {
+				$order_id = intval( $_POST['order_id'] );
+
+				if ( ! wp_verify_nonce( $_POST['nonce'], 'cr-man-rem' ) ) {
+					wp_send_json(
+						array(
+							'code' => 101,
+							'message' => __( 'A security token expired, please refresh the page and try again.', 'customer-reviews-woocommerce' ),
+							'order_id' => $order_id
+						)
+					);
+				}
+
+				if ( ! current_user_can( 'manage_woocommerce' ) ) {
+					wp_send_json(
+						array(
+							'code' => 102,
+							'message' => __( 'Your user account does not have permissions for sending review reminders.', 'customer-reviews-woocommerce' ),
+							'order_id' => $order_id
+						)
+					);
+				}
+
+				$order = wc_get_order( $order_id );
+				if ( ! $order  ) {
+					wp_send_json(
+						array(
+							'code' => 98,
+							'message' => __( 'Error: invalid order ID.', 'customer-reviews-woocommerce' )
+						)
+					);
+				}
+
+				if ( 'no' !== get_option( 'ivole_verified_reviews', 'no' ) ) {
+					wp_send_json(
+						array(
+							'code' => 99,
+							'message' => __( 'Error: links to aggregated review forms can be copied only with the self-hosted setting.', 'customer-reviews-woocommerce' )
+						)
+					);
+				}
+
+				// Check if there are any reviews for this order collected via CusRev previously
+				$existing_cr_reviews_count = get_comments(
+					array(
+						'meta_key' => 'ivole_order',
+						'meta_value' => $order_id,
+						'count' => true
+					)
+				);
+				if ( 0 < $existing_cr_reviews_count ) {
+					wp_send_json(
+						array(
+							'code' => 70,
+							'message' => __( 'Error: a link to an aggregated review form cannot be copied because reviews(s) have already been collected with a CusRev mailer for this order.', 'customer-reviews-woocommerce' )
+						)
+					);
+				}
+
+				$link = new CR_Copy_Link( $order_id );
+				$review_form = $link->get_review_form( $order_id );
+				if ( is_array( $review_form ) && count( $review_form )  > 1 ) {
+					if ( 0 !== $review_form[0] ) {
+						wp_send_json(
+							array(
+								'code' => 1,
+								'message' => 'Error: ' . $review_form[1]
+							)
+						);
+					} else {
+						// add an order note
+						$order->add_order_note(
+							__( 'CR: a link to an aggregated review form was copied manually.', 'customer-reviews-woocommerce' )
+						);
+						// success
+						wp_send_json(
+							array(
+								'code' => 0,
+								'message' => $review_form[1]
+							)
+						);
+					}
+				} else {
+					wp_send_json(
+						array(
+							'code' => 2,
+							'message' => __( 'Error: could not copy a link to an aggregated review form', 'customer-reviews-woocommerce' )
+						)
+					);
+				}
+			} else {
+				wp_send_json(
+					array(
+						'code' => 103,
+						'message' => __( 'Error: order ID is missing', 'customer-reviews-woocommerce' )
 					)
 				);
 			}

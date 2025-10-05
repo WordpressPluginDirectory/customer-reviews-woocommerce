@@ -18,8 +18,8 @@ if ( ! class_exists( 'CR_StructuredData' ) ) :
 				'mpn'   => '',
 				'brand' => ''
 			) );
-			if( is_array( $this->identifiers ) && 'yes' === get_option( 'ivole_product_feed_enable_id_str_dat', 'no' ) ) {
-				if( ( isset( $this->identifiers['gtin'] ) && $this->identifiers['gtin'] )
+			if ( is_array( $this->identifiers ) && 'yes' === get_option( 'ivole_product_feed_enable_id_str_dat', 'no' ) ) {
+				if ( ( isset( $this->identifiers['gtin'] ) && $this->identifiers['gtin'] )
 					|| ( isset( $this->identifiers['mpn'] ) && $this->identifiers['mpn'] )
 					|| (isset( $this->identifiers['brand'] ) && $this->identifiers['brand'] ) ) {
 
@@ -29,11 +29,7 @@ if ( ! class_exists( 'CR_StructuredData' ) ) :
 					add_filter( 'woocommerce_available_variation', array( $this, 'filter_woocommerce_available_variation'), 10, 3 );
 				}
 			}
-			if( 'yes' == get_option( 'ivole_attach_image', 'no' ) ) {
-				if( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '3.0.0' ) >= 0 ) {
-					add_filter( 'woocommerce_structured_data_review', array( $this, 'filter_woocommerce_structured_data_review' ), 10, 2 );
-				}
-			}
+			add_filter( 'woocommerce_structured_data_review', array( $this, 'filter_woocommerce_structured_data_review' ), 10, 2 );
 		}
 
 		public function filter_woocommerce_structured_data_review( $markup, $comment ) {

@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv3.
 msgid ""
 msgstr ""
-"Project-Id-Version: Customer Reviews for WooCommerce 5.83.3\n"
+"Project-Id-Version: Customer Reviews for WooCommerce 5.84.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/customer-reviews-woocommerce\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-09-21T20:30:23+00:00\n"
+"POT-Creation-Date: 2025-10-04T18:32:14+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 "X-Domain: customer-reviews-woocommerce\n"
@@ -34,27 +34,27 @@ msgstr ""
 msgid "https://www.cusrev.com/business/"
 msgstr ""
 
-#: class-ivole.php:173
+#: class-ivole.php:174
 msgid "View CusRev documentation"
 msgstr ""
 
-#: class-ivole.php:173
+#: class-ivole.php:174
 msgid "Docs"
 msgstr ""
 
-#: class-ivole.php:174
+#: class-ivole.php:175
 msgid "Visit community forums"
 msgstr ""
 
-#: class-ivole.php:174
+#: class-ivole.php:175
 msgid "Community support"
 msgstr ""
 
-#: class-ivole.php:184
+#: class-ivole.php:185
 msgid "View Customer Reviews settings"
 msgstr ""
 
-#: class-ivole.php:184
+#: class-ivole.php:185
 #: includes/settings/class-cr-admin-menu-settings.php:67
 #: includes/settings/class-cr-admin-menu-settings.php:68
 msgid "Settings"
@@ -70,6 +70,7 @@ msgstr ""
 
 #: includes/analytics/class-cr-reminders-log.php:361
 #: includes/reminders/class-cr-local-forms.php:301
+#: includes/reminders/class-cr-manual.php:387
 msgid "Error"
 msgstr ""
 
@@ -91,8 +92,8 @@ msgstr ""
 #: includes/misc/class-cr-admin-menu-diagnostics.php:248
 #: includes/misc/class-cr-admin-menu-diagnostics.php:340
 #: includes/qna/class-cr-admin-menu-qna.php:194
-#: includes/reminders/class-cr-manual.php:380
-#: includes/reminders/class-cr-manual.php:403
+#: includes/reminders/class-cr-manual.php:397
+#: includes/reminders/class-cr-manual.php:420
 #: includes/reviews/class-cr-admin-menu-reviews.php:244
 #: includes/reviews/class-cr-admin-menu-reviews.php:253
 #: includes/reviews/class-cr-reviews-media-meta-box.php:100
@@ -109,8 +110,8 @@ msgstr ""
 #: includes/misc/class-cr-admin-menu-diagnostics.php:253
 #: includes/misc/class-cr-admin-menu-diagnostics.php:340
 #: includes/qna/class-cr-admin-menu-qna.php:195
-#: includes/reminders/class-cr-manual.php:381
-#: includes/reminders/class-cr-manual.php:404
+#: includes/reminders/class-cr-manual.php:398
+#: includes/reminders/class-cr-manual.php:421
 #: includes/reviews/class-cr-admin-menu-reviews.php:245
 #: includes/reviews/class-cr-admin-menu-reviews.php:254
 #: includes/reviews/class-cr-reviews-media-meta-box.php:99
@@ -122,7 +123,7 @@ msgid "No"
 msgstr ""
 
 #: includes/analytics/class-cr-reminders-log.php:397
-#: includes/reminders/class-cr-manual.php:370
+#: includes/reminders/class-cr-manual.php:371
 #: includes/settings/class-cr-settings-emails.php:113
 #: includes/settings/class-cr-settings-review-discount.php:965
 #: includes/settings/class-cr-settings-review-reminder.php:1225
@@ -134,7 +135,7 @@ msgid "Email"
 msgstr ""
 
 #: includes/analytics/class-cr-reminders-log.php:400
-#: includes/reminders/class-cr-manual.php:374
+#: includes/reminders/class-cr-manual.php:375
 msgid "WhatsApp"
 msgstr ""
 
@@ -232,165 +233,165 @@ msgstr ""
 msgid "Show more reviews (%d)"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:870
+#: includes/blocks/class-cr-all-reviews.php:868
 #: includes/blocks/class-cr-reviews-grid.php:982
-#: includes/reviews/class-cr-reviews.php:551
+#: includes/reviews/class-cr-reviews.php:550
 msgid "Based on %s review"
 msgid_plural "Based on %s reviews"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/blocks/class-cr-all-reviews.php:883
-#: includes/blocks/class-cr-all-reviews.php:887
+#: includes/blocks/class-cr-all-reviews.php:881
+#: includes/blocks/class-cr-all-reviews.php:885
 #: includes/blocks/class-cr-reviews-grid.php:995
 #: includes/blocks/class-cr-reviews-grid.php:999
-#: includes/reviews/class-cr-reviews.php:566
-#: includes/reviews/class-cr-reviews.php:570
+#: includes/reviews/class-cr-reviews.php:565
+#: includes/reviews/class-cr-reviews.php:569
 msgid "5 star"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:896
-#: includes/blocks/class-cr-all-reviews.php:900
+#: includes/blocks/class-cr-all-reviews.php:894
+#: includes/blocks/class-cr-all-reviews.php:898
 #: includes/blocks/class-cr-reviews-grid.php:1008
 #: includes/blocks/class-cr-reviews-grid.php:1012
-#: includes/reviews/class-cr-reviews.php:577
-#: includes/reviews/class-cr-reviews.php:581
+#: includes/reviews/class-cr-reviews.php:576
+#: includes/reviews/class-cr-reviews.php:580
 msgid "4 star"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:909
-#: includes/blocks/class-cr-all-reviews.php:913
+#: includes/blocks/class-cr-all-reviews.php:907
+#: includes/blocks/class-cr-all-reviews.php:911
 #: includes/blocks/class-cr-reviews-grid.php:1021
 #: includes/blocks/class-cr-reviews-grid.php:1025
-#: includes/reviews/class-cr-reviews.php:588
-#: includes/reviews/class-cr-reviews.php:592
+#: includes/reviews/class-cr-reviews.php:587
+#: includes/reviews/class-cr-reviews.php:591
 msgid "3 star"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:922
-#: includes/blocks/class-cr-all-reviews.php:926
+#: includes/blocks/class-cr-all-reviews.php:920
+#: includes/blocks/class-cr-all-reviews.php:924
 #: includes/blocks/class-cr-reviews-grid.php:1034
 #: includes/blocks/class-cr-reviews-grid.php:1038
-#: includes/reviews/class-cr-reviews.php:599
-#: includes/reviews/class-cr-reviews.php:603
+#: includes/reviews/class-cr-reviews.php:598
+#: includes/reviews/class-cr-reviews.php:602
 msgid "2 star"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:935
-#: includes/blocks/class-cr-all-reviews.php:939
+#: includes/blocks/class-cr-all-reviews.php:933
+#: includes/blocks/class-cr-all-reviews.php:937
 #: includes/blocks/class-cr-reviews-grid.php:1047
 #: includes/blocks/class-cr-reviews-grid.php:1051
 #: includes/reviews/class-cr-reviews-list-table.php:474
-#: includes/reviews/class-cr-reviews.php:610
-#: includes/reviews/class-cr-reviews.php:614
+#: includes/reviews/class-cr-reviews.php:609
+#: includes/reviews/class-cr-reviews.php:613
 msgid "1 star"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:951
+#: includes/blocks/class-cr-all-reviews.php:949
 #: includes/blocks/class-cr-reviews-grid.php:1064
-#: includes/reviews/class-cr-reviews.php:1726
+#: includes/reviews/class-cr-reviews.php:1724
 #: templates/cr-review-form.php:31
 msgid "Add a review"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1085
-#: includes/reviews/class-cr-reviews.php:1639
+#: includes/blocks/class-cr-all-reviews.php:1083
+#: includes/reviews/class-cr-reviews.php:1637
 msgid "Sort reviews"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1087
-#: includes/reviews/class-cr-reviews.php:1641
+#: includes/blocks/class-cr-all-reviews.php:1085
+#: includes/reviews/class-cr-reviews.php:1639
 msgid "Most Recent"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1090
-#: includes/reviews/class-cr-reviews.php:1645
+#: includes/blocks/class-cr-all-reviews.php:1088
+#: includes/reviews/class-cr-reviews.php:1643
 msgid "Most Helpful"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1105
+#: includes/blocks/class-cr-all-reviews.php:1103
 msgid "%d star"
 msgid_plural "%d stars"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/blocks/class-cr-all-reviews.php:1111
+#: includes/blocks/class-cr-all-reviews.php:1109
 #: includes/blocks/class-cr-reviews-grid.php:1073
-#: includes/reviews/class-cr-reviews.php:626
+#: includes/reviews/class-cr-reviews.php:625
 msgid "See all %d review"
 msgid_plural "See all %d reviews"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/blocks/class-cr-all-reviews.php:1129
+#: includes/blocks/class-cr-all-reviews.php:1127
 msgid "%d-%d of %d review (%s). %s"
 msgid_plural "%d-%d of %d reviews (%s). %s"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/blocks/class-cr-all-reviews.php:1138
+#: includes/blocks/class-cr-all-reviews.php:1136
 msgid "%d-%d of %d review"
 msgid_plural "%d-%d of %d reviews"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/blocks/class-cr-all-reviews.php:1147
+#: includes/blocks/class-cr-all-reviews.php:1145
 msgid "0 of 0 reviews (%s). %s"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1152
+#: includes/blocks/class-cr-all-reviews.php:1150
 msgid "0 of 0 reviews"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1163
+#: includes/blocks/class-cr-all-reviews.php:1161
 #: includes/reminders/class-cr-local-forms.php:225
 #: templates/cr-ajax-product-reviews.php:145
 msgid "Add photos or video to your review"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1203
+#: includes/blocks/class-cr-all-reviews.php:1201
 msgid "Data validation error"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1204
+#: includes/blocks/class-cr-all-reviews.php:1202
 #: includes/qna/class-cr-admin-menu-qna.php:199
 #: includes/qna/class-cr-qna.php:179
-#: includes/reminders/class-cr-manual.php:397
+#: includes/reminders/class-cr-manual.php:414
 #: includes/reviews/class-cr-admin-menu-reviews.php:249
-#: includes/reviews/class-cr-reviews.php:450
+#: includes/reviews/class-cr-reviews.php:449
 msgid "OK"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1211
+#: includes/blocks/class-cr-all-reviews.php:1209
 #: templates/cr-review-form.php:78
 msgid "Currently, we are not accepting new reviews"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1235
+#: includes/blocks/class-cr-all-reviews.php:1233
 #: templates/cr-review-form.php:61
 msgid "You must be logged in to post a review"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1265
+#: includes/blocks/class-cr-all-reviews.php:1263
 msgid "Only customers who have purchased this product may leave a review. Please use the same email address as in your order for this product."
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1289
+#: includes/blocks/class-cr-all-reviews.php:1287
 msgid "Your review could not be added"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1290
+#: includes/blocks/class-cr-all-reviews.php:1288
 #: includes/qna/class-cr-admin-menu-qna.php:198
 #: includes/qna/class-cr-qna.php:181
 #: includes/reviews/class-cr-admin-menu-reviews.php:248
 msgid "Try again"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1291
+#: includes/blocks/class-cr-all-reviews.php:1289
 msgid "Your review has been successfully added"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1292
+#: includes/blocks/class-cr-all-reviews.php:1290
 #: includes/qna/class-cr-qna.php:182
 #: templates/cr-review-form.php:201
 #: templates/qna-list.php:202
@@ -398,26 +399,26 @@ msgstr ""
 msgid "Continue"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1319
+#: includes/blocks/class-cr-all-reviews.php:1317
 msgid "Error: no shop page configured in WooCommerce settings (WooCommerce > Settings > Products > Shop page)"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1321
+#: includes/blocks/class-cr-all-reviews.php:1319
 msgid "Error: no product with ID %d found"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1361
+#: includes/blocks/class-cr-all-reviews.php:1359
 #: includes/reminders/class-cr-local-forms-ajax.php:99
 #: includes/reminders/class-cr-local-forms.php:156
-#: includes/reviews/class-cr-reviews.php:404
+#: includes/reviews/class-cr-reviews.php:403
 msgid "The file cannot be uploaded because its size exceeds the limit of %d MB"
 msgstr ""
 
-#: includes/blocks/class-cr-all-reviews.php:1370
+#: includes/blocks/class-cr-all-reviews.php:1368
 #: includes/reminders/class-cr-local-forms-ajax.php:108
 #: includes/reminders/class-cr-local-forms.php:157
-#: includes/reviews/class-cr-reviews.php:402
-#: includes/reviews/class-cr-reviews.php:1519
+#: includes/reviews/class-cr-reviews.php:401
+#: includes/reviews/class-cr-reviews.php:1517
 msgid "Error: accepted file types are PNG, JPG, JPEG, GIF, MP4, MPEG, OGG, WEBM, MOV, AVI"
 msgstr ""
 
@@ -438,10 +439,10 @@ msgstr ""
 #: includes/blocks/class-cr-reviews-slider.php:277
 #: includes/blocks/class-cr-reviews-slider.php:279
 #: includes/reviews/class-cr-reviews-list-table.php:655
+#: includes/reviews/class-cr-reviews.php:1128
 #: includes/reviews/class-cr-reviews.php:1130
-#: includes/reviews/class-cr-reviews.php:1132
+#: includes/reviews/class-cr-reviews.php:1186
 #: includes/reviews/class-cr-reviews.php:1188
-#: includes/reviews/class-cr-reviews.php:1190
 msgid "Verified review"
 msgstr ""
 
@@ -449,13 +450,13 @@ msgstr ""
 #: includes/blocks/class-cr-reviews-grid.php:409
 #: includes/blocks/class-cr-reviews-slider.php:273
 #: includes/blocks/class-cr-reviews-slider.php:280
-#: includes/reviews/class-cr-reviews.php:1141
-#: includes/reviews/class-cr-reviews.php:1199
+#: includes/reviews/class-cr-reviews.php:1139
+#: includes/reviews/class-cr-reviews.php:1197
 msgid "view original"
 msgstr ""
 
 #: includes/blocks/class-cr-reviews-grid.php:1072
-#: includes/reviews/class-cr-reviews.php:625
+#: includes/reviews/class-cr-reviews.php:624
 msgid "Showing %1$d of %2$d review (%3$d star). "
 msgid_plural "Showing %1$d of %2$d reviews (%3$d star). "
 msgstr[0] ""
@@ -467,6 +468,47 @@ msgstr ""
 
 #: includes/blocks/class-cr-reviews-slider.php:252
 msgid "No reviews to show"
+msgstr ""
+
+#: includes/emails/class-cr-copy-link.php:19
+#: includes/emails/class-cr-email.php:40
+#: includes/emails/class-cr-wtsap.php:23
+#: includes/settings/class-cr-settings-email-template.php:110
+msgid "How did we do?"
+msgstr ""
+
+#: includes/emails/class-cr-copy-link.php:20
+#: includes/emails/class-cr-email.php:41
+#: includes/emails/class-cr-wtsap.php:24
+msgid "Please review your experience with products and services that you purchased at {site_title}."
+msgstr ""
+
+#: includes/emails/class-cr-copy-link.php:144
+#: includes/emails/class-cr-wtsap.php:171
+#: includes/emails/class-cr-wtsap.php:495
+msgid "Error: order %s does not exist"
+msgstr ""
+
+#: includes/emails/class-cr-copy-link.php:153
+#: includes/emails/class-cr-wtsap.php:180
+msgid "Error: an option to limit review reminders is enabled in the settings"
+msgstr ""
+
+#: includes/emails/class-cr-copy-link.php:295
+#: includes/emails/class-cr-email.php:454
+#: includes/emails/class-cr-wtsap.php:410
+msgid "CR: A review invitation cannot be sent because the order does not contain any products for which review reminders are enabled in the settings."
+msgstr ""
+
+#: includes/emails/class-cr-copy-link.php:297
+#: includes/emails/class-cr-email.php:458
+#: includes/emails/class-cr-wtsap.php:412
+msgid "Error: the order does not contain any products for which review reminders are enabled in the settings."
+msgstr ""
+
+#: includes/emails/class-cr-copy-link.php:300
+#: includes/emails/class-cr-wtsap.php:415
+msgid "Error: invalid order ID"
 msgstr ""
 
 #: includes/emails/class-cr-email-coupon.php:32
@@ -575,17 +617,6 @@ msgstr ""
 msgid "Comment: %s"
 msgstr ""
 
-#: includes/emails/class-cr-email.php:40
-#: includes/emails/class-cr-wtsap.php:23
-#: includes/settings/class-cr-settings-email-template.php:110
-msgid "How did we do?"
-msgstr ""
-
-#: includes/emails/class-cr-email.php:41
-#: includes/emails/class-cr-wtsap.php:24
-msgid "Please review your experience with products and services that you purchased at {site_title}."
-msgstr ""
-
 #: includes/emails/class-cr-email.php:47
 #: includes/misc/class-cr-wpml.php:12
 #: includes/reviews/class-cr-reviews-list-table.php:438
@@ -619,16 +650,6 @@ msgstr ""
 
 #: includes/emails/class-cr-email.php:354
 msgid "Error: could not save the secret key to DB. Please try again."
-msgstr ""
-
-#: includes/emails/class-cr-email.php:454
-#: includes/emails/class-cr-wtsap.php:410
-msgid "CR: A review invitation cannot be sent because the order does not contain any products for which review reminders are enabled in the settings."
-msgstr ""
-
-#: includes/emails/class-cr-email.php:458
-#: includes/emails/class-cr-wtsap.php:412
-msgid "Error: the order does not contain any products for which review reminders are enabled in the settings."
 msgstr ""
 
 #: includes/emails/class-cr-email.php:678
@@ -711,19 +732,6 @@ msgstr ""
 msgid "CR: a review reminder was cancelled because the order was cancelled."
 msgstr ""
 
-#: includes/emails/class-cr-wtsap.php:171
-#: includes/emails/class-cr-wtsap.php:495
-msgid "Error: order %s does not exist"
-msgstr ""
-
-#: includes/emails/class-cr-wtsap.php:180
-msgid "Error: an option to limit review reminders is enabled in the settings"
-msgstr ""
-
-#: includes/emails/class-cr-wtsap.php:415
-msgid "Error: invalid order ID"
-msgstr ""
-
 #: includes/emails/class-cr-wtsap.php:664
 msgid "Discount coupon %s has been successfully sent to the customer by WhatsApp."
 msgstr ""
@@ -786,7 +794,7 @@ msgstr ""
 #: includes/reviews/class-cr-admin-menu-reviews.php:62
 #: includes/reviews/class-cr-admin-menu-reviews.php:63
 #: includes/settings/class-cr-admin-menu-settings.php:174
-#: includes/settings/class-cr-settings-trust-badges.php:352
+#: includes/settings/class-cr-settings-trust-badges.php:342
 #: admin/build/index.js:1
 #: admin/src/reviews/Reviews.jsx:58
 msgid "Reviews"
@@ -1379,19 +1387,19 @@ msgstr ""
 msgid "Enable the option to add \"identifier_exists = no\" in Google Shopping feed for this variation."
 msgstr ""
 
-#: includes/google/class-cr-structured-data.php:47
+#: includes/google/class-cr-structured-data.php:43
 msgid "Image #%1$d from "
 msgstr ""
 
-#: includes/google/class-cr-structured-data.php:123
+#: includes/google/class-cr-structured-data.php:119
 msgid "GTIN: "
 msgstr ""
 
-#: includes/google/class-cr-structured-data.php:148
+#: includes/google/class-cr-structured-data.php:144
 msgid "MPN: "
 msgstr ""
 
-#: includes/google/class-cr-structured-data.php:158
+#: includes/google/class-cr-structured-data.php:154
 msgid "Brand: "
 msgstr ""
 
@@ -1488,7 +1496,7 @@ msgstr ""
 #: includes/import-export/class-cr-export-reviews.php:159
 #: includes/import-export/class-cr-import-qna.php:137
 #: includes/qna/class-cr-admin-menu-qna.php:196
-#: includes/reminders/class-cr-manual.php:391
+#: includes/reminders/class-cr-manual.php:408
 #: includes/reminders/class-cr-reminders-list-table.php:194
 #: includes/reminders/class-cr-reminders-list-table.php:399
 #: includes/reviews/class-cr-admin-menu-reviews.php:246
@@ -2483,7 +2491,7 @@ msgstr ""
 
 #: includes/reminders/class-cr-local-forms.php:185
 #: includes/reviews/class-cr-custom-questions.php:450
-#: includes/reviews/class-cr-reviews.php:1722
+#: includes/reviews/class-cr-reviews.php:1720
 #: includes/settings/class-cr-settings-forms-rating.php:64
 #: includes/settings/class-cr-settings-forms-rating.php:161
 #: blocks/build/reviews-grid/index.js:12
@@ -2528,198 +2536,241 @@ msgstr ""
 msgid "Oops! This review form isn’t available - it may have expired or the order has nothing to review."
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:77
+#: includes/reminders/class-cr-manual.php:78
 msgid "Sync the order with CR Cron"
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:90
+#: includes/reminders/class-cr-manual.php:91
 msgid "Send review reminder now"
 msgstr ""
 
 #. translators: %s will be automatically replaced with the status name
-#: includes/reminders/class-cr-manual.php:99
+#: includes/reminders/class-cr-manual.php:100
 msgid "A review reminder cannot be sent because the customer did not provide their consent"
 msgstr ""
 
 #. translators: %s will be automatically replaced with the status name
-#: includes/reminders/class-cr-manual.php:108
+#: includes/reminders/class-cr-manual.php:109
 msgid "If you would like to send a review reminder manually, please set the order status to %s"
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:128
-#: includes/reminders/class-cr-manual.php:430
-#: includes/reminders/class-cr-manual.php:545
-#: includes/reminders/class-cr-manual.php:643
+#: includes/reminders/class-cr-manual.php:129
+#: includes/reminders/class-cr-manual.php:448
+#: includes/reminders/class-cr-manual.php:563
+#: includes/reminders/class-cr-manual.php:661
+#: includes/reminders/class-cr-manual.php:731
 msgid "A security token expired, please refresh the page and try again."
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:138
-#: includes/reminders/class-cr-manual.php:440
-#: includes/reminders/class-cr-manual.php:554
-#: includes/reminders/class-cr-manual.php:653
+#: includes/reminders/class-cr-manual.php:139
+#: includes/reminders/class-cr-manual.php:458
+#: includes/reminders/class-cr-manual.php:572
+#: includes/reminders/class-cr-manual.php:671
+#: includes/reminders/class-cr-manual.php:741
 msgid "Your user account does not have permissions for sending review reminders."
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:147
-#: includes/reminders/class-cr-manual.php:449
-#: includes/reminders/class-cr-manual.php:565
-#: includes/reminders/class-cr-manual.php:665
+#: includes/reminders/class-cr-manual.php:148
+#: includes/reminders/class-cr-manual.php:467
+#: includes/reminders/class-cr-manual.php:583
+#: includes/reminders/class-cr-manual.php:683
+#: includes/reminders/class-cr-manual.php:752
 msgid "Error: invalid order ID."
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:174
+#: includes/reminders/class-cr-manual.php:175
 msgid "Error: a review reminder could not be sent because reviews(s) have already been collected with a WordPress mailer for this order."
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:183
-#: includes/reminders/class-cr-manual.php:506
+#: includes/reminders/class-cr-manual.php:184
+#: includes/reminders/class-cr-manual.php:524
 msgid "Error: a review reminder could not be sent because reviews(s) have already been collected with a CusRev mailer for this order."
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:226
-#: includes/reminders/class-cr-manual.php:328
-#: includes/reminders/class-cr-manual.php:610
+#: includes/reminders/class-cr-manual.php:227
+#: includes/reminders/class-cr-manual.php:329
+#: includes/reminders/class-cr-manual.php:628
 msgid "No reminders sent"
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:230
-#: includes/reminders/class-cr-manual.php:691
+#: includes/reminders/class-cr-manual.php:231
+#: includes/reminders/class-cr-manual.php:709
 msgid " reminder(s) sent"
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:232
-#: includes/reminders/class-cr-manual.php:300
-#: includes/reminders/class-cr-manual.php:313
-#: includes/reminders/class-cr-manual.php:693
+#: includes/reminders/class-cr-manual.php:233
+#: includes/reminders/class-cr-manual.php:301
+#: includes/reminders/class-cr-manual.php:314
+#: includes/reminders/class-cr-manual.php:711
 msgid "No reminders sent yet"
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:250
+#: includes/reminders/class-cr-manual.php:251
 msgid "CR: a review reminder was triggered manually via email."
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:252
+#: includes/reminders/class-cr-manual.php:253
 msgid "Successfully synced with CR Cron"
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:262
+#: includes/reminders/class-cr-manual.php:263
 #: includes/settings/class-cr-settings-email-template.php:29
 #: includes/settings/class-cr-settings-review-reminder.php:54
 #: includes/settings/class-cr-settings-review-reminder.php:1093
 msgid "Review Reminder"
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:273
+#: includes/reminders/class-cr-manual.php:274
 msgid "No customer consent received"
 msgstr ""
 
 #. translators: %d will be automatically replaced with the count of reviews
-#: includes/reminders/class-cr-manual.php:286
+#: includes/reminders/class-cr-manual.php:287
 msgid "%d review received"
 msgid_plural "%d reviews received"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/reminders/class-cr-manual.php:292
+#: includes/reminders/class-cr-manual.php:293
 msgid "A review reminder was scheduled via CR Cron"
 msgstr ""
 
 #. translators: %s will be automatically replaced with the status name
-#: includes/reminders/class-cr-manual.php:303
-#: includes/reminders/class-cr-manual.php:316
+#: includes/reminders/class-cr-manual.php:304
+#: includes/reminders/class-cr-manual.php:317
 msgid "A review reminder will be scheduled after the status is set to %s"
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:306
-#: includes/reminders/class-cr-manual.php:319
+#: includes/reminders/class-cr-manual.php:307
+#: includes/reminders/class-cr-manual.php:320
 msgid "Automatic review reminders are disabled"
 msgstr ""
 
 #. translators: %d will be automatically replaced with the count of review reminders
-#: includes/reminders/class-cr-manual.php:326
-#: includes/reminders/class-cr-manual.php:616
+#: includes/reminders/class-cr-manual.php:327
+#: includes/reminders/class-cr-manual.php:634
 msgid "%d reminder sent"
 msgid_plural "%d reminders sent"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/reminders/class-cr-manual.php:336
+#: includes/reminders/class-cr-manual.php:337
 msgid "A reminder is scheduled for "
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:338
+#: includes/reminders/class-cr-manual.php:339
 msgid "WP Cron error"
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:373
+#: includes/reminders/class-cr-manual.php:374
 msgid "A review invitation cannot be sent by WhatsApp because no phone number is found in the order."
 msgstr ""
 
 #: includes/reminders/class-cr-manual.php:378
+msgid "Copy a link to an aggregated review form for this order."
+msgstr ""
+
+#: includes/reminders/class-cr-manual.php:379
+msgid "Link"
+msgstr ""
+
+#: includes/reminders/class-cr-manual.php:383
+msgid "Copying..."
+msgstr ""
+
+#: includes/reminders/class-cr-manual.php:391
+msgid "Copied"
+msgstr ""
+
+#: includes/reminders/class-cr-manual.php:395
 msgid "Has the customer provided a consent to receive a review invitation?"
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:388
+#: includes/reminders/class-cr-manual.php:405
 #: includes/settings/class-cr-admin-menu-settings.php:395
 msgid "Send"
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:401
+#: includes/reminders/class-cr-manual.php:418
 msgid "Have you sent the review invitation?"
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:409
+#: includes/reminders/class-cr-manual.php:426
 #: includes/settings/class-cr-admin-menu-settings.php:151
 msgid "Sending..."
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:410
+#: includes/reminders/class-cr-manual.php:427
 msgid "Syncing..."
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:411
+#: includes/reminders/class-cr-manual.php:428
 msgid "Error code 1"
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:412
+#: includes/reminders/class-cr-manual.php:429
 msgid "Error code 2 (%s)."
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:466
-#: includes/reminders/class-cr-manual.php:582
+#: includes/reminders/class-cr-manual.php:430
+msgid "Link to the aggregated review form copied. Paste it where you need it."
+msgstr ""
+
+#: includes/reminders/class-cr-manual.php:484
+#: includes/reminders/class-cr-manual.php:600
 msgid "Error: a review reminder could not be sent because reviews(s) have already been collected via a local review form for this order."
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:478
-#: includes/reminders/class-cr-manual.php:518
+#: includes/reminders/class-cr-manual.php:496
+#: includes/reminders/class-cr-manual.php:536
 msgid "Check that the customer's phone number %s is formatted correctly."
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:479
-#: includes/reminders/class-cr-manual.php:519
+#: includes/reminders/class-cr-manual.php:497
+#: includes/reminders/class-cr-manual.php:537
 msgid "Examples"
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:480
-#: includes/reminders/class-cr-manual.php:520
+#: includes/reminders/class-cr-manual.php:498
+#: includes/reminders/class-cr-manual.php:538
 msgid "Correct: %s"
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:481
-#: includes/reminders/class-cr-manual.php:521
+#: includes/reminders/class-cr-manual.php:499
+#: includes/reminders/class-cr-manual.php:539
 msgid "Incorrect: %s"
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:606
+#: includes/reminders/class-cr-manual.php:624
 msgid "CR: a review reminder was triggered manually via WhatsApp."
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:623
+#: includes/reminders/class-cr-manual.php:641
 msgid "A review reminder has been successfully sent via WhatsApp."
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:685
+#: includes/reminders/class-cr-manual.php:703
 msgid "CR: a review reminder was sent via WhatsApp manually."
+msgstr ""
+
+#: includes/reminders/class-cr-manual.php:761
+msgid "Error: links to aggregated review forms can be copied only with the self-hosted setting."
+msgstr ""
+
+#: includes/reminders/class-cr-manual.php:778
+msgid "Error: a link to an aggregated review form cannot be copied because reviews(s) have already been collected with a CusRev mailer for this order."
+msgstr ""
+
+#: includes/reminders/class-cr-manual.php:796
+msgid "CR: a link to an aggregated review form was copied manually."
+msgstr ""
+
+#: includes/reminders/class-cr-manual.php:810
+msgid "Error: could not copy a link to an aggregated review form"
+msgstr ""
+
+#: includes/reminders/class-cr-manual.php:818
+msgid "Error: order ID is missing"
 msgstr ""
 
 #: includes/reminders/class-cr-reminders-details.php:18
@@ -3120,7 +3171,7 @@ msgid "A verified copy of this reply was published on %1$s. If this reply is del
 msgstr ""
 
 #: includes/reviews/class-cr-reviews-list-table.php:974
-#: includes/reviews/class-cr-reviews.php:1213
+#: includes/reviews/class-cr-reviews.php:1211
 #: templates/cr-review.php:131
 msgid "Featured Review"
 msgstr ""
@@ -3133,10 +3184,10 @@ msgstr ""
 #: includes/reviews/class-cr-reviews-list-table.php:1045
 #: includes/reviews/class-cr-reviews-media-meta-box.php:56
 #: includes/reviews/class-cr-reviews-media-meta-box.php:104
-#: includes/reviews/class-cr-reviews.php:246
-#: includes/reviews/class-cr-reviews.php:265
-#: includes/reviews/class-cr-reviews.php:1265
-#: includes/reviews/class-cr-reviews.php:1279
+#: includes/reviews/class-cr-reviews.php:245
+#: includes/reviews/class-cr-reviews.php:264
+#: includes/reviews/class-cr-reviews.php:1263
+#: includes/reviews/class-cr-reviews.php:1277
 #: templates/reviews-grid.php:84
 #: templates/reviews-grid.php:91
 msgid "Image #%1$d from %2$s"
@@ -3146,10 +3197,10 @@ msgstr ""
 #: includes/reviews/class-cr-reviews-list-table.php:1092
 #: includes/reviews/class-cr-reviews-media-meta-box.php:74
 #: includes/reviews/class-cr-reviews-media-meta-box.php:138
-#: includes/reviews/class-cr-reviews.php:286
-#: includes/reviews/class-cr-reviews.php:308
-#: includes/reviews/class-cr-reviews.php:1293
-#: includes/reviews/class-cr-reviews.php:1307
+#: includes/reviews/class-cr-reviews.php:285
+#: includes/reviews/class-cr-reviews.php:307
+#: includes/reviews/class-cr-reviews.php:1291
+#: includes/reviews/class-cr-reviews.php:1305
 #: templates/reviews-grid.php:74
 #: templates/reviews-grid.php:76
 #: templates/reviews-grid.php:88
@@ -3160,9 +3211,9 @@ msgstr ""
 #: includes/reviews/class-cr-reviews-list-table.php:1094
 #: includes/reviews/class-cr-reviews-media-meta-box.php:76
 #: includes/reviews/class-cr-reviews-media-meta-box.php:140
-#: includes/reviews/class-cr-reviews.php:288
-#: includes/reviews/class-cr-reviews.php:310
-#: includes/reviews/class-cr-reviews.php:1396
+#: includes/reviews/class-cr-reviews.php:287
+#: includes/reviews/class-cr-reviews.php:309
+#: includes/reviews/class-cr-reviews.php:1394
 msgid "Close"
 msgstr ""
 
@@ -3223,58 +3274,58 @@ msgstr ""
 msgid "Number"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews.php:134
-#: includes/reviews/class-cr-reviews.php:401
+#: includes/reviews/class-cr-reviews.php:133
+#: includes/reviews/class-cr-reviews.php:400
 msgid "Upload up to %d images or videos"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews.php:162
+#: includes/reviews/class-cr-reviews.php:161
 msgid "* Please confirm that you are not a robot"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews.php:189
+#: includes/reviews/class-cr-reviews.php:188
 msgid "Error: You tried to upload too many files. The maximum number of files that you can upload is %d."
 msgstr ""
 
-#: includes/reviews/class-cr-reviews.php:190
+#: includes/reviews/class-cr-reviews.php:189
 msgid "Go back to: %s"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews.php:403
+#: includes/reviews/class-cr-reviews.php:402
 msgid "Error: You tried to upload too many files. The maximum number of files that can be uploaded is %d."
 msgstr ""
 
-#: includes/reviews/class-cr-reviews.php:449
-#: includes/reviews/class-cr-reviews.php:455
+#: includes/reviews/class-cr-reviews.php:448
+#: includes/reviews/class-cr-reviews.php:454
 msgid "reCAPTCHA vertification failed and your review cannot be saved"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews.php:456
+#: includes/reviews/class-cr-reviews.php:455
 msgid "Add Review Error"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews.php:1142
-#: includes/reviews/class-cr-reviews.php:1200
+#: includes/reviews/class-cr-reviews.php:1140
+#: includes/reviews/class-cr-reviews.php:1198
 msgid "External link"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews.php:1321
+#: includes/reviews/class-cr-reviews.php:1319
 msgid "Customer Images"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews.php:1501
+#: includes/reviews/class-cr-reviews.php:1499
 msgid "Error: please solve the CAPTCHA before uploading files"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews.php:1510
+#: includes/reviews/class-cr-reviews.php:1508
 msgid "Error: the file(s) is too large"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews.php:1649
+#: includes/reviews/class-cr-reviews.php:1647
 msgid "Highest Rating"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews.php:1652
+#: includes/reviews/class-cr-reviews.php:1650
 msgid "Lowest Rating"
 msgstr ""
 
@@ -5481,172 +5532,172 @@ msgstr ""
 msgid "%1$s parameter accepts a comma-separated list of non-product pages (e.g., regular WordPress pages or posts) or %2$s. If non-product page IDs are provided, the block will display Q & A linked to the corresponding non-product pages. If the parameter is equal to %3$s, the block will display Q & A for all non-product pages in the store."
 msgstr ""
 
-#: includes/settings/class-cr-settings-trust-badges.php:45
-#: includes/settings/class-cr-settings-trust-badges.php:83
+#: includes/settings/class-cr-settings-trust-badges.php:35
+#: includes/settings/class-cr-settings-trust-badges.php:73
 msgid "Trust Badges"
 msgstr ""
 
-#: includes/settings/class-cr-settings-trust-badges.php:86
+#: includes/settings/class-cr-settings-trust-badges.php:76
 msgid "Increase your store's conversion rate by placing a \"trust badge\" on the home, checkout or any other page(s). Let customers feel more confident about shopping on your site by featuring a trust badge that shows a summary of customer reviews. Trust badges can be enabled using shortcodes or blocks in the page editor (blocks require WordPress 5.0 or newer)."
 msgstr ""
 
-#: includes/settings/class-cr-settings-trust-badges.php:88
+#: includes/settings/class-cr-settings-trust-badges.php:78
 msgid "If you enable <a href=\"%1$s\">verification of reviews</a> and claim a <a href=\"%2$s\">dedicated page</a> at CusRev.com website, trust badges will include a nofollow link to your page there."
 msgstr ""
 
-#: includes/settings/class-cr-settings-trust-badges.php:93
+#: includes/settings/class-cr-settings-trust-badges.php:83
 msgid "Small Light Badge"
 msgstr ""
 
-#: includes/settings/class-cr-settings-trust-badges.php:95
+#: includes/settings/class-cr-settings-trust-badges.php:85
 msgid "Shortcode and preview of the small light trust badge."
 msgstr ""
 
-#: includes/settings/class-cr-settings-trust-badges.php:101
+#: includes/settings/class-cr-settings-trust-badges.php:91
 msgid "Small Light Badge (with Store Rating)"
 msgstr ""
 
-#: includes/settings/class-cr-settings-trust-badges.php:103
+#: includes/settings/class-cr-settings-trust-badges.php:93
 msgid "Shortcode and preview of the small light trust badge with store rating."
 msgstr ""
 
-#: includes/settings/class-cr-settings-trust-badges.php:109
+#: includes/settings/class-cr-settings-trust-badges.php:99
 msgid "Small Dark Badge"
 msgstr ""
 
-#: includes/settings/class-cr-settings-trust-badges.php:111
+#: includes/settings/class-cr-settings-trust-badges.php:101
 msgid "Shortcode and preview of the small dark trust badge."
 msgstr ""
 
-#: includes/settings/class-cr-settings-trust-badges.php:117
+#: includes/settings/class-cr-settings-trust-badges.php:107
 msgid "Small Dark Badge (with Store Rating)"
 msgstr ""
 
-#: includes/settings/class-cr-settings-trust-badges.php:119
+#: includes/settings/class-cr-settings-trust-badges.php:109
 msgid "Shortcode and preview of the small dark trust badge with store rating."
 msgstr ""
 
-#: includes/settings/class-cr-settings-trust-badges.php:125
+#: includes/settings/class-cr-settings-trust-badges.php:115
 msgid "Wide Light Badge"
 msgstr ""
 
-#: includes/settings/class-cr-settings-trust-badges.php:127
+#: includes/settings/class-cr-settings-trust-badges.php:117
 msgid "Shortcode and preview of the wide light trust badge. The wide badge has a version for small screens that will be automatically shown when a website is viewed from phones."
 msgstr ""
 
-#: includes/settings/class-cr-settings-trust-badges.php:133
+#: includes/settings/class-cr-settings-trust-badges.php:123
 msgid "Wide Light Badge (with Store Rating)"
 msgstr ""
 
-#: includes/settings/class-cr-settings-trust-badges.php:135
+#: includes/settings/class-cr-settings-trust-badges.php:125
 msgid "Shortcode and preview of the wide light trust badge with store rating. The wide badge has a version for small screens that will be automatically shown when a website is viewed from phones."
 msgstr ""
 
-#: includes/settings/class-cr-settings-trust-badges.php:141
+#: includes/settings/class-cr-settings-trust-badges.php:131
 msgid "Wide Dark Badge"
 msgstr ""
 
-#: includes/settings/class-cr-settings-trust-badges.php:143
+#: includes/settings/class-cr-settings-trust-badges.php:133
 msgid "Shortcode and preview of the wide dark trust badge. The wide badge has a version for small screens that will be automatically shown when a website is viewed from phones."
 msgstr ""
 
-#: includes/settings/class-cr-settings-trust-badges.php:149
+#: includes/settings/class-cr-settings-trust-badges.php:139
 msgid "Wide Dark Badge (with Store Rating)"
 msgstr ""
 
-#: includes/settings/class-cr-settings-trust-badges.php:151
+#: includes/settings/class-cr-settings-trust-badges.php:141
 msgid "Shortcode and preview of the wide dark trust badge with store rating. The wide badge has a version for small screens that will be automatically shown when a website is viewed from phones."
 msgstr ""
 
-#: includes/settings/class-cr-settings-trust-badges.php:157
+#: includes/settings/class-cr-settings-trust-badges.php:147
 msgid "Compact Light Badge"
 msgstr ""
 
-#: includes/settings/class-cr-settings-trust-badges.php:159
+#: includes/settings/class-cr-settings-trust-badges.php:149
 msgid "Shortcode and preview of the compact light trust badge."
 msgstr ""
 
-#: includes/settings/class-cr-settings-trust-badges.php:165
+#: includes/settings/class-cr-settings-trust-badges.php:155
 msgid "Compact Dark Badge"
 msgstr ""
 
-#: includes/settings/class-cr-settings-trust-badges.php:167
+#: includes/settings/class-cr-settings-trust-badges.php:157
 msgid "Shortcode and preview of the compact dark trust badge."
 msgstr ""
 
-#: includes/settings/class-cr-settings-trust-badges.php:177
+#: includes/settings/class-cr-settings-trust-badges.php:167
 msgid "Floating Trust Badge"
 msgstr ""
 
-#: includes/settings/class-cr-settings-trust-badges.php:179
+#: includes/settings/class-cr-settings-trust-badges.php:169
 msgid "Settings to display a floating badge with a summary of verified reviews."
 msgstr ""
 
-#: includes/settings/class-cr-settings-trust-badges.php:183
+#: includes/settings/class-cr-settings-trust-badges.php:173
 msgid "Floating Badge"
 msgstr ""
 
-#: includes/settings/class-cr-settings-trust-badges.php:185
+#: includes/settings/class-cr-settings-trust-badges.php:175
 msgid "Enable this checkbox to display a floating trust badge on public pages of the website."
 msgstr ""
 
-#: includes/settings/class-cr-settings-trust-badges.php:190
+#: includes/settings/class-cr-settings-trust-badges.php:180
 msgid "Floating Badge Style"
 msgstr ""
 
-#: includes/settings/class-cr-settings-trust-badges.php:192
+#: includes/settings/class-cr-settings-trust-badges.php:182
 msgid "Choose one of the styles for the floating trust badge."
 msgstr ""
 
-#: includes/settings/class-cr-settings-trust-badges.php:196
+#: includes/settings/class-cr-settings-trust-badges.php:186
 #: blocks/build/trust-badge/index.js:1
 #: blocks/src/trust-badge/edit.js:72
 msgid "Light"
 msgstr ""
 
-#: includes/settings/class-cr-settings-trust-badges.php:197
+#: includes/settings/class-cr-settings-trust-badges.php:187
 #: blocks/build/trust-badge/index.js:1
 #: blocks/src/trust-badge/edit.js:73
 msgid "Dark"
 msgstr ""
 
-#: includes/settings/class-cr-settings-trust-badges.php:202
+#: includes/settings/class-cr-settings-trust-badges.php:192
 msgid "Floating Badge Location"
 msgstr ""
 
-#: includes/settings/class-cr-settings-trust-badges.php:204
+#: includes/settings/class-cr-settings-trust-badges.php:194
 msgid "Choose one of the locations for the floating trust badge."
 msgstr ""
 
-#: includes/settings/class-cr-settings-trust-badges.php:208
+#: includes/settings/class-cr-settings-trust-badges.php:198
 msgid "Bottom right"
 msgstr ""
 
-#: includes/settings/class-cr-settings-trust-badges.php:209
+#: includes/settings/class-cr-settings-trust-badges.php:199
 msgid "Bottom left"
 msgstr ""
 
-#: includes/settings/class-cr-settings-trust-badges.php:221
+#: includes/settings/class-cr-settings-trust-badges.php:211
 msgid "Trust Badge Link"
 msgstr ""
 
-#: includes/settings/class-cr-settings-trust-badges.php:224
+#: includes/settings/class-cr-settings-trust-badges.php:214
 msgid "Make Trust Badges clickable by adding a link leading to a special page of your website. Use that page to showcase reviews with one of the <a href=\"%s\">shortcodes or Gutenberg blocks</a>."
 msgstr ""
 
-#: includes/settings/class-cr-settings-trust-badges.php:230
+#: includes/settings/class-cr-settings-trust-badges.php:220
 msgid "Reviews Page"
 msgstr ""
 
-#: includes/settings/class-cr-settings-trust-badges.php:233
+#: includes/settings/class-cr-settings-trust-badges.php:223
 msgid "Set a page where customers will be taken to after clicking on a Trust Badge."
 msgstr ""
 
-#: includes/settings/class-cr-settings-trust-badges.php:328
+#: includes/settings/class-cr-settings-trust-badges.php:318
 msgid "color"
 msgstr ""
 
-#: includes/settings/class-cr-settings-trust-badges.php:331
+#: includes/settings/class-cr-settings-trust-badges.php:321
 msgid "Use %1$s shortcode to display this badge on your site. If the shortcode includes %2$s argument, you can set it to %3$s or %4$s to display or hide border. If the shortcode includes %5$s argument, you can set it to a custom %6$s (in HEX format)."
 msgstr ""
 

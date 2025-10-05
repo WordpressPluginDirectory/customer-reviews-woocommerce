@@ -55,7 +55,7 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 			}
 
 			add_action( 'wp_enqueue_scripts', array( $this, 'cr_style_1' ) );
-			if( 'yes' === get_option( 'ivole_attach_image', 'no' ) ) {
+			if ( 'yes' === get_option( 'ivole_attach_image', 'no' ) ) {
 				add_action( 'woocommerce_product_review_comment_form_args', array( $this, 'custom_fields_attachment' ) );
 				add_action( 'wp_insert_comment', array( $this, 'save_review_image' ) );
 				add_action( 'wp_ajax_cr_upload_local_images_frontend', array( $this, 'new_ajax_upload' ) );
@@ -63,15 +63,14 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 				add_action( 'wp_ajax_cr_delete_local_images_frontend', array( $this, 'new_ajax_delete' ) );
 				add_action( 'wp_ajax_nopriv_cr_delete_local_images_frontend', array( $this, 'new_ajax_delete' ) );
 			}
-			if( 'yes' === get_option( 'ivole_form_attach_media', 'no' ) || 'yes' == get_option( 'ivole_attach_image', 'no' ) ) {
-				if( 'yes' === $this->ivole_ajax_reviews ) {
-					add_action( 'cr_reviews_customer_images', array( $this, 'display_review_media_top_prd' ) );
-				}
-				// standard WooCommerce review template
-				add_action( 'woocommerce_review_after_comment_text', array( $this, 'display_review_image' ), 10 );
-				// enhanced CusRev review template
-				add_action( 'cr_review_after_comment_text', array( $this, 'display_review_image' ), 10 );
+			if ( 'yes' === $this->ivole_ajax_reviews ) {
+				add_action( 'cr_reviews_customer_images', array( $this, 'display_review_media_top_prd' ) );
 			}
+			// standard WooCommerce review template
+			add_action( 'woocommerce_review_after_comment_text', array( $this, 'display_review_image' ), 10 );
+			// enhanced CusRev review template
+			add_action( 'cr_review_after_comment_text', array( $this, 'display_review_image' ), 10 );
+			//
 			add_action( 'comment_form_after_fields', array( $this, 'custom_fields_terms' ) );
 			if( self::is_captcha_enabled() ) {
 				if( ! is_user_logged_in() ) {
@@ -1099,7 +1098,6 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 			$replacement_path = plugin_dir_path( dirname( dirname( __FILE__ ) ) ) . 'templates/review-compat.php';
 			if( is_file( $replacement_path ) ) {
 				$located = $replacement_path;
-				//error_log( print_r( $replacement_path, true ) );
 			}
 		}
 		return $located;
@@ -1796,6 +1794,39 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 		$html .= '</div>';
 
 		return apply_filters( 'cr_get_star_rating_svg', $html, $rating, $count, $color );
+	}
+
+	public static function cr_review_is_from_verified_owner( $review ) {
+		$verified = get_comment_meta( $review->comment_ID, 'verified', true );
+		if ( '' === $verified ) {
+			$verified = false;
+			if ( is_object( $review ) && $review instanceof WP_Comment ) {
+				$email = $review->user_id ? '' : $review->comment_author_email;
+				if ( 'product' === get_post_type( $review->comment_post_ID ) ) {
+					$verified = wc_customer_bought_product( $email, $review->user_id, $review->comment_post_ID );
+					add_comment_meta( $review->comment_ID, 'verified', (int) $verified, true );
+				} else {
+					if ( $review->comment_post_ID ) {
+						$shop_pages = CR_Reviews_List_Table::get_shop_page();
+						if ( in_array( $review->comment_post_ID, $shop_pages ) ) {
+							// shop reviews
+							$customer_orders = wc_get_orders( array(
+								'limit'         => 1, // we only need to check if at least one order exists
+								'customer_id'   => $review->user_id ? $review->user_id : '',
+								'billing_email' => $email,
+								'status'        => array( 'wc-completed', 'wc-processing', 'wc-on-hold' ),
+								'return'        => 'ids',
+							) );
+							if ( ! empty( $customer_orders ) ) {
+								$verified = true;
+							}
+							add_comment_meta( $review->comment_ID, 'verified', (int) $verified, true );
+						}
+					}
+				}
+			}
+		}
+		return (bool) $verified;
 	}
 }
 

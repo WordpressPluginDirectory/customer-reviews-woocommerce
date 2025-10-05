@@ -8,24 +8,14 @@ if ( ! class_exists( 'Ivole_Trust_Badges' ) ):
 
 	class Ivole_Trust_Badges {
 
-		/**
-		* @var Ivole_Trust_Badges The instance of the trust badges admin menu
-		*/
 		protected $settings_menu;
-
-		/**
-		* @var string The slug of this tab
-		*/
 		protected $tab;
-
-		/**
-		* @var array The fields for this tab
-		*/
 		protected $settings;
 		protected $language;
-
 		protected $floating_light;
 		protected $floating_dark;
+		protected $verified_page;
+		protected $store_stats;
 
 		public function __construct( $settings_menu ) {
 			$this->settings_menu = $settings_menu;

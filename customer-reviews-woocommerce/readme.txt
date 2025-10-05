@@ -4,7 +4,7 @@ Tags: woocommerce, review plugin, review reminder, customer reviews, review for 
 Requires at least: 4.5
 Tested up to: 6.8
 Requires PHP: 7.2
-Stable tag: 5.83.3
+Stable tag: 5.84.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl.html
 
@@ -233,6 +233,13 @@ If you would like to change how reviews are sorted on product pages, it is possi
 
 == Changelog ==
 
+= 5.84.0 =
+* New feature: an option to copy a link to an aggregated review form for an order from the 'Actions' menu on the 'Orders' page in WooCommerce when the plugin is configured with the self-hosted setting
+* Improvement: display a verified owner label on general shop reviews if a reviewer has at least one order
+* Improvement: display media files attached to reviews even if upload of new media files is disabled in review forms
+= 5.83.4 =
+* Bug fix: a depreciation warning
+* Bug fix: CSS for avatars display
 = 5.83.3 =
 * Improvement: new error message if discount settings are not saved before testing review-for-discount emails
 * Bug fix: a log table for review reminders was not created on new installations of the plugin

@@ -132,11 +132,11 @@ if ( ! class_exists( 'CR_Qna' ) ) :
 				$return_ans = array();
 				foreach ($ans as $a) {
 					$author_type = 0;
-					if( wc_review_is_from_verified_owner( $a->comment_ID ) ) {
+					if ( CR_Reviews::cr_review_is_from_verified_owner( $a ) ) {
 						$author_type = 2;
 					}
-					if( isset( $a->user_id ) ) {
-						if( user_can( $a->user_id, 'manage_woocommerce' ) ) {
+					if ( isset( $a->user_id ) ) {
+						if ( user_can( $a->user_id, 'manage_woocommerce' ) ) {
 							$author_type = 1;
 						}
 					}

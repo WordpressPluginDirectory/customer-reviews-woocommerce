@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <li <?php comment_class(); ?> id="li-comment-<?php comment_ID(); ?>">
 
 	<?php
-		$verified = wc_review_is_from_verified_owner( $comment->comment_ID );
+		$verified = CR_Reviews::cr_review_is_from_verified_owner( $comment );
 		$cr_comment_container_class = 'comment_container';
 		if ( $verified ) {
 			$cr_comment_container_class .= ' cr-verified-owner';

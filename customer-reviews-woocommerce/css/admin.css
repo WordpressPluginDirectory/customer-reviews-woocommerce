@@ -1203,11 +1203,31 @@ li.select2-results__option {
 .wc_actions .cr-send-menu.cr-send-menu-wa .cr-send-whatsapp,
 .wc_actions .cr-send-menu.cr-send-menu-wa2 .cr-send-whatsapp,
 .wc_actions .cr-send-menu.cr-send-menu-wa3 .cr-send-whatsapp,
-.wc_actions .cr-send-menu.cr-send-menu-wa4 .cr-send-whatsapp {
+.wc_actions .cr-send-menu.cr-send-menu-wa4 .cr-send-whatsapp,
+.wc_actions .cr-send-menu .cr-send-link.cr-send-link-copying,
+.wc_actions .cr-send-menu .cr-send-link.cr-send-link-error,
+.wc_actions .cr-send-menu .cr-send-link.cr-send-link-copied,
+.wc_actions .cr-send-menu.cr-send-menu-lk1 .cr-send-link,
+.wc_actions .cr-send-menu.cr-send-menu-lk1 .cr-send-link-error,
+.wc_actions .cr-send-menu.cr-send-menu-lk1 .cr-send-link-copied,
+.wc_actions .cr-send-menu.cr-send-menu-lk-error .cr-send-link,
+.wc_actions .cr-send-menu.cr-send-menu-lk-copied .cr-send-link {
 	display: none;
 }
+.wc_actions .cr-send-menu.cr-send-menu-lk1 .cr-send-link.cr-send-link-copying {
+	display: block;
+}
+.wc_actions .cr-send-menu.cr-send-menu-lk-error li.cr-send-link.cr-send-link-error {
+	display: block;
+	cursor: help;
+}
+.wc_actions .cr-send-menu.cr-send-menu-lk-copied li.cr-send-link.cr-send-link-copied {
+	display: block;
+	cursor: help;
+}
 .wc_actions .cr-send-menu .cr-send-whatsapp .dashicons,
-.wc_actions .cr-send-menu .cr-send-email .dashicons {
+.wc_actions .cr-send-menu .cr-send-email .dashicons,
+.wc_actions .cr-send-menu .cr-send-link .dashicons {
 	margin: 0 0 0 5px;
 }
 .wc_actions .cr-send-menu .cr-send-whatsapp.cr-wa-no-phone {

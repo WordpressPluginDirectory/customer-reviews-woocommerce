@@ -1199,7 +1199,7 @@ class CR_Reviews_List_Table extends WP_List_Table {
 
 		$author_type_label = '';
 		if ( isset( $comment->user_id ) && 0 < $comment->user_id ) {
-			if( user_can( $comment->user_id, 'manage_woocommerce' ) ) {
+			if ( user_can( $comment->user_id, 'manage_woocommerce' ) ) {
 				$author_type_label = __(
 					apply_filters( 'cr_reviews_store_manager', __( 'Store manager', 'customer-reviews-woocommerce' ) ),
 					'customer-reviews-woocommerce'
@@ -1207,7 +1207,7 @@ class CR_Reviews_List_Table extends WP_List_Table {
 			}
 		}
 		if ( ! $author_type_label ) {
-			if ( wc_review_is_from_verified_owner( $comment->comment_ID ) ) {
+			if ( CR_Reviews::cr_review_is_from_verified_owner( $comment ) ) {
 				$cr_verified_label = get_option( 'ivole_verified_owner', '' );
 				if( $cr_verified_label ) {
 					if ( function_exists( 'pll__' ) ) {

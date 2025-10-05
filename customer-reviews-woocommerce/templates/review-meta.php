@@ -18,10 +18,10 @@
 defined( 'ABSPATH' ) || exit;
 
 global $comment;
-$verified = wc_review_is_from_verified_owner( $comment->comment_ID );
+$verified = CR_Reviews::cr_review_is_from_verified_owner( $comment );
 $shop_manager = false;
-if( isset( $comment->user_id ) && 0 < $comment->user_id ) {
-	if( user_can( $comment->user_id, 'manage_woocommerce' ) ) {
+if ( isset( $comment->user_id ) && 0 < $comment->user_id ) {
+	if ( user_can( $comment->user_id, 'manage_woocommerce' ) ) {
 		$shop_manager = true;
 	}
 }

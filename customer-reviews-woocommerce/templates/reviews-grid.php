@@ -121,7 +121,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 									?>
 								</div>
 								<?php
-								if( 'yes' === get_option( 'woocommerce_review_rating_verification_label' ) && wc_review_is_from_verified_owner( $review->comment_ID ) ) {
+								if ( CR_Reviews::cr_review_is_from_verified_owner( $review ) ) {
 									echo '<div class="reviewer-verified">';
 									echo '<img class="cr-reviewer-verified" src="' . CR_Utils::cr_get_plugin_dir_url() . 'img/verified.svg' . '" alt="' . $verified_text . '" width="22" height="22" loading="lazy" />';
 									echo $verified_text;

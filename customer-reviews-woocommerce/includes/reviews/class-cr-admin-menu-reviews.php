@@ -609,7 +609,7 @@ if ( ! class_exists( 'Ivole_Reviews_Admin_Menu' ) ):
 			);
 			$selected = 'reviewer';
 
-			if ( wc_review_is_from_verified_owner( $comment->comment_ID ) ) {
+			if ( CR_Reviews::cr_review_is_from_verified_owner( $comment ) ) {
 				$cr_verified_label = get_option( 'ivole_verified_owner', '' );
 				if( $cr_verified_label ) {
 					if ( function_exists( 'pll__' ) ) {
