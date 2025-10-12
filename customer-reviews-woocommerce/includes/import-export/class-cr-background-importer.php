@@ -112,14 +112,31 @@ if ( ! class_exists( 'CR_Background_Importer' ) ) :
 				}
 				if ( -1 !== $product_id ) {
 					$ppp = wc_get_product( $product_id );
-					if ( ! $ppp || ( $ppp && 0 < wp_get_post_parent_id( $product_id ) ) ) {
+					if ( $ppp ) {
+						// check that the provided product id is not for a variation because reviews are stored at the parent product level
+						if (
+							'variation' === $ppp->get_type()
+						) {
+							unset( $reviews[$index] );
+							$results['errors']++;
+							$results['error_list'][] = sprintf( __( 'Line %1$d >> Error: product ID %2$d refers to a product variation. Use the parent product ID instead.', 'customer-reviews-woocommerce' ), $line_number, $product_id );
+							continue;
+						}
+					}
+					if ( ! $ppp ) {
 						// if no valid product_id is available but there is product_sku, try to look up the id by the sku
 						if ( $product_sku ) {
 							$product_found = false;
 							$product_id = wc_get_product_id_by_sku( $product_sku );
 							if ( $product_id ) {
 								$ppp = wc_get_product( $product_id );
-								if( $ppp && 0 === wp_get_post_parent_id( $product_id ) ) {
+								if ( $ppp ) {
+									if ( 'variation' === $ppp->get_type() ) {
+										unset( $reviews[$index] );
+										$results['errors']++;
+										$results['error_list'][] = sprintf( __( 'Line %1$d >> Error: product ID %2$d refers to a product variation. Use the parent product ID instead.', 'customer-reviews-woocommerce' ), $line_number, $product_id );
+										continue;
+									}
 									$product_found = true;
 								}
 							}
@@ -139,7 +156,11 @@ if ( ! class_exists( 'CR_Background_Importer' ) ) :
 						} else {
 							unset( $reviews[$index] );
 							$results['errors']++;
-							$results['error_list'][] = sprintf( __( 'Line %1$d >> Error: product with ID = %2$d doesn\'t exist in this WooCommerce store.', 'customer-reviews-woocommerce' ), $line_number, $product_id );
+							$results['error_list'][] = sprintf(
+								__( 'Line %1$d >> Error: product with ID = %2$d doesn\'t exist in this WooCommerce store.', 'customer-reviews-woocommerce' ),
+								$line_number,
+								$product_id
+							);
 							continue;
 						}
 					}

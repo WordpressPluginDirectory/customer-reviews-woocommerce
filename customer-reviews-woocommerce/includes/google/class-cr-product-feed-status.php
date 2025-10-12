@@ -106,7 +106,7 @@ if ( ! class_exists( 'CR_Status_Product_Feed' ) ):
 					'autoload' => false
 				),
 				array(
-					'id'       => 'ivole_product_feed_file_url',
+					'id'       => 'ivole_product_feed_file_name',
 					'title'    => __( 'Product Feed URL', 'customer-reviews-woocommerce' ),
 					'type'     => 'product_feed_file_url',
 					'desc'     => __( 'URL of the file with the product feed that should be maintained in Google Merchant Center.', 'customer-reviews-woocommerce' ),
@@ -124,7 +124,7 @@ if ( ! class_exists( 'CR_Status_Product_Feed' ) ):
 					'autoload' => false
 				),
 				array(
-					'id'       => 'ivole_feed_file_url',
+					'id'       => 'ivole_feed_file_name',
 					'title'    => __( 'Product Review Feed URL', 'customer-reviews-woocommerce' ),
 					'type'     => 'feed_file_url',
 					'desc'     => __( 'URL of the file with the product reviews feed that should be maintained in Google Merchant Center.', 'customer-reviews-woocommerce' ),
@@ -164,8 +164,26 @@ if ( ! class_exists( 'CR_Status_Product_Feed' ) ):
 			$tmp = CR_Admin::cr_get_field_description( $value );
 			$tooltip_html = $tmp['tooltip_html'];
 			$upload_url = wp_upload_dir();
-			if( !$value['value'] ) {
-				$value['value'] = '/cr/' . apply_filters( 'cr_gs_product_feed_file', 'product_feed_' . uniqid() . '.xml' );
+			$cr_folder = '/cr/';
+			$value_to_display = '';
+			// WPML compatibility
+			if ( has_filter( 'wpml_current_language' ) ) {
+				$current_language = apply_filters( 'wpml_current_language', null );
+				if ( $current_language ) {
+					$cr_folder .= $current_language . '/';
+				}
+			}
+			//
+			if ( $value['value'] ) {
+				$value_to_display = $cr_folder . $value['value'];
+			} else {
+				$value['value'] = apply_filters( 'cr_gs_product_feed_file', 'product_feed_' . uniqid() . '.xml' );
+				$value_to_display = $cr_folder . $value['value'];
+				// compatibility with earlier versions of the plugin
+				$prod_feed_file_url = get_option( 'ivole_product_feed_file_url', '' );
+				if ( $prod_feed_file_url ) {
+					$value_to_display = $prod_feed_file_url;
+				}
 			}
 			?>
 			<tr valign="top">
@@ -179,7 +197,7 @@ if ( ! class_exists( 'CR_Status_Product_Feed' ) ):
 					style="<?php echo esc_attr( $value['css'] ); ?>"
 					class="<?php echo esc_attr( $value['class'] ); ?>"
 					readonly
-					value="<?php echo $upload_url['baseurl'] . $value['value']; ?>"
+					value="<?php echo $upload_url['baseurl'] . $value_to_display; ?>"
 					/>
 					<input
 					type="hidden"
@@ -196,6 +214,27 @@ if ( ! class_exists( 'CR_Status_Product_Feed' ) ):
 			$tmp = CR_Admin::cr_get_field_description( $value );
 			$tooltip_html = $tmp['tooltip_html'];
 			$upload_url = wp_upload_dir();
+			$cr_folder = '/cr/';
+			$value_to_display = '';
+			// WPML compatibility
+			if ( has_filter( 'wpml_current_language' ) ) {
+				$current_language = apply_filters( 'wpml_current_language', null );
+				if ( $current_language ) {
+					$cr_folder .= $current_language . '/';
+				}
+			}
+			//
+			if ( $value['value'] ) {
+				$value_to_display = $upload_url['baseurl'] . $cr_folder . $value['value'];
+			} else {
+				$value['value'] = apply_filters( 'cr_gs_product_reviews_feed_file', 'product_reviews.xml' );
+				$value_to_display = $upload_url['baseurl'] . $cr_folder . $value['value'];
+				// compatibility with earlier versions of the plugin
+				$feed_file_url = get_option( 'ivole_feed_file_url', '' );
+				if ( $feed_file_url ) {
+					$value_to_display = $feed_file_url;
+				}
+			}
 			?>
 			<tr valign="top">
 				<th scope="row" class="titledesc">
@@ -204,13 +243,17 @@ if ( ! class_exists( 'CR_Status_Product_Feed' ) ):
 				</th>
 				<td class="forminp forminp-<?php echo sanitize_title( $value['type'] ) ?>">
 					<input
-					name="<?php echo esc_attr( $value['id'] ); ?>"
-					id="<?php echo esc_attr( $value['id'] ); ?>"
-					type="text"
-					style="<?php echo esc_attr( $value['css'] ); ?>"
-					class="<?php echo esc_attr( $value['class'] ); ?>"
-					readonly
-					value="<?php echo $upload_url['baseurl'] . '/cr/' . apply_filters( 'cr_gs_product_reviews_feed_file', 'product_reviews.xml' ); ?>"
+						type="text"
+						style="<?php echo esc_attr( $value['css'] ); ?>"
+						class="<?php echo esc_attr( $value['class'] ); ?>"
+						readonly
+						value="<?php echo $value_to_display; ?>"
+					/>
+					<input
+						type="hidden"
+						id="<?php echo esc_attr( $value['id'] ); ?>"
+						name="<?php echo esc_attr( $value['id'] ); ?>"
+						value="<?php echo $value['value']; ?>"
 					/>
 				</td>
 			</tr>

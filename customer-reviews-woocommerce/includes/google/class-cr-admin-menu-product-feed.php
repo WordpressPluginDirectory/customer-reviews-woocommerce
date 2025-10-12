@@ -35,10 +35,20 @@ if ( ! class_exists( 'CR_Product_Feed_Admin_Menu' ) ):
 			}
 
 			if ( isset( $_GET['cr_gen_prod_feed'] ) && 'true' === $_GET['cr_gen_prod_feed'] ) {
-				do_action( 'cr_generate_prod_feed_chunk' );
+				// WPML compatibility for XML feeds in different languages
+				if ( isset( $_GET['cr_prod_feed_lang'] ) && $_GET['cr_prod_feed_lang'] ) {
+					do_action( 'cr_generate_prod_feed_chunk', $_GET['cr_prod_feed_lang'] );
+				} else {
+					do_action( 'cr_generate_prod_feed_chunk', '' );
+				}
 			}
 			if ( isset( $_GET['cr_gen_rev_feed'] ) && 'true' === $_GET['cr_gen_rev_feed'] ) {
-				do_action( 'cr_generate_product_reviews_feed_chunk' );
+				// WPML compatibility for XML feeds in different languages
+				if ( isset( $_GET['cr_rev_feed_lang'] ) && $_GET['cr_rev_feed_lang'] ) {
+					do_action( 'cr_generate_product_reviews_feed_chunk', $_GET['cr_rev_feed_lang'] );
+				} else {
+					do_action( 'cr_generate_product_reviews_feed_chunk', '' );
+				}
 			}
 
 			add_action( 'admin_init', array( $this, 'save_settings' ) );
@@ -56,46 +66,88 @@ if ( ! class_exists( 'CR_Product_Feed_Admin_Menu' ) ):
 						'ivole_product_feed_cron',
 						array( 'started' => false )
 					);
-					if( $cron_options['started'] ) {
-						$offset = ( $cron_options['offset'] < $cron_options['total'] ) ? $cron_options['offset'] : $cron_options['total'];
-						echo '<div class="updated cr-admin-xml-update-info"><p>';
-						echo esc_html(
-							sprintf(
-								/* translators: please keep %1$s, %2$s, and %3$s in the translation - they will be replaced with the counts of products */
-								__(
-									'XML Product Feed for Google Shopping is being generated in background - products %1$s to %2$s out of %3$s.',
-									'customer-reviews-woocommerce'
-								),
-								$cron_options['current'],
-								$offset,
-								$cron_options['total']
-							)
+					// WPML compatibility to display updates about creation of multiple XML feeds for different languages
+					if (
+						has_filter( 'wpml_active_languages' ) &&
+						isset( $cron_options['langs'] ) &&
+						is_array( $cron_options['langs'] )
+					) {
+						$cron_options_for_feeds = $cron_options['langs'];
+					} else {
+						$cron_options_for_feeds = array(
+							'__' => $cron_options
 						);
-						echo '</p><a class="button button-small" href="' . admin_url( 'admin.php?page=cr-reviews-product-feed&cr_gen_prod_feed=true' ) . '">' . esc_html__( 'Update progress', 'customer-reviews-woocommerce' ) . '</a>';
-						echo '</div>';
+					}
+					foreach ( $cron_options_for_feeds as $language => $options) {
+						if ( $options['started'] ) {
+							$prefix = '';
+							$link = admin_url( 'admin.php?page=cr-reviews-product-feed&cr_gen_prod_feed=true' );
+							if ( '__' !== $language ) {
+								$prefix = '[' . $language . '] ';
+								$link = admin_url( 'admin.php?page=cr-reviews-product-feed&cr_gen_prod_feed=true&cr_prod_feed_lang=' . $language );
+							}
+							$offset = ( $options['offset'] < $options['total'] ) ? $options['offset'] : $options['total'];
+							echo '<div class="updated cr-admin-xml-update-info"><p>';
+							echo esc_html(
+								$prefix .
+								sprintf(
+									/* translators: please keep %1$s, %2$s, and %3$s in the translation - they will be replaced with the counts of products */
+									__(
+										'XML Product Feed for Google Shopping is being generated in background - products %1$s to %2$s out of %3$s.',
+										'customer-reviews-woocommerce'
+									),
+									$options['current'],
+									$offset,
+									$options['total']
+								)
+							);
+							echo '</p><a class="button button-small" href="' . esc_url( $link ) . '">' . esc_html__( 'Update progress', 'customer-reviews-woocommerce' ) . '</a>';
+							echo '</div>';
+						}
 					}
 					// XML Product Review Feed
 					$review_cron_options = get_option(
 						'ivole_product_reviews_feed_cron',
 						array( 'started' => false )
 					);
-					if( $review_cron_options['started'] ){
-						$review_offset = ( $review_cron_options['offset'] < $review_cron_options['total'] ) ? $review_cron_options['offset'] : $review_cron_options['total'];
-						echo '<div class="updated cr-admin-xml-update-info"><p>';
-						echo esc_html(
-							sprintf(
-								/* translators: please keep %1$s, %2$s, and %3$s in the translation - they will be replaced with the counts of products */
-								__(
-									'XML Product Review Feed for Google Shopping is being generated in background - reviews %1$s to %2$s out of %3$s.',
-									'customer-reviews-woocommerce'
-								),
-								$review_cron_options['current'],
-								$review_offset,
-								$review_cron_options['total']
-							)
+					// WPML compatibility to display updates about creation of multiple XML feeds for different languages
+					if (
+						has_filter( 'wpml_active_languages' ) &&
+						isset( $review_cron_options['langs'] ) &&
+						is_array( $review_cron_options['langs'] )
+					) {
+						$review_cron_options_for_feeds = $review_cron_options['langs'];
+					} else {
+						$review_cron_options_for_feeds = array(
+							'__' => $review_cron_options
 						);
-						echo '</p><a class="button button-small" href="' . admin_url( 'admin.php?page=cr-reviews-product-feed&cr_gen_rev_feed=true' ) . '">' . esc_html__( 'Update progress', 'customer-reviews-woocommerce' ) . '</a>';
-						echo '</div>';
+					}
+					foreach ( $review_cron_options_for_feeds as $language => $options) {
+						if ( $options['started'] ) {
+							$prefix = '';
+							$link = admin_url( 'admin.php?page=cr-reviews-product-feed&cr_gen_rev_feed=true' );
+							if ( '__' !== $language ) {
+								$prefix = '[' . $language . '] ';
+								$link = admin_url( 'admin.php?page=cr-reviews-product-feed&cr_gen_rev_feed=true&cr_rev_feed_lang=' . $language );
+							}
+							$offset = ( $options['offset'] < $options['total'] ) ? $options['offset'] : $options['total'];
+							echo '<div class="updated cr-admin-xml-update-info"><p>';
+							echo esc_html(
+								$prefix .
+								sprintf(
+									/* translators: please keep %1$s, %2$s, and %3$s in the translation - they will be replaced with the counts of products */
+									__(
+										'XML Product Review Feed for Google Shopping is being generated in background - reviews %1$s to %2$s out of %3$s.',
+										'customer-reviews-woocommerce'
+									),
+									$options['current'],
+									$offset,
+									$options['total']
+								)
+							);
+							echo '</p><a class="button button-small" href="' . esc_url( $link ) . '">' . esc_html__( 'Update progress', 'customer-reviews-woocommerce' ) . '</a>';
+							echo '</div>';
+						}
 					}
 				}
 				// Check that WP Cron is disabled

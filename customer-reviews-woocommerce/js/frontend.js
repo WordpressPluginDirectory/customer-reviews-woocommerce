@@ -611,6 +611,18 @@
 			parent.find(".cr-slider-read-more").css("display", "inline");
 			jQuery(this).parents(".cr-reviews-slider").slickk('setPosition');
 		} );
+		jQuery( '.cr-reviews-grid' ).on( 'click', '.cr-grid-read-more a', function (e) {
+			e.preventDefault();
+			let parent = jQuery(this).parents(".review-content");
+			parent.find(".cr-grid-read-more").hide();
+			parent.find(".cr-grid-details").css("display", "inline");
+		} );
+		jQuery( '.cr-reviews-grid' ).on( 'click', '.cr-grid-read-less a', function (e) {
+			e.preventDefault();
+			let parent = jQuery(this).parents(".review-content");
+			parent.find(".cr-grid-details").hide();
+			parent.find(".cr-grid-read-more").css("display", "inline");
+		} );
 		jQuery('.cr-qna-block .cr-qna-search-block .cr-qna-ask-button').on( 'click', function (e) {
 			e.preventDefault();
 			jQuery( this ).closest( '.cr-qna-block' ).addClass( 'cr-qna-new-q-form-open' );

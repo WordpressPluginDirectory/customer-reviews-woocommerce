@@ -151,7 +151,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 											( new WCML\Reviews\Translations\FrontEndHooks() )->translateReview( $review );
 										}
 									}
-									echo wpautop( wp_kses_post( $review->comment_content ) );
+									$clear_content = wp_strip_all_tags( $review->comment_content );
+									if( $max_chars && mb_strlen( $clear_content ) > $max_chars ) {
+										$less_content = wp_kses_post( mb_substr( $clear_content, 0, $max_chars ) );
+										$more_content = wp_kses_post( mb_substr( $clear_content, $max_chars ) );
+										$read_more = '<span class="cr-grid-read-more">...<br><a href="#">' . esc_html__( 'Show More', 'customer-reviews-woocommerce' ) . '</a></span>';
+										$more_content = '<div class="cr-grid-details" style="display:none;">' . $more_content . '<br><span class="cr-grid-read-less"><a href="#">' . esc_html__( 'Show Less', 'customer-reviews-woocommerce' ) . '</a></span></div>';
+										$comment_content = $less_content . $read_more . $more_content;
+										echo $comment_content;
+									} else {
+										echo wpautop( wp_kses_post( $review->comment_content ) );
+									}
 								?>
 							</div>
 							<?php if ( $order_id && intval( $review->comment_post_ID ) !== intval( $shop_page_id ) ): ?>

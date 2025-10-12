@@ -4,7 +4,7 @@ Tags: woocommerce, review plugin, review reminder, customer reviews, review for 
 Requires at least: 4.5
 Tested up to: 6.8
 Requires PHP: 7.2
-Stable tag: 5.84.0
+Stable tag: 5.85.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl.html
 
@@ -233,6 +233,11 @@ If you would like to change how reviews are sorted on product pages, it is possi
 
 == Changelog ==
 
+= 5.85.0 =
+* New feature: create XML Product Feed for Google Shopping in multiple languages when using WPML translation plugin
+* New feature: create XML Product Review Feed for Google Shopping in multiple languages when using WPML translation plugin
+* New feature: 'max_chars' parameter for [cusrev_reviews_grid] shortcode
+* Improvement: a check for variations during import of reviews
 = 5.84.0 =
 * New feature: an option to copy a link to an aggregated review form for an order from the 'Actions' menu on the 'Orders' page in WooCommerce when the plugin is configured with the self-hosted setting
 * Improvement: display a verified owner label on general shop reviews if a reviewer has at least one order

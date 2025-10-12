@@ -2549,10 +2549,14 @@ img.ivole-verified-badge-ext-icon {
 .product_meta .cr_gtin_val, .product_meta .cr_mpn_val, .product_meta .cr_brand_val {
 	display: inline;
 }
-.cr-reviews-slider .cr-slider-read-more a, .cr-reviews-slider .cr-slider-read-less a {
+.cr-reviews-slider .cr-slider-read-more a,
+.cr-reviews-slider .cr-slider-read-less a,
+.cr-reviews-grid .cr-grid-read-more a,
+.cr-reviews-grid .cr-grid-read-less a  {
 	font-size: 0.8em;
 }
-.cr-reviews-slider .cr-slider-details{
+.cr-reviews-slider .cr-slider-details,
+.cr-reviews-grid .cr-grid-details {
 	display:none;
 }
 .cr-qna-block .cr-qna-search-block {

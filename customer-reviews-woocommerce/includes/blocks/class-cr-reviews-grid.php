@@ -417,6 +417,7 @@ if ( ! class_exists( 'CR_Reviews_Grid' ) ) {
 			$card_style .= "background-color:" . $attributes['color_bcrd'] . ";";
 			$product_style = "background-color:" . $attributes['color_pr_bcrd'] . ";";
 			$stars_style = $attributes['color_stars'];
+			$max_chars = $attributes['max_chars'];
 
 			$id = uniqid( 'cr-reviews-grid-' );
 
@@ -503,6 +504,7 @@ if ( ! class_exists( 'CR_Reviews_Grid' ) ) {
 				'count_total' => 0,
 				'product_tags' => [],
 				'tags' => [],
+				'max_chars' => 0,
 				'min_chars' => 0,
 				'show_summary_bar' => 'false',
 				'add_review' => 'false',
@@ -517,6 +519,7 @@ if ( ! class_exists( 'CR_Reviews_Grid' ) ) {
 			$attributes['inactive_products'] = ( $attributes['inactive_products'] === 'true' );
 			$attributes['show_more'] = absint( $attributes['show_more'] );
 			$attributes['count_total'] = absint( $attributes['count_total'] );
+			$attributes['max_chars'] = absint( $attributes['max_chars'] );
 			$attributes['min_chars'] = intval( $attributes['min_chars'] );
 			$attributes['show_summary_bar'] = ( $attributes['show_summary_bar'] === 'true' );
 			if( $attributes['min_chars'] < 0 ) {

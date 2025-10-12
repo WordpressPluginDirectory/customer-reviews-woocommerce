@@ -13,39 +13,64 @@ class CR_Google_Shopping_Feed {
 
 	private $feed_file;
 	private $feed_file_tmp;
-
-	/**
-	* @var string The path to the feed file
-	*/
 	private $file_path;
-	/**
-	* @var string The path to the temp feed file
-	*/
 	private $temp_file_path;
-
-	/**
-	* @var array Full mapping of feed fields to woocommerce fields
-	*/
 	private $field_map;
 	private $cron_options;
 	private $default_limit;
 	private $min_review_length;
+	private $language;
 
-	public function __construct( $field_map = array() ) {
+	public function __construct( $language = '' ) {
+		$this->language = $language;
+		if ( $this->language ) {
+			// WPML compatibility for creation of XML feeds in multiple languages
+			$this->default_limit = apply_filters( 'cr_gs_product_reviews_cron_reduced_limit', 50 );
+		} else {
+			$this->default_limit = apply_filters( 'cr_gs_product_reviews_cron_limit', 200 );
+		}
+		$field_map = get_option(
+			'ivole_google_field_map',
+			array(
+				'gtin'  => '',
+				'mpn'   => '',
+				'sku'   => '',
+				'brand' => ''
+			)
+		);
 		$this->feed_file = apply_filters( 'cr_gs_product_reviews_feed_file', 'product_reviews.xml' );
 		$this->feed_file_tmp = apply_filters( 'cr_gs_product_reviews_feed_file_temp', 'product_reviews_temp.xml' );
-		$this->default_limit = apply_filters( 'cr_gs_product_reviews_cron_limit', 200 );
-		$this->file_path = IVOLE_CONTENT_DIR . '/' . $this->feed_file;
-		$this->temp_file_path = IVOLE_CONTENT_DIR . '/' . $this->feed_file_tmp;
+		$cr_folder = IVOLE_CONTENT_DIR . '/';
+		// WPML compatibility
+		if ( $this->language ) {
+			$cr_folder .= $this->language . '/';
+		}
+		$this->file_path = $cr_folder . $this->feed_file;
+		$this->temp_file_path = $cr_folder . $this->feed_file_tmp;
 		$this->field_map = $field_map;
 
-		$this->cron_options = get_option( 'ivole_product_reviews_feed_cron', array(
-			'started' => false,
-			'offset' => 0,
-			'limit'  => $this->default_limit,
-			'current' => 0,
-			'total' => 0
-		));
+		$cron_options = get_option(
+			'ivole_product_reviews_feed_cron',
+			array(
+				'started' => false,
+				'offset' => 0,
+				'limit'  => $this->default_limit,
+				'current' => 0,
+				'total' => 0
+			)
+		);
+		// WPML compatibility for creation of XML feeds in multiple languages
+		if (
+			$this->language &&
+			isset( $cron_options['langs'] ) &&
+			isset( $cron_options['langs'][$this->language] ) &&
+			is_array( $cron_options['langs'][$this->language] )
+		) {
+			$this->cron_options = $cron_options['langs'][$this->language];
+			$this->cron_options['langs'] = $cron_options['langs'];
+		} else {
+			$this->cron_options = $cron_options;
+		}
 	}
 
 	public function start_cron() {
@@ -55,7 +80,12 @@ class CR_Google_Shopping_Feed {
 		$this->cron_options['current'] = 0;
 		$this->cron_options['total'] = 0;
 
-		update_option('ivole_product_reviews_feed_cron', $this->cron_options);
+		$cron_options_to_save = $this->cron_options;
+		// WPML compatibility for creation of XML feeds in multiple languages
+		if ( $this->language ) {
+			$cron_options_to_save = $this->lang_cron_options( $this->cron_options );
+		}
+		update_option( 'ivole_product_reviews_feed_cron', $cron_options_to_save );
 
 		if ( file_exists( $this->temp_file_path ) ) {
 			@unlink( $this->temp_file_path );
@@ -67,14 +97,24 @@ class CR_Google_Shopping_Feed {
 		$this->cron_options['offset'] = 0;
 		$this->cron_options['current'] = 0;
 		$this->cron_options['total'] = 0;
-		update_option( 'ivole_product_reviews_feed_cron', $this->cron_options );
+		$cron_options_to_save = $this->cron_options;
+		// WPML compatibility for creation of XML feeds in multiple languages
+		if ( $this->language ) {
+			$cron_options_to_save = $this->lang_cron_options( $this->cron_options );
+		}
+		update_option( 'ivole_product_reviews_feed_cron', $cron_options_to_save );
 
-		if( $w_file ) {
+		if ( $w_file ) {
 			file_put_contents( $this->temp_file_path, "</reviews>" . PHP_EOL . "</feed>", FILE_APPEND );
 			rename( $this->temp_file_path, $this->file_path );
 		}
 
-		wp_clear_scheduled_hook( 'cr_generate_product_reviews_feed_chunk' );
+		// WPML compatibility for creation of XML feeds in multiple languages
+		if ( $this->language ) {
+			wp_clear_scheduled_hook( 'cr_generate_product_reviews_feed_chunk', array( $this->language ) );
+		} else {
+			wp_clear_scheduled_hook( 'cr_generate_product_reviews_feed_chunk', array( '' ) );
+		}
 	}
 
 	/**
@@ -83,7 +123,7 @@ class CR_Google_Shopping_Feed {
 	* @since 3.47
 	*/
 	public function generate() {
-		if ( !$this->is_enabled() ) {
+		if ( ! $this->is_enabled() ) {
 			$this->deactivate();
 			return;
 		}
@@ -108,15 +148,46 @@ class CR_Google_Shopping_Feed {
 			return;
 		}
 
+		// WPML compatibility for creation of XML feeds in multiple languages
+		if ( $this->language ) {
+			$current_language = apply_filters( 'wpml_current_language', null );
+			do_action( 'wpml_switch_language', $this->language );
+		}
+
 		$reviews = $this->get_review_data();
+
+		// WPML compatibility for creation of XML feeds in multiple languages
+		if ( $this->language ) {
+			do_action( 'wpml_switch_language', $current_language );
+		}
 
 		// Exit if there are no reviews
 		if ( count( $reviews ) < 1 ) {
 			unset( $xml_writer );
-			if( $this->cron_options['offset'] > 0 ) {
-				$this->finish_cron( true );
-			} else {
+			if (
+				0 === $this->cron_options['current'] &&
+				0 === $this->cron_options['total']
+			) {
 				$this->finish_cron( false );
+				// WPML compatibility for creation of XML feeds in multiple languages
+				if ( $this->language ) {
+					WC_Admin_Settings::add_error(
+						'[' . $this->language . '] ' .
+						__(
+							'Error: no products found for the XML Product Review Feed. Please check exclusion settings for products and product categories.',
+						'customer-reviews-woocommerce'
+						)
+					);
+				} else {
+					WC_Admin_Settings::add_error(
+						__(
+							'Error: no products found for the XML Product Review Feed. Please check exclusion settings for products and product categories.',
+						'customer-reviews-woocommerce'
+						)
+					);
+				}
+			} else {
+				$this->finish_cron( true );
 			}
 			return;
 		}
@@ -300,18 +371,16 @@ class CR_Google_Shopping_Feed {
 	}
 
 	protected function reschedule_cron() {
-		if ( ! wp_next_scheduled( 'cr_generate_product_reviews_feed_chunk' ) ) {
-			wp_schedule_single_event( time(), 'cr_generate_product_reviews_feed_chunk' );
+		// WPML compatibility for creation of XML feeds in multiple languages
+		if ( $this->language ) {
+			wp_clear_scheduled_hook( 'cr_generate_product_reviews_feed_chunk', array( $this->language ) );
+			wp_schedule_single_event( time(), 'cr_generate_product_reviews_feed_chunk', array( $this->language ) );
+		} else {
+			wp_clear_scheduled_hook( 'cr_generate_product_reviews_feed_chunk', array( '' ) );
+			wp_schedule_single_event( time(), 'cr_generate_product_reviews_feed_chunk', array( '' ) );
 		}
 	}
 
-	/**
-	* Fetches reviews to include in the feed.
-	*
-	* @since 3.47
-	*
-	* @return array
-	*/
 	protected function get_review_data() {
 		global $wpdb;
 		$reviews = array();
@@ -434,31 +503,39 @@ class CR_Google_Shopping_Feed {
 
 		$this->cron_options['current'] = $this->cron_options['offset'];
 		$this->cron_options['offset'] = $this->cron_options['offset'] + $this->cron_options['limit'];
-		update_option( 'ivole_product_reviews_feed_cron', $this->cron_options );
+		$cron_options_to_save = $this->cron_options;
+		// WPML compatibility for creation of XML feeds in multiple languages
+		if ( $this->language ) {
+			$cron_options_to_save = $this->lang_cron_options( $this->cron_options );
+		}
+		update_option( 'ivole_product_reviews_feed_cron', $cron_options_to_save );
 
 		return $reviews;
 	}
 
-	/**
-	* Returns true if Google Shopping Reviews XML feed is enabled
-	*
-	* @since 3.47
-	*
-	* @return bool
-	*/
 	public function is_enabled() {
 		return ( get_option( 'ivole_google_generate_xml_feed', 'no' ) === 'yes' );
 	}
 
-	/**
-	* Schedules the job to generate the feed
-	*
-	* @since 3.47
-	*/
 	public function activate() {
 		// Check to ensure that the wp-content/uploads/cr directory exists
 		if ( ! is_dir( IVOLE_CONTENT_DIR ) ) {
 			@mkdir( IVOLE_CONTENT_DIR, 0755 );
+		}
+		// WPML compatibility
+		if ( has_filter( 'wpml_active_languages' ) ) {
+			$languages = apply_filters( 'wpml_active_languages', null, array( 'skip_missing' => 1 ) );
+			if ( $languages && is_array( $languages ) ) {
+				foreach ( $languages as $lang ) {
+					if ( isset( $lang['language_code'] ) ) {
+						$language_specific_dir = IVOLE_CONTENT_DIR . '/' . $lang['language_code'];
+						if ( ! is_dir( $language_specific_dir ) ) {
+							// create folders for each language
+							@mkdir( $language_specific_dir, 0755 );
+						}
+					}
+				}
+			}
 		}
 
 		$this->deactivate();
@@ -474,19 +551,21 @@ class CR_Google_Shopping_Feed {
 		}
 	}
 
-	/**
-	* Stops the generation of the feed and deletes the feed file
-	*
-	* @since 3.47
-	*/
 	public function deactivate() {
-		if ( wp_next_scheduled( 'cr_generate_product_reviews_feed_chunk' ) ) wp_clear_scheduled_hook( 'cr_generate_product_reviews_feed_chunk' );
-		if ( wp_next_scheduled( 'cr_generate_feed' ) ) wp_clear_scheduled_hook( 'cr_generate_feed' );
+		if ( $this->language ) {
+			if ( wp_next_scheduled( 'cr_generate_product_reviews_feed_chunk', array( $this->language ) ) ) {
+				wp_clear_scheduled_hook( 'cr_generate_product_reviews_feed_chunk', array( $this->language ) );
+			}
+		} else {
+			if ( wp_next_scheduled( 'cr_generate_product_reviews_feed_chunk', array( '' ) ) ) {
+				wp_clear_scheduled_hook( 'cr_generate_product_reviews_feed_chunk', array( '' ) );
+			}
+		}
+		if ( wp_next_scheduled( 'cr_generate_feed' ) ) {
+			wp_clear_scheduled_hook( 'cr_generate_feed' );
+		}
 
-		$this->cron_options['offset'] = 0;
-		$this->cron_options['started'] = false;
-		$this->cron_options['total'] = 0;
-		update_option('ivole_product_reviews_feed_cron', $this->cron_options);
+		delete_option( 'ivole_product_reviews_feed_cron' );
 
 		if ( file_exists( $this->file_path ) ) {
 			@unlink( $this->file_path );
@@ -623,6 +702,23 @@ class CR_Google_Shopping_Feed {
 			$clauses['where'] .= " AND CHAR_LENGTH({$wpdb->comments}.comment_content) >= " . $this->min_review_length;
 		}
 		return $clauses;
+	}
+
+	private function lang_cron_options( $cron_options ) {
+		$ret = array();
+		$ret['started'] = false;
+		$ret['offset'] = 0;
+		$ret['limit'] = $this->default_limit;
+		$ret['current'] = 0;
+		$ret['total'] = 0;
+		if ( isset( $cron_options['langs'] ) ) {
+			$ret['langs'] = $cron_options['langs'];
+		} else {
+			$ret['langs'] = array();
+		}
+		unset( $cron_options['langs'] );
+		$ret['langs'][$this->language] = $cron_options;
+		return $ret;
 	}
 
 }
