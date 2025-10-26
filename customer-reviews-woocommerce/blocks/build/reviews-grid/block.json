@@ -24,6 +24,10 @@
 			"type": "number",
 			"default": 0
 		},
+		"max_chars": {
+			"type": "number",
+			"default": 0
+		},
 		"show_products": {
 			"type": "boolean",
 			"default": true

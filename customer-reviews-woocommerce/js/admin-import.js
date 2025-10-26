@@ -1,307 +1,260 @@
-var ivoleImporter;
-
 jQuery(document).ready(function() {
     var max_file_size = _wpPluploadSettings.defaults.filters.max_file_size;
 
-    ivoleImporter = {
-        progress_id: null,
+    let crImporter = {
+      init: function() {
+        jQuery('#cr-import-cancel').on('click', function(event) {
+          event.preventDefault();
+          crImporter.cancel_import();
+        });
 
-        init: function() {
-            jQuery('#ivole-import-cancel').on('click', function(event) {
-                event.preventDefault();
-                ivoleImporter.cancel_import();
-            });
+        crImporter.uploader = new plupload.Uploader( {
+          browse_button: document.getElementById('cr-select-button'),
+          container: document.getElementById('cr-upload-container'),
+          url: ajaxurl,
+          multi_selection: false,
+          multipart_params: {
+            _wpnonce: _wpPluploadSettings.defaults.multipart_params._wpnonce,
+            action: 'cr_import_upload_csv'
+          },
 
-            if (window.localStorage) {
-                var import_data = localStorage.getItem('ivole_import_data');
-                if (import_data) {
-                    try {
-                        import_data = JSON.parse(import_data);
-                    } catch (error) {}
-
-                    if (typeof import_data === 'object') {
-                        ivoleImporter.progress_id = import_data.progress_id;
-                        ivoleImporter.check_progress();
-                        ivoleImporter.begin_import(import_data);
-                    }
-                }
-            }
-
-            ivoleImporter.uploader = new plupload.Uploader({
-                browse_button: document.getElementById('ivole-select-button'),
-                container: document.getElementById('ivole-upload-container'),
-
-                url: ajaxurl,
-                multi_selection: false,
-                multipart_params: {
-                    _wpnonce: _wpPluploadSettings.defaults.multipart_params._wpnonce,
-                    action: 'ivole_import_upload_csv'
-                },
-
-                filters : {
-                    max_file_size : max_file_size,
-                    mime_types: [
-                        {
-                            title : "CSV files",
-                            extensions : "csv"
-                        }
-                    ]
-                }
-            });
-
-            ivoleImporter.uploader.bind('postinit', function(up) {
-                jQuery('#ivole-upload-button').on('click', function(event) {
-                    event.preventDefault();
-                    ivoleImporter.uploader.start();
-                    return false;
-                });
-
-                jQuery('#ivole-upload-button').prop('disabled', true);
-            });
-
-            ivoleImporter.uploader.init();
-
-            ivoleImporter.uploader.bind('QueueChanged', function(up) {
-                ivoleImporter.set_status('none', '');
-
-                // Limit the file queue to a single file
-                if (up.files.length > 1) {
-                    var length = up.files.length;
-                    var to_remove = [];
-                    for (var i = 0; i < length - 1; i++) {
-                        to_remove.push(up.files[i].id);
-                    }
-
-                    for (var g = 0; g < to_remove.length; g++) {
-                        up.removeFile(to_remove[g]);
-                    }
-                }
-
-                // Render the list of files, for our purposes it should only display a single file
-                var $file_list = jQuery('#ivole-import-filelist');
-                $file_list.html('');
-                plupload.each(up.files, function(file) {
-                    $file_list.append('<div id="' + file.id + '">' + file.name + ' (' + plupload.formatSize(file.size) + ')</div>');
-                });
-
-                // If there are files in the queue, upload button is enabled, else disabled
-                if (up.files.length > 0) {
-                    jQuery('#ivole-upload-button').prop('disabled', false);
-                } else {
-                    $file_list.html(ivoleImporterStrings.filelist_empty);
-                    jQuery('#ivole-upload-button').prop('disabled', true);
-                }
-            });
-
-            ivoleImporter.uploader.bind('UploadProgress', function(up, file) {
-                ivoleImporter.set_status('notice', ivoleImporterStrings.uploading.replace('%s', file.percent));
-            });
-
-            ivoleImporter.uploader.bind('UploadFile', function(up, file) {
-                jQuery('#ivole-select-button').prop('disabled', true);
-            });
-
-            ivoleImporter.uploader.bind('FileUploaded', function(up, file, response) {
-                var success = true,
-                    error = pluploadL10n.default_error;
-
-                try {
-                    response = JSON.parse( response.response );
-                } catch ( e ) {
-                    success = false;
-                }
-
-                if ( ! _.isObject( response ) || _.isUndefined( response.success ) ) {
-                    success = false;
-                } else if ( ! response.success ) {
-                    if (_.isObject(response.data) && response.data.message) {
-                        error = response.data.message;
-                    }
-                    success = false;
-                }
-
-                up.refresh();
-                up.removeFile(file.id);
-
-                if (!success) {
-                    ivoleImporter.set_status('error', error);
-                    jQuery('#ivole-select-button').prop('disabled', false);
-                    return;
-                }
-
-                ivoleImporter.progress_id = response.data.progress_id;
-
-                if (window.localStorage) {
-                    localStorage.setItem('ivole_import_data', JSON.stringify(response.data));
-                }
-
-                ivoleImporter.begin_import(response.data);
-            });
-
-            ivoleImporter.uploader.bind('Error', function(up, err) {
-                var error_text;
-                switch (err.code) {
-                    case -600:
-                        error_text = pluploadL10n.file_exceeds_size_limit.replace('%s', err.file.name);
-                        break;
-                    default:
-                        error_text = pluploadL10n.default_error;
-                }
-
-                ivoleImporter.set_status('error', error_text);
-                jQuery('#ivole-select-button').prop('disabled', false);
-            });
-        },
-
-        set_status: function(status, text) {
-            var $status = jQuery('#ivole-import-status');
-            $status.html(text);
-            $status.removeClass('status-error status-notice');
-
-            switch (status) {
-                case 'none':
-                    $status.html('');
-                    $status.hide();
-                    return;
-                case 'error':
-                    $status.addClass('status-error');
-                    break;
-                case 'notice':
-                    $status.addClass('status-notice');
-                    break;
-            }
-
-            $status.show();
-        },
-
-        begin_import: function(import_job) {
-            jQuery('#ivole-import-upload-steps').remove();
-            jQuery('#ivole-import-text').html(ivoleImporterStrings.importing.replace('%s', '0').replace('%s', import_job.num_rows));
-            jQuery('#ivole-import-progress').show();
-            jQuery('#ivole-import-result-details').empty();
-
-            ivoleImporter.__progress_check_interval = setInterval(function() {
-                ivoleImporter.check_progress();
-            }, 1000);
-        },
-
-        import_completed: function(data) {
-            clearInterval(ivoleImporter.__progress_check_interval);
-
-            if (window.localStorage) {
-                localStorage.removeItem('ivole_import_data');
-            }
-
-            let start_date = new Date(data.started * 1000);
-            let end_date   = new Date(data.finished * 1000);
-            let delta      = end_date.getSeconds() - start_date.getSeconds();
-            let import_result_details = '';
-
-            jQuery('#ivole-import-result-started').html(ivoleImporterStrings.result_started.replace('%s', start_date.toLocaleDateString() + ' ' + start_date.toLocaleTimeString()));
-            jQuery('#ivole-import-result-finished').html(ivoleImporterStrings.result_finished.replace('%s', end_date.toLocaleDateString() + ' ' + end_date.toLocaleTimeString()));
-            if ( data.hasOwnProperty( 'reviews' ) ) {
-              jQuery('#ivole-import-result-imported').html(ivoleImporterStrings.result_imported.replace('%d', data.reviews.imported));
-              jQuery('#ivole-import-result-skipped').html(ivoleImporterStrings.result_skipped.replace('%d', data.reviews.skipped));
-              jQuery('#ivole-import-result-errors').html(ivoleImporterStrings.result_errors.replace('%d', data.reviews.errors));
-              if (data.reviews.error_list && data.reviews.error_list.length > 0) {
-                  import_result_details = '<div>' + data.reviews.error_list.join('<br>') + '</div>';
+          filters : {
+            max_file_size : max_file_size,
+            mime_types: [
+              {
+                title : "CSV files",
+                extensions : "csv"
               }
-              if (data.reviews.duplicate_list && data.reviews.duplicate_list.length > 0) {
-                  import_result_details = import_result_details + '<div>' + data.reviews.duplicate_list.join('<br>') + '</div>';
-              }
+            ]
+          }
+        } );
+
+        crImporter.uploader.bind('postinit', function(up) {
+          jQuery('#cr-upload-button').on('click', function(event) {
+            event.preventDefault();
+            crImporter.uploader.start();
+            return false;
+          });
+
+          jQuery('#cr-upload-button').prop('disabled', true);
+        });
+
+        crImporter.uploader.init();
+
+        crImporter.uploader.bind('QueueChanged', function(up) {
+          crImporter.set_status('none', '');
+
+          // Limit the file queue to a single file
+          if ( up.files.length > 1 ) {
+            var length = up.files.length;
+            var to_remove = [];
+            for (var i = 0; i < length - 1; i++) {
+              to_remove.push(up.files[i].id);
             }
-            if( import_result_details.length > 0 ) {
-                jQuery('#ivole-import-result-details').show().html(import_result_details);
+            for (var g = 0; g < to_remove.length; g++) {
+              up.removeFile(to_remove[g]);
             }
+          }
 
-            setTimeout(function() {
-                jQuery('#ivole-import-progress').hide();
-                jQuery('#ivole-import-results').show();
-            }, 1000);
-        },
+          // Render the list of files, for our purposes it should only display a single file
+          var $file_list = jQuery('#cr-import-filelist');
+          $file_list.html('');
+          plupload.each(up.files, function(file) {
+            $file_list.append('<div id="' + file.id + '">' + file.name + ' (' + plupload.formatSize(file.size) + ')</div>');
+          });
 
-        import_failed: function() {
-            clearInterval(ivoleImporter.__progress_check_interval);
+          // If there are files in the queue, upload button is enabled, else disabled
+          if (up.files.length > 0) {
+            jQuery('#cr-upload-button').prop('disabled', false);
+          } else {
+            $file_list.html(ivoleImporterStrings.filelist_empty);
+            jQuery('#cr-upload-button').prop('disabled', true);
+          }
+        });
 
-            if (window.localStorage) {
-                localStorage.removeItem('ivole_import_data');
+        crImporter.uploader.bind('UploadProgress', function(up, file) {
+          crImporter.set_status('notice', ivoleImporterStrings.uploading.replace('%s', file.percent));
+        });
+
+        crImporter.uploader.bind('UploadFile', function(up, file) {
+          jQuery('#cr-select-button').prop('disabled', true);
+        });
+
+        crImporter.uploader.bind('FileUploaded', function(up, file, response) {
+          var success = true, error = pluploadL10n.default_error;
+
+          try {
+            response = JSON.parse( response.response );
+          } catch ( e ) {
+            success = false;
+          }
+
+          if ( ! _.isObject( response ) || _.isUndefined( response.success ) ) {
+            success = false;
+          } else if ( ! response.success ) {
+            if (_.isObject(response.data) && response.data.message) {
+              error = response.data.message;
             }
+            success = false;
+          }
 
-            jQuery('#ivole-import-result-status').html(ivoleImporterStrings.upload_failed);
+          up.refresh();
+          up.removeFile(file.id);
 
-            jQuery('#ivole-import-progress').hide();
-            jQuery('#ivole-import-results').show();
-        },
+          if ( ! success ) {
+            crImporter.set_status('error', error);
+            jQuery('#cr-select-button').prop('disabled', false);
+            return;
+          }
 
-        import_cancelled: function(data) {
-            jQuery('#ivole-import-result-status').html(ivoleImporterStrings.upload_cancelled);
-            ivoleImporter.import_completed(data);
-        },
+          crImporter.begin_import(response.data);
+        });
 
-        check_progress: function() {
-            jQuery.post(
-                ajaxurl,
-                {
-                    action: 'ivole_check_import_progress',
-                    progress_id: ivoleImporter.progress_id,
-                    cr_nonce: jQuery('.ivole-import-container').data('nonce')
-                }
-            ).done(function(response) {
-              if ( response ) {
-                if (response.status) {
-                    if (response.status === 'importing') {
-                        var processed = response.reviews.imported + response.reviews.skipped + response.reviews.errors;
-                        var percentage = Math.floor((processed / response.reviews.total) * 100);
-                        jQuery('#ivole-import-text').html(ivoleImporterStrings.importing.replace('%s', processed).replace('%s', response.reviews.total));
-                        jQuery('#ivole-progress-bar').val(percentage);
-                    } else if (response.status === 'failed') {
-                        ivoleImporter.import_failed();
-                    } else if (response.status === 'complete') {
-                        var processed = response.reviews.imported + response.reviews.skipped + response.reviews.errors;
-                        var percentage = Math.floor((processed / response.reviews.total) * 100);
-                        jQuery('#ivole-progress-bar').val(percentage);
-                        ivoleImporter.import_completed(response);
-                    } else if (response.status === 'cancelled') {
-                        ivoleImporter.import_cancelled(response);
-                    }
-                } else {
-                    ivoleImporter.import_failed();
-                }
-              } else {
-                ivoleImporter.import_failed();
-              }
-            });
-        },
+        crImporter.uploader.bind('Error', function(up, err) {
+          var error_text;
+          switch (err.code) {
+            case -600:
+              error_text = pluploadL10n.file_exceeds_size_limit.replace('%s', err.file.name);
+              break;
+            default:
+              error_text = pluploadL10n.default_error;
+          }
+          crImporter.set_status('error', error_text);
+          jQuery('#cr-select-button').prop('disabled', false);
+        });
+      },
 
-        cancel_import: function() {
-            var $cancel_button = jQuery('#ivole-import-cancel');
-            $cancel_button.prop('disabled', true);
-            $cancel_button.html(ivoleImporterStrings.cancelling);
-            jQuery.post(
-                ajaxurl,
-                {
-                    action: 'ivole_cancel_import',
-                    progress_id: ivoleImporter.progress_id,
-                    cr_nonce: jQuery('.ivole-import-container').data('nonce')
-                }
-            ).done(function(response) {
-              if ( response ) {
-                ivoleImporter.import_cancelled( response );
-              }
-            }).fail(function(response) {
-              jQuery('#ivole-import-result-status').html(ivoleImporterStrings.upload_cancelled);
-              clearInterval(ivoleImporter.__progress_check_interval);
-              if (window.localStorage) {
-                  localStorage.removeItem('ivole_import_data');
-              }
-              setTimeout(function() {
-                $cancel_button.prop('disabled', false);
-                $cancel_button.html(ivoleImporterStrings.cancel);
-                jQuery('#ivole-import-progress').hide();
-                jQuery('#ivole-import-results').show();
-              }, 1000);
-            });
+      set_status: function(status, text) {
+        var $status = jQuery('#cr-import-status');
+        $status.html(text);
+        $status.removeClass('status-error status-notice');
+
+        switch (status) {
+          case 'none':
+            $status.html('');
+            $status.hide();
+            return;
+          case 'error':
+            $status.addClass('status-error');
+            break;
+          case 'notice':
+            $status.addClass('status-notice');
+            break;
         }
+
+        $status.show();
+      },
+
+      begin_import: function(importJob) {
+        let startDate = new Date();
+        jQuery('#cr-import-result-started').html(
+          ivoleImporterStrings.result_started.replace('%s', startDate.toLocaleDateString() + ' ' + startDate.toLocaleTimeString())
+        );
+        jQuery('#cr-import-upload-steps').remove();
+        jQuery('#cr-import-text').html(
+          ivoleImporterStrings.importing.replace('%s', '0').replace('%s', importJob.num_rows)
+        );
+        jQuery('#cr-progress-bar').data('numreviews', importJob.num_rows);
+        jQuery('#cr-import-progress').show();
+        jQuery('#cr-import-result-details > *:not("h4")').remove();
+        //
+        crImporter.importNextChunk( importJob.offset, 0, importJob.progress_id );
+      },
+
+      importNextChunk: function( offset, lastLine, progressID ) {
+        if ( jQuery('#cr-import-cancel').data('cancelled') ) {
+          jQuery('#cr-import-result-status').html(ivoleImporterStrings.upload_cancelled);
+          crImporter.completeOrCancelledUI();
+          return;
+        }
+        jQuery.post(
+          ajaxurl,
+          {
+            action: 'cr_import_chunk',
+            cr_nonce: jQuery('.cr-import-container').data('nonce'),
+            offset: offset,
+            lastLine: lastLine,
+            progressID: progressID
+          },
+          function( res ) {
+            if ( ! res.success ) {
+              jQuery('#cr-import-result-status').html(res.data.message);
+              crImporter.completeOrCancelledUI();
+              jQuery('#cr-import-results p, #cr-import-results div').hide();
+            } else {
+              // update progress
+              let percentage = Math.floor( ( res.lastLine / jQuery('#cr-progress-bar').data('numreviews') ) * 100);
+              jQuery('#cr-progress-bar').val(percentage);
+              jQuery('#cr-import-text').html(
+                ivoleImporterStrings.importing.replace('%s', res.lastLine).replace('%s', jQuery('#cr-progress-bar').data('numreviews'))
+              );
+              // update stats
+              jQuery('#cr-import-result-rev-imported').data(
+                'count',
+                jQuery('#cr-import-result-rev-imported').data('count') + res.data.rev.imported
+              );
+              jQuery('#cr-import-result-rep-imported').data(
+                'count',
+                jQuery('#cr-import-result-rep-imported').data('count') + res.data.rep.imported
+              );
+              jQuery('#cr-import-result-rev-skipped').data(
+                'count',
+                jQuery('#cr-import-result-rev-skipped').data('count') + res.data.rev.skipped
+              );
+              jQuery('#cr-import-result-rep-skipped').data(
+                'count',
+                jQuery('#cr-import-result-rep-skipped').data('count') + res.data.rep.skipped
+              );
+              jQuery('#cr-import-result-errors').data(
+                'count',
+                jQuery('#cr-import-result-errors').data('count') + res.data.errors
+              );
+              if ( res.data.error_list && 0 < res.data.error_list.length ) {
+                jQuery('#cr-import-result-details').append(
+                  res.data.error_list.join('<br>') + '<br>'
+                );
+              }
+              // either completed
+              if ( res.lastChunk ) {
+                crImporter.completeOrCancelledUI();
+              } else {
+                // or process the next chunk
+                crImporter.importNextChunk( res.offset, res.lastLine, res.progressID );
+              }
+            }
+          }
+        );
+      },
+
+      cancelImport: function() {
+        jQuery('#cr-import-cancel').data('cancelled', 1);
+        jQuery('#cr-import-cancel').prop('disabled', true);
+        jQuery('#cr-import-cancel').html(ivoleImporterStrings.cancelling);
+      },
+
+      completeOrCancelledUI: function() {
+        let endDate = new Date();
+        jQuery('#cr-import-result-finished').html(
+          ivoleImporterStrings.result_finished.replace('%s', endDate.toLocaleDateString() + ' ' + endDate.toLocaleTimeString())
+        );
+        jQuery('#cr-import-result-rev-imported').html(
+          ivoleImporterStrings.result_imported.replace('%d', jQuery('#cr-import-result-rev-imported').data('count'))
+        );
+        jQuery('#cr-import-result-rep-imported').html(
+          ivoleImporterStrings.result_rep_imported.replace('%d', jQuery('#cr-import-result-rep-imported').data('count'))
+        );
+        jQuery('#cr-import-result-rev-skipped').html(
+          ivoleImporterStrings.result_skipped.replace('%d', jQuery('#cr-import-result-rev-skipped').data('count'))
+        );
+        jQuery('#cr-import-result-rep-skipped').html(
+          ivoleImporterStrings.result_rep_skipped.replace('%d', jQuery('#cr-import-result-rep-skipped').data('count'))
+        );
+        jQuery('#cr-import-result-errors').html(
+          ivoleImporterStrings.result_errors.replace('%d', jQuery('#cr-import-result-errors').data('count'))
+        );
+        jQuery('#cr-import-progress').hide();
+        jQuery('#cr-import-results').show();
+      }
     };
 
     let crQnaImporter = {
@@ -558,6 +511,6 @@ jQuery(document).ready(function() {
       }
     };
 
-    ivoleImporter.init();
+    crImporter.init();
     crQnaImporter.init();
 })

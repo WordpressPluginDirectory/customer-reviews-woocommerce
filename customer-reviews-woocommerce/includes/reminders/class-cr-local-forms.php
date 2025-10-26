@@ -417,7 +417,9 @@ if ( ! class_exists( 'CR_Local_Forms' ) ) :
 			// insert data
 			$res = $wpdb->replace( $table_name, $insert_args );
 			if( false !== $res ) {
-				return array( 'code' => 0, 'text' => get_home_url() . '/' . self::FORMS_SLUG . '/' . $formId . '/' );
+				$formUrl = get_home_url() . '/' . self::FORMS_SLUG . '/' . $formId . '/';
+				do_action( 'cr_local_forms_created', $orderId, $formId, $formUrl );
+				return array( 'code' => 0, 'text' => $formUrl );
 			} else {
 				return array( 'code' => 2, 'text' => 'Form \'' . $formId . '\' could not be saved to the table \'' . $table_name . '\'. Error: ' . $wpdb->last_error );
 			}

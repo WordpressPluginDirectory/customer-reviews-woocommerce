@@ -27,32 +27,35 @@ class CR_Import_Qna {
 	protected $settings;
 
 	public function __construct( $admin_menu ) {
-			$this->menu_slug = 'cr-import-export';
-			$this->admin_menu = $admin_menu;
-			$this->tab = 'import-qna';
-			$this->page_url = add_query_arg(
-				array(
-					'page' => $this->admin_menu->get_page_slug()
-				),
-				admin_url( 'admin.php' )
-			);
+		$this->menu_slug = 'cr-import-export';
+		$this->admin_menu = $admin_menu;
+		$this->tab = 'import-qna';
+		$this->page_url = add_query_arg(
+			array(
+				'page' => $this->admin_menu->get_page_slug()
+			),
+			admin_url( 'admin.php' )
+		);
 
-			add_filter( 'cr_import_export_tabs', array( $this, 'register_tab' ) );
-			add_action( 'cr_import_export_display_' . $this->tab, array( $this, 'display' ) );
-			add_action( 'wp_ajax_cr_import_qna_upload_csv', array( $this, 'handle_qna_upload' ) );
-			add_action( 'wp_ajax_cr_qna_import_chunk', array( $this, 'import_qna_chunk' ) );
+		add_filter( 'cr_import_export_tabs', array( $this, 'register_tab' ) );
+		add_action( 'cr_import_export_display_' . $this->tab, array( $this, 'display' ) );
+		add_action( 'wp_ajax_cr_import_qna_upload_csv', array( $this, 'handle_qna_upload' ) );
+		add_action( 'wp_ajax_cr_qna_import_chunk', array( $this, 'import_qna_chunk' ) );
 	}
 
 		public function register_tab( $tabs ) {
-				$tabs[$this->tab] = __( 'Import Q & A', 'customer-reviews-woocommerce' );
-				return $tabs;
+			$tabs[$this->tab] = __( 'Import Q & A', 'customer-reviews-woocommerce' );
+			return $tabs;
 		}
 
 		public function display() {
-			$download_template_url = add_query_arg( array(
+			$download_template_url = add_query_arg(
+				array(
 					'action'   => 'cr-download-import-qna-template',
 					'_wpnonce' => wp_create_nonce( 'download_csv_template' )
-			), $this->page_url );
+				),
+				$this->page_url
+			);
 			$max_upload_size = size_format( wp_max_upload_size() );
 			?>
 				<div class="cr-import-container" data-nonce="<?php echo wp_create_nonce( 'cr_qna_import_page' ); ?>">
@@ -158,7 +161,7 @@ class CR_Import_Qna {
 		}
 
 		public function is_this_page() {
-				return ( isset( $_GET['page'] ) && $_GET['page'] === $this->menu_slug );
+			return ( isset( $_GET['page'] ) && $_GET['page'] === $this->menu_slug );
 		}
 
 		public function remove_file( $filename ) {
@@ -287,7 +290,7 @@ class CR_Import_Qna {
 
 			$file = fopen( $file_path, 'r' );
 			// detect delimiter
-			$delimiter = CR_Reviews_Importer::detect_delimiter( $file );
+			$delimiter = CR_Import_Reviews::detect_delimiter( $file );
 			set_transient( 'cr_csv_delimiter', $delimiter, DAY_IN_SECONDS );
 			$columns = fgetcsv( $file, 0, $delimiter );
 			// check for Byte Order Mark present in UTF8 files
@@ -474,7 +477,7 @@ class CR_Import_Qna {
 				if ( empty( $filtered ) ) {
 					unset( $qnas[$index] );
 					$results['errors']++;
-					$results['error_list'][] = sprintf( __( 'Line %1$d >> Error: no data for this review.', 'customer-reviews-woocommerce' ), $line_number );
+					$results['error_list'][] = sprintf( __( 'Line %1$d >> Error: no data for this Q & A.', 'customer-reviews-woocommerce' ), $line_number );
 					continue;
 				}
 				//
@@ -736,7 +739,7 @@ class CR_Import_Qna {
 				if ( function_exists( 'sanitize_textarea_field' ) ) {
 					$tmp_comment_content = sanitize_textarea_field( $qna[$qna_content_index] );
 				} else {
-					$tmp_comment_content = sanitize_text_field( $review[$qna_content_index] );
+					$tmp_comment_content = sanitize_text_field( $qna[$qna_content_index] );
 				}
 				// create meta
 				$meta = array();

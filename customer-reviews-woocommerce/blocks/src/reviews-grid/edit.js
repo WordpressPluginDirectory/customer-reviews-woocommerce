@@ -91,6 +91,17 @@ export default function Edit( { attributes, setAttributes } ) {
 						__nextHasNoMarginBottom
 					/>
 					<RangeControl
+						label={ __( 'Maximum Number of Characters to Display (0 = Unlimited)', 'customer-reviews-woocommerce' ) }
+						value={ attributes.max_chars }
+						min={ 0 }
+						max={ 9999 }
+						onChange={ ( newMax_chars ) =>
+							setAttributes( { max_chars: newMax_chars } )
+						}
+						__next40pxDefaultSize
+						__nextHasNoMarginBottom
+					/>
+					<RangeControl
 						label={ __( 'Minimum Number of Characters in a Review (0 = Display All Reviews)', 'customer-reviews-woocommerce' ) }
 						value={ attributes.min_chars }
 						min={ 0 }

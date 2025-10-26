@@ -674,7 +674,7 @@ if (! class_exists('CR_All_Reviews')) :
 				$disable_lightbox = 'yes' === get_option( 'ivole_disable_lightbox', 'no' ) ? true : false;
 				// Load gallery scripts on product pages only if supported.
 				if ( ! $disable_lightbox ) {
-					$this->enqueue_wc_script( 'photoswipe-ui-default' );
+					$this->enqueue_wc_script( 'wc-photoswipe-ui-default' );
 					$this->enqueue_wc_style( 'photoswipe-default-skin' );
 					add_action( 'wp_footer', array( $this, 'cr_photoswipe' ) );
 				}

@@ -32,15 +32,11 @@ if ( ! class_exists( 'CR_XML_Feeds' ) ) :
 			if ( has_filter( 'wpml_active_languages' ) ) {
 				$languages = apply_filters( 'wpml_active_languages', null, array( 'skip_missing' => 1 ) );
 			}
-			if ( ! empty( $languages ) && is_array( $languages ) ) {
-				$languages = array_filter(
-					$languages,
-					function( $lang ) {
-						return ! empty( $lang['active'] );
-					}
-				);
-			}
-			if ( is_array( $languages ) && 0 < count( $languages ) ) {
+			if (
+				! empty( $languages ) &&
+				is_array( $languages ) &&
+				0 < count( $languages )
+			) {
 				foreach ( $languages as $lang ) {
 					if ( isset( $lang['language_code'] ) ) {
 						$feed = new CR_Google_Shopping_Prod_Feed( $lang['language_code'] );
@@ -70,15 +66,11 @@ if ( ! class_exists( 'CR_XML_Feeds' ) ) :
 			if ( has_filter( 'wpml_active_languages' ) ) {
 				$languages = apply_filters( 'wpml_active_languages', null, array( 'skip_missing' => 1 ) );
 			}
-			if ( ! empty( $languages ) && is_array( $languages ) ) {
-				$languages = array_filter(
-					$languages,
-					function( $lang ) {
-						return ! empty( $lang['active'] );
-					}
-				);
-			}
-			if ( is_array( $languages ) && 0 < count( $languages ) ) {
+			if (
+				! empty( $languages ) &&
+				is_array( $languages ) &&
+				0 < count( $languages )
+			) {
 				foreach ( $languages as $lang ) {
 					if ( isset( $lang['language_code'] ) ) {
 						$feed = new CR_Google_Shopping_Feed( $lang['language_code'] );

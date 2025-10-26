@@ -25,7 +25,7 @@ class CR_Google_Shopping_Feed {
 		$this->language = $language;
 		if ( $this->language ) {
 			// WPML compatibility for creation of XML feeds in multiple languages
-			$this->default_limit = apply_filters( 'cr_gs_product_reviews_cron_reduced_limit', 50 );
+			$this->default_limit = apply_filters( 'cr_gs_product_reviews_cron_reduced_limit', 100 );
 		} else {
 			$this->default_limit = apply_filters( 'cr_gs_product_reviews_cron_limit', 200 );
 		}
@@ -382,59 +382,30 @@ class CR_Google_Shopping_Feed {
 	}
 
 	protected function get_review_data() {
-		global $wpdb;
 		$reviews = array();
 		$this->min_review_length = intval( get_option( 'ivole_google_min_review_length', 10 ) );
-		//WPML integration
-		//fetch IDs of reviews (cannot use get_comments due to WPML that adds a hook to filter comments by language)
-		if ( defined( 'ICL_LANGUAGE_CODE' ) ) {
-			$min_length = '';
-			if ( 0 < $this->min_review_length ) {
-				$min_length = " AND CHAR_LENGTH(comms.comment_content) >= " . $this->min_review_length;
-			}
-			$query_count = "SELECT COUNT(comms.comment_ID) FROM $wpdb->comments comms " .
-			"INNER JOIN $wpdb->posts psts ON comms.comment_post_ID = psts.ID " .
-			"INNER JOIN $wpdb->commentmeta commsm ON comms.comment_ID = commsm.comment_id " .
-			"WHERE comms.comment_approved = '1' AND psts.post_type = 'product' AND commsm.meta_key = 'rating'" .
-			$min_length
-			;
-			$this->cron_options['total'] = $wpdb->get_var( $query_count );
 
-			$query_ids = "SELECT comms.comment_ID FROM $wpdb->comments comms " .
-			"INNER JOIN $wpdb->posts psts ON comms.comment_post_ID = psts.ID " .
-			"INNER JOIN $wpdb->commentmeta commsm ON comms.comment_ID = commsm.comment_id " .
-			"WHERE comms.comment_approved = '1' AND psts.post_type = 'product' AND commsm.meta_key = 'rating'" .
-			$min_length .
-			" LIMIT ".$this->cron_options['offset'].",".$this->cron_options['limit']
-			;
-			$reviews_ids = $wpdb->get_col( $query_ids );
-			if( $reviews_ids ) {
-				$reviews_ids = array_map( 'intval', $reviews_ids );
-				foreach ( $reviews_ids as $review_id ) {
-					if ( $temp_r = get_comment( $review_id ) ) {
-						$reviews[] = $temp_r;
-					}
-				}
+		$args = array(
+			'post_type' => 'product',
+			'status'    => 'approve',
+			'meta_key'	=> 'rating',
+			'count' => true
+		);
+		// WPML compatibility to set different cache domains and fetch reviews translated in different languages
+		if ( $this->language ) {
+			if ( has_filter( 'wpml_current_language' ) ) {
+				$args['cache_domain'] = 'cr-xml-reviews-' . $this->language;
 			}
-		} else {
-			$args = array(
-				'post_type' => 'product',
-				'status'    => 'approve',
-				'meta_key'	=> 'rating',
-				'update_comment_meta_cache' => true,
-				'update_comment_post_cache' => true,
-				'count' => true
-			);
-			if ( 0 < $this->min_review_length ) {
-				add_filter( 'comments_clauses', array( $this, 'min_reviews_length' ) );
-			}
-			$this->cron_options['total'] = get_comments( $args );
-			$args['number'] = $this->cron_options['limit'];
-			$args['offset'] = $this->cron_options['offset'];
-			$args['count'] = false;
-			$reviews = get_comments( $args );
-			remove_filter( 'comments_clauses', array( $this, 'min_reviews_length' ) );
 		}
+		if ( 0 < $this->min_review_length ) {
+			add_filter( 'comments_clauses', array( $this, 'min_reviews_length' ) );
+		}
+		$this->cron_options['total'] = get_comments( $args );
+		$args['number'] = $this->cron_options['limit'];
+		$args['offset'] = $this->cron_options['offset'];
+		$args['count'] = false;
+		$reviews = get_comments( $args );
+		remove_filter( 'comments_clauses', array( $this, 'min_reviews_length' ) );
 
 		$reviews = array_map( function( $review ) {
 			$_review = new stdClass;

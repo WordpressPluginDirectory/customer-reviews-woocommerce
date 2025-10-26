@@ -4,7 +4,7 @@ Tags: woocommerce, review plugin, review reminder, customer reviews, review for 
 Requires at least: 4.5
 Tested up to: 6.8
 Requires PHP: 7.2
-Stable tag: 5.85.0
+Stable tag: 5.86.1
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl.html
 
@@ -233,6 +233,15 @@ If you would like to change how reviews are sorted on product pages, it is possi
 
 == Changelog ==
 
+= 5.86.1 =
+* Bug fix: media files were uploaded to the Media Library but not attached to reviews during import
+* Bug fix: random sorting in [cusrev_reviews_slider] shortcode didn't work correctly in some scenarios
+= 5.86.0 =
+* New feature: include replies to reviews when importing reviews
+* New feature: include replies to reviews when exporting reviews
+* Improvement: 'max_chars' parameter is available for the Reviews Grid block
+* Improvement: a new 'cr_local_forms_created' action is triggered on creation of local aggregated review forms
+* Bug fix: XML feeds for Google Shopping created only in the active WPML language instead of all WPML languages
 = 5.85.0 =
 * New feature: create XML Product Feed for Google Shopping in multiple languages when using WPML translation plugin
 * New feature: create XML Product Review Feed for Google Shopping in multiple languages when using WPML translation plugin

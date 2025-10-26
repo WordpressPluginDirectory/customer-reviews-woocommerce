@@ -54,33 +54,33 @@ class CR_Export_Qna {
 
 		?>
 		<div id="cr-export-qna">
-				<button type="button" class="button button-primary" id="cr-export-qna-button" data-nonce="<?php echo wp_create_nonce( 'cr-export-qna' ); ?>">
-					<?php _e( 'Export', 'customer-reviews-woocommerce' ); ?>
-				</button>
-				<?php
-				if( file_exists( get_temp_dir() . self::FILE_PATH ) ):
-				?>
-				<a href="<?php echo esc_url( $download_url ); ?>" class="cr-export-qna-download button button-primary" target="_blank"><?php _e( 'Download', 'customer-reviews-woocommerce' ); ?></a>
-				<?php
-				endif;
-				?>
+			<button type="button" class="button button-primary" id="cr-export-qna-button" data-nonce="<?php echo wp_create_nonce( 'cr-export-qna' ); ?>">
+				<?php _e( 'Export', 'customer-reviews-woocommerce' ); ?>
+			</button>
+			<?php
+			if( file_exists( get_temp_dir() . self::FILE_PATH ) ):
+			?>
+			<a href="<?php echo esc_url( $download_url ); ?>" class="cr-export-qna-download button button-primary" target="_blank"><?php _e( 'Download', 'customer-reviews-woocommerce' ); ?></a>
+			<?php
+			endif;
+			?>
 		</div>
 		<div id="cr-export-qna-progress" class="cr-export-progress">
-				<h2 id="cr-export-qna-text"><?php _e( 'Export is in progress', 'customer-reviews-woocommerce' ); ?></h2>
-				<progress id="cr-export-qna-progress-bar" max="100" value="0" data-nonce="<?php echo wp_create_nonce( 'cr-export-progress' ); ?>"></progress>
-				<div>
-						<button id="cr-export-qna-cancel" class="button button-secondary" data-cancelled="0">
-							<?php _e( 'Cancel', 'customer-reviews-woocommerce' ); ?>
-						</button>
-				</div>
+			<h2 id="cr-export-qna-text"><?php _e( 'Export is in progress', 'customer-reviews-woocommerce' ); ?></h2>
+			<progress id="cr-export-qna-progress-bar" max="100" value="0" data-nonce="<?php echo wp_create_nonce( 'cr-export-progress' ); ?>"></progress>
+			<div>
+				<button id="cr-export-qna-cancel" class="button button-secondary" data-cancelled="0">
+					<?php _e( 'Cancel', 'customer-reviews-woocommerce' ); ?>
+				</button>
+			</div>
 		</div>
 		<div id="cr-export-qna-results" class="cr-export-results">
-				<h3 id="cr-export-qna-result-status"><?php _e( 'Export Completed', 'customer-reviews-woocommerce' ); ?></h3>
-				<p id="cr-export-qna-result-started"></p>
-				<p id="cr-export-qna-result-finished"></p>
-				<p id="cr-export-qna-result-exported" data-qnacount="0"></p>
-				<br>
-				<a id="cr-export-qna-download" href="<?php echo esc_url( $download_url ); ?>" class="button button-primary" style="display: none"><?php _e( 'Download', 'customer-reviews-woocommerce' ); ?></a>
+			<h3 id="cr-export-qna-result-status"><?php _e( 'Export Completed', 'customer-reviews-woocommerce' ); ?></h3>
+			<p id="cr-export-qna-result-started"></p>
+			<p id="cr-export-qna-result-finished"></p>
+			<p id="cr-export-qna-result-exported" data-qnacount="0"></p>
+			<br>
+			<a id="cr-export-qna-download" href="<?php echo esc_url( $download_url ); ?>" class="button button-primary" style="display: none"><?php _e( 'Download', 'customer-reviews-woocommerce' ); ?></a>
 		</div>
 
 		<?php
@@ -90,12 +90,12 @@ class CR_Export_Qna {
 		if ( isset( $_GET['action'] ) && $_GET['action'] === 'cr-download-export-qna' ) {
 			// ensure a valid nonce has been provided
 			if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( $_GET['_wpnonce'], 'download_csv_export_qna' ) ) {
-					wp_die(
-						sprintf(
-							__( 'Failed to download: invalid nonce. <a href="%s">Return to settings</a>', 'customer-reviews-woocommerce' ),
-							$this->page_url
-						)
-					);
+				wp_die(
+					sprintf(
+						__( 'Failed to download: invalid nonce. <a href="%s">Return to settings</a>', 'customer-reviews-woocommerce' ),
+						$this->page_url
+					)
+				);
 			}
 
 			$filename = get_temp_dir() . self::FILE_PATH;
@@ -154,7 +154,7 @@ class CR_Export_Qna {
 				'result_started' => __( 'Started: %s', 'customer-reviews-woocommerce' ),
 				'result_finished' => __( 'Finished: %s', 'customer-reviews-woocommerce' ),
 				'result_cancelled' => __( 'Cancelled: %s', 'customer-reviews-woocommerce' ),
-				'result_exported' => __( '%d question(s) and answer(s) successfully exported', 'customer-reviews-woocommerce' ),
+				'result_exported' => __( '%d review(s) and/or reply(s) successfully exported', 'customer-reviews-woocommerce' ),
 				'result_qna_exported' => __( '%d question(s) and/or answer(s) successfully exported', 'customer-reviews-woocommerce' )
 			));
 

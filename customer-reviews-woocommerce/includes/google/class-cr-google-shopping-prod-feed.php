@@ -23,7 +23,7 @@ class CR_Google_Shopping_Prod_Feed {
 		$this->language = $language;
 		if ( $this->language ) {
 			// WPML compatibility for creation of XML feeds in multiple languages
-			$this->default_limit = apply_filters( 'cr_gs_product_feed_cron_reduced_limit', 50 );
+			$this->default_limit = apply_filters( 'cr_gs_product_feed_cron_reduced_limit', 100 );
 		} else {
 			$this->default_limit = apply_filters( 'cr_gs_product_feed_cron_limit', 200 );
 		}

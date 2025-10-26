@@ -384,7 +384,7 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 			if( is_product() ) {
 				$assets_version = Ivole::CR_VERSION;
 				if( ! $this->disable_lightbox ) {
-					wp_enqueue_script( 'photoswipe-ui-default' );
+					wp_enqueue_script( 'wc-photoswipe-ui-default' );
 					wp_enqueue_style( 'photoswipe-default-skin' );
 				}
 				wp_register_style( 'cr-frontend-css', plugins_url( '/css/frontend.css', dirname( dirname( __FILE__ ) ) ), array(), $assets_version, 'all' );
