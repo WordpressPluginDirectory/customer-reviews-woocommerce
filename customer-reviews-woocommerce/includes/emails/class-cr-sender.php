@@ -193,14 +193,17 @@ if ( ! class_exists( 'CR_Sender' ) ) :
 			} else {
 				$e = new Ivole_Email( $order_id, $sequence );
 				$result = $e->trigger2( $order_id, null, $schedule );
-				// logging
-				$log = new CR_Reminders_Log();
-				$l_result = $log->add(
-					$order_id,
-					apply_filters( 'cr_reminders_table_type_log', 'a', $sequence ),
-					'email',
-					$result
-				);
+				// logging for reminders except when sent via CR Cron
+				// if sent via CR Cron, then loggin in CusRev dashboard
+				if ( ! $schedule ) {
+					$log = new CR_Reminders_Log();
+					$l_result = $log->add(
+						$order_id,
+						apply_filters( 'cr_reminders_table_type_log', 'a', $sequence ),
+						'email',
+						$result
+					);
+				}
 				// end of logging
 			}
 

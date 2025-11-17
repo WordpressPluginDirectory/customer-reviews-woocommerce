@@ -630,6 +630,11 @@ li.select2-results__option {
 .cr-all-reviews-rating {
 	margin-bottom: 0.6em;
 }
+.cr-reviews-list-table .cr-comment-head-text {
+	font-size: 16px;
+	font-weight: 600;
+	margin: 0.6em 0;
+}
 .cr-qna-admin-details,
 .cr-all-reviews-details {
 	font-size: 11px;
@@ -815,6 +820,24 @@ li.select2-results__option {
 }
 .cr-reviews-list-table .cr-admin-avatar img {
 	border-radius: 16px;
+}
+.cr-reviews-list-table .cr-review-country-cont {
+	display: flex;
+	align-items: flex-start;
+	margin: 2px 0;
+}
+.cr-reviews-list-table .cr-review-country-cont .cr-review-country-icon {
+	display: inline;
+	height: 12px;
+	width: auto;
+	margin: 0 5px 0 0;
+	padding: 0;
+	border-radius: 0;
+	float: none;
+}
+.cr-reviews-list-table .cr-review-country-cont .cr-review-country-text {
+	line-height: 1;
+	font-size: 12px;
 }
 .cr-reviews-list-table .cr-avatar-check {
 	width: 15px;

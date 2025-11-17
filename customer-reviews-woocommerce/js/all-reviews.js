@@ -556,7 +556,12 @@
 			var cr_data = {
 				"action": "cr_update_tags",
 				"review_id": jQuery(this).data("reviewid"),
-				"tags": JSON.stringify(jQuery(this).parents("td.tags").find("select.cr_tags").eq(0).select2("data")),
+				"tags": JSON.stringify(
+					jQuery(this).parents("td.tags").find("select.cr_tags").eq(0).select2("data").map( item => ( {
+							text: item.text
+						} )
+					)
+				),
 				"cr_nonce": jQuery(this).data("nonce")
 			};
 			jQuery(this).parents("td.tags").find(".cr-tags-edit").addClass("cr-update-in-progress");

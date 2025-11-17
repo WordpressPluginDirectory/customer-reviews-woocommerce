@@ -78,7 +78,7 @@ if ( ! class_exists( 'CR_Shortcodes_Settings' ) ):
 			$shortcodes_desc = '<p class="cr-admin-shortcodes-large"><code>[cusrev_all_reviews]</code></p>' .
 			'<p>' .__( 'Use this shortcode to display a list of all reviews on any page or post. Here are the default parameters of the shortcode:', 'customer-reviews-woocommerce' ) . '</p>' .
 			'<p class="cr-admin-shortcodes"><code>[cusrev_all_reviews sort="DESC" sort_by="date" per_page="10" show_summary_bar="true" show_media="true" ' .
-			'show_products="true" categories="" product_tags="" tags="" products="current" product_reviews="true" shop_reviews="true" inactive_products="false" show_replies="false" show_more="5" min_chars="0" avatars="initials" users="all" add_review="false"]</code></p>' .
+			'show_products="true" categories="" product_tags="" tags="" products="current" product_reviews="true" shop_reviews="true" inactive_products="false" show_replies="false" show_more="5" min_chars="0" avatars="initials" users="all" add_review="false" schema_markup="false"]</code></p>' .
 			'<p class="cr-admin-shortcodes"><b>' . __( 'Parameters:', 'customer-reviews-woocommerce' ) . '</b></p>' .
 			'<ul>' .
 			'<li>' . sprintf( __( '%1$s argument defines how reviews are sorted. Possible values are %2$s and %3$s.', 'customer-reviews-woocommerce' ), '<code>sort</code>', '<code>"ASC"</code>', '<code>"DESC"</code>' ) . '</li>' .
@@ -100,6 +100,17 @@ if ( ! class_exists( 'CR_Shortcodes_Settings' ) ):
 			'<li>' . sprintf( __( '%1$s argument accepts %2$s, %3$s or %4$s and defines how avatars of customers will be displayed on reviews.', 'customer-reviews-woocommerce' ), '<code>avatars</code>', '<code>"initials"</code>', '<code>"standard"</code>', '<code>"hidden"</code>' ) . '</li>' .
 			'<li>' . sprintf( __( '%1$s parameter accepts %2$s or %3$s. Use it to display reviews written by anyone or only the current WordPress user.', 'customer-reviews-woocommerce' ), '<code>users</code>', '<code>"all"</code>', '<code>"current"</code>' ) . '</li>' .
 			'<li>' . sprintf( __( '%1$s parameter accepts %2$s, %3$s or a product ID. Use it to display a form to write a new review. If the shortcode is placed on a page of a product and the parameter is set to %2$s, the review form will correspond to that product. If the shortocode is placed on a non-product page and the parameter is set to %2$s, the review form will collect shop reviews. If the parameter is set to a product ID, the review form will correspond to a product with that ID.', 'customer-reviews-woocommerce' ), '<code>add_review</code>', '<code>"true"</code>', '<code>"false"</code>' ) . '</li>' .
+			'<li>' . sprintf(
+				__( '%1$s parameter accepts %2$s or %3$s and controls if %4$s structured data should be created for search engines. To comply with schema markup guidelines, this parameter takes effect only when the shortcode displays reviews for a single product, that is, when parameter %5$s is %2$s, parameter %6$s is %3$s, and parameter %7$s is set to either %8$s or a single product ID.', 'customer-reviews-woocommerce' ),
+				'<code>schema_markup</code>',
+				'<code>"true"</code>',
+				'<code>"false"</code>',
+				'<code>AggregateRating</code>',
+				'<code>product_reviews</code>',
+				'<code>shop_reviews</code>',
+				'<code>products</code>',
+				'<code>"current"</code>'
+				) . '</li>' .
 			'</ul>' . '<br>' .
 
 			'<p class="cr-admin-shortcodes-large"><code>[cusrev_reviews_grid]</code></p>' .

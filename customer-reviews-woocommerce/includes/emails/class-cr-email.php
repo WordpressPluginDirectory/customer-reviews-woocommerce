@@ -727,7 +727,14 @@ class Ivole_Email {
 		if ( 'yes' !== get_option( 'ivole_verified_reviews', 'no' ) ) {
 			$wp_locale = get_locale();
 			$wp_lang = explode( '_', $wp_locale );
-			if( is_array( $wp_lang ) && 0 < count( $wp_lang ) ) {
+			if (
+				'PT_BR' === strtoupper( $wp_locale )
+			) {
+				// a special case for historical reasons
+				$language = 'BR';
+			} elseif (
+				is_array( $wp_lang ) && 0 < count( $wp_lang )
+			) {
 				$language = strtoupper( $wp_lang[0] );
 			} else {
 				$language = 'EN';

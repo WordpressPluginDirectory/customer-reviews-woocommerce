@@ -447,7 +447,6 @@ if ( ! class_exists( 'CR_Email_Func' ) ) :
 					$api_url = 'https://api.cusrev.com/v2/test-email';
 				}
 				$data_string = json_encode( $data );
-				//error_log( $data_string );
 				$ch = curl_init();
 				curl_setopt( $ch, CURLOPT_URL, $api_url );
 				curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
@@ -524,7 +523,6 @@ if ( ! class_exists( 'CR_Email_Func' ) ) :
 					$api_url = 'https://api.cusrev.com/v2/test-email';
 				}
 				$data_string = json_encode( $data );
-				//error_log( $data_string );
 				$ch = curl_init();
 				curl_setopt( $ch, CURLOPT_URL, $api_url );
 				curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );

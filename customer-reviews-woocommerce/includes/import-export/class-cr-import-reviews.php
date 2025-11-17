@@ -15,6 +15,7 @@ class CR_Import_Reviews {
 	protected $settings;
 	public static $columns = array(
 		'id',
+		'review_title',
 		'review_content',
 		'review_score',
 		'parent',
@@ -24,7 +25,8 @@ class CR_Import_Reviews {
 		'display_name',
 		'email',
 		'order_id',
-		'media'
+		'media',
+		'location'
 	);
 	public static $file_read_buffer = 3;
 
@@ -482,6 +484,7 @@ class CR_Import_Reviews {
 			'error_list' => array()
 		);
 		$id_index = array_search( 'id', self::$columns );
+		$title_index = array_search( 'review_title', self::$columns );
 		$content_index = array_search( 'review_content', self::$columns );
 		$score_index = array_search( 'review_score', self::$columns );
 		$parent_index = array_search( 'parent', self::$columns );
@@ -492,6 +495,7 @@ class CR_Import_Reviews {
 		$email_index = array_search( 'email', self::$columns );
 		$order_id_index = array_search( 'order_id', self::$columns );
 		$media_index = array_search( 'media', self::$columns );
+		$location_index = array_search( 'location', self::$columns );
 		$num_lines = count( $lines );
 		$shop_page_id = wc_get_page_id( 'shop' );
 		$product_ids = array();
@@ -679,7 +683,7 @@ class CR_Import_Reviews {
 		$timezone_string = empty( $timezone_string ) ? 'gmt': $timezone_string;
 		$site_timezone = new DateTimeZone( $timezone_string );
 		$gmt_timezone  = new DateTimeZone( 'gmt' );
-		// check for duplicates and create Q & A
+		// check for duplicates and create reviews
 		foreach ( $lines as $index => $line ) {
 			$line_number = $last_line - ( $num_lines - $index ) + 1;
 			$product_id = intval( $line[$product_id_index] );
@@ -710,7 +714,8 @@ class CR_Import_Reviews {
 				foreach ( $existing_reviews[$product_id] as $existing_one ) {
 					if (
 						$line[$content_index] == $existing_one['comment_content'] &&
-						$line[$email_index] == $existing_one['comment_author_email']
+						$line[$email_index] == $existing_one['comment_author_email'] &&
+						$line[$content_index]
 					) {
 						if ( $line[$parent_index] ) {
 							$results['rep']['skipped']++;
@@ -726,7 +731,7 @@ class CR_Import_Reviews {
 					continue;
 				}
 			}
-			// check that the parent question exists for answers
+			// check that the parent review exists for replies
 			$line_parent = 0;
 			if ( 0 < $line[$parent_index] ) {
 				$line_parent = intval( $line[$parent_index] );
@@ -740,7 +745,7 @@ class CR_Import_Reviews {
 						'parent' => 0
 					)
 				);
-				// no questions found with the provided id, try searching by meta data
+				// no reviews found with the provided id, try searching by meta data
 				if ( 0 >= $parent_count ) {
 					$args = array(
 						'type__not_in' => array( 'cr_qna' ),
@@ -797,11 +802,32 @@ class CR_Import_Reviews {
 			if ( $line[$id_index] ) {
 				$meta['cr_import_id'] = sanitize_text_field( $line[$id_index] );
 			}
+			if ( $line[$title_index] ) {
+				$meta['cr_rev_title'] = sanitize_text_field( $line[$title_index] );
+			}
 			if ( $line[$score_index] ) {
 				$meta['rating'] = intval( $line[$score_index] );
 			}
+			$order_id = intval( $line[$order_id_index] );
 			if ( $order_id ) {
 				$meta['ivole_order'] = $order_id;
+			}
+			$country_code = '';
+			$countr_desc = '';
+			$country = trim( $line[$location_index] );
+			if ( $country ) {
+				$parts = explode( '|', $country, 2 );
+				if ( $parts && is_array( $parts ) ) {
+					if ( isset( $parts[0] ) ) {
+						$country_code = strtolower( sanitize_text_field( trim( $parts[0] ) ) );
+						if ( isset( $parts[1] ) ) {
+							$countr_desc = sanitize_text_field( trim( $parts[1] ) );
+						}
+					}
+				}
+			}
+			if ( $country_code ) {
+				$meta['ivole_country'] = array( 'code' => $country_code, 'desc' => $countr_desc );
 			}
 			// WPML compatibility
 			if ( has_filter( 'wpml_object_id' ) && class_exists( 'WCML_Comments' ) ) {

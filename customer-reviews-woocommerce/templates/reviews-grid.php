@@ -142,6 +142,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 								<?php echo $rating . '/5'; ?>
 							</div>
 						</div>
+						<?php
+							if ( 0 === intval( $review->comment_parent ) ) {
+								$rev_title = get_comment_meta( $review->comment_ID, 'cr_rev_title', true );
+								if ( $rev_title ) {
+									echo '<div class="cr-comment-head-text">' . esc_html( $rev_title ) . '</div>';
+								}
+							}
+						?>
 						<div class="middle-row">
 							<div class="review-content">
 								<?php

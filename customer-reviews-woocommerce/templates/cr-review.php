@@ -46,7 +46,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		}
 
 		if ( ! $cr_hide_avatars ) {
-			$get_avtr = get_avatar( $comment, apply_filters( 'cr_review_gravatar_size', '60' ), '' );
+			$get_avtr = get_avatar( $comment, apply_filters( 'cr_review_gravatar_size', '60' ), '', '', array( 'class' => array( 'cr-std-avatar' ) ) );
 			if ( $get_avtr ) {
 				echo $get_avtr;
 			} else {
@@ -56,7 +56,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		?>
 
-		<div class="comment-text<?php echo $hide_avatars_class; ?>">
+		<div class="cr-comment-text<?php echo $hide_avatars_class; ?>">
 
 			<?php
 

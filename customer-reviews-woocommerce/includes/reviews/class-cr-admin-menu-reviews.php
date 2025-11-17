@@ -25,6 +25,7 @@ if ( ! class_exists( 'Ivole_Reviews_Admin_Menu' ) ):
 			add_filter( 'wp_editor_settings', array( $this, 'wp_editor_settings_filter' ), 10, 2 );
 			add_action( 'ivole_admin_review_reply_form', array( $this, 'review_reply' ) );
 			add_action( 'wp_ajax_ivole-replyto-comment', array( $this, 'wp_ajax_ivole_replyto_comment' ) );
+			add_action( 'add_meta_boxes', array( $this, 'add_title_meta_box' ), 8, 2 );
 			add_action( 'add_meta_boxes', array( $this, 'add_reviewer_meta_box' ), 9, 2 );
 			add_action( 'add_meta_boxes', array( $this, 'add_review_meta_box' ), 10, 2 );
 			add_action( 'edit_comment', array( $this, 'update_cr_review' ), 10, 2 );
@@ -492,6 +493,22 @@ if ( ! class_exists( 'Ivole_Reviews_Admin_Menu' ) ):
 			$x->send();
 		}
 
+		public function add_title_meta_box( $post_type, $comment ) {
+			if ( 'comment' === $post_type ) {
+				$rating = get_comment_meta( $comment->comment_ID, 'rating', true );
+				if ( $rating ) {
+					add_meta_box(
+						'cr_title_meta_box',
+						__( 'Review Title', 'customer-reviews-woocommerce' ),
+						array( $this, 'render_title_meta_box' ),
+						$post_type,
+						'normal',
+						'default'
+					);
+				}
+			}
+		}
+
 		public function add_reviewer_meta_box( $post_type, $comment ) {
 			if ( 'comment' === $post_type ) {
 				$rating = get_comment_meta( $comment->comment_ID, 'rating', true );
@@ -603,6 +620,16 @@ if ( ! class_exists( 'Ivole_Reviews_Admin_Menu' ) ):
 			}
 		}
 
+		public function render_title_meta_box( $comment ) {
+			$title = get_comment_meta( $comment->comment_ID, 'cr_rev_title', true );
+			?>
+				<p>
+					<input type="text" name="cr_rev_title" id="cr_rev_title" value="<?php echo esc_attr( $title ); ?>" class="widefat" />
+				</p>
+			<?php
+			wp_nonce_field( 'cr_title', 'cr_title_nonce' );
+		}
+
 		public function render_reviewer_meta_box( $comment ) {
 			$options = array(
 				'reviewer' => __( 'Reviewer', 'customer-reviews-woocommerce' )
@@ -659,6 +686,12 @@ if ( ! class_exists( 'Ivole_Reviews_Admin_Menu' ) ):
 				$meta[] = 203;
 				$meta[] = __( 'This reply was originally posted on CusRev portal. This copy of the reply was modified and might be different from the original reply published on CusRev portal.', 'customer-reviews-woocommerce' );
 				update_comment_meta( $comment_ID, 'ivole_reply', $meta );
+			}
+			if (
+				isset( $_POST['cr_rev_title'] ) &&
+				wp_verify_nonce( $_POST['cr_title_nonce'], 'cr_title' )
+			) {
+				update_comment_meta( $comment_ID, 'cr_rev_title', sanitize_text_field( $_POST['cr_rev_title'] ) );
 			}
 		}
 

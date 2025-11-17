@@ -115,10 +115,10 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 			add_action( 'wp_footer', array( $this, 'cr_photoswipe' ) );
 			add_action( 'woocommerce_review_before_comment_text', array( $this, 'display_featured' ), 9 );
 			add_action( 'woocommerce_before_single_product', array( $this, 'custom_avatars' ) );
-			add_filter( 'cr_review_form_before_comment', array( 'CR_Custom_Questions', 'review_form_questions' ) );
+			add_filter( 'cr_review_form_before_comment', array( 'CR_Custom_Questions', 'review_form_questions' ), 10, 2 );
 			add_action( 'wp_insert_comment', array( 'CR_Custom_Questions', 'submit_onsite_questions' ) );
 			add_action( 'comment_post', array( $this, 'action_after_review_added' ), 10, 3 );
-			add_action( 'cr_review_form_rating', array( 'CR_Custom_Questions', 'review_form_rating' ) );
+			add_action( 'cr_review_form_rating', array( 'CR_Custom_Questions', 'review_form_rating' ), 10, 2 );
 			// standard WooCommerce review template
 			add_action( 'woocommerce_review_after_comment_text', array( $this, 'display_incentivized_badge' ), 8 );
 			// enhanced CusRev review template
@@ -1163,6 +1163,12 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 
 	public function display_verified_badge_only( $comment ) {
 		if( 0 === intval( $comment->comment_parent ) ) {
+			//
+			$title = get_comment_meta( $comment->comment_ID, 'cr_rev_title', true );
+			if ( $title ) {
+				echo '<div class="cr-comment-head-text">' . esc_html( $title ) . '</div>';
+			}
+			//
 			$output = '';
 			// check if a badge should be shown for the review
 			$product_id = $comment->comment_post_ID;
@@ -1205,7 +1211,11 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 	}
 
 	public function display_featured( $comment ) {
-		if( 0 === intval( $comment->comment_parent ) ) {
+		if ( 0 === intval( $comment->comment_parent ) ) {
+			$title = get_comment_meta( $comment->comment_ID, 'cr_rev_title', true );
+			if ( $title ) {
+				echo '<div class="cr-comment-head-text">' . esc_html( $title ) . '</div>';
+			}
 			if( 0 < $comment->comment_karma ) {
 				// display 'featured' badge
 				$output = __( 'Featured Review', 'customer-reviews-woocommerce' );
@@ -1603,7 +1613,9 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 
 	public function custom_avatars() {
 		if ( 'initials' === get_option( 'ivole_avatars', 'standard' ) ) {
-			add_filter( 'get_avatar', array( $this, 'get_avatar' ), 10, 5 );
+			add_filter( 'get_avatar', array( $this, 'get_avatar' ), 10, 6 );
+		} else {
+			add_filter( 'get_avatar', array( self::class, 'change_avatar_class' ), 10, 6 );
 		}
 	}
 
@@ -1622,8 +1634,21 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 		);
 	}
 
-	public function get_avatar( $avatar, $id_or_email, $size = 96, $default = '', $alt = '' ) {
+	public function get_avatar( $avatar, $id_or_email, $size = 96, $default = '', $alt = '', $args = null ) {
 		return CR_Reviews_Grid::cr_get_avatar( $avatar, $id_or_email, $size, $default, $alt );
+	}
+
+	public static function change_avatar_class( $avatar, $id_or_email, $size = 96, $default = '', $alt = '', $args = null ) {
+		if (
+			$args &&
+			is_array( $args ) &&
+			isset( $args['class'] ) &&
+			is_array( $args['class'] ) &&
+			in_array( 'cr-std-avatar', $args['class'] )
+		) {
+			$avatar = str_replace( 'class=\'avatar ', 'class=\'', $avatar );
+		}
+		return $avatar;
 	}
 
 	public function show_count_row( $count, $page, $per_page ) {
@@ -1682,7 +1707,10 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 			}
 			if ( ! $review_from_aggregated ) {
 				$customer_email = isset( $commentdata['comment_author_email'] ) ? $commentdata['comment_author_email'] : '';
-				if ( $customer_email ) {
+				if (
+					$customer_email &&
+					'spam' !== $comment_approved
+				) {
 					$ec = new CR_Email_Coupon( 0 );
 					$ec->maybe_send_coupon(
 						$comment_id, // id of the review

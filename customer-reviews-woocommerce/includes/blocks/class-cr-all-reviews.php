@@ -55,7 +55,8 @@ if (! class_exists('CR_All_Reviews')) :
 				'min_chars' => 0,
 				'avatars' => 'initials',
 				'users' => 'all',
-				'add_review' => false
+				'add_review' => 'false',
+				'schema_markup' => 'false'
 			);
 
 			if ( isset( $attributes['categories'] ) && ! is_array( $attributes['categories'] ) ) {
@@ -145,6 +146,7 @@ if (! class_exists('CR_All_Reviews')) :
 			} else {
 				$this->shortcode_atts['add_review'] = false;
 			}
+			$this->shortcode_atts['schema_markup'] = $this->shortcode_atts['schema_markup'] === 'true' ? true : false;
 		}
 
 		public function render_all_reviews_shortcode( $attributes ) {
@@ -503,6 +505,8 @@ if (! class_exists('CR_All_Reviews')) :
 			$return .= '<ol class="commentlist">';
 			if ( 'initials' === $this->shortcode_atts['avatars'] ) {
 				add_filter( 'get_avatar', array( 'CR_Reviews_Grid', 'cr_get_avatar' ), 10, 5 );
+			} else {
+				add_filter( 'get_avatar', array( 'CR_Reviews', 'change_avatar_class' ), 10, 6 );
 			}
 			$return .= wp_list_comments( apply_filters('ivole_product_review_list_args', array(
 				'callback' => array( 'CR_Reviews', 'callback_comments' ),
@@ -516,6 +520,8 @@ if (! class_exists('CR_All_Reviews')) :
 			)), $comments );
 			if ( 'initials' === $this->shortcode_atts['avatars'] ) {
 				remove_filter( 'get_avatar', array( 'CR_Reviews_Grid', 'cr_get_avatar' ) );
+			} else {
+				remove_filter( 'get_avatar', array( 'CR_Reviews', 'change_avatar_class' ) );
 			}
 			$return .= '<span class="cr-pagination-review-spinner"></span>';
 			$return .= '</ol>';
@@ -612,6 +618,8 @@ if (! class_exists('CR_All_Reviews')) :
 
 			if ( 'initials' === $this->shortcode_atts['avatars'] ) {
 				add_filter( 'get_avatar', array( 'CR_Reviews_Grid', 'cr_get_avatar' ), 10, 5 );
+			} else {
+				add_filter( 'get_avatar', array( 'CR_Reviews', 'change_avatar_class' ), 10, 6 );
 			}
 			$html .= wp_list_comments( apply_filters( 'ivole_product_review_list_args', array(
 				'callback' => array( 'CR_Reviews', 'callback_comments' ),
@@ -625,6 +633,8 @@ if (! class_exists('CR_All_Reviews')) :
 			) ), $comments );
 			if ( 'initials' === $this->shortcode_atts['avatars'] ) {
 				remove_filter( 'get_avatar', array( 'CR_Reviews_Grid', 'cr_get_avatar' ) );
+			} else {
+				remove_filter( 'get_avatar', array( 'CR_Reviews', 'change_avatar_class' ) );
 			}
 
 			$last_page = false;
@@ -950,6 +960,36 @@ if (! class_exists('CR_All_Reviews')) :
 				$output .= '</div>';
 				$output .= '<div class="cr-summary-separator-side"></div>';
 			}
+
+			// add structured data
+			if (
+				$this->shortcode_atts['schema_markup'] &&
+				$this->shortcode_atts['product_reviews'] &&
+				! $this->shortcode_atts['shop_reviews'] &&
+				$this->shortcode_atts['products'] &&
+				is_array( $this->shortcode_atts['products'] ) &&
+				1 === count( $this->shortcode_atts['products'] )
+			) {
+				$prod_temp = wc_get_product( $this->shortcode_atts['products'][0] );
+				if ( $prod_temp ) {
+					$prod_name = esc_html( strip_tags( $prod_temp->get_title() ) );
+					$schema = array(
+						'@context' => 'https://schema.org/',
+						'@type' => 'Product',
+						'name' => $prod_name,
+						'aggregateRating' => array(
+							'@type' => 'aggregateRating',
+							'ratingValue' => round( $average, 1 ),
+							'bestRating' => 5,
+							'ratingCount' => $all
+						)
+					);
+					$output .= '<script type="application/ld+json">';
+					$output .= wp_json_encode( $schema );
+					$output .= '</script>';
+				}
+			}
+
 			$output .= '</div>';
 			return $output;
 		}
@@ -1187,7 +1227,8 @@ if (! class_exists('CR_All_Reviews')) :
 					'cr_form_item_media_desc' => $cr_form_item_media_desc,
 					'cr_form_permissions' => $cr_form_permissions,
 					'cr_form_checkbox' => $cr_form_checkbox,
-					'cr_form_checkbox_text' => wp_specialchars_decode( $cr_form_checkbox_text, ENT_QUOTES )
+					'cr_form_checkbox_text' => wp_specialchars_decode( $cr_form_checkbox_text, ENT_QUOTES ),
+					'cr_form_settings_array' => $form_settings
 				),
 				'customer-reviews-woocommerce',
 				dirname( dirname( dirname( __FILE__ ) ) ) . '/templates/'

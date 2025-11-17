@@ -66,7 +66,7 @@ if ( ! class_exists( 'CR_Settings_Admin_Menu' ) ):
 				'cr-reviews',
 				__( 'Settings', 'customer-reviews-woocommerce' ),
 				__( 'Settings', 'customer-reviews-woocommerce' ),
-				'manage_options',
+				apply_filters( 'cr_settings_permissions', 'manage_options' ),
 				$this->menu_slug,
 				array( $this, 'display_settings_admin_page' )
 			);

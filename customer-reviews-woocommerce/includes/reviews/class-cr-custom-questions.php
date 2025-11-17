@@ -217,7 +217,7 @@ if ( ! class_exists( 'CR_Custom_Questions' ) ) :
 			delete_comment_meta( $review_id, self::$meta_id );
 		}
 
-		public static function review_form_questions( $comment_form ) {
+		public static function review_form_questions( $comment_form, $hash ) {
 			$onsite_form = CR_Forms_Settings::get_default_form_settings();
 			$rs = '';
 			$qs = '';
@@ -225,7 +225,6 @@ if ( ! class_exists( 'CR_Custom_Questions' ) ) :
 				$onsite_form &&
 				is_array( $onsite_form )
 			) {
-				$hash = random_int( 0, 99 ) . '_';
 				$shared_index = 0;
 				// if there are any custom ratings, display them
 				if (
@@ -444,8 +443,7 @@ if ( ! class_exists( 'CR_Custom_Questions' ) ) :
 		}
 
 		// display a rating block on a review form
-		public static function review_form_rating( $item_id ) {
-			$hash = random_int( 0, 99 ) . '_';
+		public static function review_form_rating( $item_id, $hash ) {
 			$out = self::display_rating(
 				__( 'Rating', 'customer-reviews-woocommerce' ),
 				true,
@@ -458,7 +456,7 @@ if ( ! class_exists( 'CR_Custom_Questions' ) ) :
 			);
 			//
 			if ( 0 < $item_id ) {
-				$out = self::review_form_questions( $out );
+				$out = self::review_form_questions( $out, $hash );
 			}
 			echo $out;
 		}

@@ -154,7 +154,8 @@ $nonce = wp_create_nonce( "cr_product_reviews_" . $cr_product_id );
 						'cr_form_item_media_desc' => $cr_form_item_media_desc,
 						'cr_form_permissions' => $cr_form_permissions,
 						'cr_form_checkbox' => $cr_form_checkbox,
-						'cr_form_checkbox_text' => wp_specialchars_decode( $cr_form_checkbox_text, ENT_QUOTES )
+						'cr_form_checkbox_text' => wp_specialchars_decode( $cr_form_checkbox_text, ENT_QUOTES ),
+						'cr_form_settings_array' => $form_settings
 					),
 					'customer-reviews-woocommerce',
 					dirname( dirname( __FILE__ ) ) . '/templates/'

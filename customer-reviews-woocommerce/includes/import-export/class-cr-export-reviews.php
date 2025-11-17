@@ -239,7 +239,7 @@ class CR_Export_Reviews {
 			"WHERE c.comment_approved = '1' AND (p.post_type = 'product' OR p.ID IN(" . $shop_page_ids . ")) AND m.meta_key ='rating'" .
 			"LIMIT " . $offset_reviews . "," . self::$file_write_buffer;
 		$result_reviews_chunk = $wpdb->get_results( $query_reviews_chunk );
-		if ( ! $result_reviews_chunk || ! is_array( $result_reviews_chunk ) ) {
+		if ( ! $result_reviews_chunk && ! is_array( $result_reviews_chunk ) ) {
 			wp_send_json(
 				array(
 					'success'  => false,
@@ -284,7 +284,7 @@ class CR_Export_Reviews {
 				"WHERE c.comment_approved = '1' AND (p.post_type = 'product' OR p.ID IN(" . $shop_page_ids . ")) AND m.meta_key ='rating'" .
 				"LIMIT " . $offset_replies . "," . self::$file_write_buffer;
 			$result_replies_chunk = $wpdb->get_results( $query_replies_chunk );
-			if ( ! $result_replies_chunk || ! is_array( $result_replies_chunk ) ) {
+			if ( ! $result_replies_chunk && ! is_array( $result_replies_chunk ) ) {
 				wp_send_json(
 					array(
 						'success'  => false,
@@ -340,11 +340,20 @@ class CR_Export_Reviews {
 
 	private function process_chunk( $file, $data, $shop_page_ids ) {
 		$shop_page_id = wc_get_page_id( 'shop' );
-		// extract relevant fields from each Q&A record for writing them into the file
+		// extract relevant fields from each review or reply for writing them into the file
 		foreach ( $data as $review_or_reply ) {
 			$product = wc_get_product( $review_or_reply->comment_post_ID );
 			$row = array();
 			$row[] = $review_or_reply->comment_ID;
+
+			// extract title of a review if any
+			$title = get_comment_meta( $review_or_reply->comment_ID, 'cr_rev_title', true );
+			if ( $title ) {
+				$row[] = $title;
+			} else {
+				$row[] = '';
+			}
+
 			$row[] = $review_or_reply->comment_content;
 			$row[] = get_comment_meta ( $review_or_reply->comment_ID, 'rating', true );
 			$row[] = $review_or_reply->comment_parent > 0 ? $review_or_reply->comment_parent : '';
@@ -382,6 +391,19 @@ class CR_Export_Reviews {
 			} else {
 				$row[] = '';
 			}
+
+			// extract location of a review if any
+			$country_col = '';
+			$country = get_comment_meta( $review_or_reply->comment_ID, 'ivole_country', true );
+			if ( is_array( $country ) && 2 === count( $country ) ) {
+				if ( isset( $country['code'] ) ) {
+					$country_col = $country['code'];
+					if ( isset( $country['desc'] ) ) {
+						$country_col .= ' | ' . $country['desc'];
+					}
+				}
+			}
+			$row[] = $country_col;
 
 			fputcsv( $file, $row );
 		}

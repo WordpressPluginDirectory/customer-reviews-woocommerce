@@ -449,10 +449,10 @@ class CR_Google_Shopping_Prod_Feed {
 		// WPML compatibility for creation of XML feeds in multiple languages
 		if ( $this->language ) {
 			wp_clear_scheduled_hook( 'cr_generate_prod_feed_chunk', array( $this->language ) );
-			wp_schedule_single_event( time(), 'cr_generate_prod_feed_chunk', array( $this->language ) );
+			wp_schedule_single_event( time() + 1, 'cr_generate_prod_feed_chunk', array( $this->language ) );
 		} else {
 			wp_clear_scheduled_hook( 'cr_generate_prod_feed_chunk', array( '' ) );
-			wp_schedule_single_event( time(), 'cr_generate_prod_feed_chunk', array( '' ) );
+			wp_schedule_single_event( time() + 1, 'cr_generate_prod_feed_chunk', array( '' ) );
 		}
 	}
 

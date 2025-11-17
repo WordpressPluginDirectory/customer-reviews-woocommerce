@@ -131,6 +131,7 @@ class CR_Import_Admin_Menu {
 				$template_data = array(
 					array(
 						'id',
+						'review_title',
 						'review_content',
 						'review_score',
 						'parent',
@@ -140,10 +141,12 @@ class CR_Import_Admin_Menu {
 						'display_name',
 						'email',
 						'order_id',
-						'media'
+						'media',
+						'location'
 					),
 					array(
 						'1',
+						'',
 						__( 'This product is great!', 'customer-reviews-woocommerce' ),
 						'5',
 						'',
@@ -153,10 +156,12 @@ class CR_Import_Admin_Menu {
 						__( 'Example Customer', 'customer-reviews-woocommerce' ),
 						'example.customer@mail.com',
 						'',
-						'https://www.example.com/image-1.jpeg,https://www.example.com/image-2.jpeg,https://www.example.com/video-1.mp4'
+						'https://www.example.com/image-1.jpeg,https://www.example.com/image-2.jpeg,https://www.example.com/video-1.mp4',
+						''
 					),
 					array(
 						'2',
+						'An optional review title...',
 						__( 'This product is not so great.', 'customer-reviews-woocommerce' ),
 						'1',
 						'',
@@ -166,10 +171,12 @@ class CR_Import_Admin_Menu {
 						__( 'Sample Customer', 'customer-reviews-woocommerce' ),
 						'sample.customer@mail.com',
 						'',
-						''
+						'',
+						'GB | London'
 					),
 					array(
 						'3',
+						'An optional title of a shop review',
 						__( 'This is a shop review. Note that the product_id is -1 and product_sku is blank. Customer service is good!', 'customer-reviews-woocommerce' ),
 						'4',
 						'',
@@ -179,10 +186,27 @@ class CR_Import_Admin_Menu {
 						__( 'Sample Customer', 'customer-reviews-woocommerce' ),
 						'sample.customer@mail.com',
 						'',
-						''
+						'',
+						'JP | Tokyo'
 					),
 					array(
 						'4',
+						'',
+						__( 'Another shop review. Note that the product_id is still -1 and product_sku is blank. Customer service is good!', 'customer-reviews-woocommerce' ),
+						'4',
+						'',
+						'2018-04-18 10:24:43',
+						-1,
+						'',
+						__( 'Sample Customer', 'customer-reviews-woocommerce' ),
+						'sample.customer@mail.com',
+						'',
+						'',
+						'US | New York, NY'
+					),
+					array(
+						'5',
+						'',
 						__( 'This is a reply to the review with the id = 2. Sorry it did not meet your expectations — thanks for the feedback!', 'customer-reviews-woocommerce' ),
 						'',
 						'2',
@@ -191,6 +215,7 @@ class CR_Import_Admin_Menu {
 						'',
 						__( 'Store Manager', 'customer-reviews-woocommerce' ),
 						'sample.store.manager@mail.com',
+						'',
 						'',
 						''
 					)

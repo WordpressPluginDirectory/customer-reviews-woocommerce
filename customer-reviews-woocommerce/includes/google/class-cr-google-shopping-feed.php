@@ -256,6 +256,13 @@ class CR_Google_Shopping_Feed {
 			$xml_writer->text( $review->date );
 			$xml_writer->endElement();
 
+			if ( $review->title ) {
+				// <title>
+				$xml_writer->startElement( 'title' );
+				$xml_writer->text( $review->title );
+				$xml_writer->endElement();
+			}
+
 			// <content>
 			$xml_writer->startElement( 'content' );
 			$xml_writer->text( $review->content );
@@ -374,10 +381,10 @@ class CR_Google_Shopping_Feed {
 		// WPML compatibility for creation of XML feeds in multiple languages
 		if ( $this->language ) {
 			wp_clear_scheduled_hook( 'cr_generate_product_reviews_feed_chunk', array( $this->language ) );
-			wp_schedule_single_event( time(), 'cr_generate_product_reviews_feed_chunk', array( $this->language ) );
+			wp_schedule_single_event( time() + 1, 'cr_generate_product_reviews_feed_chunk', array( $this->language ) );
 		} else {
 			wp_clear_scheduled_hook( 'cr_generate_product_reviews_feed_chunk', array( '' ) );
-			wp_schedule_single_event( time(), 'cr_generate_product_reviews_feed_chunk', array( '' ) );
+			wp_schedule_single_event( time() + 1, 'cr_generate_product_reviews_feed_chunk', array( '' ) );
 		}
 	}
 
@@ -446,6 +453,12 @@ class CR_Google_Shopping_Feed {
 			//Google's requirement for Z instead of +00:00
 			if( '+00:00' === substr( $_review->date, -6 ) ) {
 				$_review->date = substr( $_review->date, 0, -6 ) . 'Z';
+			}
+			$title = get_comment_meta( $review->comment_ID, 'cr_rev_title', true );
+			if ( $title ) {
+				$_review->title = htmlspecialchars( $title, ENT_XML1, 'UTF-8' );
+			} else {
+				$_review->title = '';
 			}
 			$_review->content = htmlspecialchars( $review->comment_content, ENT_XML1, 'UTF-8' );
 			$_review->content = trim( $_review->content );

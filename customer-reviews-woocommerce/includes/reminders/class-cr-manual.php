@@ -190,21 +190,24 @@ if ( ! class_exists( 'CR_Manual' ) ) :
 				$l_msg = '';
 				$e = new Ivole_Email( $order_id, 1 );
 				$result = $e->trigger2( $order_id, null, $schedule );
-				// logging
-				$log = new CR_Reminders_Log();
-				$l_result = $log->add(
-					$order_id,
-					'm',
-					'email',
-					$result
-				);
-				if (
-					is_array( $l_result ) &&
-					isset( $l_result['code'] ) &&
-					0 !== $l_result['code'] &&
-					isset( $l_result['text'] )
-				) {
-					$l_msg = ';<br>' . esc_html( $l_result['text'] );
+				// logging for reminders except when sent via CR Cron
+				// if sent via CR Cron, then loggin in CusRev dashboard
+				if ( 'cr' !== $mailer ) {
+					$log = new CR_Reminders_Log();
+					$l_result = $log->add(
+						$order_id,
+						'm',
+						'email',
+						$result
+					);
+					if (
+						is_array( $l_result ) &&
+						isset( $l_result['code'] ) &&
+						0 !== $l_result['code'] &&
+						isset( $l_result['text'] )
+					) {
+						$l_msg = ';<br>' . esc_html( $l_result['text'] );
+					}
 				}
 				// end of logging
 

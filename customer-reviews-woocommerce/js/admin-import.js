@@ -5,7 +5,7 @@ jQuery(document).ready(function() {
       init: function() {
         jQuery('#cr-import-cancel').on('click', function(event) {
           event.preventDefault();
-          crImporter.cancel_import();
+          crImporter.cancelImport();
         });
 
         crImporter.uploader = new plupload.Uploader( {

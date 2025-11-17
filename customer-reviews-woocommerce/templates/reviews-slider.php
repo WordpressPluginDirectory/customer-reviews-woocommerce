@@ -60,6 +60,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 					</div>
 				</div>
 				<?php
+					if ( 0 === intval( $review->comment_parent ) ) {
+						$rev_title = get_comment_meta( $review->comment_ID, 'cr_rev_title', true );
+						if ( $rev_title ) {
+							echo '<div class="cr-comment-head-text">' . esc_html( $rev_title ) . '</div>';
+						}
+					}
+				?>
+				<?php
 					do_action( 'cr_slider_before_review_text', $review );
 				?>
 				<div class="middle-row">

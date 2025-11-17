@@ -106,26 +106,22 @@ if ( ! class_exists( 'CR_Forms_Settings' ) ) :
 						'rev_perm' => ''
 					)
 				);
-				$update_ivole_review_forms = false;
 				// save the additional ratings
 				if ( ! empty( $_POST ) && isset( $_POST['ivole_rating_criteria'] ) ) {
 					$rtn_crta = json_decode( stripslashes( $_POST['ivole_rating_criteria'] ), true );
 					$rtn_crta = array_slice( $rtn_crta, 0, CR_Forms_Settings_Rating::get_max_rating_criteria() );
 					$ivole_review_forms[0]['rtn_crta'] = $rtn_crta;
-					$update_ivole_review_forms = true;
 				}
 				// save the customer attributes
 				if ( ! empty( $_POST ) && isset( $_POST['ivole_customer_attributes'] ) ) {
 					$cus_atts = json_decode( stripslashes( $_POST['ivole_customer_attributes'] ), true );
 					$cus_atts = array_slice( $cus_atts, 0, self::get_max_cus_atts() );
 					$ivole_review_forms[0]['cus_atts'] = $cus_atts;
-					$update_ivole_review_forms = true;
 				}
 				// save the review permissions
 				if ( ! empty( $_POST ) && isset( $_POST['ivole_review_permissions'] ) ) {
 					$rev_perm = strval( $_POST['ivole_review_permissions'] );
 					$ivole_review_forms[0]['rev_perm'] = $rev_perm;
-					$update_ivole_review_forms = true;
 				}
 				// save the terms and privacy checkbox
 				if ( ! empty( $_POST ) ) {
@@ -137,17 +133,15 @@ if ( ! class_exists( 'CR_Forms_Settings' ) ) :
 					} else {
 						$ivole_review_forms[0]['chbx'] = '';
 					}
-					$update_ivole_review_forms = true;
 				}
 				// save the terms and privacy text
 				if ( ! empty( $_POST ) && isset( $_POST['ivole_onsite_form_checkbox_text'] ) ) {
 					$ivole_review_forms[0]['chbx_text'] = esc_html( $_POST['ivole_onsite_form_checkbox_text'] );
-					$update_ivole_review_forms = true;
 				}
 				//
-				if ( $update_ivole_review_forms ) {
-					$_POST['ivole_review_forms'] = $ivole_review_forms;
-				}
+				$ivole_review_forms = apply_filters( 'cr_settings_save_onsite_form', $ivole_review_forms );
+				//
+				$_POST['ivole_review_forms'] = $ivole_review_forms;
 				// save the geolocation setting
 				if( ! empty( $_POST ) ) {
 					if( isset( $_POST['ivole_form_geolocation'] ) ) {
@@ -486,7 +480,7 @@ if ( ! class_exists( 'CR_Forms_Settings' ) ) :
 				}
 			}
 
-			$this->settings = apply_filters( 'cr_settings_forms', $this->settings );
+			$this->settings = apply_filters( 'cr_settings_forms', $this->settings, $form_settings );
 			ksort( $this->settings );
 		}
 

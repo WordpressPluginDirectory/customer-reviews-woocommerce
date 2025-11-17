@@ -866,7 +866,8 @@ if ( ! class_exists( 'CR_Review_Reminder_Settings' ) ):
 											echo sprintf(
 												/* translators: please keep %1$s and %2$s in the translation - they will be replaced with a link markup */
 												esc_html__(
-													'I confirm that I will send review invitations only with consent of customers and agree to CusRev’s %1$sterms and conditions%2$s'
+													'I confirm that I will send review invitations only with consent of customers and agree to CusRev’s %1$sterms and conditions%2$s',
+													'customer-reviews-woocommerce'
 												),
 												'<a href="https://www.cusrev.com/terms.html" target="_blank" rel="noopener noreferrer">',
 												'</a><img src="' . untrailingslashit( plugin_dir_url( dirname( dirname( __FILE__ ) ) ) ) . '/img/external-link.png" class="cr-product-feed-categories-ext-icon">'

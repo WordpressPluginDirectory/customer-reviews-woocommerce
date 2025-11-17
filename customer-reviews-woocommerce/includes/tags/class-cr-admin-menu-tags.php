@@ -220,17 +220,17 @@ if ( ! class_exists( 'CR_Tags_Admin_Menu' ) ):
 
 		public function wp_cr_update_tags() {
 			$return = array();
-			if( check_ajax_referer( 'update_tags_' . $_POST['review_id'], 'cr_nonce', false ) ) {
+			if ( check_ajax_referer( 'update_tags_' . $_POST['review_id'], 'cr_nonce', false ) ) {
 				$tax = get_taxonomy( 'cr_tag' );
 				if ( ! current_user_can( $tax->cap->edit_terms ) ) {
 					wp_die( -1 );
 				}
 				$tags_assigned = json_decode( html_entity_decode( stripslashes( $_POST['tags'] ) ) );
 				wp_delete_object_term_relationships( $_POST['review_id'], 'cr_tag' );
-				if( isset( $_POST['review_id'] ) && 0 < $_POST['review_id'] && $tags_assigned ) {
+				if ( isset( $_POST['review_id'] ) && 0 < $_POST['review_id'] && $tags_assigned ) {
 					$tag_ids_prepared = array();
 					foreach($tags_assigned as $tag) {
-						if( property_exists( $tag, 'text' ) ) {
+						if ( property_exists( $tag, 'text' ) ) {
 							$tag_text = sanitize_text_field( $tag->text );
 							$tag_found = get_terms( array(
 								'taxonomy' => 'cr_tag',
@@ -238,7 +238,7 @@ if ( ! class_exists( 'CR_Tags_Admin_Menu' ) ):
 								'name' => $tag_text,
 								'number' => 1
 							) );
-							if( is_array( $tag_found ) && 0 < count( $tag_found ) ) {
+							if ( is_array( $tag_found ) && 0 < count( $tag_found ) ) {
 								$tag_ids_prepared[] = intval( $tag_found[0]->term_id );
 							} else {
 								$new_tag = wp_insert_term( $tag_text, 'cr_tag', array() );
@@ -250,7 +250,7 @@ if ( ! class_exists( 'CR_Tags_Admin_Menu' ) ):
 					}
 					if( 0 < count( $tag_ids_prepared ) ) {
 						$res = wp_set_object_terms( $_POST['review_id'], $tag_ids_prepared, 'cr_tag' );
-						if( !is_wp_error( $res ) ) {
+						if ( ! is_wp_error( $res ) ) {
 							$review_tags = wp_get_object_terms( $_POST['review_id'], 'cr_tag' );
 							foreach( $review_tags as $term ) {
 								$return[] = $term->name;

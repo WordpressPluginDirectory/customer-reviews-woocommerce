@@ -4,7 +4,7 @@ Tags: woocommerce, review plugin, review reminder, customer reviews, review for 
 Requires at least: 4.5
 Tested up to: 6.8
 Requires PHP: 7.2
-Stable tag: 5.86.1
+Stable tag: 5.89.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl.html
 
@@ -233,6 +233,29 @@ If you would like to change how reviews are sorted on product pages, it is possi
 
 == Changelog ==
 
+= 5.89.0 =
+* New feature: 'schema_markup' parameter in [cusrev_all_reviews] shortcode to create AggregateRating rich snippet
+* New feature: support of 'title' field in the utility for import / export of reviews
+* Improvement: cache for count of Q & A on product pages
+* Improvement: compatibility with Variation Swatches plugin
+* Bug fix: locations could be matched to incorrect reviews during some import scenarios
+= 5.88.1 =
+* Improvement: compatibility for displaying country flags on web servers that do not automatically convert uppercase and lowercase characters in URLs
+= 5.88.0 =
+* Improvement: a check that a review is not SPAM before triggering sending of a discount coupon
+* Improvement: a new filter 'cr_settings_permissions' to allow modification of permissions required to edit the plugin's settings
+* Improvement: compatibility with WPML plugin to prevent double avatars
+* Improvement: exclude review reminders scheduled via CR Cron from the Reminders page
+* Bug fix: button to cancel import of reviews didn't work
+* Bug fix: translations of aggregated review forms in Portuguese (Brazil) weren't selected correctly
+= 5.87.0 =
+* New feature: support of 'location' field in the utility for import / export of reviews
+* Improvement: display location of reviews on Reviews page in the admin console
+* Improvement: a new CSS class name to prevent conflicts with other plugins and themes
+* Improvement: reload the page after submission of reviews via on-site review forms
+* Bug fix: export of reviews could not be completed in some scenarios
+= 5.86.2 =
+* Bug fix: export of reviews could not be completed in some scenarios
 = 5.86.1 =
 * Bug fix: media files were uploaded to the Media Library but not attached to reviews during import
 * Bug fix: random sorting in [cusrev_reviews_slider] shortcode didn't work correctly in some scenarios

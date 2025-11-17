@@ -964,6 +964,11 @@ class CR_Reviews_List_Table extends WP_List_Table {
 		</div>
 		<?php
 
+		$title = get_comment_meta( $comment->comment_ID, 'cr_rev_title', true );
+		if ( $title ) {
+			echo '<div class="cr-comment-head-text">' . esc_html( $title ) . '</div>';
+		}
+
 		if( $this->cr_ajax_enabled ) {
 			if( 0 < get_comment_meta( $comment->comment_ID, 'ivole_featured', true ) ) {
 				$featured_class = 'cr-featured-badge-admin';
@@ -1181,7 +1186,21 @@ class CR_Reviews_List_Table extends WP_List_Table {
 		if ( 'hidden' !== $this->cust_avatars ) {
 			echo '<div class="cr-admin-avatar">' . get_avatar( $comment, 32, '' ) . '</div>';
 		}
-		echo "<strong>" . esc_html( get_comment_author( $comment ) ) . '</strong><br />';
+
+		// location information if available
+		$country_string = '';
+		$country = get_comment_meta( $comment->comment_ID, 'ivole_country', true );
+		if ( is_array( $country ) && 2 === count( $country ) ) {
+			if ( isset( $country['code'] ) ) {
+				$country_string = '<div class="cr-review-country-cont"><img src="' . plugin_dir_url( dirname( dirname( __FILE__ ) ) ) . 'img/flags/' . $country['code'] . '.svg" class="cr-review-country-icon" alt="' . $country['code'] . '">';
+				if ( isset( $country['desc'] ) ) {
+					$country_string .= '<span class="cr-review-country-text">' . $country['desc'] . '</span>';
+				}
+				$country_string .= '</div>';
+			}
+		}
+
+		echo "<strong>" . esc_html( get_comment_author( $comment ) ) . '</strong><br />' . $country_string;
 		if ( ! empty( $author_url_display ) ) {
 			printf( '<a href="%s">%s</a><br />', esc_url( $author_url ), esc_html( $author_url_display ) );
 		}

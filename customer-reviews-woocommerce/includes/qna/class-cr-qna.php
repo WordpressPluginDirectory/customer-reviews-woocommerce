@@ -33,6 +33,10 @@ if ( ! class_exists( 'CR_Qna' ) ) :
 			}
 			add_filter( 'preprocess_comment', array( $this, 'update_answer_type' ) );
 			add_action( 'pre_get_comments', array( $this, 'filter_out_qna' ) );
+			add_action( 'wp_insert_comment', array( $this, 'clear_qna_cache' ), 10, 1 );
+			add_action( 'wp_set_comment_status', array( $this, 'clear_qna_cache' ), 10, 1 );
+			add_action( 'edit_comment', array( $this, 'clear_qna_cache' ), 10, 1 );
+			add_action( 'delete_comment', array( $this, 'clear_qna_cache' ), 10, 1 );
 		}
 
 		public function create_qna_tab( $tabs ) {
@@ -815,11 +819,27 @@ if ( ! class_exists( 'CR_Qna' ) ) :
 
 		public static function get_count_answered( $product_id ) {
 			global $wpdb;
-			$query = "SELECT COUNT(DISTINCT cmt1.comment_ID) AS count FROM $wpdb->comments AS cmt1 " .
-			"INNER JOIN $wpdb->comments AS cmt2 ON cmt1.comment_ID = cmt2.comment_parent " .
-			"WHERE cmt1.comment_approved = 1 AND cmt1.comment_post_ID = " . $product_id .
-			" AND cmt1.comment_parent = 0 AND cmt1.comment_type = 'cr_qna'";
-			$count_answered = $wpdb->get_var( $query );
+			// check cache
+			$cache_key = 'cr_qna_answered_' . intval( $product_id );
+			$count_answered = wp_cache_get( $cache_key, 'cr_qna' );
+			// no cache
+			if ( false === $count_answered ) {
+				$query = $wpdb->prepare(
+					"SELECT COUNT(DISTINCT cmt1.comment_ID) AS count
+					FROM $wpdb->comments AS cmt1
+					INNER JOIN $wpdb->comments AS cmt2 ON cmt1.comment_ID = cmt2.comment_parent
+					WHERE cmt1.comment_approved = 1
+					AND cmt1.comment_post_ID = %d
+					AND cmt1.comment_parent = 0
+					AND cmt1.comment_type = 'cr_qna'",
+					$product_id
+				);
+				$count_answered = $wpdb->get_var( $query );
+				if ( ! is_null( $count_answered ) ) {
+					// set cache
+					wp_cache_set( $cache_key, $count_answered, 'cr_qna', 3600 );
+				}
+			}
 			return intval( $count_answered );
 		}
 
@@ -939,6 +959,16 @@ if ( ! class_exists( 'CR_Qna' ) ) :
 						}
 					}
 				}
+			}
+		}
+
+		public function clear_qna_cache( $comment_id ) {
+			if (
+				$comment_id &&
+				'cr_qna' === get_comment_type( $comment_id )
+			) {
+				$cache_key = 'cr_qna_answered_' . intval( $comment_id );
+				wp_cache_delete( $cache_key, 'cr_qna' );
 			}
 		}
 

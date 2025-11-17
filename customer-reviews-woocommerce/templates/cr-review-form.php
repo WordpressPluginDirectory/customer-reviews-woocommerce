@@ -87,7 +87,11 @@ if( $cr_current_user instanceof WP_User ) {
 			<input type="hidden" value="<?php echo esc_attr( $cr_item_id ); ?>" class="cr-review-form-item-id" />
 		</div>
 
-		<?php do_action( 'cr_review_form_rating', $cr_item_id ); ?>
+		<?php
+			$cr_hash = random_int( 0, 99 ) . '_';
+			do_action( 'cr_review_form_header', $cr_item_id, $cr_form_settings_array, $cr_hash );
+			do_action( 'cr_review_form_rating', $cr_item_id, $cr_hash );
+		?>
 
 		<div class="cr-review-form-comment">
 			<div class="cr-review-form-lbl">

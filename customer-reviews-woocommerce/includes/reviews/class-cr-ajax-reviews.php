@@ -288,6 +288,8 @@ if (! class_exists('CR_Ajax_Reviews')) :
 					$initials_setting = get_option( 'ivole_avatars', 'standard' );
 					if( 'initials' === $initials_setting ) {
 						add_filter( 'get_avatar', array( 'CR_Reviews_Grid', 'cr_get_avatar' ), 10, 5 );
+					} else {
+						add_filter( 'get_avatar', array( 'CR_Reviews', 'change_avatar_class' ), 10, 6 );
 					}
 					$hide_avatars = 'hidden' === get_option( 'ivole_avatars', 'standard' ) ? true : false;
 					$more_reviews = wp_list_comments( apply_filters(

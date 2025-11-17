@@ -192,7 +192,7 @@ if ( ! class_exists( 'CR_Discount_Tiers' ) ):
 							<tr>
 								<td class="cr-coupon-tiers-table-td">
 									<?php
-									esc_html_e( 'Discount type', 'woocommerce' );
+									esc_html_e( 'Discount type', 'customer-reviews-woocommerce' );
 									echo CR_Admin::ivole_wc_help_tip( __( 'Choose one the discount types for new coupons.', 'customer-reviews-woocommerce' ) );
 									?>
 								</td>
@@ -219,7 +219,7 @@ if ( ! class_exists( 'CR_Discount_Tiers' ) ):
 								<td class="cr-coupon-tiers-table-td">
 									<?php
 									esc_html_e( 'Coupon amount', 'customer-reviews-woocommerce' );
-									echo CR_Admin::ivole_wc_help_tip( __( 'Value of the coupon.', 'woocommerce' ) );
+									echo CR_Admin::ivole_wc_help_tip( __( 'Value of the coupon.', 'customer-reviews-woocommerce' ) );
 									?>
 								</td>
 								<?php
@@ -236,9 +236,9 @@ if ( ! class_exists( 'CR_Discount_Tiers' ) ):
 							<tr>
 								<td class="cr-coupon-tiers-table-td">
 									<?php
-									esc_html_e( 'Allow free shipping', 'woocommerce' );
+									esc_html_e( 'Allow free shipping', 'customer-reviews-woocommerce' );
 									echo CR_Admin::ivole_wc_help_tip( sprintf(
-										__( 'Check this box if the coupon grants free shipping. A <a href="%s" target="_blank">free shipping method</a> must be enabled in your shipping zone and be set to require "a valid free shipping coupon" (see the "Free Shipping Requires" setting).', 'woocommerce' ),
+										__( 'Check this box if the coupon grants free shipping. A <a href="%s" target="_blank">free shipping method</a> must be enabled in your shipping zone and be set to require "a valid free shipping coupon" (see the "Free Shipping Requires" setting).', 'customer-reviews-woocommerce' ),
 										'https://docs.woocommerce.com/document/free-shipping/'
 									) );
 									?>
@@ -274,7 +274,7 @@ if ( ! class_exists( 'CR_Discount_Tiers' ) ):
 								<td class="cr-coupon-tiers-table-td">
 									<?php
 									esc_html_e( 'Minimum spend', 'customer-reviews-woocommerce' );
-									echo CR_Admin::ivole_wc_help_tip( __( 'This field allows you to set the minimum spend (subtotal, including taxes) allowed to use the coupon.', 'woocommerce' ) );
+									echo CR_Admin::ivole_wc_help_tip( __( 'This field allows you to set the minimum spend (subtotal, including taxes) allowed to use the coupon.', 'customer-reviews-woocommerce' ) );
 									?>
 								</td>
 								<?php
@@ -282,7 +282,7 @@ if ( ! class_exists( 'CR_Discount_Tiers' ) ):
 										$svalue = floatval( $table_tiers[self::$tiers_settings['cr_coupon__minimum_amount']][$tier] );
 										$svalue = 0 < $svalue ? wc_format_localized_price( $svalue ) : '';
 										echo '<td class="cr-coupon-tiers-table-td cr-coupon-settings cr-no-coupon cr-coupon-tiers-table-td-' . $tier . '">';
-										echo '<input type="text" name="' . self::$tiers_settings['cr_coupon__minimum_amount'] . $tier . '" placeholder="' . __( 'No minimum', 'woocommerce' ) . '" class="cr-new-coupon" value="' . $svalue . '">';
+										echo '<input type="text" name="' . self::$tiers_settings['cr_coupon__minimum_amount'] . $tier . '" placeholder="' . __( 'No minimum', 'customer-reviews-woocommerce' ) . '" class="cr-new-coupon" value="' . $svalue . '">';
 										echo '<span class="cr-option-not-available cr-new-coupon">' . self::$option_not_available . '</span>';
 										echo '</td>';
 									}
@@ -292,7 +292,7 @@ if ( ! class_exists( 'CR_Discount_Tiers' ) ):
 								<td class="cr-coupon-tiers-table-td">
 									<?php
 									esc_html_e( 'Maximum spend', 'customer-reviews-woocommerce' );
-									echo CR_Admin::ivole_wc_help_tip( __( 'This field allows you to set the maximum spend (subtotal, including taxes) allowed when using the coupon.', 'woocommerce' ) );
+									echo CR_Admin::ivole_wc_help_tip( __( 'This field allows you to set the maximum spend (subtotal, including taxes) allowed when using the coupon.', 'customer-reviews-woocommerce' ) );
 									?>
 								</td>
 								<?php
@@ -300,7 +300,7 @@ if ( ! class_exists( 'CR_Discount_Tiers' ) ):
 										$svalue = floatval( $table_tiers[self::$tiers_settings['cr_coupon__maximum_amount']][$tier] );
 										$svalue = 0 < $svalue ? wc_format_localized_price( $svalue ) : '';
 										echo '<td class="cr-coupon-tiers-table-td cr-coupon-settings cr-no-coupon cr-coupon-tiers-table-td-' . $tier . '">';
-										echo '<input type="text" name="' . self::$tiers_settings['cr_coupon__maximum_amount'] . $tier . '" placeholder="' . __( 'No maximum', 'woocommerce' ) . '" class="cr-new-coupon" value="' . $svalue . '">';
+										echo '<input type="text" name="' . self::$tiers_settings['cr_coupon__maximum_amount'] . $tier . '" placeholder="' . __( 'No maximum', 'customer-reviews-woocommerce' ) . '" class="cr-new-coupon" value="' . $svalue . '">';
 										echo '<span class="cr-option-not-available cr-new-coupon">' . self::$option_not_available . '</span>';
 										echo '</td>';
 									}
@@ -309,8 +309,8 @@ if ( ! class_exists( 'CR_Discount_Tiers' ) ):
 							<tr>
 								<td class="cr-coupon-tiers-table-td">
 									<?php
-									esc_html_e( 'Individual use only', 'woocommerce' );
-									echo CR_Admin::ivole_wc_help_tip( __( 'Check this box if the coupon cannot be used in conjunction with other coupons.', 'woocommerce' ) );
+									esc_html_e( 'Individual use only', 'customer-reviews-woocommerce' );
+									echo CR_Admin::ivole_wc_help_tip( __( 'Check this box if the coupon cannot be used in conjunction with other coupons.', 'customer-reviews-woocommerce' ) );
 									?>
 								</td>
 								<?php
@@ -326,8 +326,8 @@ if ( ! class_exists( 'CR_Discount_Tiers' ) ):
 							<tr>
 								<td class="cr-coupon-tiers-table-td">
 									<?php
-									esc_html_e( 'Exclude sale items', 'woocommerce' );
-									echo CR_Admin::ivole_wc_help_tip( __( 'Check this box if the coupon should not apply to items on sale. Per-item coupons will only work if the item is not on sale. Per-cart coupons will only work if there are items in the cart that are not on sale.', 'woocommerce' ) );
+									esc_html_e( 'Exclude sale items', 'customer-reviews-woocommerce' );
+									echo CR_Admin::ivole_wc_help_tip( __( 'Check this box if the coupon should not apply to items on sale. Per-item coupons will only work if the item is not on sale. Per-cart coupons will only work if there are items in the cart that are not on sale.', 'customer-reviews-woocommerce' ) );
 									?>
 								</td>
 								<?php
@@ -343,8 +343,8 @@ if ( ! class_exists( 'CR_Discount_Tiers' ) ):
 							<tr>
 								<td class="cr-coupon-tiers-table-td">
 									<?php
-									esc_html_e( 'Products', 'woocommerce' );
-									echo CR_Admin::ivole_wc_help_tip( __( 'Products which need to be in the cart to use this coupon or, for "Product Discounts", which products are discounted.', 'woocommerce' ) );
+									esc_html_e( 'Products', 'customer-reviews-woocommerce' );
+									echo CR_Admin::ivole_wc_help_tip( __( 'Products which need to be in the cart to use this coupon or, for "Product Discounts", which products are discounted.', 'customer-reviews-woocommerce' ) );
 									?>
 								</td>
 								<?php
@@ -358,8 +358,8 @@ if ( ! class_exists( 'CR_Discount_Tiers' ) ):
 							<tr>
 								<td class="cr-coupon-tiers-table-td">
 									<?php
-									esc_html_e( 'Exclude products', 'woocommerce' );
-									echo CR_Admin::ivole_wc_help_tip( __( 'Products which must not be in the cart to use this coupon or, for "Product Discounts", which products are not discounted.', 'woocommerce' ) );
+									esc_html_e( 'Exclude products', 'customer-reviews-woocommerce' );
+									echo CR_Admin::ivole_wc_help_tip( __( 'Products which must not be in the cart to use this coupon or, for "Product Discounts", which products are not discounted.', 'customer-reviews-woocommerce' ) );
 									?>
 								</td>
 								<?php
@@ -404,7 +404,7 @@ if ( ! class_exists( 'CR_Discount_Tiers' ) ):
 								<td class="cr-coupon-tiers-table-td">
 									<?php
 									esc_html_e( 'Usage limit', 'customer-reviews-woocommerce' );
-									echo CR_Admin::ivole_wc_help_tip( __( 'How many times this coupon can be used before it is void. Set it to 0 for unlimited usage.', 'woocommerce' ) );
+									echo CR_Admin::ivole_wc_help_tip( __( 'How many times this coupon can be used before it is void. Set it to 0 for unlimited usage.', 'customer-reviews-woocommerce' ) );
 									?>
 								</td>
 								<?php

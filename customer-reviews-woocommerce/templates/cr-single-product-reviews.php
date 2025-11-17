@@ -142,7 +142,8 @@ if ( ! comments_open() ) {
 					</select></div>';
 				}
 
-				$comment_form['comment_field'] = apply_filters( 'cr_review_form_before_comment', $comment_form['comment_field'] );
+				$cr_hash = random_int( 0, 99 ) . '_';
+				$comment_form['comment_field'] = apply_filters( 'cr_review_form_before_comment', $comment_form['comment_field'], $cr_hash );
 
 				$comment_form['comment_field'] .= '<p class="comment-form-comment"><label for="comment">' . esc_html__( 'Your review', 'woocommerce' ) . '&nbsp;<span class="required">*</span></label><textarea id="comment" name="comment" cols="45" rows="8" required class="cr-review-form-textbox"></textarea></p>';
 
