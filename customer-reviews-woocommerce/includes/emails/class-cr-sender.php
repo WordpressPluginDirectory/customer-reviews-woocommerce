@@ -8,18 +8,23 @@ if ( ! class_exists( 'CR_Sender' ) ) :
 
 	class CR_Sender {
 		public function __construct() {
-			$order_status = get_option( 'ivole_order_status', 'completed' );
-			$order_status = 'wc-' === substr( $order_status, 0, 3 ) ? substr( $order_status, 3 ) : $order_status;
 			// Triggers for completed orders
-			add_action( 'woocommerce_order_status_' . $order_status, array( $this, 'sender_trigger' ), 20, 1 );
-			add_action( 'ivole_send_reminder', array( $this, 'sender_action' ), 10, 2 );
+			add_action( 'woocommerce_order_status_changed', array( $this, 'sender_trigger' ), 20, 4 );
 			// Trigger for refunded orders
 			add_action( 'woocommerce_order_status_refunded', array( $this, 'refund_trigger' ), 20, 1 );
 			// Trigger for cancelled orders
 			add_action( 'woocommerce_order_status_cancelled', array( $this, 'cancellation_trigger' ), 20, 1 );
+			//
+			add_action( 'ivole_send_reminder', array( $this, 'sender_action' ), 10, 2 );
 		}
 
-		public function sender_trigger( $order_id ) {
+		public function sender_trigger( $order_id, $old_status, $new_status, $order ) {
+			// check if the order transitioned to a status relevant for scheduling a review reminder
+			$order_status = get_option( 'ivole_order_status', 'completed' );
+			$order_status = 'wc-' === substr( $order_status, 0, 3 ) ? substr( $order_status, 3 ) : $order_status;
+			if ( $order_status !== $new_status ) {
+				return;
+			}
 			// check if reminders are enabled
 			$reminders_enabled = get_option( 'ivole_enable', 'no' );
 			if( $reminders_enabled === 'no' ) {

@@ -647,6 +647,14 @@ li.select2-results__option {
 		height: 12px;
 		font-size: 12px;
 	}
+	.cr-incentivized-badge {
+		display: flex;
+		align-items: center;
+		column-gap: 5px;
+		.cr-incentivized-icon {
+			line-height: 0;
+		}
+	}
 }
 .cr_qna .cr-qna-admin-details,
 .cr_qna p.cr-qna-admin-reply {

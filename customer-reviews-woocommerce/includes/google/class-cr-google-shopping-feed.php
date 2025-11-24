@@ -256,6 +256,13 @@ class CR_Google_Shopping_Feed {
 			$xml_writer->text( $review->date );
 			$xml_writer->endElement();
 
+			if ( $review->is_incentivized ) {
+				// <is_incentivized_review>
+				$xml_writer->startElement( 'is_incentivized_review' );
+				$xml_writer->text( 'true' );
+				$xml_writer->endElement();
+			}
+
 			if ( $review->title ) {
 				// <title>
 				$xml_writer->startElement( 'title' );
@@ -454,6 +461,14 @@ class CR_Google_Shopping_Feed {
 			if( '+00:00' === substr( $_review->date, -6 ) ) {
 				$_review->date = substr( $_review->date, 0, -6 ) . 'Z';
 			}
+			// is_incentivized
+			$coupon_code = get_comment_meta( $review->comment_ID, 'cr_coupon_code', true );
+			if ( $coupon_code ) {
+				$_review->is_incentivized = true;
+			} else {
+				$_review->is_incentivized = false;
+			}
+			// title
 			$title = get_comment_meta( $review->comment_ID, 'cr_rev_title', true );
 			if ( $title ) {
 				$_review->title = htmlspecialchars( $title, ENT_XML1, 'UTF-8' );

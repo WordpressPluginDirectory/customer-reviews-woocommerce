@@ -1134,11 +1134,16 @@ if ( ! class_exists( 'CR_Reviews_Grid' ) ) {
 		}
 
 		public static function cr_get_avatar( $avatar, $id_or_email, $size = 96, $default = '', $alt = '' ) {
+			$tmp_name = '';
 			if ( is_object( $id_or_email ) && isset( $id_or_email->comment_ID ) ) {
-				$id_or_email = get_comment( $id_or_email );
-				$initials = '';
+				// It's a comment object
+				if ( isset( $id_or_email->comment_author ) ) {
+					$tmp_name = $id_or_email->comment_author;
+				}
+			}
+			if ( $tmp_name ) {
 				if ( function_exists( 'mb_ereg_replace' ) ) {
-					$author = trim( mb_ereg_replace( '[\.,]', ' ', get_comment_author( $id_or_email ) ) );
+					$author = trim( mb_ereg_replace( '[\.,]', ' ', $tmp_name ) );
 					if ( 0 < mb_strlen( $author ) ) {
 						$initials = mb_substr( $author, 0, 1 );
 						$words = mb_split( '\s+', $author );
@@ -1151,7 +1156,7 @@ if ( ! class_exists( 'CR_Reviews_Grid' ) ) {
 						}
 					}
 				} else {
-					$author = trim( preg_replace( '/[\.,]/', ' ', get_comment_author( $id_or_email ) ) );
+					$author = trim( preg_replace( '/[\.,]/', ' ', $tmp_name ) );
 					if( 0 < strlen( $author ) ) {
 						$initials = substr( $author, 0, 1 );
 						$words = preg_split( '/\s+/', $author );

@@ -4,7 +4,7 @@ Tags: woocommerce, review plugin, review reminder, customer reviews, review for 
 Requires at least: 4.5
 Tested up to: 6.8
 Requires PHP: 7.2
-Stable tag: 5.89.0
+Stable tag: 5.90.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl.html
 
@@ -233,6 +233,12 @@ If you would like to change how reviews are sorted on product pages, it is possi
 
 == Changelog ==
 
+= 5.90.0 =
+* Improvement: support of <is_incentivized_review> attribute in XML product reviews feed for Google
+* Improvement: display coupon codes created for reviews on the Reviews page in WordPress admin panel
+* Improvement: improved compatibility with non-standard WooCommerce and WordPress themes
+* Improvement: reduced number of option checks on page load
+* Bug fix: reviews imported from CSV could not be sorted by media attachments
 = 5.89.0 =
 * New feature: 'schema_markup' parameter in [cusrev_all_reviews] shortcode to create AggregateRating rich snippet
 * New feature: support of 'title' field in the utility for import / export of reviews

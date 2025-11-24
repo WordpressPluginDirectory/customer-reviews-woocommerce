@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv3.
 msgid ""
 msgstr ""
-"Project-Id-Version: Customer Reviews for WooCommerce 5.89.0\n"
+"Project-Id-Version: Customer Reviews for WooCommerce 5.90.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/customer-reviews-woocommerce\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-11-17T00:11:35+00:00\n"
+"POT-Creation-Date: 2025-11-24T01:19:27+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 "X-Domain: customer-reviews-woocommerce\n"
@@ -218,7 +218,7 @@ msgstr ""
 
 #: includes/blocks/class-cr-all-reviews.php:498
 #: includes/blocks/class-cr-all-reviews.php:543
-#: templates/cr-ajax-product-reviews.php:124
+#: templates/cr-ajax-product-reviews.php:125
 #: templates/reviews-grid.php:241
 msgid "Sorry, no reviews match your current selections"
 msgstr ""
@@ -228,7 +228,7 @@ msgstr ""
 #: includes/reviews/class-cr-ajax-reviews.php:317
 #: includes/reviews/class-cr-ajax-reviews.php:397
 #: includes/reviews/class-cr-ajax-reviews.php:470
-#: templates/cr-ajax-product-reviews.php:110
+#: templates/cr-ajax-product-reviews.php:111
 #: templates/reviews-grid.php:230
 msgid "Show more reviews (%d)"
 msgstr ""
@@ -345,7 +345,7 @@ msgstr ""
 
 #: includes/blocks/class-cr-all-reviews.php:1201
 #: includes/reminders/class-cr-local-forms.php:225
-#: templates/cr-ajax-product-reviews.php:145
+#: templates/cr-ajax-product-reviews.php:146
 msgid "Add photos or video to your review"
 msgstr ""
 
@@ -425,7 +425,7 @@ msgstr ""
 #: includes/blocks/class-cr-reviews-grid.php:395
 #: includes/blocks/class-cr-reviews-slider.php:239
 #: includes/reviews/class-cr-admin-menu-reviews.php:647
-#: includes/reviews/class-cr-reviews-list-table.php:1237
+#: includes/reviews/class-cr-reviews-list-table.php:1259
 #: templates/cr-review.php:116
 msgid "Verified owner"
 msgstr ""
@@ -672,63 +672,63 @@ msgstr ""
 msgid "Error: the customer has already left a review for a different order in the past."
 msgstr ""
 
-#: includes/emails/class-cr-sender.php:58
+#: includes/emails/class-cr-sender.php:63
 msgid "CR: a review reminder was not scheduled because the order did not have products from categories relevant for reminders."
 msgstr ""
 
-#: includes/emails/class-cr-sender.php:71
+#: includes/emails/class-cr-sender.php:76
 msgid "CR: a review reminder was not scheduled because the customer did not have relevant roles."
 msgstr ""
 
-#: includes/emails/class-cr-sender.php:78
+#: includes/emails/class-cr-sender.php:83
 msgid "CR: a review reminder was not scheduled because reminders are disabled for guests."
 msgstr ""
 
-#: includes/emails/class-cr-sender.php:86
-#: includes/emails/class-cr-sender.php:95
+#: includes/emails/class-cr-sender.php:91
+#: includes/emails/class-cr-sender.php:100
 msgid "CR: a review reminder was not scheduled because the customer did not provide their consent."
 msgstr ""
 
-#: includes/emails/class-cr-sender.php:108
+#: includes/emails/class-cr-sender.php:113
 msgid "CR: a review reminder was not scheduled because reviews(s) have already been collected with a WordPress mailer for this order."
 msgstr ""
 
-#: includes/emails/class-cr-sender.php:118
+#: includes/emails/class-cr-sender.php:123
 msgid "CR: a review reminder was not scheduled because reviews(s) have already been collected with a CusRev mailer for this order."
 msgstr ""
 
-#: includes/emails/class-cr-sender.php:130
+#: includes/emails/class-cr-sender.php:135
 msgid "CR: a review reminder was not scheduled due to a bespoke filter."
 msgstr ""
 
-#: includes/emails/class-cr-sender.php:144
+#: includes/emails/class-cr-sender.php:149
 msgid "CR: a review reminder was scheduled via CR Cron. Please log in to your account on <a href=\"https://www.cusrev.com/login.html\" target=\"_blank\" rel=\"noopener noreferrer\">CR website</a> to view and manage the reminders."
 msgstr ""
 
 #. translators: please keep %s and %d as they are because the plugin will automatically replace them with the error description and code
-#: includes/emails/class-cr-sender.php:148
+#: includes/emails/class-cr-sender.php:153
 msgid "CR: a review reminder could not be scheduled via CR Cron. %s Error code: %d."
 msgstr ""
 
 #. translators: please keep %d as it is because the plugin will automatically replace it with the error code
-#: includes/emails/class-cr-sender.php:151
-#: includes/emails/class-cr-sender.php:154
+#: includes/emails/class-cr-sender.php:156
+#: includes/emails/class-cr-sender.php:159
 msgid "CR: a review reminder could not be scheduled via CR Cron. Error %d."
 msgstr ""
 
-#: includes/emails/class-cr-sender.php:164
+#: includes/emails/class-cr-sender.php:169
 msgid "CR: a review reminder could not be scheduled."
 msgstr ""
 
-#: includes/emails/class-cr-sender.php:172
+#: includes/emails/class-cr-sender.php:177
 msgid "CR: a review reminder was successfully scheduled for %s."
 msgstr ""
 
-#: includes/emails/class-cr-sender.php:217
+#: includes/emails/class-cr-sender.php:222
 msgid "CR: a review reminder was cancelled because the order was refunded."
 msgstr ""
 
-#: includes/emails/class-cr-sender.php:226
+#: includes/emails/class-cr-sender.php:231
 msgid "CR: a review reminder was cancelled because the order was cancelled."
 msgstr ""
 
@@ -813,7 +813,7 @@ msgstr ""
 msgid "Error: no products found for the XML Product Review Feed. Please check exclusion settings for products and product categories."
 msgstr ""
 
-#: includes/google/class-cr-google-shopping-feed.php:434
+#: includes/google/class-cr-google-shopping-feed.php:441
 #: includes/reminders/class-cr-local-forms.php:241
 msgid "Anonymous"
 msgstr ""
@@ -1985,7 +1985,7 @@ msgstr ""
 msgid "Line %1$d >> An error occurred while downloading a media file."
 msgstr ""
 
-#: includes/import-export/class-cr-import-reviews.php:901
+#: includes/import-export/class-cr-import-reviews.php:904
 msgid "Line %1$d >> A media file could not be imported due to its type."
 msgstr ""
 
@@ -3007,7 +3007,7 @@ msgid "Reply could not be published to CusRev portal. Error "
 msgstr ""
 
 #: includes/reviews/class-cr-admin-menu-reviews.php:635
-#: includes/reviews/class-cr-reviews-list-table.php:1240
+#: includes/reviews/class-cr-reviews-list-table.php:1262
 #: templates/cr-review.php:119
 #: templates/reviews-grid.php:131
 #: templates/reviews-slider.php:48
@@ -3016,7 +3016,7 @@ msgstr ""
 
 #: includes/reviews/class-cr-admin-menu-reviews.php:654
 #: includes/reviews/class-cr-admin-menu-reviews.php:663
-#: includes/reviews/class-cr-reviews-list-table.php:1223
+#: includes/reviews/class-cr-reviews-list-table.php:1245
 #: templates/cr-review.php:104
 msgid "Store manager"
 msgstr ""
@@ -3193,8 +3193,12 @@ msgstr ""
 msgid "This review was submitted in response to a review invitation sent for the order %s"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews-list-table.php:1029
-#: includes/reviews/class-cr-reviews-list-table.php:1050
+#: includes/reviews/class-cr-reviews-list-table.php:1018
+msgid "Coupon code that was sent to the reviewer after they submitted this review"
+msgstr ""
+
+#: includes/reviews/class-cr-reviews-list-table.php:1051
+#: includes/reviews/class-cr-reviews-list-table.php:1072
 #: includes/reviews/class-cr-reviews-media-meta-box.php:56
 #: includes/reviews/class-cr-reviews-media-meta-box.php:104
 #: includes/reviews/class-cr-reviews.php:245
@@ -3206,8 +3210,8 @@ msgstr ""
 msgid "Image #%1$d from %2$s"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews-list-table.php:1073
-#: includes/reviews/class-cr-reviews-list-table.php:1097
+#: includes/reviews/class-cr-reviews-list-table.php:1095
+#: includes/reviews/class-cr-reviews-list-table.php:1119
 #: includes/reviews/class-cr-reviews-media-meta-box.php:74
 #: includes/reviews/class-cr-reviews-media-meta-box.php:138
 #: includes/reviews/class-cr-reviews.php:285
@@ -3220,8 +3224,8 @@ msgstr ""
 msgid "Video #%1$d from %2$s"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews-list-table.php:1075
-#: includes/reviews/class-cr-reviews-list-table.php:1099
+#: includes/reviews/class-cr-reviews-list-table.php:1097
+#: includes/reviews/class-cr-reviews-list-table.php:1121
 #: includes/reviews/class-cr-reviews-media-meta-box.php:76
 #: includes/reviews/class-cr-reviews-media-meta-box.php:140
 #: includes/reviews/class-cr-reviews.php:287
@@ -3230,7 +3234,7 @@ msgstr ""
 msgid "Close"
 msgstr ""
 
-#: includes/reviews/class-cr-reviews-list-table.php:1150
+#: includes/reviews/class-cr-reviews-list-table.php:1172
 msgid "Add a tag"
 msgstr ""
 
@@ -6014,7 +6018,7 @@ msgstr ""
 msgid "Search reviews"
 msgstr ""
 
-#: templates/cr-ajax-product-reviews.php:126
+#: templates/cr-ajax-product-reviews.php:127
 #: templates/cr-shortcode-rating.php:49
 #: templates/cr-single-product-reviews.php:74
 msgid "There are no reviews yet"

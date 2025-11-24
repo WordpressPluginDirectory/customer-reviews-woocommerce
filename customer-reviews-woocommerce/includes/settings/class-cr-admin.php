@@ -364,6 +364,14 @@ if ( ! class_exists( 'CR_Admin' ) ) :
 						$log = new CR_Reminders_Log();
 						$log->check_create_table();
 						update_option( 'ivole_version', $this->ver );
+					} elseif ( version_compare( $version, '5.90.0', '<' ) ) {
+						if ( CR_Ajax_Reviews::update_reviews_meta2() ) {
+							update_option( 'ivole_version', $this->ver );
+						}
+						// notice about updating review media count meta
+						if ( get_option( 'ivole_update_media_meta', false ) ) {
+							add_action( 'admin_notices', array( $this, 'admin_notice_update7' ) );
+						}
 					} else {
 						update_option( 'ivole_version', $this->ver );
 					}

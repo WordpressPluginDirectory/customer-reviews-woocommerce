@@ -114,7 +114,7 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 			add_action( 'woocommerce_review_meta', array( $this, 'cusrev_review_meta' ), 9, 1 );
 			add_action( 'wp_footer', array( $this, 'cr_photoswipe' ) );
 			add_action( 'woocommerce_review_before_comment_text', array( $this, 'display_featured' ), 9 );
-			add_action( 'woocommerce_before_single_product', array( $this, 'custom_avatars' ) );
+			add_action( 'cr_reviews_section', array( $this, 'custom_avatars' ) );
 			add_filter( 'cr_review_form_before_comment', array( 'CR_Custom_Questions', 'review_form_questions' ), 10, 2 );
 			add_action( 'wp_insert_comment', array( 'CR_Custom_Questions', 'submit_onsite_questions' ) );
 			add_action( 'comment_post', array( $this, 'action_after_review_added' ), 10, 3 );

@@ -356,6 +356,7 @@ div.iv-comment-image img {
 	border-top: 1px solid #E5E9EB;
 	border-bottom: 1px solid #E5E9EB;
 	height: 50px;
+	box-sizing: border-box;
 }
 .cr-qna-block .cr-qna-list-inl-answ .cr-review-form-nav {
 	margin: 0 0 20px 0;
@@ -597,6 +598,7 @@ div.iv-comment-image img {
 	font-size: 14px;
 	width: 100%;
 	margin: 0;
+	box-sizing: border-box;
 }
 .cr-all-reviews-shortcode .cr-review-form-comment.cr-review-form-error .cr-review-form-comment-txt,
 .cr-ajax-reviews-review-form .cr-review-form-comment.cr-review-form-error .cr-review-form-comment-txt,
@@ -750,6 +752,7 @@ div.iv-comment-image img {
 	color: #0E252C;
 	font-size: 14px;
 	margin: 0;
+	box-sizing: border-box;
 }
 .cr-review-form-wrap .cr-onsite-question .cr-onsite-question-inp {
 	border: solid 1px #D8E2E7;
@@ -759,6 +762,7 @@ div.iv-comment-image img {
 	color: #0E252C;
 	font-size: 14px;
 	width: 50%;
+	box-sizing: border-box;
 }
 .cr-review-form-wrap .cr-onsite-question label {
 	position: absolute;
@@ -2048,9 +2052,10 @@ img.ivole-verified-badge-ext-icon {
 }
 .cr-review-form-wrap .cr-onsite-key-question {
 	display: block;
-	margin: 1.5em 0;
+	margin: 1.5em auto;
 	position: relative;
 	width: 100%;
+	max-width: 500px;
 }
 .cr-review-form-wrap .cr-onsite-key-question label {
 	font-size: 16px;
@@ -2058,6 +2063,7 @@ img.ivole-verified-badge-ext-icon {
 .cr-review-form-wrap .cr-onsite-key-question .cr-onsite-question-inp {
 	font-size: 16px;
 	width: 100%;
+	box-sizing: border-box;
 }
 .cr-onsite-questions .cr-onsite-question {
 	display: block;
@@ -2283,6 +2289,7 @@ img.ivole-verified-badge-ext-icon {
 	font-size: 1em;
 	box-shadow: none;
 	outline: none;
+	box-sizing: border-box;
 }
 .cr-ajax-search input[type="text"] {
 	height: 42px;

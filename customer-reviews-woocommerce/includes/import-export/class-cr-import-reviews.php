@@ -892,13 +892,21 @@ class CR_Import_Reviews {
 									$results['errors']++;
 									$results['error_list'][] = __( 'Line %1$d >> An error occurred while downloading a media file.', 'customer-reviews-woocommerce' );
 								} else {
+									$successful_media_attachment = false;
 									if ( wp_attachment_is( 'image', $mediaId ) ) {
 										add_comment_meta( $line_id, CR_Reviews::REVIEWS_META_LCL_IMG, $mediaId, false );
+										$successful_media_attachment = true;
 									} else if( wp_attachment_is( 'video', $mediaId ) ) {
 										add_comment_meta( $line_id, CR_Reviews::REVIEWS_META_LCL_VID, $mediaId, false );
+										$successful_media_attachment = true;
 									} else {
 										$results['errors']++;
 										$results['error_list'][] = __( 'Line %1$d >> A media file could not be imported due to its type.', 'customer-reviews-woocommerce' );
+									}
+									if ( $successful_media_attachment ) {
+										// create a meta value that can later be used for sorting reviews by media attachments
+										$media_count = CR_Ajax_Reviews::get_media_count( $line_id );
+										add_comment_meta( $line_id, 'ivole_media_count', $media_count );
 									}
 								}
 							}
