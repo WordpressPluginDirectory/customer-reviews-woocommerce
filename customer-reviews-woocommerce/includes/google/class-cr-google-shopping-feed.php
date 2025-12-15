@@ -208,7 +208,7 @@ class CR_Google_Shopping_Feed {
 			$xml_writer->endAttribute();
 			// <version>
 			$xml_writer->startElement('version');
-			$xml_writer->text('2.3');
+			$xml_writer->text('2.4');
 			$xml_writer->endElement();
 			// <aggregator>
 			$xml_writer->startElement('aggregator');
