@@ -148,6 +148,8 @@ if ( ! class_exists( 'CR_Manual' ) ) :
 					wp_send_json( array( 'code' => 98, 'message' => __( 'Error: invalid order ID.', 'customer-reviews-woocommerce' ), 'order_id' => $order_id ) );
 				}
 
+				do_action( 'cr_reminder_manual_email_send', $order );
+
 				//qTranslate integration
 				$lang = $order->get_meta( '_user_language', true );
 				$old_lang = '';

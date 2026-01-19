@@ -1,15 +1,15 @@
-# Copyright (C) 2025 CusRev
+# Copyright (C) 2026 CusRev
 # This file is distributed under the GPLv3.
 msgid ""
 msgstr ""
-"Project-Id-Version: Customer Reviews for WooCommerce 5.92.0\n"
+"Project-Id-Version: Customer Reviews for WooCommerce 5.97.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/customer-reviews-woocommerce\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-12-07T14:45:20+00:00\n"
+"POT-Creation-Date: 2026-01-19T02:07:43+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 "X-Domain: customer-reviews-woocommerce\n"
@@ -70,7 +70,7 @@ msgstr ""
 
 #: includes/analytics/class-cr-reminders-log.php:361
 #: includes/reminders/class-cr-local-forms.php:301
-#: includes/reminders/class-cr-manual.php:393
+#: includes/reminders/class-cr-manual.php:395
 msgid "Error"
 msgstr ""
 
@@ -87,43 +87,43 @@ msgid "Canceled"
 msgstr ""
 
 #: includes/analytics/class-cr-reminders-log.php:382
-#: includes/google/class-cr-product-fields.php:112
-#: includes/google/class-cr-product-fields.php:256
+#: includes/google/class-cr-product-fields.php:90
+#: includes/google/class-cr-product-fields.php:259
 #: includes/misc/class-cr-admin-menu-diagnostics.php:248
 #: includes/misc/class-cr-admin-menu-diagnostics.php:340
 #: includes/qna/class-cr-admin-menu-qna.php:194
-#: includes/reminders/class-cr-manual.php:403
-#: includes/reminders/class-cr-manual.php:426
+#: includes/reminders/class-cr-manual.php:405
+#: includes/reminders/class-cr-manual.php:428
 #: includes/reviews/class-cr-admin-menu-reviews.php:245
 #: includes/reviews/class-cr-admin-menu-reviews.php:254
 #: includes/reviews/class-cr-reviews-media-meta-box.php:100
 #: includes/reviews/class-cr-reviews-media-meta-box.php:129
 #: includes/settings/class-cr-admin-menu-settings.php:140
 #: includes/settings/class-cr-settings-forms-rating.php:104
-#: includes/settings/class-cr-settings-forms.php:576
+#: includes/settings/class-cr-settings-forms.php:596
 msgid "Yes"
 msgstr ""
 
 #: includes/analytics/class-cr-reminders-log.php:385
-#: includes/google/class-cr-product-fields.php:113
-#: includes/google/class-cr-product-fields.php:257
+#: includes/google/class-cr-product-fields.php:91
+#: includes/google/class-cr-product-fields.php:260
 #: includes/misc/class-cr-admin-menu-diagnostics.php:253
 #: includes/misc/class-cr-admin-menu-diagnostics.php:340
 #: includes/qna/class-cr-admin-menu-qna.php:195
-#: includes/reminders/class-cr-manual.php:404
-#: includes/reminders/class-cr-manual.php:427
+#: includes/reminders/class-cr-manual.php:406
+#: includes/reminders/class-cr-manual.php:429
 #: includes/reviews/class-cr-admin-menu-reviews.php:246
 #: includes/reviews/class-cr-admin-menu-reviews.php:255
 #: includes/reviews/class-cr-reviews-media-meta-box.php:99
 #: includes/reviews/class-cr-reviews-media-meta-box.php:128
 #: includes/settings/class-cr-admin-menu-settings.php:141
 #: includes/settings/class-cr-settings-forms-rating.php:106
-#: includes/settings/class-cr-settings-forms.php:578
+#: includes/settings/class-cr-settings-forms.php:598
 msgid "No"
 msgstr ""
 
 #: includes/analytics/class-cr-reminders-log.php:397
-#: includes/reminders/class-cr-manual.php:377
+#: includes/reminders/class-cr-manual.php:379
 #: includes/settings/class-cr-settings-emails.php:113
 #: includes/settings/class-cr-settings-review-discount.php:965
 #: includes/settings/class-cr-settings-review-reminder.php:1226
@@ -135,7 +135,7 @@ msgid "Email"
 msgstr ""
 
 #: includes/analytics/class-cr-reminders-log.php:400
-#: includes/reminders/class-cr-manual.php:381
+#: includes/reminders/class-cr-manual.php:383
 msgid "WhatsApp"
 msgstr ""
 
@@ -195,25 +195,34 @@ msgstr ""
 msgid "Orders"
 msgstr ""
 
-#: includes/analytics/class-cr-reviews-top-charts.php:409
+#: includes/analytics/class-cr-reviews-top-charts.php:416
 msgid "Views"
 msgstr ""
 
-#: includes/analytics/class-cr-reviews-top-charts.php:410
+#: includes/analytics/class-cr-reviews-top-charts.php:417
 msgid "The number of times your store's products were displayed as recommendations on aggregated review forms."
 msgstr ""
 
-#: includes/analytics/class-cr-reviews-top-charts.php:413
-#: includes/analytics/class-cr-reviews-top-charts.php:422
+#: includes/analytics/class-cr-reviews-top-charts.php:420
+#: includes/analytics/class-cr-reviews-top-charts.php:429
+#: includes/analytics/class-cr-reviews-top-charts.php:438
 msgid "Product Recommendations on Review Forms"
 msgstr ""
 
-#: includes/analytics/class-cr-reviews-top-charts.php:418
+#: includes/analytics/class-cr-reviews-top-charts.php:425
 msgid "Clicks"
 msgstr ""
 
-#: includes/analytics/class-cr-reviews-top-charts.php:419
+#: includes/analytics/class-cr-reviews-top-charts.php:426
 msgid "The number of times customers clicked on your store's product recommendations shown on aggregated review forms."
+msgstr ""
+
+#: includes/analytics/class-cr-reviews-top-charts.php:434
+msgid "Sales"
+msgstr ""
+
+#: includes/analytics/class-cr-reviews-top-charts.php:435
+msgid "Revenue attributed to purchases influenced by product recommendations shown on aggregated review forms."
 msgstr ""
 
 #: includes/blocks/class-cr-all-reviews.php:498
@@ -356,7 +365,7 @@ msgstr ""
 #: includes/blocks/class-cr-all-reviews.php:1243
 #: includes/qna/class-cr-admin-menu-qna.php:199
 #: includes/qna/class-cr-qna.php:183
-#: includes/reminders/class-cr-manual.php:420
+#: includes/reminders/class-cr-manual.php:422
 #: includes/reviews/class-cr-admin-menu-reviews.php:250
 #: includes/reviews/class-cr-reviews.php:449
 msgid "OK"
@@ -424,7 +433,7 @@ msgstr ""
 
 #: includes/blocks/class-cr-reviews-grid.php:398
 #: includes/blocks/class-cr-reviews-slider.php:239
-#: includes/reviews/class-cr-admin-menu-reviews.php:647
+#: includes/reviews/class-cr-admin-menu-reviews.php:660
 #: includes/reviews/class-cr-reviews-list-table.php:1259
 #: templates/cr-review.php:116
 msgid "Verified owner"
@@ -828,102 +837,116 @@ msgid "Error: no products found for the XML Product Feed. Please check exclusion
 msgstr ""
 
 #: includes/google/class-cr-product-feed-attributes.php:40
-#: includes/google/class-cr-product-feed-attributes.php:105
+#: includes/google/class-cr-product-feed-attributes.php:108
 msgid "Product Attributes"
 msgstr ""
 
-#: includes/google/class-cr-product-feed-attributes.php:107
+#: includes/google/class-cr-product-feed-attributes.php:110
 msgid "Specify mapping of WooCommerce product fields to Google Shopping product attributes that might be required in certain countries for some product categories."
 msgstr ""
 
-#: includes/google/class-cr-product-feed-attributes.php:112
+#: includes/google/class-cr-product-feed-attributes.php:115
 msgid "Bundle"
 msgstr ""
 
-#: includes/google/class-cr-product-feed-attributes.php:113
+#: includes/google/class-cr-product-feed-attributes.php:116
 msgid "Add a bundle attribute to WooCommerce products (on 'Inventory' tab). Use the bundle attribute to indicate that you have created a bundle: a main product that you have grouped with other, different products, sold together as one package for a single price."
 msgstr ""
 
-#: includes/google/class-cr-product-feed-attributes.php:120
-#: includes/google/class-cr-product-fields.php:136
-#: includes/google/class-cr-product-fields.php:278
+#: includes/google/class-cr-product-feed-attributes.php:123
+#: includes/google/class-cr-product-fields.php:117
+#: includes/google/class-cr-product-fields.php:281
 msgid "Material"
 msgstr ""
 
-#: includes/google/class-cr-product-feed-attributes.php:121
+#: includes/google/class-cr-product-feed-attributes.php:124
 msgid "Add a material attribute to WooCommerce products (on 'General' tab). Use the material attribute to describe the main fabric or material that your product is made of."
 msgstr ""
 
-#: includes/google/class-cr-product-feed-attributes.php:128
-#: includes/google/class-cr-product-fields.php:93
-#: includes/google/class-cr-product-fields.php:230
+#: includes/google/class-cr-product-feed-attributes.php:131
+#: includes/google/class-cr-product-fields.php:71
+#: includes/google/class-cr-product-fields.php:233
 msgid "Multipack"
 msgstr ""
 
-#: includes/google/class-cr-product-feed-attributes.php:129
+#: includes/google/class-cr-product-feed-attributes.php:132
 msgid "Add a multipack attribute to WooCommerce products (on 'Inventory' tab). The multipack attribute refers to multiple identical products that you, the retailer, combine for sale. If you have created a multipack grouping several identical products together, then use the mulitpack attribute to indicate how many products you have grouped together."
 msgstr ""
 
-#: includes/google/class-cr-product-feed-attributes.php:173
+#: includes/google/class-cr-product-feed-attributes.php:139
+#: includes/google/class-cr-product-fields.php:129
+#: includes/google/class-cr-product-fields.php:299
+msgid "Condition"
+msgstr ""
+
+#: includes/google/class-cr-product-feed-attributes.php:140
+msgid "Add a condition attribute to WooCommerce products (on 'General' tab). The condition attribute refers to condition of products you are selling. It is an optional field for new products but required for used and refurbished products."
+msgstr ""
+
+#: includes/google/class-cr-product-feed-attributes.php:184
 #: includes/google/class-cr-product-feed-identifiers.php:174
 msgid "WooCommerce Product Field"
 msgstr ""
 
-#: includes/google/class-cr-product-feed-attributes.php:174
+#: includes/google/class-cr-product-feed-attributes.php:185
 #: includes/google/class-cr-product-feed-identifiers.php:175
 msgid "Select a product field that should be mapped"
 msgstr ""
 
-#: includes/google/class-cr-product-feed-attributes.php:179
+#: includes/google/class-cr-product-feed-attributes.php:190
 msgid "Google Shopping Attribute"
 msgstr ""
 
-#: includes/google/class-cr-product-feed-attributes.php:180
+#: includes/google/class-cr-product-feed-attributes.php:191
 msgid "Product attributes required by Google Shopping in some countries"
 msgstr ""
 
-#: includes/google/class-cr-product-feed-attributes.php:307
+#: includes/google/class-cr-product-feed-attributes.php:329
 #: includes/google/class-cr-product-feed-identifiers.php:197
 msgid "Product ID"
 msgstr ""
 
-#: includes/google/class-cr-product-feed-attributes.php:308
+#: includes/google/class-cr-product-feed-attributes.php:330
 msgid "Product SKU"
 msgstr ""
 
-#: includes/google/class-cr-product-feed-attributes.php:309
+#: includes/google/class-cr-product-feed-attributes.php:331
 msgid "Product Name"
 msgstr ""
 
-#: includes/google/class-cr-product-feed-attributes.php:369
+#: includes/google/class-cr-product-feed-attributes.php:391
 msgid "Product GTIN"
 msgstr ""
 
-#: includes/google/class-cr-product-feed-attributes.php:370
+#: includes/google/class-cr-product-feed-attributes.php:392
 msgid "Product MPN"
 msgstr ""
 
-#: includes/google/class-cr-product-feed-attributes.php:371
+#: includes/google/class-cr-product-feed-attributes.php:393
 msgid "Product Brand"
 msgstr ""
 
-#: includes/google/class-cr-product-feed-attributes.php:372
+#: includes/google/class-cr-product-feed-attributes.php:394
 msgid "Product Material"
 msgstr ""
 
-#: includes/google/class-cr-product-feed-attributes.php:373
+#: includes/google/class-cr-product-feed-attributes.php:395
 msgid "Product Multipack"
 msgstr ""
 
-#: includes/google/class-cr-product-feed-attributes.php:374
+#: includes/google/class-cr-product-feed-attributes.php:396
 msgid "Product Bundle"
 msgstr ""
 
-#: includes/google/class-cr-product-feed-attributes.php:375
+#: includes/google/class-cr-product-feed-attributes.php:397
 msgid "Global Unique ID"
 msgstr ""
 
-#: includes/google/class-cr-product-feed-attributes.php:377
+#: includes/google/class-cr-product-feed-attributes.php:398
+msgid "Product Condition"
+msgstr ""
+
+#: includes/google/class-cr-product-feed-attributes.php:400
 msgid "Product Tag"
 msgstr ""
 
@@ -1015,8 +1038,8 @@ msgstr ""
 #: includes/google/class-cr-product-feed-identifiers.php:94
 #: includes/google/class-cr-product-feed-identifiers.php:210
 #: includes/google/class-cr-product-feed-reviews.php:163
-#: includes/google/class-cr-product-fields.php:50
-#: includes/google/class-cr-product-fields.php:180
+#: includes/google/class-cr-product-fields.php:28
+#: includes/google/class-cr-product-fields.php:183
 msgid "GTIN"
 msgstr ""
 
@@ -1027,8 +1050,8 @@ msgstr ""
 #: includes/google/class-cr-product-feed-identifiers.php:102
 #: includes/google/class-cr-product-feed-identifiers.php:223
 #: includes/google/class-cr-product-feed-reviews.php:176
-#: includes/google/class-cr-product-fields.php:61
-#: includes/google/class-cr-product-fields.php:194
+#: includes/google/class-cr-product-fields.php:39
+#: includes/google/class-cr-product-fields.php:197
 msgid "MPN"
 msgstr ""
 
@@ -1039,8 +1062,8 @@ msgstr ""
 #: includes/google/class-cr-product-feed-identifiers.php:110
 #: includes/google/class-cr-product-feed-identifiers.php:236
 #: includes/google/class-cr-product-feed-reviews.php:202
-#: includes/google/class-cr-product-fields.php:72
-#: includes/google/class-cr-product-fields.php:212
+#: includes/google/class-cr-product-fields.php:50
+#: includes/google/class-cr-product-fields.php:215
 msgid "Brand"
 msgstr ""
 
@@ -1049,8 +1072,8 @@ msgid "Add a Brand field to WooCommerce products (on 'Inventory' tab). This fiel
 msgstr ""
 
 #: includes/google/class-cr-product-feed-identifiers.php:118
-#: includes/google/class-cr-product-fields.php:83
-#: includes/google/class-cr-product-fields.php:291
+#: includes/google/class-cr-product-fields.php:61
+#: includes/google/class-cr-product-fields.php:319
 msgid "identifier_exists"
 msgstr ""
 
@@ -1313,83 +1336,113 @@ msgid_plural "<strong>%1d</strong> product reviews (1 star)"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/google/class-cr-product-fields.php:50
-#: includes/google/class-cr-product-fields.php:180
+#: includes/google/class-cr-product-fields.php:28
+#: includes/google/class-cr-product-fields.php:183
 msgid "Global Trade Item Number"
 msgstr ""
 
-#: includes/google/class-cr-product-fields.php:52
-#: includes/google/class-cr-product-fields.php:182
+#: includes/google/class-cr-product-fields.php:30
+#: includes/google/class-cr-product-fields.php:185
 msgid "GTIN refers to a Global Trade Item Number, a globally unique number used to identify trade items, products, or services that can be purchased. GTIN is also an umbrella term that refers to UPC, EAN, JAN, and ISBN."
 msgstr ""
 
-#: includes/google/class-cr-product-fields.php:61
-#: includes/google/class-cr-product-fields.php:194
+#: includes/google/class-cr-product-fields.php:39
+#: includes/google/class-cr-product-fields.php:197
 msgid "Manufacturer Part Number"
 msgstr ""
 
-#: includes/google/class-cr-product-fields.php:63
-#: includes/google/class-cr-product-fields.php:196
+#: includes/google/class-cr-product-fields.php:41
+#: includes/google/class-cr-product-fields.php:199
 msgid "MPN refers to a Manufacturer Part Number, a number that uniquely identifies the product to its manufacturer."
 msgstr ""
 
-#: includes/google/class-cr-product-fields.php:74
-#: includes/google/class-cr-product-fields.php:214
+#: includes/google/class-cr-product-fields.php:52
+#: includes/google/class-cr-product-fields.php:217
 msgid "The brand of the product."
 msgstr ""
 
-#: includes/google/class-cr-product-fields.php:83
+#: includes/google/class-cr-product-fields.php:61
 msgid "identifier_exists attribute for Google Shopping"
 msgstr ""
 
-#: includes/google/class-cr-product-fields.php:84
+#: includes/google/class-cr-product-fields.php:62
 msgid "Enable the checkbox to add \"identifier_exists = no\" in Google Shopping feed for this product."
 msgstr ""
 
-#: includes/google/class-cr-product-fields.php:93
-#: includes/google/class-cr-product-fields.php:230
+#: includes/google/class-cr-product-fields.php:71
+#: includes/google/class-cr-product-fields.php:233
 msgid "Multipack attribute for Google Shopping"
 msgstr ""
 
-#: includes/google/class-cr-product-fields.php:95
+#: includes/google/class-cr-product-fields.php:73
 msgid "If this product is a multipack, use the multipack attribute to indicate how many products you’ve grouped together."
 msgstr ""
 
-#: includes/google/class-cr-product-fields.php:114
-#: includes/google/class-cr-product-fields.php:258
+#: includes/google/class-cr-product-fields.php:92
+#: includes/google/class-cr-product-fields.php:261
 msgid "Default"
 msgstr ""
 
-#: includes/google/class-cr-product-fields.php:116
-#: includes/google/class-cr-product-fields.php:260
+#: includes/google/class-cr-product-fields.php:94
+#: includes/google/class-cr-product-fields.php:263
 msgid "is_bundle attribute for Google Shopping"
 msgstr ""
 
-#: includes/google/class-cr-product-fields.php:116
-#: includes/google/class-cr-product-fields.php:260
+#: includes/google/class-cr-product-fields.php:94
+#: includes/google/class-cr-product-fields.php:263
 msgid "is_bundle"
 msgstr ""
 
-#: includes/google/class-cr-product-fields.php:118
-#: includes/google/class-cr-product-fields.php:262
+#: includes/google/class-cr-product-fields.php:96
+#: includes/google/class-cr-product-fields.php:265
 msgid "If this product is a bundle, use the is_bundle attribute to flag it as bundle in the XML Product Feed for Google Shopping."
 msgstr ""
 
-#: includes/google/class-cr-product-fields.php:136
-#: includes/google/class-cr-product-fields.php:278
+#: includes/google/class-cr-product-fields.php:117
+#: includes/google/class-cr-product-fields.php:281
 msgid "Material attribute for Google Shopping"
 msgstr ""
 
-#: includes/google/class-cr-product-fields.php:138
-#: includes/google/class-cr-product-fields.php:280
+#: includes/google/class-cr-product-fields.php:119
+#: includes/google/class-cr-product-fields.php:283
 msgid "Use the material attribute to describe the main fabric or material that your product is made of."
 msgstr ""
 
-#: includes/google/class-cr-product-fields.php:232
+#: includes/google/class-cr-product-fields.php:129
+#: includes/google/class-cr-product-fields.php:299
+msgid "Condition attribute for Google Shopping"
+msgstr ""
+
+#: includes/google/class-cr-product-fields.php:131
+#: includes/google/class-cr-product-fields.php:301
+msgid "Use the condition attribute to describe condition (new, used or refurbished) of products."
+msgstr ""
+
+#: includes/google/class-cr-product-fields.php:133
+#: includes/google/class-cr-product-fields.php:303
+msgid "Not specified"
+msgstr ""
+
+#: includes/google/class-cr-product-fields.php:134
+#: includes/google/class-cr-product-fields.php:304
+msgid "New"
+msgstr ""
+
+#: includes/google/class-cr-product-fields.php:135
+#: includes/google/class-cr-product-fields.php:305
+msgid "Used"
+msgstr ""
+
+#: includes/google/class-cr-product-fields.php:136
+#: includes/google/class-cr-product-fields.php:306
+msgid "Refurbished"
+msgstr ""
+
+#: includes/google/class-cr-product-fields.php:235
 msgid "If this product is a multipack, then use the multipack attribute to indicate how many products you’ve grouped together."
 msgstr ""
 
-#: includes/google/class-cr-product-fields.php:290
+#: includes/google/class-cr-product-fields.php:318
 msgid "Enable the option to add \"identifier_exists = no\" in Google Shopping feed for this variation."
 msgstr ""
 
@@ -1507,14 +1560,14 @@ msgstr ""
 #: includes/import-export/class-cr-import-qna.php:140
 #: includes/import-export/class-cr-import-reviews.php:147
 #: includes/qna/class-cr-admin-menu-qna.php:196
-#: includes/reminders/class-cr-manual.php:414
+#: includes/reminders/class-cr-manual.php:416
 #: includes/reminders/class-cr-reminders-list-table.php:194
 #: includes/reminders/class-cr-reminders-list-table.php:399
 #: includes/reviews/class-cr-admin-menu-reviews.php:247
 #: includes/settings/class-cr-settings-forms-rating.php:186
 #: includes/settings/class-cr-settings-forms-rating.php:213
-#: includes/settings/class-cr-settings-forms.php:674
-#: includes/settings/class-cr-settings-forms.php:701
+#: includes/settings/class-cr-settings-forms.php:694
+#: includes/settings/class-cr-settings-forms.php:721
 #: templates/cr-review-form.php:199
 #: templates/qna-list.php:197
 #: templates/qna-tab.php:111
@@ -2564,221 +2617,221 @@ msgid "If you would like to send a review reminder manually, please set the orde
 msgstr ""
 
 #: includes/reminders/class-cr-manual.php:129
-#: includes/reminders/class-cr-manual.php:454
-#: includes/reminders/class-cr-manual.php:569
-#: includes/reminders/class-cr-manual.php:667
-#: includes/reminders/class-cr-manual.php:737
+#: includes/reminders/class-cr-manual.php:456
+#: includes/reminders/class-cr-manual.php:571
+#: includes/reminders/class-cr-manual.php:669
+#: includes/reminders/class-cr-manual.php:739
 msgid "A security token expired, please refresh the page and try again."
 msgstr ""
 
 #: includes/reminders/class-cr-manual.php:139
-#: includes/reminders/class-cr-manual.php:464
-#: includes/reminders/class-cr-manual.php:578
-#: includes/reminders/class-cr-manual.php:677
-#: includes/reminders/class-cr-manual.php:747
+#: includes/reminders/class-cr-manual.php:466
+#: includes/reminders/class-cr-manual.php:580
+#: includes/reminders/class-cr-manual.php:679
+#: includes/reminders/class-cr-manual.php:749
 msgid "Your user account does not have permissions for sending review reminders."
 msgstr ""
 
 #: includes/reminders/class-cr-manual.php:148
-#: includes/reminders/class-cr-manual.php:473
-#: includes/reminders/class-cr-manual.php:589
-#: includes/reminders/class-cr-manual.php:689
-#: includes/reminders/class-cr-manual.php:758
+#: includes/reminders/class-cr-manual.php:475
+#: includes/reminders/class-cr-manual.php:591
+#: includes/reminders/class-cr-manual.php:691
+#: includes/reminders/class-cr-manual.php:760
 msgid "Error: invalid order ID."
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:175
+#: includes/reminders/class-cr-manual.php:177
 msgid "Error: a review reminder could not be sent because reviews(s) have already been collected with a WordPress mailer for this order."
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:184
-#: includes/reminders/class-cr-manual.php:530
+#: includes/reminders/class-cr-manual.php:186
+#: includes/reminders/class-cr-manual.php:532
 msgid "Error: a review reminder could not be sent because reviews(s) have already been collected with a CusRev mailer for this order."
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:230
-#: includes/reminders/class-cr-manual.php:335
-#: includes/reminders/class-cr-manual.php:634
+#: includes/reminders/class-cr-manual.php:232
+#: includes/reminders/class-cr-manual.php:337
+#: includes/reminders/class-cr-manual.php:636
 msgid "No reminders sent"
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:234
-#: includes/reminders/class-cr-manual.php:715
+#: includes/reminders/class-cr-manual.php:236
+#: includes/reminders/class-cr-manual.php:717
 msgid " reminder(s) sent"
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:236
-#: includes/reminders/class-cr-manual.php:307
-#: includes/reminders/class-cr-manual.php:320
-#: includes/reminders/class-cr-manual.php:717
+#: includes/reminders/class-cr-manual.php:238
+#: includes/reminders/class-cr-manual.php:309
+#: includes/reminders/class-cr-manual.php:322
+#: includes/reminders/class-cr-manual.php:719
 msgid "No reminders sent yet"
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:254
+#: includes/reminders/class-cr-manual.php:256
 msgid "CR: a review reminder was triggered manually via email."
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:256
+#: includes/reminders/class-cr-manual.php:258
 msgid "Successfully synced with CR Cron"
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:266
+#: includes/reminders/class-cr-manual.php:268
 #: includes/settings/class-cr-settings-email-template.php:29
 #: includes/settings/class-cr-settings-review-reminder.php:54
 #: includes/settings/class-cr-settings-review-reminder.php:1094
 msgid "Review Reminder"
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:280
+#: includes/reminders/class-cr-manual.php:282
 msgid "No customer consent received"
 msgstr ""
 
 #. translators: %d will be automatically replaced with the count of reviews
-#: includes/reminders/class-cr-manual.php:293
+#: includes/reminders/class-cr-manual.php:295
 msgid "%d review received"
 msgid_plural "%d reviews received"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/reminders/class-cr-manual.php:299
+#: includes/reminders/class-cr-manual.php:301
 msgid "A review reminder was scheduled via CR Cron"
 msgstr ""
 
 #. translators: %s will be automatically replaced with the status name
-#: includes/reminders/class-cr-manual.php:310
-#: includes/reminders/class-cr-manual.php:323
+#: includes/reminders/class-cr-manual.php:312
+#: includes/reminders/class-cr-manual.php:325
 msgid "A review reminder will be scheduled after the status is set to %s"
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:313
-#: includes/reminders/class-cr-manual.php:326
+#: includes/reminders/class-cr-manual.php:315
+#: includes/reminders/class-cr-manual.php:328
 msgid "Automatic review reminders are disabled"
 msgstr ""
 
 #. translators: %d will be automatically replaced with the count of review reminders
-#: includes/reminders/class-cr-manual.php:333
-#: includes/reminders/class-cr-manual.php:640
+#: includes/reminders/class-cr-manual.php:335
+#: includes/reminders/class-cr-manual.php:642
 msgid "%d reminder sent"
 msgid_plural "%d reminders sent"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/reminders/class-cr-manual.php:343
+#: includes/reminders/class-cr-manual.php:345
 msgid "A reminder is scheduled for "
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:345
+#: includes/reminders/class-cr-manual.php:347
 msgid "WP Cron error"
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:380
+#: includes/reminders/class-cr-manual.php:382
 msgid "A review invitation cannot be sent by WhatsApp because no phone number is found in the order."
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:384
+#: includes/reminders/class-cr-manual.php:386
 msgid "Copy a link to an aggregated review form for this order."
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:385
+#: includes/reminders/class-cr-manual.php:387
 msgid "Link"
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:389
+#: includes/reminders/class-cr-manual.php:391
 msgid "Copying..."
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:397
+#: includes/reminders/class-cr-manual.php:399
 msgid "Copied"
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:401
+#: includes/reminders/class-cr-manual.php:403
 msgid "Has the customer provided a consent to receive a review invitation?"
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:411
+#: includes/reminders/class-cr-manual.php:413
 #: includes/settings/class-cr-admin-menu-settings.php:398
 msgid "Send"
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:424
+#: includes/reminders/class-cr-manual.php:426
 msgid "Have you sent the review invitation?"
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:432
+#: includes/reminders/class-cr-manual.php:434
 #: includes/settings/class-cr-admin-menu-settings.php:151
 msgid "Sending..."
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:433
+#: includes/reminders/class-cr-manual.php:435
 msgid "Syncing..."
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:434
+#: includes/reminders/class-cr-manual.php:436
 msgid "Error code 1"
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:435
+#: includes/reminders/class-cr-manual.php:437
 msgid "Error code 2 (%s)."
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:436
+#: includes/reminders/class-cr-manual.php:438
 msgid "Link to the aggregated review form copied. Paste it where you need it."
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:490
-#: includes/reminders/class-cr-manual.php:606
+#: includes/reminders/class-cr-manual.php:492
+#: includes/reminders/class-cr-manual.php:608
 msgid "Error: a review reminder could not be sent because reviews(s) have already been collected via a local review form for this order."
-msgstr ""
-
-#: includes/reminders/class-cr-manual.php:502
-#: includes/reminders/class-cr-manual.php:542
-msgid "Check that the customer's phone number %s is formatted correctly."
-msgstr ""
-
-#: includes/reminders/class-cr-manual.php:503
-#: includes/reminders/class-cr-manual.php:543
-msgid "Examples"
 msgstr ""
 
 #: includes/reminders/class-cr-manual.php:504
 #: includes/reminders/class-cr-manual.php:544
-msgid "Correct: %s"
+msgid "Check that the customer's phone number %s is formatted correctly."
 msgstr ""
 
 #: includes/reminders/class-cr-manual.php:505
 #: includes/reminders/class-cr-manual.php:545
+msgid "Examples"
+msgstr ""
+
+#: includes/reminders/class-cr-manual.php:506
+#: includes/reminders/class-cr-manual.php:546
+msgid "Correct: %s"
+msgstr ""
+
+#: includes/reminders/class-cr-manual.php:507
+#: includes/reminders/class-cr-manual.php:547
 msgid "Incorrect: %s"
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:630
+#: includes/reminders/class-cr-manual.php:632
 msgid "CR: a review reminder was triggered manually via WhatsApp."
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:647
+#: includes/reminders/class-cr-manual.php:649
 msgid "A review reminder has been successfully sent via WhatsApp."
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:709
+#: includes/reminders/class-cr-manual.php:711
 msgid "CR: a review reminder was sent via WhatsApp manually."
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:767
+#: includes/reminders/class-cr-manual.php:769
 msgid "Error: links to aggregated review forms can be copied only with the self-hosted setting."
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:784
+#: includes/reminders/class-cr-manual.php:786
 msgid "Error: a link to an aggregated review form cannot be copied because reviews(s) have already been collected with a CusRev mailer for this order."
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:802
+#: includes/reminders/class-cr-manual.php:804
 msgid "CR: a link to an aggregated review form was copied manually."
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:816
+#: includes/reminders/class-cr-manual.php:818
 msgid "Error: could not copy a link to an aggregated review form"
 msgstr ""
 
-#: includes/reminders/class-cr-manual.php:824
+#: includes/reminders/class-cr-manual.php:826
 msgid "Error: order ID is missing"
 msgstr ""
 
@@ -2825,8 +2878,8 @@ msgstr ""
 
 #: includes/reminders/class-cr-reminders-list-table.php:212
 #: includes/reminders/class-cr-reminders-log-table.php:92
-#: includes/settings/class-cr-settings-forms.php:540
-#: includes/settings/class-cr-settings-forms.php:654
+#: includes/settings/class-cr-settings-forms.php:560
+#: includes/settings/class-cr-settings-forms.php:674
 #: includes/settings/class-cr-settings-review-reminder.php:1184
 #: templates/reminder-details-admin-page.php:162
 msgid "Type"
@@ -2926,50 +2979,54 @@ msgstr[1] ""
 msgid "Would you like to remove verification from this review?"
 msgstr ""
 
-#: includes/reviews/class-cr-admin-menu-reviews.php:298
+#: includes/reviews/class-cr-admin-menu-reviews.php:299
 msgid "Reply to Review"
 msgstr ""
 
-#: includes/reviews/class-cr-admin-menu-reviews.php:372
+#: includes/reviews/class-cr-admin-menu-reviews.php:373
 msgid "Publish a copy of your reply to <a href=\"%s\" target=\"_blank\" rel=\"noopener noreferrer\">CusRev</a> portal"
 msgstr ""
 
-#: includes/reviews/class-cr-admin-menu-reviews.php:374
+#: includes/reviews/class-cr-admin-menu-reviews.php:375
 msgid "CusRev (Customer Reviews) portal"
 msgstr ""
 
-#: includes/reviews/class-cr-admin-menu-reviews.php:375
+#: includes/reviews/class-cr-admin-menu-reviews.php:376
 msgid "plugin's settings"
 msgstr ""
 
-#: includes/reviews/class-cr-admin-menu-reviews.php:376
+#: includes/reviews/class-cr-admin-menu-reviews.php:377
 msgid "A copy of this reply will not be published on %1$s because no license key was entered in the %2$s. A license key (free or professional) is used as a secret token for additional security when communicating with CusRev service."
 msgstr ""
 
-#: includes/reviews/class-cr-admin-menu-reviews.php:502
+#: includes/reviews/class-cr-admin-menu-reviews.php:503
 msgid "Review Title"
 msgstr ""
 
-#: includes/reviews/class-cr-admin-menu-reviews.php:518
-msgid "Author Type"
+#: includes/reviews/class-cr-admin-menu-reviews.php:519
+msgid "Reviewer Type"
 msgstr ""
 
-#: includes/reviews/class-cr-admin-menu-reviews.php:533
-msgid "Customer Reviews (CR)"
+#: includes/reviews/class-cr-admin-menu-reviews.php:535
+msgid "Review Location"
 msgstr ""
 
 #: includes/reviews/class-cr-admin-menu-reviews.php:546
+msgid "Customer Reviews (CR)"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:559
 msgid "Answers to Custom Questions"
 msgstr ""
 
-#: includes/reviews/class-cr-admin-menu-reviews.php:570
-#: includes/reviews/class-cr-admin-menu-reviews.php:572
-#: includes/reviews/class-cr-admin-menu-reviews.php:579
-#: includes/reviews/class-cr-admin-menu-reviews.php:581
-#: includes/reviews/class-cr-admin-menu-reviews.php:588
-#: includes/reviews/class-cr-admin-menu-reviews.php:590
-#: includes/reviews/class-cr-admin-menu-reviews.php:597
-#: includes/reviews/class-cr-admin-menu-reviews.php:599
+#: includes/reviews/class-cr-admin-menu-reviews.php:583
+#: includes/reviews/class-cr-admin-menu-reviews.php:585
+#: includes/reviews/class-cr-admin-menu-reviews.php:592
+#: includes/reviews/class-cr-admin-menu-reviews.php:594
+#: includes/reviews/class-cr-admin-menu-reviews.php:601
+#: includes/reviews/class-cr-admin-menu-reviews.php:603
+#: includes/reviews/class-cr-admin-menu-reviews.php:610
+#: includes/reviews/class-cr-admin-menu-reviews.php:612
 #: includes/reviews/class-cr-reviews-list-table.php:875
 #: includes/reviews/class-cr-reviews-list-table.php:877
 #: includes/reviews/class-cr-reviews-list-table.php:892
@@ -2981,32 +3038,32 @@ msgstr ""
 msgid "CusRev portal"
 msgstr ""
 
-#: includes/reviews/class-cr-admin-menu-reviews.php:574
+#: includes/reviews/class-cr-admin-menu-reviews.php:587
 #: includes/reviews/class-cr-reviews-list-table.php:882
 msgid "A verified copy of this reply was published on %s"
 msgstr ""
 
-#: includes/reviews/class-cr-admin-menu-reviews.php:583
+#: includes/reviews/class-cr-admin-menu-reviews.php:596
 #: includes/reviews/class-cr-reviews-list-table.php:899
 msgid "This reply was originally posted on %s. If this copy of the reply is edited, the original reply will NOT be updated. Only the customer can edit the original reply on CusRev portal."
 msgstr ""
 
-#: includes/reviews/class-cr-admin-menu-reviews.php:592
+#: includes/reviews/class-cr-admin-menu-reviews.php:605
 #: includes/reviews/class-cr-reviews-list-table.php:916
 msgid "This reply was originally posted on %s. This copy of the reply was modified and might be different from the original published on CusRev portal."
 msgstr ""
 
-#: includes/reviews/class-cr-admin-menu-reviews.php:601
+#: includes/reviews/class-cr-admin-menu-reviews.php:614
 #: includes/reviews/class-cr-reviews-list-table.php:933
 msgid "A verified copy published on %s could not be updated because it is not the last reply for the review. The verified copy might be different from this reply."
 msgstr ""
 
-#: includes/reviews/class-cr-admin-menu-reviews.php:604
+#: includes/reviews/class-cr-admin-menu-reviews.php:617
 #: includes/reviews/class-cr-reviews-list-table.php:939
 msgid "Reply could not be published to CusRev portal. Error "
 msgstr ""
 
-#: includes/reviews/class-cr-admin-menu-reviews.php:635
+#: includes/reviews/class-cr-admin-menu-reviews.php:648
 #: includes/reviews/class-cr-reviews-list-table.php:1262
 #: templates/cr-review.php:119
 #: templates/reviews-grid.php:131
@@ -3015,30 +3072,850 @@ msgstr ""
 msgid "Reviewer"
 msgstr ""
 
-#: includes/reviews/class-cr-admin-menu-reviews.php:654
-#: includes/reviews/class-cr-admin-menu-reviews.php:663
+#: includes/reviews/class-cr-admin-menu-reviews.php:667
+#: includes/reviews/class-cr-admin-menu-reviews.php:676
 #: includes/reviews/class-cr-reviews-list-table.php:1245
 #: templates/cr-review.php:104
 #: templates/reviews-grid.php:249
 msgid "Store manager"
 msgstr ""
 
-#: includes/reviews/class-cr-admin-menu-reviews.php:687
+#: includes/reviews/class-cr-admin-menu-reviews.php:706
+msgid "Select a country"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:710
+msgid "Country"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:721
+msgid "Location"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:738
 msgid "This reply was originally posted on CusRev portal. This copy of the reply was modified and might be different from the original reply published on CusRev portal."
 msgstr ""
 
-#: includes/reviews/class-cr-admin-menu-reviews.php:705
+#: includes/reviews/class-cr-admin-menu-reviews.php:776
 #: includes/reviews/class-cr-reviews-list-table.php:783
 msgid "Feature"
 msgstr ""
 
-#: includes/reviews/class-cr-admin-menu-reviews.php:711
+#: includes/reviews/class-cr-admin-menu-reviews.php:782
 #: includes/reviews/class-cr-reviews-list-table.php:785
 msgid "Unfeature"
 msgstr ""
 
-#: includes/reviews/class-cr-admin-menu-reviews.php:805
+#: includes/reviews/class-cr-admin-menu-reviews.php:876
 msgid "Reviews per page"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:894
+msgid "Afghanistan"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:895
+msgid "Aland Islands"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:896
+msgid "Albania"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:897
+msgid "Algeria"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:898
+msgid "American Samoa"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:899
+msgid "Andorra"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:900
+msgid "Angola"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:901
+msgid "Anguilla"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:902
+msgid "Antarctica"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:903
+msgid "Antigua and Barbuda"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:904
+msgid "Argentina"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:905
+msgid "Armenia"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:906
+msgid "Aruba"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:907
+msgid "Australia"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:908
+msgid "Austria"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:909
+msgid "Azerbaijan"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:910
+msgid "Bahamas"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:911
+msgid "Bahrain"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:912
+msgid "Bangladesh"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:913
+msgid "Barbados"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:914
+msgid "Belarus"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:915
+msgid "Belgium"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:916
+msgid "Belize"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:917
+msgid "Benin"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:918
+msgid "Bermuda"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:919
+msgid "Bhutan"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:920
+msgid "Bolivia"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:921
+msgid "Bonaire, Sint Eustatius and Saba"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:922
+msgid "Bosnia and Herzegovina"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:923
+msgid "Botswana"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:924
+msgid "Bouvet Island"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:925
+msgid "Brazil"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:926
+msgid "British Indian Ocean Territory"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:927
+msgid "Brunei Darussalam"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:928
+msgid "Bulgaria"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:929
+msgid "Burkina Faso"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:930
+msgid "Burundi"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:931
+msgid "Cambodia"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:932
+msgid "Cameroon"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:933
+msgid "Canada"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:934
+msgid "Cape Verde"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:935
+msgid "Cayman Islands"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:936
+msgid "Central African Republic"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:937
+msgid "Chad"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:938
+msgid "Chile"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:939
+msgid "China"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:940
+msgid "Christmas Island"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:941
+msgid "Cocos (Keeling) Islands"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:942
+msgid "Colombia"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:943
+msgid "Comoros"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:944
+msgid "Congo"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:945
+msgid "Congo, Democratic Republic of the"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:946
+msgid "Cook Islands"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:947
+msgid "Costa Rica"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:948
+msgid "Cote dIvoire"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:949
+msgid "Croatia"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:950
+msgid "Cuba"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:951
+msgid "Curacao"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:952
+msgid "Cyprus"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:953
+msgid "Czech Republic"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:954
+msgid "Denmark"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:955
+msgid "Djibouti"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:956
+msgid "Dominica"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:957
+msgid "Dominican Republic"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:958
+msgid "Ecuador"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:959
+msgid "Egypt"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:960
+msgid "El Salvador"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:961
+msgid "Equatorial Guinea"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:962
+msgid "Eritrea"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:963
+msgid "Estonia"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:964
+msgid "Ethiopia"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:965
+msgid "Falkland Islands (Malvinas)"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:966
+msgid "Faroe Islands"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:967
+msgid "Fiji"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:968
+msgid "Finland"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:969
+msgid "France"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:970
+msgid "French Guiana"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:971
+msgid "French Polynesia"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:972
+msgid "French Southern Territories"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:973
+msgid "Gabon"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:974
+msgid "Gambia"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:975
+msgid "Georgia"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:976
+msgid "Germany"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:977
+msgid "Ghana"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:978
+msgid "Gibraltar"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:979
+msgid "Greece"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:980
+msgid "Greenland"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:981
+msgid "Grenada"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:982
+msgid "Guadeloupe"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:983
+msgid "Guam"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:984
+msgid "Guatemala"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:985
+msgid "Guernsey"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:986
+msgid "Guinea"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:987
+msgid "Guinea-Bissau"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:988
+msgid "Guyana"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:989
+msgid "Haiti"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:990
+msgid "Heard Island and McDonald Islands"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:991
+msgid "Vatican City State"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:992
+msgid "Honduras"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:993
+msgid "Hong Kong"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:994
+msgid "Hungary"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:995
+msgid "Iceland"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:996
+msgid "India"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:997
+msgid "Indonesia"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:998
+msgid "Iran"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:999
+msgid "Iraq"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1000
+msgid "Ireland"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1001
+msgid "Isle of Man"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1002
+msgid "Israel"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1003
+msgid "Italy"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1004
+msgid "Jamaica"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1005
+msgid "Japan"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1006
+msgid "Jersey"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1007
+msgid "Jordan"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1008
+msgid "Kazakhstan"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1009
+msgid "Kenya"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1010
+msgid "Kiribati"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1011
+msgid "Korea, North"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1012
+msgid "Korea, South"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1013
+msgid "Kuwait"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1014
+msgid "Kyrgyzstan"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1015
+msgid "Laos"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1016
+msgid "Latvia"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1017
+msgid "Lebanon"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1018
+msgid "Lesotho"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1019
+msgid "Liberia"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1020
+msgid "Libya"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1021
+msgid "Liechtenstein"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1022
+msgid "Lithuania"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1023
+msgid "Luxembourg"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1024
+msgid "Macao"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1025
+msgid "North Macedonia"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1026
+msgid "Madagascar"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1027
+msgid "Malawi"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1028
+msgid "Malaysia"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1029
+msgid "Maldives"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1030
+msgid "Mali"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1031
+msgid "Malta"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1032
+msgid "Marshall Islands"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1033
+msgid "Martinique"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1034
+msgid "Mauritania"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1035
+msgid "Mauritius"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1036
+msgid "Mayotte"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1037
+msgid "Mexico"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1038
+msgid "Micronesia"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1039
+msgid "Moldova"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1040
+msgid "Monaco"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1041
+msgid "Mongolia"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1042
+msgid "Montenegro"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1043
+msgid "Montserrat"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1044
+msgid "Morocco"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1045
+msgid "Mozambique"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1046
+msgid "Myanmar"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1047
+msgid "Namibia"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1048
+msgid "Nauru"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1049
+msgid "Nepal"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1050
+msgid "Netherlands"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1051
+msgid "New Caledonia"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1052
+msgid "New Zealand"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1053
+msgid "Nicaragua"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1054
+msgid "Niger"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1055
+msgid "Nigeria"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1056
+msgid "Niue"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1057
+msgid "Norfolk Island"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1058
+msgid "Northern Mariana Islands"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1059
+msgid "Norway"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1060
+msgid "Oman"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1061
+msgid "Pakistan"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1062
+msgid "Palau"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1063
+msgid "Palestine"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1064
+msgid "Panama"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1065
+msgid "Papua New Guinea"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1066
+msgid "Paraguay"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1067
+msgid "Peru"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1068
+msgid "Philippines"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1069
+msgid "Pitcairn"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1070
+msgid "Poland"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1071
+msgid "Portugal"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1072
+msgid "Puerto Rico"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1073
+msgid "Qatar"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1074
+msgid "Reunion"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1075
+msgid "Romania"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1076
+msgid "Russia"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1077
+msgid "Rwanda"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1078
+msgid "Samoa"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1079
+msgid "San Marino"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1080
+msgid "Saudi Arabia"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1081
+msgid "Serbia"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1082
+msgid "Singapore"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1083
+msgid "Slovakia"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1084
+msgid "Slovenia"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1085
+msgid "South Africa"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1086
+msgid "Spain"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1087
+msgid "Sweden"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1088
+msgid "Switzerland"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1089
+msgid "Turkey"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1090
+msgid "Ukraine"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1091
+msgid "United Arab Emirates"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1092
+msgid "United Kingdom"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1093
+msgid "United States"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1094
+msgid "Vietnam"
+msgstr ""
+
+#: includes/reviews/class-cr-admin-menu-reviews.php:1095
+msgid "Zimbabwe"
 msgstr ""
 
 #: includes/reviews/class-cr-ajax-reviews.php:760
@@ -4103,15 +4980,15 @@ msgstr ""
 
 #: includes/settings/class-cr-settings-forms-rating.php:68
 #: includes/settings/class-cr-settings-forms-rating.php:172
-#: includes/settings/class-cr-settings-forms.php:536
-#: includes/settings/class-cr-settings-forms.php:647
+#: includes/settings/class-cr-settings-forms.php:556
+#: includes/settings/class-cr-settings-forms.php:667
 msgid "Label"
 msgstr ""
 
 #: includes/settings/class-cr-settings-forms-rating.php:72
 #: includes/settings/class-cr-settings-forms-rating.php:179
-#: includes/settings/class-cr-settings-forms.php:544
-#: includes/settings/class-cr-settings-forms.php:667
+#: includes/settings/class-cr-settings-forms.php:564
+#: includes/settings/class-cr-settings-forms.php:687
 msgid "Required"
 msgstr ""
 
@@ -4133,8 +5010,8 @@ msgstr ""
 
 #: includes/settings/class-cr-settings-forms-rating.php:187
 #: includes/settings/class-cr-settings-forms-rating.php:214
-#: includes/settings/class-cr-settings-forms.php:675
-#: includes/settings/class-cr-settings-forms.php:702
+#: includes/settings/class-cr-settings-forms.php:695
+#: includes/settings/class-cr-settings-forms.php:722
 msgid "Confirm"
 msgstr ""
 
@@ -4412,48 +5289,56 @@ msgstr ""
 msgid "Automatic geolocation on review forms."
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:465
+#: includes/settings/class-cr-settings-forms.php:467
+msgid "Terms and Privacy Page"
+msgstr ""
+
+#: includes/settings/class-cr-settings-forms.php:473
+msgid "Select the page customers will be directed to when clicking the Terms and Conditions link on aggregated review forms."
+msgstr ""
+
+#: includes/settings/class-cr-settings-forms.php:485
 msgid "Expiry Period"
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:469
+#: includes/settings/class-cr-settings-forms.php:489
 msgid "Aggregated review forms will be automatically deleted after the specified number of days, or kept indefinitely if set to 0."
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:519
+#: includes/settings/class-cr-settings-forms.php:539
 msgid "Add Question"
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:522
+#: includes/settings/class-cr-settings-forms.php:542
 msgid "The free version of the plugin supports up to 2 questions"
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:532
-#: includes/settings/class-cr-settings-forms.php:636
+#: includes/settings/class-cr-settings-forms.php:552
+#: includes/settings/class-cr-settings-forms.php:656
 msgid "Question"
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:627
+#: includes/settings/class-cr-settings-forms.php:647
 msgid "Add a Question"
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:639
+#: includes/settings/class-cr-settings-forms.php:659
 msgid "E.g., What is your skin type?"
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:642
+#: includes/settings/class-cr-settings-forms.php:662
 msgid "* Question cannot be blank"
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:650
+#: includes/settings/class-cr-settings-forms.php:670
 msgid "E.g., Skin type"
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:697
+#: includes/settings/class-cr-settings-forms.php:717
 msgid "Would you like to delete this question?"
 msgstr ""
 
-#: includes/settings/class-cr-settings-forms.php:823
+#: includes/settings/class-cr-settings-forms.php:843
 msgid "Add a checkbox for people to accept your Terms and Conditions, Privacy Policy, and any other legal agreements required in your jurisdiction before submitting a review via an on-site review form."
 msgstr ""
 

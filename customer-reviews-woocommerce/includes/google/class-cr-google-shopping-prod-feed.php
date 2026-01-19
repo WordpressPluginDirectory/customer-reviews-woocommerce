@@ -429,6 +429,13 @@ class CR_Google_Shopping_Prod_Feed {
 				$xml_writer->endElement();
 			}
 
+			// <condition>
+			if ( $review->condition ) {
+				$xml_writer->startElement( 'g:condition' );
+				$xml_writer->text( $review->condition );
+				$xml_writer->endElement();
+			}
+
 			do_action( 'cr_gs_product_feed_xml_elements', $xml_writer, $review );
 
 			$xml_writer->endElement(); // </entry>
@@ -478,7 +485,8 @@ class CR_Google_Shopping_Prod_Feed {
 			'material' => '',
 			'multipack' => '',
 			'size' => '',
-			'bundle' => ''
+			'bundle' => '',
+			'condition' => ''
 		) );
 
 		$exclude = get_option( 'ivole_excl_product_ids', array() );
@@ -726,6 +734,10 @@ class CR_Google_Shopping_Prod_Feed {
 			$_product->bundle = '';
 			if( is_array( $attributes ) && isset( $attributes['bundle'] ) ) {
 				$_product->bundle = self::get_field( $attributes['bundle'], $product );
+			}
+			$_product->condition = '';
+			if( is_array( $attributes ) && isset( $attributes['condition'] ) ) {
+				$_product->condition = self::get_field( $attributes['condition'], $product );
 			}
 			$_product->identifier_exists = self::get_field( 'meta__cr_identifier_exists', $product );
 			$_product->product_type = '';

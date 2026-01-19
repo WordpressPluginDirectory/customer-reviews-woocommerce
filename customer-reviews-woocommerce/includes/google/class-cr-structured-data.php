@@ -288,9 +288,8 @@ if ( ! class_exists( 'CR_StructuredData' ) ) :
 				}
 			}
 			if ( ! empty( $markup['aggregateRating'] ) ) {
-				echo '<script type="application/ld+json">' .
-					wp_json_encode( $markup ) .
-					'</script>';
+				$markup_to_output = '<script type="application/ld+json">' . wp_json_encode( $markup ) . '</script>';
+				echo apply_filters( 'cr_schema_markup', $markup_to_output, $post_id );
 			}
 		}
 

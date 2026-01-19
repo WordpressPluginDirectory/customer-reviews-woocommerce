@@ -375,6 +375,37 @@ function Reviews({ nonce, referrals }) {
               <Text fz="sm" fw={600}>{refsSWR.data.referralClicks.count}</Text>
             </div>
           </div>
+          <div className={classes.subContReferrals}>
+            <IconShoppingCart size="1.4rem" stroke={1.5} className={classes.iconReferrals} />
+            <div>
+              <Group gap="5px" justify="center">
+                <Text c="dimmed" fz="xs">
+                  {refsSWR.data.referralSales.label}
+                </Text>
+                <HoverCard width={280} shadow="md" withArrow>
+                  <HoverCard.Target>
+                    <IconHelp className={classes.helpIcon} color="var(--mantine-color-gray-6)" />
+                  </HoverCard.Target>
+                  <HoverCard.Dropdown>
+                    <Text size="xs">
+                      {refsSWR.data.referralSales.help}
+                    </Text>
+                    <Divider my="xs" />
+                    <Group gap="5px">
+                      <IconArticle className={classes.settingsIcon} />
+                      <Anchor
+                        size="xs"
+                        href={refsSWR.data.referralSales.helpLinks.link}
+                      >
+                        {refsSWR.data.referralSales.helpLinks.label}
+                      </Anchor>
+                    </Group>
+                  </HoverCard.Dropdown>
+                </HoverCard>
+              </Group>
+              <Text fz="sm" fw={600}>{refsSWR.data.referralSales.amount}</Text>
+            </div>
+          </div>
         </Group>
       );
     }

@@ -253,7 +253,8 @@ if ( ! class_exists( 'Ivole_Reviews_Admin_Menu' ) ):
 						'cr_confirm_unverify' => __( 'Would you like to remove verification from this review?', 'customer-reviews-woocommerce' ),
 						'unverify_yes' => __( 'Yes', 'customer-reviews-woocommerce' ),
 						'unverify_no' => __( 'No', 'customer-reviews-woocommerce' ),
-						'videoicon' => plugin_dir_url( dirname( dirname( __FILE__ ) ) ) . 'img/video.svg'
+						'videoicon' => plugin_dir_url( dirname( dirname( __FILE__ ) ) ) . 'img/video.svg',
+						'flags_path' => plugin_dir_url( dirname( dirname( __FILE__ ) ) ) . 'img/flags/'
 					)
 				);
 				wp_enqueue_script( 'cr-all-reviews' );
@@ -515,7 +516,7 @@ if ( ! class_exists( 'Ivole_Reviews_Admin_Menu' ) ):
 				if ( $rating || CR_Replies::isReplyForReview( $comment ) ) {
 					add_meta_box(
 						'cr_reviewer_meta_box',
-						__( 'Author Type', 'customer-reviews-woocommerce' ),
+						__( 'Reviewer Type', 'customer-reviews-woocommerce' ),
 						array( $this, 'render_reviewer_meta_box' ),
 						$post_type,
 						'normal',
@@ -527,6 +528,18 @@ if ( ! class_exists( 'Ivole_Reviews_Admin_Menu' ) ):
 
 		public function add_review_meta_box( $post_type, $comment ) {
 			if ( 'comment' === $post_type ) {
+				$rating = get_comment_meta( $comment->comment_ID, 'rating', true );
+				if ( $rating ) {
+					add_meta_box(
+						'cr_review_location_meta_box',
+						__( 'Review Location', 'customer-reviews-woocommerce' ),
+						array( $this, 'render_review_location_meta_box' ),
+						$post_type,
+						'normal',
+						'default'
+					);
+				}
+				//
 				if( CR_Replies::isReplyForCRReview( $comment ) ) {
 					add_meta_box(
 						'ivole_cr_meta_box',
@@ -674,6 +687,44 @@ if ( ! class_exists( 'Ivole_Reviews_Admin_Menu' ) ):
 			wp_nonce_field( 'cr_author_type', 'cr_author_type_nonce' );
 		}
 
+		public function render_review_location_meta_box( $comment ) {
+			$country = '';
+			$location = '';
+			// read review meta data for location information
+			$country_arr = get_comment_meta( $comment->comment_ID, 'ivole_country', true );
+			if ( $country_arr ) {
+				if ( is_array( $country_arr ) && 2 === count( $country_arr ) ) {
+					if ( isset( $country_arr['code'] ) ) {
+						$country = strtoupper( $country_arr['code'] );
+					}
+					if ( isset( $country_arr['desc'] ) ) {
+						$location = $country_arr['desc'];
+					}
+				}
+			}
+			//
+			$options = array( '' => __( 'Select a country', 'customer-reviews-woocommerce' ) );
+			$options = array_merge( $options, self::get_country_list() );
+			//
+			echo '<table class="cr-review-location-table form-table"><tbody><tr><td class="cr-review-location-table-first">';
+			echo '<label for="cr_review_country">' . esc_html__( 'Country', 'customer-reviews-woocommerce' ) . '</label>';
+			echo '</td><td>';
+			echo '<select id="cr_review_country" name="cr_review_country" class="cr-review-loc-country">';
+			foreach ( $options as $key => $value ) {
+				$sel = ( $key === $country ) ? ' selected' : '';
+				echo '<option value="' . esc_attr( $key ) .'"' . $sel . '>' . esc_html( $value ) . '</option>';
+			}
+			echo '</select>';
+			echo '</td></tr>';
+			//
+			echo '<tr><td class="cr-review-location-table-first">';
+			echo '<label for="cr_review_location">' . esc_html__( 'Location', 'customer-reviews-woocommerce' ) . '</label>';
+			echo '</td><td>';
+			echo '<input type="text" name="cr_review_location" id="cr_review_location" class="cr-review-loc-desc" value="' . esc_attr( $location ) . '"/>';
+			echo '</td></tr></tbody></table>';
+			wp_nonce_field( 'cr_review_location', 'cr_review_location_nonce' );
+		}
+
 		public function update_cr_review( $comment_ID, $data ) {
 			if( isset( $_POST['ivole_publish_reply_cr_checkbox'] ) && wp_verify_nonce( $_POST['ivole_publish_reply_cr_checkbox'], 'ivole_publish_reply_cr' ) ) {
 				if( isset( $_POST['ivole_editreply_cr'] ) && $comment_ID ) {
@@ -692,6 +743,26 @@ if ( ! class_exists( 'Ivole_Reviews_Admin_Menu' ) ):
 				wp_verify_nonce( $_POST['cr_title_nonce'], 'cr_title' )
 			) {
 				update_comment_meta( $comment_ID, 'cr_rev_title', sanitize_text_field( $_POST['cr_rev_title'] ) );
+			}
+			// saving review location
+			if (
+				wp_verify_nonce( $_POST['cr_review_location_nonce'], 'cr_review_location' )
+			) {
+				$review_country = isset( $_POST['cr_review_country'] ) ? sanitize_text_field( $_POST['cr_review_country'] ) : '';
+				$review_location = isset( $_POST['cr_review_location'] ) ? sanitize_text_field( $_POST['cr_review_location'] ) : '';
+				if (
+					$review_country ||
+					$review_location
+				) {
+					update_comment_meta(
+						$comment_ID,
+						'ivole_country',
+						array(
+							'code' => $review_country,
+							'desc' => $review_location
+						)
+					);
+				}
 			}
 		}
 
@@ -816,6 +887,213 @@ if ( ! class_exists( 'Ivole_Reviews_Admin_Menu' ) ):
 				}
 			}
 			return $value;
+		}
+
+		public static function get_country_list() {
+			return [
+				'AF' => __( 'Afghanistan', 'customer-reviews-woocommerce' ),
+				'AX' => __( 'Aland Islands', 'customer-reviews-woocommerce' ),
+				'AL' => __( 'Albania', 'customer-reviews-woocommerce' ),
+				'DZ' => __( 'Algeria', 'customer-reviews-woocommerce' ),
+				'AS' => __( 'American Samoa', 'customer-reviews-woocommerce' ),
+				'AD' => __( 'Andorra', 'customer-reviews-woocommerce' ),
+				'AO' => __( 'Angola', 'customer-reviews-woocommerce' ),
+				'AI' => __( 'Anguilla', 'customer-reviews-woocommerce' ),
+				'AQ' => __( 'Antarctica', 'customer-reviews-woocommerce' ),
+				'AG' => __( 'Antigua and Barbuda', 'customer-reviews-woocommerce' ),
+				'AR' => __( 'Argentina', 'customer-reviews-woocommerce' ),
+				'AM' => __( 'Armenia', 'customer-reviews-woocommerce' ),
+				'AW' => __( 'Aruba', 'customer-reviews-woocommerce' ),
+				'AU' => __( 'Australia', 'customer-reviews-woocommerce' ),
+				'AT' => __( 'Austria', 'customer-reviews-woocommerce' ),
+				'AZ' => __( 'Azerbaijan', 'customer-reviews-woocommerce' ),
+				'BS' => __( 'Bahamas', 'customer-reviews-woocommerce' ),
+				'BH' => __( 'Bahrain', 'customer-reviews-woocommerce' ),
+				'BD' => __( 'Bangladesh', 'customer-reviews-woocommerce' ),
+				'BB' => __( 'Barbados', 'customer-reviews-woocommerce' ),
+				'BY' => __( 'Belarus', 'customer-reviews-woocommerce' ),
+				'BE' => __( 'Belgium', 'customer-reviews-woocommerce' ),
+				'BZ' => __( 'Belize', 'customer-reviews-woocommerce' ),
+				'BJ' => __( 'Benin', 'customer-reviews-woocommerce' ),
+				'BM' => __( 'Bermuda', 'customer-reviews-woocommerce' ),
+				'BT' => __( 'Bhutan', 'customer-reviews-woocommerce' ),
+				'BO' => __( 'Bolivia', 'customer-reviews-woocommerce' ),
+				'BQ' => __( 'Bonaire, Sint Eustatius and Saba', 'customer-reviews-woocommerce' ),
+				'BA' => __( 'Bosnia and Herzegovina', 'customer-reviews-woocommerce' ),
+				'BW' => __( 'Botswana', 'customer-reviews-woocommerce' ),
+				'BV' => __( 'Bouvet Island', 'customer-reviews-woocommerce' ),
+				'BR' => __( 'Brazil', 'customer-reviews-woocommerce' ),
+				'IO' => __( 'British Indian Ocean Territory', 'customer-reviews-woocommerce' ),
+				'BN' => __( 'Brunei Darussalam', 'customer-reviews-woocommerce' ),
+				'BG' => __( 'Bulgaria', 'customer-reviews-woocommerce' ),
+				'BF' => __( 'Burkina Faso', 'customer-reviews-woocommerce' ),
+				'BI' => __( 'Burundi', 'customer-reviews-woocommerce' ),
+				'KH' => __( 'Cambodia', 'customer-reviews-woocommerce' ),
+				'CM' => __( 'Cameroon', 'customer-reviews-woocommerce' ),
+				'CA' => __( 'Canada', 'customer-reviews-woocommerce' ),
+				'CV' => __( 'Cape Verde', 'customer-reviews-woocommerce' ),
+				'KY' => __( 'Cayman Islands', 'customer-reviews-woocommerce' ),
+				'CF' => __( 'Central African Republic', 'customer-reviews-woocommerce' ),
+				'TD' => __( 'Chad', 'customer-reviews-woocommerce' ),
+				'CL' => __( 'Chile', 'customer-reviews-woocommerce' ),
+				'CN' => __( 'China', 'customer-reviews-woocommerce' ),
+				'CX' => __( 'Christmas Island', 'customer-reviews-woocommerce' ),
+				'CC' => __( 'Cocos (Keeling) Islands', 'customer-reviews-woocommerce' ),
+				'CO' => __( 'Colombia', 'customer-reviews-woocommerce' ),
+				'KM' => __( 'Comoros', 'customer-reviews-woocommerce' ),
+				'CG' => __( 'Congo', 'customer-reviews-woocommerce' ),
+				'CD' => __( 'Congo, Democratic Republic of the', 'customer-reviews-woocommerce' ),
+				'CK' => __( 'Cook Islands', 'customer-reviews-woocommerce' ),
+				'CR' => __( 'Costa Rica', 'customer-reviews-woocommerce' ),
+				'CI' => __( 'Cote dIvoire', 'customer-reviews-woocommerce' ),
+				'HR' => __( 'Croatia', 'customer-reviews-woocommerce' ),
+				'CU' => __( 'Cuba', 'customer-reviews-woocommerce' ),
+				'CW' => __( 'Curacao', 'customer-reviews-woocommerce' ),
+				'CY' => __( 'Cyprus', 'customer-reviews-woocommerce' ),
+				'CZ' => __( 'Czech Republic', 'customer-reviews-woocommerce' ),
+				'DK' => __( 'Denmark', 'customer-reviews-woocommerce' ),
+				'DJ' => __( 'Djibouti', 'customer-reviews-woocommerce' ),
+				'DM' => __( 'Dominica', 'customer-reviews-woocommerce' ),
+				'DO' => __( 'Dominican Republic', 'customer-reviews-woocommerce' ),
+				'EC' => __( 'Ecuador', 'customer-reviews-woocommerce' ),
+				'EG' => __( 'Egypt', 'customer-reviews-woocommerce' ),
+				'SV' => __( 'El Salvador', 'customer-reviews-woocommerce' ),
+				'GQ' => __( 'Equatorial Guinea', 'customer-reviews-woocommerce' ),
+				'ER' => __( 'Eritrea', 'customer-reviews-woocommerce' ),
+				'EE' => __( 'Estonia', 'customer-reviews-woocommerce' ),
+				'ET' => __( 'Ethiopia', 'customer-reviews-woocommerce' ),
+				'FK' => __( 'Falkland Islands (Malvinas)', 'customer-reviews-woocommerce' ),
+				'FO' => __( 'Faroe Islands', 'customer-reviews-woocommerce' ),
+				'FJ' => __( 'Fiji', 'customer-reviews-woocommerce' ),
+				'FI' => __( 'Finland', 'customer-reviews-woocommerce' ),
+				'FR' => __( 'France', 'customer-reviews-woocommerce' ),
+				'GF' => __( 'French Guiana', 'customer-reviews-woocommerce' ),
+				'PF' => __( 'French Polynesia', 'customer-reviews-woocommerce' ),
+				'TF' => __( 'French Southern Territories', 'customer-reviews-woocommerce' ),
+				'GA' => __( 'Gabon', 'customer-reviews-woocommerce' ),
+				'GM' => __( 'Gambia', 'customer-reviews-woocommerce' ),
+				'GE' => __( 'Georgia', 'customer-reviews-woocommerce' ),
+				'DE' => __( 'Germany', 'customer-reviews-woocommerce' ),
+				'GH' => __( 'Ghana', 'customer-reviews-woocommerce' ),
+				'GI' => __( 'Gibraltar', 'customer-reviews-woocommerce' ),
+				'GR' => __( 'Greece', 'customer-reviews-woocommerce' ),
+				'GL' => __( 'Greenland', 'customer-reviews-woocommerce' ),
+				'GD' => __( 'Grenada', 'customer-reviews-woocommerce' ),
+				'GP' => __( 'Guadeloupe', 'customer-reviews-woocommerce' ),
+				'GU' => __( 'Guam', 'customer-reviews-woocommerce' ),
+				'GT' => __( 'Guatemala', 'customer-reviews-woocommerce' ),
+				'GG' => __( 'Guernsey', 'customer-reviews-woocommerce' ),
+				'GN' => __( 'Guinea', 'customer-reviews-woocommerce' ),
+				'GW' => __( 'Guinea-Bissau', 'customer-reviews-woocommerce' ),
+				'GY' => __( 'Guyana', 'customer-reviews-woocommerce' ),
+				'HT' => __( 'Haiti', 'customer-reviews-woocommerce' ),
+				'HM' => __( 'Heard Island and McDonald Islands', 'customer-reviews-woocommerce' ),
+				'VA' => __( 'Vatican City State', 'customer-reviews-woocommerce' ),
+				'HN' => __( 'Honduras', 'customer-reviews-woocommerce' ),
+				'HK' => __( 'Hong Kong', 'customer-reviews-woocommerce' ),
+				'HU' => __( 'Hungary', 'customer-reviews-woocommerce' ),
+				'IS' => __( 'Iceland', 'customer-reviews-woocommerce' ),
+				'IN' => __( 'India', 'customer-reviews-woocommerce' ),
+				'ID' => __( 'Indonesia', 'customer-reviews-woocommerce' ),
+				'IR' => __( 'Iran', 'customer-reviews-woocommerce' ),
+				'IQ' => __( 'Iraq', 'customer-reviews-woocommerce' ),
+				'IE' => __( 'Ireland', 'customer-reviews-woocommerce' ),
+				'IM' => __( 'Isle of Man', 'customer-reviews-woocommerce' ),
+				'IL' => __( 'Israel', 'customer-reviews-woocommerce' ),
+				'IT' => __( 'Italy', 'customer-reviews-woocommerce' ),
+				'JM' => __( 'Jamaica', 'customer-reviews-woocommerce' ),
+				'JP' => __( 'Japan', 'customer-reviews-woocommerce' ),
+				'JE' => __( 'Jersey', 'customer-reviews-woocommerce' ),
+				'JO' => __( 'Jordan', 'customer-reviews-woocommerce' ),
+				'KZ' => __( 'Kazakhstan', 'customer-reviews-woocommerce' ),
+				'KE' => __( 'Kenya', 'customer-reviews-woocommerce' ),
+				'KI' => __( 'Kiribati', 'customer-reviews-woocommerce' ),
+				'KP' => __( 'Korea, North', 'customer-reviews-woocommerce' ),
+				'KR' => __( 'Korea, South', 'customer-reviews-woocommerce' ),
+				'KW' => __( 'Kuwait', 'customer-reviews-woocommerce' ),
+				'KG' => __( 'Kyrgyzstan', 'customer-reviews-woocommerce' ),
+				'LA' => __( 'Laos', 'customer-reviews-woocommerce' ),
+				'LV' => __( 'Latvia', 'customer-reviews-woocommerce' ),
+				'LB' => __( 'Lebanon', 'customer-reviews-woocommerce' ),
+				'LS' => __( 'Lesotho', 'customer-reviews-woocommerce' ),
+				'LR' => __( 'Liberia', 'customer-reviews-woocommerce' ),
+				'LY' => __( 'Libya', 'customer-reviews-woocommerce' ),
+				'LI' => __( 'Liechtenstein', 'customer-reviews-woocommerce' ),
+				'LT' => __( 'Lithuania', 'customer-reviews-woocommerce' ),
+				'LU' => __( 'Luxembourg', 'customer-reviews-woocommerce' ),
+				'MO' => __( 'Macao', 'customer-reviews-woocommerce' ),
+				'MK' => __( 'North Macedonia', 'customer-reviews-woocommerce' ),
+				'MG' => __( 'Madagascar', 'customer-reviews-woocommerce' ),
+				'MW' => __( 'Malawi', 'customer-reviews-woocommerce' ),
+				'MY' => __( 'Malaysia', 'customer-reviews-woocommerce' ),
+				'MV' => __( 'Maldives', 'customer-reviews-woocommerce' ),
+				'ML' => __( 'Mali', 'customer-reviews-woocommerce' ),
+				'MT' => __( 'Malta', 'customer-reviews-woocommerce' ),
+				'MH' => __( 'Marshall Islands', 'customer-reviews-woocommerce' ),
+				'MQ' => __( 'Martinique', 'customer-reviews-woocommerce' ),
+				'MR' => __( 'Mauritania', 'customer-reviews-woocommerce' ),
+				'MU' => __( 'Mauritius', 'customer-reviews-woocommerce' ),
+				'YT' => __( 'Mayotte', 'customer-reviews-woocommerce' ),
+				'MX' => __( 'Mexico', 'customer-reviews-woocommerce' ),
+				'FM' => __( 'Micronesia', 'customer-reviews-woocommerce' ),
+				'MD' => __( 'Moldova', 'customer-reviews-woocommerce' ),
+				'MC' => __( 'Monaco', 'customer-reviews-woocommerce' ),
+				'MN' => __( 'Mongolia', 'customer-reviews-woocommerce' ),
+				'ME' => __( 'Montenegro', 'customer-reviews-woocommerce' ),
+				'MS' => __( 'Montserrat', 'customer-reviews-woocommerce' ),
+				'MA' => __( 'Morocco', 'customer-reviews-woocommerce' ),
+				'MZ' => __( 'Mozambique', 'customer-reviews-woocommerce' ),
+				'MM' => __( 'Myanmar', 'customer-reviews-woocommerce' ),
+				'NA' => __( 'Namibia', 'customer-reviews-woocommerce' ),
+				'NR' => __( 'Nauru', 'customer-reviews-woocommerce' ),
+				'NP' => __( 'Nepal', 'customer-reviews-woocommerce' ),
+				'NL' => __( 'Netherlands', 'customer-reviews-woocommerce' ),
+				'NC' => __( 'New Caledonia', 'customer-reviews-woocommerce' ),
+				'NZ' => __( 'New Zealand', 'customer-reviews-woocommerce' ),
+				'NI' => __( 'Nicaragua', 'customer-reviews-woocommerce' ),
+				'NE' => __( 'Niger', 'customer-reviews-woocommerce' ),
+				'NG' => __( 'Nigeria', 'customer-reviews-woocommerce' ),
+				'NU' => __( 'Niue', 'customer-reviews-woocommerce' ),
+				'NF' => __( 'Norfolk Island', 'customer-reviews-woocommerce' ),
+				'MP' => __( 'Northern Mariana Islands', 'customer-reviews-woocommerce' ),
+				'NO' => __( 'Norway', 'customer-reviews-woocommerce' ),
+				'OM' => __( 'Oman', 'customer-reviews-woocommerce' ),
+				'PK' => __( 'Pakistan', 'customer-reviews-woocommerce' ),
+				'PW' => __( 'Palau', 'customer-reviews-woocommerce' ),
+				'PS' => __( 'Palestine', 'customer-reviews-woocommerce' ),
+				'PA' => __( 'Panama', 'customer-reviews-woocommerce' ),
+				'PG' => __( 'Papua New Guinea', 'customer-reviews-woocommerce' ),
+				'PY' => __( 'Paraguay', 'customer-reviews-woocommerce' ),
+				'PE' => __( 'Peru', 'customer-reviews-woocommerce' ),
+				'PH' => __( 'Philippines', 'customer-reviews-woocommerce' ),
+				'PN' => __( 'Pitcairn', 'customer-reviews-woocommerce' ),
+				'PL' => __( 'Poland', 'customer-reviews-woocommerce' ),
+				'PT' => __( 'Portugal', 'customer-reviews-woocommerce' ),
+				'PR' => __( 'Puerto Rico', 'customer-reviews-woocommerce' ),
+				'QA' => __( 'Qatar', 'customer-reviews-woocommerce' ),
+				'RE' => __( 'Reunion', 'customer-reviews-woocommerce' ),
+				'RO' => __( 'Romania', 'customer-reviews-woocommerce' ),
+				'RU' => __( 'Russia', 'customer-reviews-woocommerce' ),
+				'RW' => __( 'Rwanda', 'customer-reviews-woocommerce' ),
+				'WS' => __( 'Samoa', 'customer-reviews-woocommerce' ),
+				'SM' => __( 'San Marino', 'customer-reviews-woocommerce' ),
+				'SA' => __( 'Saudi Arabia', 'customer-reviews-woocommerce' ),
+				'RS' => __( 'Serbia', 'customer-reviews-woocommerce' ),
+				'SG' => __( 'Singapore', 'customer-reviews-woocommerce' ),
+				'SK' => __( 'Slovakia', 'customer-reviews-woocommerce' ),
+				'SI' => __( 'Slovenia', 'customer-reviews-woocommerce' ),
+				'ZA' => __( 'South Africa', 'customer-reviews-woocommerce' ),
+				'ES' => __( 'Spain', 'customer-reviews-woocommerce' ),
+				'SE' => __( 'Sweden', 'customer-reviews-woocommerce' ),
+				'CH' => __( 'Switzerland', 'customer-reviews-woocommerce' ),
+				'TR' => __( 'Turkey', 'customer-reviews-woocommerce' ),
+				'UA' => __( 'Ukraine', 'customer-reviews-woocommerce' ),
+				'AE' => __( 'United Arab Emirates', 'customer-reviews-woocommerce' ),
+				'GB' => __( 'United Kingdom', 'customer-reviews-woocommerce' ),
+				'US' => __( 'United States', 'customer-reviews-woocommerce' ),
+				'VN' => __( 'Vietnam', 'customer-reviews-woocommerce' ),
+				'ZW' => __( 'Zimbabwe', 'customer-reviews-woocommerce' ),
+			];
 		}
 
 	}

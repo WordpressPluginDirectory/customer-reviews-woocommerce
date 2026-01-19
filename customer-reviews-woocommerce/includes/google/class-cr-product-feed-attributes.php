@@ -53,32 +53,35 @@ if ( ! class_exists( 'CR_Attributes_Product_Feed' ) ):
 				if ( isset( $_POST['cr_google_attribute_age_group'] ) ) {
 					$product_fields['age_group'] = $_POST['cr_google_attribute_age_group'];
 				}
-				if( isset( $_POST['cr_google_attribute_color'] ) ) {
+				if ( isset( $_POST['cr_google_attribute_color'] ) ) {
 					$product_fields['color'] = $_POST['cr_google_attribute_color'];
 				}
-				if( isset( $_POST['cr_google_attribute_gender'] ) ) {
+				if ( isset( $_POST['cr_google_attribute_gender'] ) ) {
 					$product_fields['gender'] = $_POST['cr_google_attribute_gender'];
 				}
-				if( isset( $_POST['cr_google_attribute_material'] ) ) {
+				if ( isset( $_POST['cr_google_attribute_material'] ) ) {
 					$product_fields['material'] = $_POST['cr_google_attribute_material'];
 				}
-				if( isset( $_POST['cr_google_attribute_multipack'] ) ) {
+				if ( isset( $_POST['cr_google_attribute_multipack'] ) ) {
 					$product_fields['multipack'] = $_POST['cr_google_attribute_multipack'];
 				}
-				if( isset( $_POST['cr_google_attribute_size'] ) ) {
+				if ( isset( $_POST['cr_google_attribute_size'] ) ) {
 					$product_fields['size'] = $_POST['cr_google_attribute_size'];
 				}
-				if( isset( $_POST['cr_google_attribute_bundle'] ) ) {
+				if ( isset( $_POST['cr_google_attribute_bundle'] ) ) {
 					$product_fields['bundle'] = $_POST['cr_google_attribute_bundle'];
 				}
-				if( isset( $_POST['cr_google_attribute_unit'] ) ) {
+				if ( isset( $_POST['cr_google_attribute_unit'] ) ) {
 					$product_fields['unit'] = $_POST['cr_google_attribute_unit'];
 				}
-				if( isset( $_POST['cr_google_attribute_unit_pricing_measure'] ) ) {
+				if ( isset( $_POST['cr_google_attribute_unit_pricing_measure'] ) ) {
 					$product_fields['unit_pricing_measure'] = $_POST['cr_google_attribute_unit_pricing_measure'];
 				}
-				if( isset( $_POST['cr_google_attribute_unit_pricing_base_measure'] ) ) {
+				if ( isset( $_POST['cr_google_attribute_unit_pricing_base_measure'] ) ) {
 					$product_fields['unit_pricing_base_measure'] = $_POST['cr_google_attribute_unit_pricing_base_measure'];
+				}
+				if ( isset( $_POST['cr_google_attribute_condition'] ) ) {
+					$product_fields['condition'] = $_POST['cr_google_attribute_condition'];
 				}
 			}
 			$_POST['ivole_product_feed_attributes'] = $product_fields;
@@ -127,6 +130,14 @@ if ( ! class_exists( 'CR_Attributes_Product_Feed' ) ):
 					'id'       => 'ivole_product_feed_enable_multipack',
 					'title'    => __( 'Multipack', 'customer-reviews-woocommerce' ),
 					'desc'     => __( 'Add a multipack attribute to WooCommerce products (on \'Inventory\' tab). The multipack attribute refers to multiple identical products that you, the retailer, combine for sale. If you have created a multipack grouping several identical products together, then use the mulitpack attribute to indicate how many products you have grouped together.', 'customer-reviews-woocommerce' ),
+					'default'  => 'no',
+					'autoload' => false,
+					'type'     => 'checkbox'
+				),
+				array(
+					'id'       => 'ivole_product_feed_enable_condition',
+					'title'    => __( 'Condition', 'customer-reviews-woocommerce' ),
+					'desc'     => __( 'Add a condition attribute to WooCommerce products (on \'General\' tab). The condition attribute refers to condition of products you are selling. It is an optional field for new products but required for used and refurbished products.', 'customer-reviews-woocommerce' ),
 					'default'  => 'no',
 					'autoload' => false,
 					'type'     => 'checkbox'
@@ -207,6 +218,17 @@ if ( ! class_exists( 'CR_Attributes_Product_Feed' ) ):
 							</tr>
 							<tr>
 								<td class="cr-product-feed-categories-td">
+									<select class="cr-product-feed-identifiers-select" name="cr_google_attribute_condition">
+										<option></option>
+										<?php foreach ( $list_fields as $attribute_value => $attribute_name ): ?>
+											<option value="<?php echo $attribute_value; ?>" <?php if ( isset( $option['value']['condition'] ) && $attribute_value == $option['value']['condition'] ) echo "selected"; ?>><?php echo $attribute_name; ?></option>
+										<?php endforeach; ?>
+									</select>
+								</td>
+								<td class="cr-product-feed-categories-td">condition</td>
+							</tr>
+							<tr class="cr-alternate">
+								<td class="cr-product-feed-categories-td">
 									<select class="cr-product-feed-identifiers-select" name="cr_google_attribute_gender">
 										<option></option>
 										<?php foreach ( $list_fields as $attribute_value => $attribute_name ): ?>
@@ -216,7 +238,7 @@ if ( ! class_exists( 'CR_Attributes_Product_Feed' ) ):
 								</td>
 								<td class="cr-product-feed-categories-td">gender</td>
 							</tr>
-							<tr class="cr-alternate">
+							<tr>
 								<td class="cr-product-feed-categories-td">
 									<select class="cr-product-feed-identifiers-select" name="cr_google_attribute_bundle">
 										<option></option>
@@ -227,7 +249,7 @@ if ( ! class_exists( 'CR_Attributes_Product_Feed' ) ):
 								</td>
 								<td class="cr-product-feed-categories-td">is_bundle</td>
 							</tr>
-							<tr>
+							<tr class="cr-alternate">
 								<td class="cr-product-feed-categories-td">
 									<select class="cr-product-feed-identifiers-select" name="cr_google_attribute_material">
 										<option></option>
@@ -373,6 +395,7 @@ if ( ! class_exists( 'CR_Attributes_Product_Feed' ) ):
 			$product_attributes['meta__cr_multipack'] = __( 'Product Multipack', 'customer-reviews-woocommerce' );
 			$product_attributes['meta__cr_bundle'] = __( 'Product Bundle', 'customer-reviews-woocommerce' );
 			$product_attributes['meta__global_unique_id'] = __( 'Global Unique ID', 'customer-reviews-woocommerce' );
+			$product_attributes['meta__cr_condition'] = __( 'Product Condition', 'customer-reviews-woocommerce' );
 
 			$product_attributes['tags_tags'] = __( 'Product Tag', 'customer-reviews-woocommerce' );
 

@@ -8,41 +8,19 @@ if ( ! class_exists( 'CR_Product_Fields' ) ) :
 
 	class CR_Product_Fields {
 
-		private $gtin = false;
-		private $mpn = false;
-		private $brand = false;
-		private $identifier_exists = false;
-		private $multipack = false;
-		private $material = false;
-		private $bundle = false;
-
 		public function __construct() {
-			$this->gtin = ( 'yes' === get_option( 'ivole_product_feed_enable_gtin', 'no' ) );
-			$this->mpn = ( 'yes' === get_option( 'ivole_product_feed_enable_mpn', 'no' ) );
-			$this->brand = ( 'yes' === get_option( 'ivole_product_feed_enable_brand', 'no' ) );
-			$this->identifier_exists = ( 'yes' === get_option( 'ivole_product_feed_enable_identifier_exists', 'no' ) );
-			$this->material = ( 'yes' === get_option( 'ivole_product_feed_enable_material', 'no' ) );
-			$this->multipack = ( 'yes' === get_option( 'ivole_product_feed_enable_multipack', 'no' ) );
-			$this->bundle = ( 'yes' === get_option( 'ivole_product_feed_enable_bundle', 'no' ) );
-
-			if(
-				$this->gtin || $this->mpn || $this->brand ||
-				$this->identifier_exists || $this->multipack || $this->bundle ||
-				$this->material
-			) {
-				add_action( 'woocommerce_product_options_sku', array( $this, 'display_fields' ) );
-				add_action( 'woocommerce_product_options_general_product_data', array( $this, 'display_general_fields' ) );
-				add_action( 'woocommerce_admin_process_product_object', array( $this, 'save_fields' ) );
-				add_action( 'woocommerce_variation_options_pricing', array( $this, 'display_fields_variation'), 10, 3 );
-				add_action( 'woocommerce_variation_options', array( $this, 'display_fields_variation_options'), 10, 3 );
-				add_action( 'woocommerce_admin_process_variation_object', array( $this, 'save_fields_variation' ), 10, 2 );
-			}
+			add_action( 'woocommerce_product_options_sku', array( $this, 'display_fields' ) );
+			add_action( 'woocommerce_product_options_general_product_data', array( $this, 'display_general_fields' ) );
+			add_action( 'woocommerce_admin_process_product_object', array( $this, 'save_fields' ) );
+			add_action( 'woocommerce_variation_options_pricing', array( $this, 'display_fields_variation'), 10, 3 );
+			add_action( 'woocommerce_variation_options', array( $this, 'display_fields_variation_options'), 10, 3 );
+			add_action( 'woocommerce_admin_process_variation_object', array( $this, 'save_fields_variation' ), 10, 2 );
 		}
 
 		public function display_fields() {
 			global $product_object;
-			if( $product_object ) {
-				if( $this->gtin ) {
+			if ( $product_object ) {
+				if ( 'yes' === get_option( 'ivole_product_feed_enable_gtin', 'no' ) ) {
 					woocommerce_wp_text_input(
 						array(
 							'id'          => '_cr_gtin',
@@ -53,7 +31,7 @@ if ( ! class_exists( 'CR_Product_Fields' ) ) :
 						)
 					);
 				}
-				if( $this->mpn ) {
+				if ( 'yes' === get_option( 'ivole_product_feed_enable_mpn', 'no' ) ) {
 					woocommerce_wp_text_input(
 						array(
 							'id'          => '_cr_mpn',
@@ -64,7 +42,7 @@ if ( ! class_exists( 'CR_Product_Fields' ) ) :
 						)
 					);
 				}
-				if( $this->brand ) {
+				if ( 'yes' === get_option( 'ivole_product_feed_enable_brand', 'no' ) ) {
 					woocommerce_wp_text_input(
 						array(
 							'id'          => '_cr_brand',
@@ -75,7 +53,7 @@ if ( ! class_exists( 'CR_Product_Fields' ) ) :
 						)
 					);
 				}
-				if( $this->identifier_exists ) {
+				if ( 'yes' === get_option( 'ivole_product_feed_enable_identifier_exists', 'no' ) ) {
 					woocommerce_wp_checkbox(
 						array(
 							'id'          => '_cr_identifier_exists',
@@ -85,7 +63,7 @@ if ( ! class_exists( 'CR_Product_Fields' ) ) :
 						)
 					);
 				}
-				if( $this->multipack ) {
+				if ( 'yes' === get_option( 'ivole_product_feed_enable_multipack', 'no' ) ) {
 					woocommerce_wp_text_input(
 						array(
 							'id'          => '_cr_multipack',
@@ -96,7 +74,7 @@ if ( ! class_exists( 'CR_Product_Fields' ) ) :
 						)
 					);
 				}
-				if( $this->bundle ) {
+				if ( 'yes' === get_option( 'ivole_product_feed_enable_bundle', 'no' ) ) {
 					$bundle_value = $product_object->get_meta( '_cr_bundle', true, 'edit' );
 					if(
 						'yes' !== $bundle_value &&
@@ -125,19 +103,41 @@ if ( ! class_exists( 'CR_Product_Fields' ) ) :
 		public function display_general_fields() {
 			global $product_object;
 			if ( $product_object ) {
-				if( $this->material ) {
+				$enable_material = ( 'yes' === get_option( 'ivole_product_feed_enable_material', 'no' ) ) ? true : false;
+				$enable_condition = ( 'yes' === get_option( 'ivole_product_feed_enable_condition', 'no' ) ) ? true : false;
+				if ( $enable_material || $enable_condition ) {
 
 					echo '<div class="options_group">';
 
-					woocommerce_wp_text_input(
-						array(
-							'id'          => '_cr_material',
-							'value'       => $product_object->get_meta( '_cr_material', true, 'edit' ),
-							'label'       => '<abbr title="' . esc_attr__( 'Material attribute for Google Shopping', 'customer-reviews-woocommerce' ) . '">' . esc_html__( 'Material', 'customer-reviews-woocommerce' ) . '</abbr>',
-							'desc_tip'    => true,
-							'description' => __( 'Use the material attribute to describe the main fabric or material that your product is made of.', 'customer-reviews-woocommerce' )
-						)
-					);
+					if ( $enable_material ) {
+						woocommerce_wp_text_input(
+							array(
+								'id'          => '_cr_material',
+								'value'       => $product_object->get_meta( '_cr_material', true, 'edit' ),
+								'label'       => '<abbr title="' . esc_attr__( 'Material attribute for Google Shopping', 'customer-reviews-woocommerce' ) . '">' . esc_html__( 'Material', 'customer-reviews-woocommerce' ) . '</abbr>',
+								'desc_tip'    => true,
+								'description' => __( 'Use the material attribute to describe the main fabric or material that your product is made of.', 'customer-reviews-woocommerce' )
+							)
+						);
+					}
+
+					if ( $enable_condition ) {
+						woocommerce_wp_select(
+							array(
+								'id'          => '_cr_condition',
+								'value'       => $product_object->get_meta( '_cr_condition', true, 'edit' ),
+								'label'       => '<abbr title="' . esc_attr__( 'Condition attribute for Google Shopping', 'customer-reviews-woocommerce' ) . '">' . esc_html__( 'Condition', 'customer-reviews-woocommerce' ) . '</abbr>',
+								'desc_tip'    => true,
+								'description' => __( 'Use the condition attribute to describe condition (new, used or refurbished) of products.', 'customer-reviews-woocommerce' ),
+								'options'     => array(
+									''            => __( 'Not specified', 'customer-reviews-woocommerce' ),
+									'new'         => __( 'New', 'customer-reviews-woocommerce' ),
+									'used'        => __( 'Used', 'customer-reviews-woocommerce' ),
+									'refurbished' => __( 'Refurbished', 'customer-reviews-woocommerce' )
+								)
+							)
+						);
+					}
 
 					echo '</div>';
 				}
@@ -145,33 +145,36 @@ if ( ! class_exists( 'CR_Product_Fields' ) ) :
 		}
 
 		public function save_fields( $product ) {
-			if( $this->gtin ) {
+			if ( 'yes' === get_option( 'ivole_product_feed_enable_gtin', 'no' ) ) {
 				$product->update_meta_data( '_cr_gtin', isset( $_POST['_cr_gtin'] ) ? wc_clean( wp_unslash( $_POST['_cr_gtin'] ) ) : null );
 			}
-			if( $this->mpn ) {
+			if ( 'yes' === get_option( 'ivole_product_feed_enable_mpn', 'no' ) ) {
 				$product->update_meta_data( '_cr_mpn', isset( $_POST['_cr_mpn'] ) ? wc_clean( wp_unslash( $_POST['_cr_mpn'] ) ) : null );
 			}
-			if( $this->brand ) {
+			if ( 'yes' === get_option( 'ivole_product_feed_enable_brand', 'no' ) ) {
 				$product->update_meta_data( '_cr_brand', isset( $_POST['_cr_brand'] ) ? wc_clean( wp_unslash( $_POST['_cr_brand'] ) ) : null );
 			}
-			if( $this->identifier_exists ) {
+			if ( 'yes' === get_option( 'ivole_product_feed_enable_identifier_exists', 'no' ) ) {
 				$product->update_meta_data( '_cr_identifier_exists', ! empty( $_POST['_cr_identifier_exists'] ) );
 			}
-			if( $this->material ) {
+			if ( 'yes' === get_option( 'ivole_product_feed_enable_material', 'no' ) ) {
 				$product->update_meta_data( '_cr_material', isset( $_POST['_cr_material'] ) ? wc_clean( wp_unslash( $_POST['_cr_material'] ) ) : null );
 			}
-			if( $this->multipack ) {
+			if ( 'yes' === get_option( 'ivole_product_feed_enable_multipack', 'no' ) ) {
 				$product->update_meta_data( '_cr_multipack', isset( $_POST['_cr_multipack'] ) ? intval( wc_clean( wp_unslash( $_POST['_cr_multipack'] ) ) ) : null );
 			}
-			if( $this->bundle ) {
+			if ( 'yes' === get_option( 'ivole_product_feed_enable_bundle', 'no' ) ) {
 				$product->update_meta_data( '_cr_bundle', ( isset( $_POST['_cr_bundle'] ) && $_POST['_cr_bundle'] ) ? wc_clean( wp_unslash( $_POST['_cr_bundle'] ) ) : null );
+			}
+			if ( 'yes' === get_option( 'ivole_product_feed_enable_condition', 'no' ) ) {
+				$product->update_meta_data( '_cr_condition', isset( $_POST['_cr_condition'] ) ? wc_clean( wp_unslash( $_POST['_cr_condition'] ) ) : null );
 			}
 		}
 
 		public function display_fields_variation( $loop, $variation_data, $variation ) {
 			$variation_object = wc_get_product( $variation->ID );
 			$css_class = 'form-row-first';
-			if( $this->gtin ) {
+			if ( 'yes' === get_option( 'ivole_product_feed_enable_gtin', 'no' ) ) {
 				woocommerce_wp_text_input(
 					array(
 						'id'          => "_cr_gtin_var{$loop}",
@@ -185,7 +188,7 @@ if ( ! class_exists( 'CR_Product_Fields' ) ) :
 				);
 				$css_class = 'form-row-last';
 			}
-			if( $this->mpn ) {
+			if ( 'yes' === get_option( 'ivole_product_feed_enable_mpn', 'no' ) ) {
 				woocommerce_wp_text_input(
 					array(
 						'id'          => "_cr_mpn_var{$loop}",
@@ -203,7 +206,7 @@ if ( ! class_exists( 'CR_Product_Fields' ) ) :
 					$css_class = 'form-row-last';
 				}
 			}
-			if( $this->brand ) {
+			if ( 'yes' === get_option( 'ivole_product_feed_enable_brand', 'no' ) ) {
 				woocommerce_wp_text_input(
 					array(
 						'id'          => "_cr_brand_var{$loop}",
@@ -221,7 +224,7 @@ if ( ! class_exists( 'CR_Product_Fields' ) ) :
 					$css_class = 'form-row-last';
 				}
 			}
-			if( $this->multipack ) {
+			if ( 'yes' === get_option( 'ivole_product_feed_enable_multipack', 'no' ) ) {
 				woocommerce_wp_text_input(
 					array(
 						'id'          => "_cr_multipack_var{$loop}",
@@ -239,7 +242,7 @@ if ( ! class_exists( 'CR_Product_Fields' ) ) :
 					$css_class = 'form-row-last';
 				}
 			}
-			if( $this->bundle ) {
+			if ( 'yes' === get_option( 'ivole_product_feed_enable_bundle', 'no' ) ) {
 				$bundle_var_value = $variation_object->get_meta( '_cr_bundle', true, 'edit' );
 				if(
 					'yes' !== $bundle_var_value &&
@@ -269,7 +272,7 @@ if ( ! class_exists( 'CR_Product_Fields' ) ) :
 					$css_class = 'form-row-last';
 				}
 			}
-			if( $this->material ) {
+			if ( 'yes' === get_option( 'ivole_product_feed_enable_material', 'no' ) ) {
 				woocommerce_wp_text_input(
 					array(
 						'id'          => "_cr_material_var{$loop}",
@@ -281,11 +284,36 @@ if ( ! class_exists( 'CR_Product_Fields' ) ) :
 						'wrapper_class' => 'form-row ' . $css_class
 					)
 				);
+				if ( 'form-row-last' === $css_class ) {
+					$css_class = 'form-row-first';
+				} else {
+					$css_class = 'form-row-last';
+				}
+			}
+			if ( 'yes' === get_option( 'ivole_product_feed_enable_condition', 'no' ) ) {
+				woocommerce_wp_select(
+					array(
+						'id'          => "_cr_condition_var{$loop}",
+						'name'        => "_cr_condition_var[{$loop}]",
+						'value'       => $variation_object->get_meta( '_cr_condition', true, 'edit' ),
+						'label'       => '<abbr title="' . esc_attr__( 'Condition attribute for Google Shopping', 'customer-reviews-woocommerce' ) . '">' . esc_html__( 'Condition', 'customer-reviews-woocommerce' ) . '</abbr>',
+						'desc_tip'    => true,
+						'description' => __( 'Use the condition attribute to describe condition (new, used or refurbished) of products.', 'customer-reviews-woocommerce' ),
+						'options'     => array(
+							''            => __( 'Not specified', 'customer-reviews-woocommerce' ),
+							'new'         => __( 'New', 'customer-reviews-woocommerce' ),
+							'used'        => __( 'Used', 'customer-reviews-woocommerce' ),
+							'refurbished' => __( 'Refurbished', 'customer-reviews-woocommerce' )
+						),
+						'wrapper_class' => 'form-row ' . $css_class
+					)
+				);
 			}
 		}
+
 		public function display_fields_variation_options( $loop, $variation_data, $variation ) {
 			$variation_object = wc_get_product( $variation->ID );
-			if( $this->identifier_exists ) {
+			if ( 'yes' === get_option( 'ivole_product_feed_enable_identifier_exists', 'no' ) ) {
 				?>
 				<label class="tips" data-tip="<?php esc_attr_e( 'Enable the option to add "identifier_exists = no" in Google Shopping feed for this variation.', 'customer-reviews-woocommerce' ); ?>">
 					<?php esc_html_e( 'identifier_exists', 'customer-reviews-woocommerce' ); ?>
@@ -294,29 +322,34 @@ if ( ! class_exists( 'CR_Product_Fields' ) ) :
 				<?php
 			}
 		}
+
 		public function save_fields_variation( $variation, $i ) {
-			if( $this->gtin ) {
+			if ( 'yes' === get_option( 'ivole_product_feed_enable_gtin', 'no' ) ) {
 				$variation->update_meta_data( '_cr_gtin', isset( $_POST['_cr_gtin_var'][$i] ) ? wc_clean( wp_unslash( $_POST['_cr_gtin_var'][$i] ) ) : null );
 			}
-			if( $this->mpn ) {
+			if ( 'yes' === get_option( 'ivole_product_feed_enable_mpn', 'no' ) ) {
 				$variation->update_meta_data( '_cr_mpn', isset( $_POST['_cr_mpn_var'][$i] ) ? wc_clean( wp_unslash( $_POST['_cr_mpn_var'][$i] ) ) : null );
 			}
-			if( $this->brand ) {
+			if ( 'yes' === get_option( 'ivole_product_feed_enable_brand', 'no' ) ) {
 				$variation->update_meta_data( '_cr_brand', isset( $_POST['_cr_brand_var'][$i] ) ? wc_clean( wp_unslash( $_POST['_cr_brand_var'][$i] ) ) : null );
 			}
-			if( $this->identifier_exists ) {
+			if ( 'yes' === get_option( 'ivole_product_feed_enable_identifier_exists', 'no' ) ) {
 				$variation->update_meta_data( '_cr_identifier_exists', ! empty( $_POST['_cr_identifier_exists_var'][$i] ) );
 			}
-			if( $this->multipack ) {
+			if ( 'yes' === get_option( 'ivole_product_feed_enable_multipack', 'no' ) ) {
 				$variation->update_meta_data( '_cr_multipack', isset( $_POST['_cr_multipack_var'][$i] ) ? intval( wc_clean( wp_unslash( $_POST['_cr_multipack_var'][$i] ) ) ) : null );
 			}
-			if( $this->bundle ) {
+			if ( 'yes' === get_option( 'ivole_product_feed_enable_bundle', 'no' ) ) {
 				$variation->update_meta_data( '_cr_bundle', ( isset( $_POST['_cr_bundle_var'][$i] ) && $_POST['_cr_bundle_var'][$i] ) ? wc_clean( wp_unslash( $_POST['_cr_bundle_var'][$i] ) ) : null );
 			}
-			if( $this->material ) {
+			if ( 'yes' === get_option( 'ivole_product_feed_enable_material', 'no' ) ) {
 				$variation->update_meta_data( '_cr_material', isset( $_POST['_cr_material_var'][$i] ) ? wc_clean( wp_unslash( $_POST['_cr_material_var'][$i] ) ) : null );
 			}
+			if ( 'yes' === get_option( 'ivole_product_feed_enable_condition', 'no' ) ) {
+				$variation->update_meta_data( '_cr_condition', isset( $_POST['_cr_condition_var'][$i] ) ? wc_clean( wp_unslash( $_POST['_cr_condition_var'][$i] ) ) : null );
+			}
 		}
+
 	}
 
 endif;

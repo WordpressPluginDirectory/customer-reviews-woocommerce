@@ -336,6 +336,7 @@ class CR_Reviews_Top_Charts {
 		$countReferralViews = 0;
 		$countReferralClicks = 0;
 		$referralCountsUpdates = false;
+		$referralSalesAmount = 0;
 
 		$licenseKey = get_option( 'ivole_license_key', '' );
 		if ( $licenseKey ) {
@@ -345,11 +346,13 @@ class CR_Reviews_Top_Charts {
 				false !== $cachedFormReferralStats &&
 				is_object( $cachedFormReferralStats ) &&
 				property_exists( $cachedFormReferralStats, 'views' ) &&
-				property_exists( $cachedFormReferralStats, 'clicks' )
+				property_exists( $cachedFormReferralStats, 'clicks' ) &&
+				property_exists( $cachedFormReferralStats, 'sales' )
 			) {
 				$countReferralViews = $cachedFormReferralStats->views + 0;
 				$countReferralClicks = $cachedFormReferralStats->clicks + 0;
 				$referralCountsUpdates = true;
+				$referralSalesAmount = $cachedFormReferralStats->sales + 0;
 			} else {
 				// there are no cached stats
 				$data = array(
@@ -382,11 +385,15 @@ class CR_Reviews_Top_Charts {
 							$countReferralViews = $result->formsReferrals->countViews + 0;
 							$countReferralClicks = $result->formsReferrals->countClicks + 0;
 							$referralCountsUpdates = true;
+							// calculate referral sales
+							$referralSalesAmount = self::get_orders_referrals();
+							//
 							set_transient(
 								'cr_form_referrals_stats',
 								(object) array(
 									'views' => $countReferralViews,
-									'clicks' => $countReferralClicks
+									'clicks' => $countReferralClicks,
+									'sales' => $referralSalesAmount
 								),
 								DAY_IN_SECONDS
 							);
@@ -422,9 +429,42 @@ class CR_Reviews_Top_Charts {
 						'label' => __( 'Product Recommendations on Review Forms', 'customer-reviews-woocommerce' )
 					),
 					'count' => html_entity_decode( number_format_i18n( $countReferralClicks, 0 ) )
+				),
+				'referralSales' => (object) array(
+					'label' => __( 'Sales', 'customer-reviews-woocommerce' ),
+					'help' => __( 'Revenue attributed to purchases influenced by product recommendations shown on aggregated review forms.', 'customer-reviews-woocommerce' ),
+					'helpLinks' => (object) array(
+						'link' => 'https://help.cusrev.com/support/solutions/articles/43000592925-product-recommendations-on-review-forms',
+						'label' => __( 'Product Recommendations on Review Forms', 'customer-reviews-woocommerce' )
+					),
+					'amount' => html_entity_decode( wc_price( $referralSalesAmount, array(
+						'in_span' => false
+					) ) )
 				)
 			)
 		);
+	}
+
+	public static function get_orders_referrals() {
+		$orders = wc_get_orders( array(
+			'status'   => wc_get_is_paid_statuses(), // completed, processing, etc.
+			'limit'    => -1,
+			'return'   => 'ids',
+			'meta_key' => '_cr_referral_session',
+		) );
+
+		$total = 0.0;
+
+		foreach ( $orders as $order_id ) {
+			$order = wc_get_order( $order_id );
+			if ( ! $order ) {
+				continue;
+			}
+
+			$total += (float) $order->get_total();
+		}
+
+		return $total;
 	}
 
 }

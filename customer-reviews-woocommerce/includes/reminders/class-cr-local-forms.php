@@ -253,13 +253,13 @@ if ( ! class_exists( 'CR_Local_Forms' ) ) :
 					$cr_form_cust_f_name = $firstname;
 				}
 			}
-			$wc_terms_page = wc_get_page_id( 'terms' );
-			if( $wc_terms_page ) {
-				$wc_terms_page = get_permalink( $wc_terms_page );
+			$cr_terms_page = get_option( 'ivole_form_terms_page', wc_get_page_id( 'terms' ) );
+			if ( $cr_terms_page ) {
+				$cr_terms_page = get_permalink( $cr_terms_page );
 			} else {
-				$wc_terms_page = '';
+				$cr_terms_page = '';
 			}
-			$cr_form_terms = sprintf( __( 'By submitting your review, you agree to the <a href="%s" target="_blank" rel="noopener noreferrer">terms and conditions</a>.', 'customer-reviews-woocommerce' ), esc_url( $wc_terms_page ) );
+			$cr_form_terms = sprintf( __( 'By submitting your review, you agree to the <a href="%s" target="_blank" rel="noopener noreferrer">terms and conditions</a>.', 'customer-reviews-woocommerce' ), esc_url( $cr_terms_page ) );
 			$cr_form_submit = __( 'Submit', 'customer-reviews-woocommerce' );
 			ob_start();
 			include( $template );

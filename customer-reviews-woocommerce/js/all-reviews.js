@@ -658,6 +658,11 @@
 			keepAlive: false,
 		} );
 
+		jQuery( ".cr-review-loc-country" ).select2( {
+			templateResult: cr_formatCountry,
+			templateSelection: cr_formatCountry
+		} );
+
 	});
 
 	function cr_updatePending( diff ) {
@@ -746,4 +751,18 @@
 			}
 		});
 	}
+
+	function cr_formatCountry( country ) {
+		if ( ! country.id ) {
+			return jQuery(
+				`<span class="cr-select-country-cont"><span class="cr-select-country-name">${country.text}</span></span>`
+			);
+		}
+		const code = country.id.toLowerCase();
+		const flag = `<img src="${cr_ajax_object.flags_path}${code}.svg" class="cr-select-country-flag" />`;
+		return jQuery(
+			`<span class="cr-select-country-cont">${flag}<span class="cr-select-country-name">${country.text}</span></span>`
+		);
+	}
+
 }());

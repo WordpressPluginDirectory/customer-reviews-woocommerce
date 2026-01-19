@@ -760,9 +760,9 @@ if ( ! class_exists( 'CR_Settings_Admin_Menu' ) ):
 		}
 
 		public function display_features_banner( $current_tab ) {
-			if( 'review_reminder' === $current_tab ) {
-				if( ! $this->is_pro_addon_activated() ) {
-					if( $this->is_banner_hidden( 'review_reminder' ) ) {
+			if ( 'review_reminder' === $current_tab ) {
+				if ( ! $this->is_pro_addon_activated() ) {
+					if ( $this->is_banner_hidden( 'review_reminder' ) ) {
 						return;
 					}
 					?>
@@ -796,15 +796,58 @@ if ( ! class_exists( 'CR_Settings_Admin_Menu' ) ):
 						</div>
 					<?php
 				}
-			} elseif( 'emails' === $current_tab ) {
-				if( isset( $_GET['section'] ) ) {
+			} elseif ( 'forms' === $current_tab ) {
+				if ( ! $this->is_pro_addon_activated() ) {
+					if ( $this->is_banner_hidden( 'forms' ) ) {
+						return;
+					}
+					?>
+						<div class="cr-features-banner">
+								<div class="cr-features-bnr-col1">
+									<img src="<?php echo plugins_url( 'img/reminders-banner.svg', dirname( dirname( __FILE__ ) ) ) ; ?>">
+								</div>
+								<div class="cr-features-bnr-col2">
+									<div class="cr-features-bnr-title">Get more with a Pro version</div>
+									<div class="cr-features-bnr-subtitle">Install a Pro add-on to get advanced customization options and dedicated email support</div>
+									<div class="cr-features-bnr-sec">On-site review forms</div>
+									<div class="cr-features-bnr-uls">
+										<ul class="cr-features-bnr-ul">
+											<li>Add unlimited rating criteria and questions to on-site review forms</li>
+										</ul>
+									</div>
+									<div class="cr-features-bnr-sec">Aggregated review forms</div>
+									<div class="cr-features-bnr-uls">
+										<ul class="cr-features-bnr-ul">
+											<li>Add single, multiple-choice and comment questions</li>
+											<li>Add shop logo to aggregated review forms</li>
+											<li>Customize labels and colors on aggregated forms</li>
+											<li>Limit products on review forms for large orders</li>
+										</ul>
+										<ul class="cr-features-bnr-ul">
+											<li>Set default display name format</li>
+											<li>Customize anonymous display names</li>
+											<li>Show or hide product prices</li>
+											<li>Customize label of the "Submit" button</li>
+										</ul>
+									</div>
+									<div class="cr-features-bnr-other">And other powerful features...</div>
+									<div class="cr-features-bnr-buttons">
+										<a class="button cr-features-bnr-pricing" href="https://www.cusrev.com/business/pricing.html?utm_source=wp_plugin&utm_medium=forms" target="_blank" rel="noopener noreferrer">See pricing<img src="<?php esc_attr_e( untrailingslashit( plugin_dir_url( dirname( dirname( __FILE__ ) ) ) ) . '/img/external-link-2.svg' ); ?>"></a>
+										<a class="cr-features-bnr-hide" href="#" data-banner="forms">Hide this message</a>
+									</div>
+								</div>
+						</div>
+					<?php
+				}
+			} elseif ( 'emails' === $current_tab ) {
+				if ( isset( $_GET['section'] ) ) {
 					$section = $_GET['section'];
-					if(
+					if (
 						'review_reminder' === $section ||
 						'review_discount' === $section
 					) {
-						if( ! $this->is_pro_addon_activated() ) {
-							if( $this->is_banner_hidden( 'emails_' . $section ) ) {
+						if ( ! $this->is_pro_addon_activated() ) {
+							if ( $this->is_banner_hidden( 'emails_' . $section ) ) {
 								return;
 							}
 							?>
@@ -866,8 +909,8 @@ if ( ! class_exists( 'CR_Settings_Admin_Menu' ) ):
 
 		private function is_banner_hidden( $banner ) {
 			$hidden_banners = get_option( 'ivole_hidden_banners', array() );
-			if( $hidden_banners && is_array( $hidden_banners ) ) {
-				if( isset( $hidden_banners[$banner] ) && 1 === $hidden_banners[$banner] ) {
+			if ( $hidden_banners && is_array( $hidden_banners ) ) {
+				if ( isset( $hidden_banners[$banner] ) && 1 === $hidden_banners[$banner] ) {
 					return true;
 				}
 			}

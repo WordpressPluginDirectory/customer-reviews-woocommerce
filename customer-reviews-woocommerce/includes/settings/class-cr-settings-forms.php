@@ -461,6 +461,26 @@ if ( ! class_exists( 'CR_Forms_Settings' ) ) :
 				);
 			} else {
 				// and some features of review forms are available only for local forms
+				$wc_terms_page = wc_get_page_id( 'terms' );
+				$wc_terms_page = $wc_terms_page ? $wc_terms_page : '';
+				$this->settings[75] = array(
+					'title'   => __( 'Terms and Privacy Page', 'customer-reviews-woocommerce' ),
+					'type' => 'single_select_page_with_search',
+					'id'      => 'ivole_form_terms_page',
+					'default' => $wc_terms_page,
+					'class'    => 'wc-page-search',
+					'css'      => 'min-width:300px;',
+					'desc' => __( 'Select the page customers will be directed to when clicking the Terms and Conditions link on aggregated review forms.', 'customer-reviews-woocommerce' ),
+					'desc_tip' => true,
+					'args'     => array(
+						'exclude' =>
+							array(
+								wc_get_page_id( 'checkout' ),
+								wc_get_page_id( 'myaccount' ),
+							),
+					),
+					'autoload' => false
+				);
 				$this->settings[105] = array(
 					'title'   => __( 'Expiry Period', 'customer-reviews-woocommerce' ),
 					'type'    => 'number',
