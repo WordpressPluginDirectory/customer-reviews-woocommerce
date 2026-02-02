@@ -12,7 +12,7 @@ if ( ! class_exists( 'CR_Referrals' ) ) :
 			add_filter( 'query_vars', array( $this, 'referral_session' ) );
 			add_action( 'parse_query', array( $this, 'check_referral' ) );
 			// Trigger for new order
-			add_action( 'woocommerce_checkout_update_order_meta', array( $this, 'update_order_meta' ), 10, 2 );
+			add_action( 'woocommerce_new_order', array( $this, 'update_order_meta' ), 10, 2 );
 			// Triggers for paid orders
 			add_action( 'woocommerce_order_status_processing', array( $this, 'referral_trigger' ) );
 			add_action( 'woocommerce_order_status_completed', array( $this, 'referral_trigger' ) );
@@ -125,10 +125,10 @@ if ( ! class_exists( 'CR_Referrals' ) ) :
 			}
 		}
 
-		public function update_order_meta( $order_id, $data ) {
-			if( $order_id ) {
+		public function update_order_meta( $order_id, $order ) {
+			if ( $order_id ) {
 				$order = wc_get_order( $order_id );
-				if( $order && isset( $_COOKIE['cr_referral_session'] ) ) {
+				if ( $order && isset( $_COOKIE['cr_referral_session'] ) ) {
 					// If the referral cookie is present, save it as a meta field in the order
 					$order->update_meta_data( '_cr_referral_session', sanitize_text_field( $_COOKIE['cr_referral_session'] ) );
 					$order->save();

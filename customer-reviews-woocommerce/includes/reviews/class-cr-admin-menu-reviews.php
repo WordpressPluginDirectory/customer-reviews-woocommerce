@@ -746,6 +746,7 @@ if ( ! class_exists( 'Ivole_Reviews_Admin_Menu' ) ):
 			}
 			// saving review location
 			if (
+				isset( $_POST['cr_review_location_nonce'] ) &&
 				wp_verify_nonce( $_POST['cr_review_location_nonce'], 'cr_review_location' )
 			) {
 				$review_country = isset( $_POST['cr_review_country'] ) ? sanitize_text_field( $_POST['cr_review_country'] ) : '';

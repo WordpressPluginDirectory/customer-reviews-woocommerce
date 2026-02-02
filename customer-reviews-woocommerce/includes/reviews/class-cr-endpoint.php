@@ -313,14 +313,14 @@ if ( ! class_exists( 'CR_Endpoint' ) ) :
 											if( wp_attachment_is( 'image', $body2->order->items[$i]->media[$m] ) ) {
 												$media_meta[] = array(
 													'meta' => CR_Reviews::REVIEWS_META_LCL_IMG,
-													'value' => $body2->order->items[$i]->media[$m]
+													'value' => esc_url_raw( $body2->order->items[$i]->media[$m] )
 												);
 											}
 											// video
 											else if( wp_attachment_is( 'video', $body2->order->items[$i]->media[$m] ) ) {
 												$media_meta[] = array(
 													'meta' => CR_Reviews::REVIEWS_META_LCL_VID,
-													'value' => $body2->order->items[$i]->media[$m]
+													'value' => esc_url_raw( $body2->order->items[$i]->media[$m] )
 												);
 											}
 										}
@@ -333,14 +333,14 @@ if ( ! class_exists( 'CR_Endpoint' ) ) :
 											if( 'image' === $body2->order->items[$i]->media[$m]->type && isset( $body2->order->items[$i]->media[$m]->href ) ) {
 												$media_meta[] = array(
 													'meta' => 'ivole_review_image',
-													'value' => array( 'url' => $body2->order->items[$i]->media[$m]->href )
+													'value' => array( 'url' => esc_url_raw( $body2->order->items[$i]->media[$m]->href ) )
 												);
 											}
 											// video
 											else if( 'video' === $body2->order->items[$i]->media[$m]->type && isset( $body2->order->items[$i]->media[$m]->href) ) {
 												$media_meta[] = array(
 													'meta' => 'ivole_review_video',
-													'value' => array( 'url' => $body2->order->items[$i]->media[$m]->href )
+													'value' => array( 'url' => esc_url_raw( $body2->order->items[$i]->media[$m]->href ) )
 												);
 											}
 										}

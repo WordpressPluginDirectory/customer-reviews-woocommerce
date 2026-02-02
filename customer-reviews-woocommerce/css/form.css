@@ -610,6 +610,124 @@
 	vertical-align: middle;
 	margin-left: 7px;
 }
+.cr-form-recommend-title {
+	font-weight: normal;
+	display: none;
+}
+.cr-form-recommend-cont {
+	display: flex;
+	flex-direction: row;
+	column-gap: 16px;
+	row-gap: 32px;
+	padding: 0 32px 40px 32px;
+	flex-wrap: wrap;
+}
+.cr-form-recommend-cont .cr-form-recommend-prod-container {
+	display: flex;
+	flex-direction: column;
+	flex: 1 1 calc(33.333% - 16px);
+	border: 1px solid #C1CDD0;
+	position: relative;
+}
+.cr-form-recommend-cont .cr-form-recommend-prod-container .cr-form-recommend-prod-price {
+	display: block;
+	position: absolute;
+	top: 10px;
+	left: 0;
+	padding: 3px 10px;
+	font-size: 16px;
+	font-weight: normal;
+}
+.cr-form-recommend-cont .cr-form-recommend-prod-container img {
+	max-width: 100%;
+	height: auto;
+	display: block;
+	margin: 0 auto;
+	width: 100%;
+	object-fit: cover;
+}
+.cr-form-recommend-cont .cr-form-recommend-prod-container .cr-form-recommend-prod-content {
+	padding: 10px 10px 10px 10px;
+	border-top: 1px solid #C1CDD0;
+}
+.cr-form-recommend-cont .cr-form-recommend-prod-container .cr-form-recommend-prod-content .cr-form-recommend-prod-title {
+	font-size: 18px;
+	line-height: 1.2em;
+	height: 2.4em;
+	font-weight: bold;
+	margin: 0;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	word-break: break-word;
+	margin: 0 0 10px 0;
+}
+.cr-form-recommend-cont .cr-form-recommend-prod-container .cr-form-recommend-prod-content .cr-form-recommend-prod-rating {
+	margin: 0 0 10px 0;
+}
+.cr-form-recommend-cont .cr-form-recommend-prod-container .cr-form-recommend-prod-content .cr-form-recommend-prod-rating .cr-form-recommend-prod-rating-top {
+	display: flex;
+	flex-direction: row;
+	column-gap: 7px;
+	align-items: center;
+}
+.cr-form-recommend-cont .cr-form-recommend-prod-container .cr-form-recommend-prod-content .cr-form-recommend-prod-rating .cr-form-recommend-prod-rating-rng {
+	font-size: 16px;
+	font-weight: bold;
+}
+.cr-form-recommend-cont .cr-form-recommend-prod-container .cr-form-recommend-prod-content .cr-form-recommend-prod-rating .cr-form-recommend-prod-rating-btm {
+	font-size: 14px;
+	font-weight: normal;
+}
+.cr-form-recommend-cont .cr-form-recommend-prod-container .cr-form-recommend-prod-content .cr-form-recommend-prod-buy {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 40px;
+	text-decoration: none;
+	font-weight: bold;
+	font-size: 16px;
+	border: none;
+	cursor: pointer;
+	transition: filter 0.2s;
+}
+.cr-form-recommend-cont .cr-form-recommend-prod-container .cr-form-recommend-prod-content .cr-form-recommend-prod-buy:hover {
+	filter: brightness(95%);
+}
+.crstar-rating-svg {
+	margin: 0;
+	position: relative;
+	display: block;
+}
+.crstar-rating-svg .cr-rating-icon-base {
+	display: flex;
+	height: 20px;
+	column-gap: 1px;
+}
+.crstar-rating-svg .cr-rating-icon-frnt {
+	display: flex;
+	height: 20px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	overflow: hidden;
+	column-gap: 1px;
+}
+.crstar-rating-svg .cr-rating-icon-base .cr-rating-icon-bg {
+	width: 20px;
+	height: 20px;
+	fill: none;
+	stroke: #FFBC00;
+}
+.crstar-rating-svg .cr-rating-icon-frnt .cr-rating-icon {
+	width: 20px;
+	height: 20px;
+	fill: #FFBC00;
+	flex-shrink: 0;
+}
 
 @font-face {
 	font-display: swap;

@@ -9,13 +9,23 @@ if ( ! wc_review_ratings_enabled() ) {
 }
 
 $count_answered = 0;
-if( class_exists( 'CR_Qna' ) ) {
-	$count_answered = CR_Qna::get_count_answered( $cr_product->get_id() );
+$rating_count   = 0;
+$review_count   = 0;
+$average        = 0;
+$count_products = count( $cr_products );
+
+foreach ( $cr_products as $prod ) {
+	if ( class_exists( 'CR_Qna' ) ) {
+		$count_answered += CR_Qna::get_count_answered( $prod->get_id() );
+	}
+	$rating_count += $prod->get_rating_count();
+	$review_count += $prod->get_review_count();
+	$average      += $prod->get_average_rating();
 }
 
-$rating_count = $cr_product->get_rating_count();
-$review_count = $cr_product->get_review_count();
-$average      = $cr_product->get_average_rating();
+if ( 0 < $average && 0 < $count_products ) {
+	$average = (float) $average / $count_products;
+}
 
 if ( 0 <= $rating_count || 0 < $count_answered ) : ?>
 

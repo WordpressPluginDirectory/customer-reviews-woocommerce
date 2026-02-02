@@ -929,41 +929,47 @@ class CR_Google_Shopping_Prod_Feed {
 		$value = '';
 		switch ( $field_type ) {
 			case 'product':
-			$func = 'get_' . $field_key;
-			$temp = $product->$func();
-			if( $temp ) {
-				$value = $temp;
-			}
-			break;
+				$func = 'get_' . $field_key;
+				$temp = $product->$func();
+				if ( $temp ) {
+					$value = $temp;
+				}
+				break;
 			case 'attribute':
-			$temp = $product->get_attribute( $field_key );
-			if( $temp ) {
-				$value = $temp;
-			}
-			break;
+				$temp = $product->get_attribute( $field_key );
+				if ( $temp ) {
+					$value = $temp;
+				}
+				break;
 			case 'meta':
-			$temp = $product->get_meta( $field_key, true );
-			if( $temp ) {
-				$value = $temp;
-			}
-			break;
+				if ( '_global_unique_id' === $field_key ) {
+					$temp = $product->get_global_unique_id();
+				} else {
+					$temp = $product->get_meta( $field_key, true );
+				}
+				if ( $temp ) {
+					$value = $temp;
+				}
+				break;
 			case 'tags':
-			$temp = $product->get_tag_ids();
-			if( $temp && is_array( $temp ) && count( $temp ) > 0 ) {
-				$tag_name = get_term( $temp[0], 'product_tag' );
-				if( $tag_name && $tag_name->name ) {
-					$value = $tag_name->name;
+				$temp = $product->get_tag_ids();
+				if ( $temp && is_array( $temp ) && count( $temp ) > 0 ) {
+					$tag_name = get_term( $temp[0], 'product_tag' );
+					if ( $tag_name && $tag_name->name ) {
+						$value = $tag_name->name;
+					}
 				}
-			}
-			break;
+				break;
 			case 'terms':
-			$temp = get_the_terms( $product->get_id(), $field_key );
-			if( $temp && !is_wp_error( $temp ) && is_array( $temp ) ) {
-				if( 0 < count( $temp ) ) {
-					$value = $temp[0]->name;
+				$temp = get_the_terms( $product->get_id(), $field_key );
+				if ( $temp && !is_wp_error( $temp ) && is_array( $temp ) ) {
+					if ( 0 < count( $temp ) ) {
+						$value = $temp[0]->name;
+					}
 				}
-			}
-			break;
+				break;
+			default:
+				break;
 		}
 
 		return strval( $value );

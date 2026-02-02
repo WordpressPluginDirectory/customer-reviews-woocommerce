@@ -36,7 +36,7 @@ const fetcher = ( [url, nonce, hook] ) => {
   ).then(res => res.json());
 };
 
-function Reviews({ nonce, referrals }) {
+function Reviews({ nonce }) {
 
   let ratingCard = {
     title: __( "Ratings", "customer-reviews-woocommerce" ),
@@ -98,27 +98,25 @@ function Reviews({ nonce, referrals }) {
     content: ""
   };
   let refsSWR;
-  if ( referrals ) {
-    referralsCard.content = (
-      <Card withBorder padding="xs" className={referralsCard.class}>
-        <Group justify="space-between">
-          <Text size="xs" c="dimmed" className={classes.title}>
-            {referralsCard.title}
-          </Text>
-          <IconThumbUp size="1.4rem" stroke={1.5} className={classes.icon} />
-        </Group>
-        <Skeleton width="100%" radius="sm" mt={10} className={classes.skel}>
-          <IconEye size="1.4rem" stroke={1.5} className={classes.iconReferrals} />
-          <Text fz="xs">...</Text>
-          <Text fz="sm">...</Text>
-        </Skeleton>
-      </Card>
-    );
-    refsSWR = useSWR(
-      [ ajaxurl, nonce, "cr_get_reviews_top_row_refs" ],
-      fetcher
-    );
-  }
+  referralsCard.content = (
+    <Card withBorder padding="xs" className={referralsCard.class}>
+      <Group justify="space-between">
+        <Text size="xs" c="dimmed" className={classes.title}>
+          {referralsCard.title}
+        </Text>
+        <IconThumbUp size="1.4rem" stroke={1.5} className={classes.icon} />
+      </Group>
+      <Skeleton width="100%" radius="sm" mt={10} className={classes.skel}>
+        <IconEye size="1.4rem" stroke={1.5} className={classes.iconReferrals} />
+        <Text fz="xs">...</Text>
+        <Text fz="sm">...</Text>
+      </Skeleton>
+    </Card>
+  );
+  refsSWR = useSWR(
+    [ ajaxurl, nonce, "cr_get_reviews_top_row_refs" ],
+    fetcher
+  );
 
   const statsSWR = useSWR(
     [ ajaxurl, nonce, "cr_get_reviews_top_row_stats" ],
@@ -299,7 +297,7 @@ function Reviews({ nonce, referrals }) {
     );
   }
 
-  if ( referrals && refsSWR && ! refsSWR.error && ! refsSWR.isLoading ) {
+  if ( refsSWR && ! refsSWR.error && ! refsSWR.isLoading ) {
     // referralsCard
     let referralsCardContent = '';
     if ( -1 == refsSWR.data ) {

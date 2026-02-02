@@ -335,81 +335,60 @@ class CR_Reviews_Top_Charts {
 
 		$countReferralViews = 0;
 		$countReferralClicks = 0;
-		$referralCountsUpdates = false;
 		$referralSalesAmount = 0;
 
-		$licenseKey = get_option( 'ivole_license_key', '' );
-		if ( $licenseKey ) {
-			// check if there are cached stats
-			$cachedFormReferralStats = get_transient( 'cr_form_referrals_stats' );
-			if (
-				false !== $cachedFormReferralStats &&
-				is_object( $cachedFormReferralStats ) &&
-				property_exists( $cachedFormReferralStats, 'views' ) &&
-				property_exists( $cachedFormReferralStats, 'clicks' ) &&
-				property_exists( $cachedFormReferralStats, 'sales' )
-			) {
-				$countReferralViews = $cachedFormReferralStats->views + 0;
-				$countReferralClicks = $cachedFormReferralStats->clicks + 0;
-				$referralCountsUpdates = true;
-				$referralSalesAmount = $cachedFormReferralStats->sales + 0;
+		// check if there are cached stats
+		$cachedFormReferralStats = get_transient( 'cr_form_referrals_stats' );
+		if (
+			// cache is available
+			false !== $cachedFormReferralStats &&
+			is_object( $cachedFormReferralStats ) &&
+			property_exists( $cachedFormReferralStats, 'views' ) &&
+			property_exists( $cachedFormReferralStats, 'clicks' ) &&
+			property_exists( $cachedFormReferralStats, 'sales' )
+		) {
+			$countReferralViews = $cachedFormReferralStats->views + 0;
+			$countReferralClicks = $cachedFormReferralStats->clicks + 0;
+			$referralSalesAmount = $cachedFormReferralStats->sales + 0;
+		} else {
+			// there are no cached stats
+			$licenseKey = get_option( 'ivole_license_key', '' );
+			$cusrev_hosted = 'yes' === get_option( 'ivole_verified_reviews', 'no' ) ? true : false;
+			// if there is a license key, try to retrieve stats for CusRev-hosted review forms
+			if ( $licenseKey ) {
+				$cusrev_stats = self::get_cusrev_referral_stats( $licenseKey );
+				if ( $cusrev_hosted && ! $cusrev_stats ) {
+					die( '-4' );
+				}
 			} else {
-				// there are no cached stats
-				$data = array(
-					'shopDomain' => Ivole_Email::get_blogurl(),
-					'licenseKey' => $licenseKey
-				);
-				$api_url = 'https://api.cusrev.com/v2/track-referrals';
-				$data_string = json_encode($data);
-				$ch = curl_init();
-				curl_setopt( $ch, CURLOPT_URL, $api_url );
-				curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-				curl_setopt( $ch, CURLOPT_CUSTOMREQUEST, "POST" );
-				curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
-				curl_setopt( $ch, CURLOPT_HTTPHEADER, array(
-					'Content-Type: application/json',
-					'Content-Length: ' . strlen( $data_string ) )
-				);
-				$result = curl_exec( $ch );
-				$httpcode = curl_getinfo( $ch, CURLINFO_HTTP_CODE );
-				if ( 200 === $httpcode ) {
-					$result = json_decode( $result );
-					if (
-						is_object( $result ) &&
-						property_exists( $result, 'formsReferrals' )
-					) {
-						if (
-							property_exists( $result->formsReferrals, 'countViews' ) &&
-							property_exists( $result->formsReferrals, 'countClicks' )
-						) {
-							$countReferralViews = $result->formsReferrals->countViews + 0;
-							$countReferralClicks = $result->formsReferrals->countClicks + 0;
-							$referralCountsUpdates = true;
-							// calculate referral sales
-							$referralSalesAmount = self::get_orders_referrals();
-							//
-							set_transient(
-								'cr_form_referrals_stats',
-								(object) array(
-									'views' => $countReferralViews,
-									'clicks' => $countReferralClicks,
-									'sales' => $referralSalesAmount
-								),
-								DAY_IN_SECONDS
-							);
-						}
-					}
+				// if the pluging is using CusRev-hosted review forms, return an error
+				if ( $cusrev_hosted ) {
+					die( '-3' );
 				}
 			}
-		} else {
-			die( '-3' );
+			// irrespective of license key, try to retrieve stats for self-hosted review forms
+			$local_stats = self::get_local_referral_stats();
+			// sum up cusrev and local stats
+			if ( $cusrev_stats ) {
+				$local_stats['views'] += $cusrev_stats['views'];
+				$local_stats['clicks'] += $cusrev_stats['clicks'];
+			}
+			$countReferralViews = $local_stats['views'];
+			$countReferralClicks = $local_stats['clicks'];
+			// calculate referral sales
+			$referralSalesAmount = self::get_orders_referrals();
+			// save cache
+			set_transient(
+				'cr_form_referrals_stats',
+				(object) array(
+					'views' => $countReferralViews,
+					'clicks' => $countReferralClicks,
+					'sales' => $referralSalesAmount
+				),
+				DAY_IN_SECONDS
+			);
 		}
-
-		// error handling
-		if ( ! $referralCountsUpdates ) {
-			die( '-4' );
-		}
-
+		// send results to the frontend
 		wp_send_json(
 			array(
 				'referralViews' => (object) array(
@@ -465,6 +444,84 @@ class CR_Reviews_Top_Charts {
 		}
 
 		return $total;
+	}
+
+	public static function get_cusrev_referral_stats( $license_key ) {
+		$data = array(
+			'shopDomain' => Ivole_Email::get_blogurl(),
+			'licenseKey' => $license_key
+		);
+		$api_url = 'https://api.cusrev.com/v2/track-referrals';
+		$data_string = json_encode($data);
+		$ch = curl_init();
+		curl_setopt( $ch, CURLOPT_URL, $api_url );
+		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+		curl_setopt( $ch, CURLOPT_CUSTOMREQUEST, "POST" );
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+		curl_setopt( $ch, CURLOPT_HTTPHEADER, array(
+			'Content-Type: application/json',
+			'Content-Length: ' . strlen( $data_string ) )
+		);
+		$result = curl_exec( $ch );
+		$httpcode = curl_getinfo( $ch, CURLINFO_HTTP_CODE );
+		if ( 200 === $httpcode ) {
+			$result = json_decode( $result );
+			if (
+				is_object( $result ) &&
+				property_exists( $result, 'formsReferrals' )
+			) {
+				if (
+					property_exists( $result->formsReferrals, 'countViews' ) &&
+					property_exists( $result->formsReferrals, 'countClicks' )
+				) {
+					return array(
+						'views'  => $result->formsReferrals->countViews + 0,
+						'clicks' => $result->formsReferrals->countClicks + 0
+					);
+				}
+			}
+		}
+		return false;
+	}
+
+	public static function get_local_referral_stats() {
+		global $wpdb;
+
+		$table_name = $wpdb->prefix . CR_Local_Forms_Ajax::RECOMMENDATION_EVENTS_TABLE;
+
+		$stats = array(
+			'views'  => 0,
+			'clicks' => 0,
+		);
+
+		// handle missing table
+		if ( $wpdb->get_var(
+			$wpdb->prepare( "SHOW TABLES LIKE %s", $table_name )
+		) !== $table_name ) {
+			return $stats;
+		}
+
+		$results = $wpdb->get_results(
+			"
+			SELECT
+				event_type,
+				COUNT(*) AS cnt
+			FROM {$table_name}
+			WHERE event_type IN ('view', 'click')
+			GROUP BY event_type
+			",
+			ARRAY_A
+		);
+
+		foreach ( $results as $row ) {
+			if ( $row['event_type'] === 'view' ) {
+				$stats['views'] = (int) $row['cnt'];
+			} elseif ( $row['event_type'] === 'click' ) {
+				$stats['clicks'] = (int) $row['cnt'];
+			}
+		}
+
+		return $stats;
 	}
 
 }

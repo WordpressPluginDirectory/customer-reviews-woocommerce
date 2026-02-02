@@ -89,6 +89,12 @@
 					data: crData,
 					context: this,
 					success: function( response ) {
+						if ( response.success ) {
+							if ( response.data ) {
+								jQuery( ".cr-form-recommend-title" ).show();
+								jQuery( ".cr-form-recommend-cont" ).html(response.data);
+							}
+						}
 						jQuery( ".cr-form-submit" ).removeClass( "cr-form-loading" );
 						jQuery( ".cr-form" ).addClass( "cr-form-edit-submit" );
 					},
@@ -98,6 +104,7 @@
 		} );
 		// edit reviews
 		jQuery( ".cr-form-edit" ).on( "click", function( t ) {
+			jQuery( ".cr-form-recommend-cont" ).empty();
 			jQuery( ".cr-form-submit" ).removeClass( "cr-form-loading" );
 			jQuery( ".cr-form" ).removeClass( "cr-form-edit-submit" );
 		} );
@@ -267,5 +274,44 @@
 				}
 			}, "json" );
 		} );
+		// click on recommendation
+		jQuery( ".cr-form" ).on( "click", ".cr-form-recommend-prod-buy", function( t ) {
+			let link = jQuery(this);
+
+			// Prevent double counting
+			if (link.data('crclicked')) {
+				return;
+			}
+			link.data('crclicked', true);
+
+			let productId = link.data('productid');
+			let formId    = link.data('formid');
+
+			if ( ! productId || ! formId ) {
+				return;
+			}
+
+			crSendClickEvent(productId, formId);
+		} );
 	} );
+
+	function crSendClickEvent(productId, formId) {
+		var data = new FormData();
+		data.append('action', 'cr_local_forms_event_click');
+		data.append('product_id', productId);
+		data.append('form_id', formId);
+		data.append('nonce', crEventNonce);
+
+		if (navigator.sendBeacon) {
+			navigator.sendBeacon(crAjaxURL, data);
+		} else {
+			fetch(crAjaxURL, {
+				method: 'POST',
+				body: data,
+				credentials: 'same-origin',
+				keepalive: true
+			});
+		}
+	}
+
 } )();

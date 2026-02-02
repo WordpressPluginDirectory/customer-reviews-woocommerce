@@ -239,8 +239,8 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 					for( $i = 0; $i < $pics_n; $i++ ) {
 						if ( isset( $pics[$i]['url'] ) ) {
 							$output .= '<div class="iv-comment-image cr-comment-image-ext" data-reviewid="' . $comment->comment_ID . '">';
-							$output .= '<a href="' . $pics[$i]['url'] . $cr_query . '" class="cr-comment-a" rel="nofollow"><img src="' .
-							$pics[$i]['url'] . $cr_query . '" alt="' .
+							$output .= '<a href="' . esc_url( $pics[$i]['url'] . $cr_query ) . '" class="cr-comment-a" rel="nofollow"><img src="' .
+							esc_url( $pics[$i]['url'] . $cr_query ) . '" alt="' .
 							esc_attr(
 								sprintf( __( 'Image #%1$d from %2$s', 'customer-reviews-woocommerce' ), $k, $comment->comment_author )
 							) . '" loading="lazy"></a>';
@@ -257,8 +257,8 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 						if( $attachmentSrc ) {
 							$temp_comment_content_flag = true;
 							$temp_comment_content .= '<div class="iv-comment-image">';
-							$temp_comment_content .= '<a href="' . $attachmentSrc[0] . '" class="cr-comment-a"><img src="' .
-							$attachmentSrc[0] . '" width="' . $attachmentSrc[1] . '" height="' . $attachmentSrc[2] .
+							$temp_comment_content .= '<a href="' . esc_url( $attachmentSrc[0] ) . '" class="cr-comment-a"><img src="' .
+							esc_url( $attachmentSrc[0] ) . '" width="' . $attachmentSrc[1] . '" height="' . $attachmentSrc[2] .
 							'" alt="' .
 							esc_attr(
 								sprintf( __( 'Image #%1$d from %2$s', 'customer-reviews-woocommerce' ), $k, $comment->comment_author )
@@ -277,7 +277,7 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 						$output .= '<div class="cr-comment-video cr-comment-video-ext cr-comment-video-' . $k . '" data-reviewid="' . $comment->comment_ID . '">';
 						$output .= '<div class="cr-video-cont">';
 						$output .= '<video preload="metadata" class="cr-video-a" ';
-						$output .= 'src="' . $pics_v[$i]['url'] . $cr_query . '#t=0.1';
+						$output .= 'src="' . esc_url( $pics_v[$i]['url'] . $cr_query . '#t=0.1' );
 						$output .= '"></video>';
 						$output .= '<img class="cr-comment-videoicon" src="' . plugin_dir_url( dirname( dirname( __FILE__ ) ) ) . 'img/video.svg" ';
 						$output .= 'alt="' .
@@ -299,7 +299,7 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 							$temp_comment_content .= '<div class="cr-comment-video cr-comment-video-' . $k . '">';
 							$temp_comment_content .= '<div class="cr-video-cont">';
 							$temp_comment_content .= '<video preload="metadata" class="cr-video-a" ';
-							$temp_comment_content .= 'src="' . $attachmentUrl . '#t=0.1';
+							$temp_comment_content .= 'src="' . esc_url( $attachmentUrl . '#t=0.1' );
 							$temp_comment_content .= '"></video>';
 							$temp_comment_content .= '<img class="cr-comment-videoicon" src="' . plugin_dir_url( dirname( dirname( __FILE__ ) ) ) . 'img/video.svg" ';
 							$temp_comment_content .= 'alt="' .
@@ -1796,6 +1796,7 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 	public static function get_star_rating_svg( $rating, $count, $color ) {
 		$templateFile = plugin_dir_path( dirname( dirname( __FILE__ ) ) ) . '/templates/cr-rating-icon.php';
 		$templateFileBg = plugin_dir_path( dirname( dirname( __FILE__ ) ) ) . '/templates/cr-rating-icon-bg.php';
+		$rating = is_numeric( $rating ) ? (float)$rating : 0;
 
 		$inline_icon_style = '';
 		if ( $color ) {

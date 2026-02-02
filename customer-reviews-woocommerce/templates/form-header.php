@@ -29,12 +29,13 @@ if ( property_exists( $cr_jquery, 'src' ) && $cr_jquery->src ) {
 			var crMediaUploadMaxSize = "<?php echo intval( $cr_form_media_upload_max_size ); ?>";
 			var crErrorMaxFileSize = "<?php echo strval( $cr_form_error_max_file_size ); ?>";
 			var crErrorFileType = "<?php echo strval( $cr_form_error_file_type ); ?>";
+			var crEventNonce = "<?php echo esc_js( wp_create_nonce( 'cr_click_event' ) ); ?>";
 		</script>
 		<style>
 			.cr-form-header, .cr-form-top-line {
 				background-color: <?php echo esc_attr( $cr_form_color1 ); ?> !important;
 			}
-			.cr-form-item-title div, .cr-form-customer-title {
+			.cr-form-item-title div, .cr-form-customer-title, .cr-form-recommend-prod-price {
 				background-color: <?php echo esc_attr( $cr_form_color1 ); ?> !important;
 				color: <?php echo esc_attr( $cr_form_color2 ); ?> !important;
 			}
@@ -67,7 +68,7 @@ if ( property_exists( $cr_jquery, 'src' ) && $cr_jquery->src ) {
 			.cr-form-submit .cr-form-submit-loader::after {
 				background-color: <?php echo esc_attr( $cr_form_color3 ); ?> !important;
 			}
-			.cr-form-edit {
+			.cr-form-edit, .cr-form-recommend-prod-buy {
 				color: <?php echo esc_attr( $cr_form_color2 ); ?> !important;
 				background-color: <?php echo esc_attr( $cr_form_color3 ); ?> !important;
 			}
@@ -85,6 +86,9 @@ if ( property_exists( $cr_jquery, 'src' ) && $cr_jquery->src ) {
 			}
 			.cr-form-item-media-preview .cr-upload-images-containers .cr-upload-video-thumbnail {
 				fill: <?php echo esc_attr( $cr_form_color3 ); ?> !important;
+			}
+			.cr-form-recommend-prod-rating-rng {
+				color: <?php echo esc_attr( $cr_form_color3 ); ?> !important;
 			}
 		</style>
 	</head>
@@ -110,6 +114,13 @@ if ( property_exists( $cr_jquery, 'src' ) && $cr_jquery->src ) {
 							</span>
 						</div>
 					</div>
+					<div class="cr-form-item-title cr-form-recommend-title">
+						<div>
+							<?php echo esc_html( $cr_form_edit_recom ); ?>
+						</div>
+					</div>
+				</div>
+				<div class="cr-form-recommend-cont">
 				</div>
 				<div class="cr-form-content cr-form-body">
 					<div class="cr-form-title">

@@ -1045,8 +1045,8 @@ class CR_Reviews_List_Table extends WP_List_Table {
 				for ( $i = 0; $i < $pics_n; $i++ ) {
 					if ( isset( $pics[$i]['url'] ) ) {
 						echo '<div class="iv-comment-image">';
-						echo '<a href="' . $pics[$i]['url'] . $cr_query . '" class="cr-comment-a" rel="nofollow"><img src="' .
-						$pics[$i]['url'] . $cr_query . '" alt="' .
+						echo '<a href="' . esc_url( $pics[$i]['url'] . $cr_query ) . '" class="cr-comment-a" rel="nofollow"><img src="' .
+						esc_url( $pics[$i]['url'] . $cr_query ) . '" alt="' .
 						esc_attr(
 							sprintf( __( 'Image #%1$d from %2$s', 'customer-reviews-woocommerce' ), $k, $comment->comment_author )
 						) . '"></a>';
@@ -1066,8 +1066,8 @@ class CR_Reviews_List_Table extends WP_List_Table {
 					if ( $attachmentUrl ) {
 						$temp_comment_content_flag = true;
 						$temp_comment_content .= '<div class="iv-comment-image">';
-						$temp_comment_content .= '<a href="' . $attachmentUrl . '" class="cr-comment-a"><img src="' .
-						$attachmentUrl . '" alt="' .
+						$temp_comment_content .= '<a href="' . esc_url( $attachmentUrl ) . '" class="cr-comment-a"><img src="' .
+						esc_url( $attachmentUrl ) . '" alt="' .
 						esc_attr(
 							sprintf( __( 'Image #%1$d from %2$s', 'customer-reviews-woocommerce' ), $k, $comment->comment_author )
 						) . '" /></a>';
@@ -1088,7 +1088,7 @@ class CR_Reviews_List_Table extends WP_List_Table {
 					echo '<div class="cr-comment-video cr-comment-video-' . $k . '">';
 					echo '<div class="cr-video-cont">';
 					echo '<video preload="metadata" class="cr-video-a" ';
-					echo 'src="' . $pics_v[$i]['url'] . $cr_query . '#t=0.1';
+					echo 'src="' . esc_url( $pics_v[$i]['url'] . $cr_query . '#t=0.1' );
 					echo '"></video>';
 					echo '<img class="cr-comment-videoicon" src="' . plugin_dir_url( dirname( dirname( __FILE__ ) ) ) . 'img/video.svg" ';
 					echo 'alt="' . esc_attr(
@@ -1112,7 +1112,7 @@ class CR_Reviews_List_Table extends WP_List_Table {
 						$temp_comment_content .= '<div class="cr-comment-video cr-comment-video-' . $k . '">';
 						$temp_comment_content .= '<div class="cr-video-cont">';
 						$temp_comment_content .= '<video preload="metadata" class="cr-video-a" ';
-						$temp_comment_content .= 'src="' . $attachmentUrl . '#t=0.1';
+						$temp_comment_content .= 'src="' . esc_url( $attachmentUrl . '#t=0.1' );
 						$temp_comment_content .= '"></video>';
 						$temp_comment_content .= '<img class="cr-comment-videoicon" src="' . plugin_dir_url( dirname( dirname( __FILE__ ) ) ) . 'img/video.svg" ';
 						$temp_comment_content .= 'alt="' . esc_attr(

@@ -180,5 +180,7 @@ $reminders_table = $wpdb->prefix . 'cr_reminders_log';
 $wpdb->query( "DROP TABLE IF EXISTS `$reminders_table`;" );
 $wpmail_log_table = $wpdb->prefix . 'cr_wpmail_log';
 $wpdb->query( "DROP TABLE IF EXISTS `$wpmail_log_table`;" );
+$reco_events_table = $wpdb->prefix . 'cr_reco_events';
+$wpdb->query( "DROP TABLE IF EXISTS `$reco_events_table`;" );
 
 wp_cache_flush();

@@ -146,6 +146,7 @@ if ( ! class_exists( 'CR_Local_Forms' ) ) :
 			$cr_form_subm_header = __( 'Thank you for submitting a review!', 'customer-reviews-woocommerce' );
 			$cr_form_subm_desc = __( 'Your response has been recorded.', 'customer-reviews-woocommerce' );
 			$cr_form_edit_label = __( 'Edit your review', 'customer-reviews-woocommerce' );
+			$cr_form_edit_recom = __( 'Items You May Be Interested In', 'customer-reviews-woocommerce' );
 			$cr_form_edit = $this->display_name ? true : false;
 			$cr_form_color1 = $this->cr_form_color1;
 			$cr_form_color2 = $this->cr_form_color2;

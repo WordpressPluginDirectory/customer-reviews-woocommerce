@@ -9,7 +9,6 @@ if ( elReviews ) {
   reviewCharts.render(
     <Reviews
       nonce={elReviews.getAttribute('data-nonce')}
-      referrals={elReviews.getAttribute('data-referrals')}
     />
   );
 }

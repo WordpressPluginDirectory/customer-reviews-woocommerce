@@ -14,6 +14,8 @@ if ( ! class_exists( 'CR_Local_Forms_Ajax' ) ) :
 		private $form_header;
 		private $form_body;
 
+		const RECOMMENDATION_EVENTS_TABLE = 'cr_reco_events';
+
 		public function __construct() {
 			add_action( 'wp_ajax_cr_local_forms_submit', array( $this, 'submit_form' ) );
 			add_action( 'wp_ajax_nopriv_cr_local_forms_submit', array( $this, 'submit_form' ) );
@@ -21,13 +23,19 @@ if ( ! class_exists( 'CR_Local_Forms_Ajax' ) ) :
 			add_action( 'wp_ajax_nopriv_cr_local_forms_upload_media', array( $this, 'upload_media' ) );
 			add_action( 'wp_ajax_cr_local_forms_delete_media', array( $this, 'delete_media' ) );
 			add_action( 'wp_ajax_nopriv_cr_local_forms_delete_media', array( $this, 'delete_media' ) );
+			add_action( 'wp_ajax_cr_local_forms_event_click', array( $this, 'event_click' ) );
+			add_action( 'wp_ajax_nopriv_cr_local_forms_event_click', array( $this, 'event_click' ) );
 		}
 
 		public function submit_form() {
-			if( isset( $_POST['formId'] ) ) {
+			if ( isset( $_POST['formId'] ) ) {
+				// fetch product recommendations
+				$recom_prods = $this->get_recommended_products();
+				$recommendations = $this->get_recommended_products_html( $recom_prods, $_POST['formId'] );
+				//
 				if( CR_Local_Forms::TEST_FORM === $_POST['formId'] ) {
 					// submission of a test form
-					return;
+					wp_send_json_success( $recommendations );
 				} else {
 					global $wpdb;
 					$table_name = $wpdb->prefix . CR_Local_Forms::FORMS_TABLE;
@@ -80,6 +88,8 @@ if ( ! class_exists( 'CR_Local_Forms_Ajax' ) ) :
 							CR_Endpoint::create_review( $req, true );
 						};
 					}
+					$this->record_recommendations_views( $recom_prods, $_POST['formId'], 'view' );
+					wp_send_json_success( $recommendations );
 				}
 			}
 		}
@@ -221,6 +231,222 @@ if ( ! class_exists( 'CR_Local_Forms_Ajax' ) ) :
 				}
 			}
 			return $update_result;
+		}
+
+		private function get_recommended_products() {
+			if ( ! function_exists( 'wc_get_products' ) ) {
+				return [];
+			}
+
+			$products = wc_get_products( [
+				'limit'        => 3,
+				'status'       => 'publish',
+				'stock_status' => 'instock',
+				'visibility'   => 'catalog',
+				'orderby'      => 'rand',
+			] );
+
+			$result = [];
+
+			foreach ( $products as $product ) {
+				$image_id  = $product->get_image_id();
+				$image_url = $image_id
+					? wp_get_attachment_image_url( $image_id, 'woocommerce_thumbnail' )
+					: wc_placeholder_img_src();
+
+				$result[] = [
+					'id'           => $product->get_id(),
+					'name'         => $product->get_name(),
+					'price'        => wc_get_price_to_display( $product ),
+					'rating'       => (float) $product->get_average_rating(),
+					'review_count' => (int) $product->get_review_count(),
+					'image'        => $image_url,
+					'permalink'    => get_permalink( $product->get_id() ),
+				];
+			}
+
+			return $result;
+		}
+
+		private function get_recommended_products_html( $products, $form_id ) {
+			if ( empty( $products ) ) {
+				return '';
+			}
+
+			// create HTML to return
+			ob_start();
+			foreach ( $products as $product ) :
+				?>
+				<div class="cr-form-recommend-prod-container">
+					<div class="cr-form-recommend-prod-price">
+						<?php echo wc_price( $product['price'] ); ?>
+					</div>
+
+					<img
+						src="<?php echo esc_url( $product['image'] ); ?>"
+						alt="<?php echo esc_attr( $product['name'] ); ?>"
+					/>
+
+					<div class="cr-form-recommend-prod-content">
+						<h3 class="cr-form-recommend-prod-title">
+							<?php echo esc_html( $product['name'] ); ?>
+						</h3>
+
+						<div class="cr-form-recommend-prod-rating">
+							<div class="cr-form-recommend-prod-rating-top">
+								<div class="cr-form-recommend-prod-rating-rng">
+									<?php echo esc_html( number_format( $product['rating'], 1 ) ); ?>
+								</div>
+								<div class="cr-form-recommend-prod-rating-str">
+									<?php
+										$label = sprintf( __( 'Rated %s out of 5', 'customer-reviews-woocommerce' ), number_format( $product['rating'], 1 ) );
+										$html_star_rating = '<div class="crstar-rating-svg" role="img" aria-label="' . esc_attr( $label ) . '">' . CR_Reviews::get_star_rating_svg( $product['rating'], 0, '' ) . '</div>';
+										echo $html_star_rating;
+									?>
+								</div>
+							</div>
+							<div class="cr-form-recommend-prod-rating-btm">
+								<?php
+									$count = (int) $product['review_count'];
+									echo esc_html(
+										sprintf(
+											/* translators: %s: number of reviews */
+											_n( '%s review', '%s reviews', $count, 'customer-reviews-woocommerce' ),
+											$count
+										)
+									);
+								?>
+							</div>
+						</div>
+
+						<a
+							href="<?php echo esc_url(
+								add_query_arg(
+									array(
+										'referral_session' => $form_id,
+										'utm_source' => wp_parse_url( home_url(), PHP_URL_HOST ),
+										'utm_medium' => 'cusrev_recommendation',
+										'utm_content' => 'local_aggregated_review_form'
+									),
+									$product['permalink']
+									)
+								); ?>"
+							class="cr-form-recommend-prod-buy"
+							data-productid="<?php echo esc_attr( $product['id'] ); ?>"
+							data-formid="<?php echo esc_attr( $form_id ); ?>"
+						>
+							<?php esc_html_e( 'View', 'customer-reviews-woocommerce' ); ?>
+						</a>
+					</div>
+				</div>
+				<?php
+			endforeach;
+
+			$html = ob_get_clean();
+
+			return $html;
+		}
+
+		private function record_recommendations_views( $products, $form_id, $event_type ) {
+			global $wpdb;
+
+			$event_type = sanitize_key( $event_type );
+
+			// Allowed event types (must match ENUM definition)
+			$allowed_event_types = array(
+				'view',
+				'click',
+				'sale',
+			);
+			if ( ! in_array( $event_type, $allowed_event_types, true ) ) {
+				return;
+			}
+
+			// Extract and normalize product IDs
+			$product_ids = array();
+
+			foreach ( $products as $product ) {
+				if ( is_array( $product ) && isset( $product['id'] ) ) {
+					$product_ids[] = (int) $product['id'];
+				}
+			}
+
+			$product_ids = array_unique( array_filter( $product_ids ) );
+
+			if ( empty( $product_ids ) || ! $form_id ) {
+				return;
+			}
+
+			$table_name = $wpdb->prefix . self::RECOMMENDATION_EVENTS_TABLE;
+
+			// ensure table exists
+			if ( $wpdb->get_var(
+				$wpdb->prepare( "SHOW TABLES LIKE %s", $table_name )
+			) !== $table_name ) {
+
+				require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+
+				$charset_collate = $wpdb->get_charset_collate();
+
+				$sql = "
+					CREATE TABLE {$table_name} (
+						id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+						form_id VARCHAR(190) NOT NULL,
+						product_id BIGINT(20) UNSIGNED NOT NULL,
+						event_type ENUM('view','click','sale') NOT NULL,
+						created_at DATETIME NOT NULL,
+						PRIMARY KEY (id),
+						KEY product (product_id),
+						KEY form (form_id),
+						KEY event (event_type),
+						KEY created_at (created_at)
+					) {$charset_collate};
+				";
+
+				dbDelta( $sql );
+			}
+
+			// insert impression events
+			$now = current_time( 'mysql' );
+
+			$placeholders = array();
+			$values       = array();
+
+			foreach ( $product_ids as $product_id ) {
+				$placeholders[] = "(%s, %d, %s, %s)";
+				$values[]       = $form_id;
+				$values[]       = $product_id;
+				$values[]       = $event_type;
+				$values[]       = $now;
+			}
+
+			$sql = "
+				INSERT INTO {$table_name}
+					(form_id, product_id, event_type, created_at)
+				VALUES " . implode( ', ', $placeholders );
+
+			$wpdb->query( $wpdb->prepare( $sql, $values ) );
+		}
+
+		public function event_click() {
+			check_ajax_referer( 'cr_click_event', 'nonce' );
+
+			$product_id = isset( $_POST['product_id'] ) ? (int) $_POST['product_id'] : 0;
+			$form_id    = isset( $_POST['form_id'] ) ? $_POST['form_id'] : '';
+
+			if ( ! $product_id || ! $form_id || 'test' === $form_id ) {
+				wp_die();
+			}
+
+			$this->record_recommendations_views(
+				array(
+					array( 'id' => $product_id ),
+				),
+				$form_id,
+				'click'
+			);
+
+			wp_die();
 		}
 
 	}
