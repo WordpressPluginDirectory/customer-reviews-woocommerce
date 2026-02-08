@@ -963,10 +963,7 @@ if ( ! class_exists( 'CR_Qna' ) ) :
 		}
 
 		public function clear_qna_cache( $comment_id ) {
-			if (
-				$comment_id &&
-				'cr_qna' === get_comment_type( $comment_id )
-			) {
+			if ( $comment_id ) {
 				$cache_key = 'cr_qna_answered_' . intval( $comment_id );
 				wp_cache_delete( $cache_key, 'cr_qna' );
 			}

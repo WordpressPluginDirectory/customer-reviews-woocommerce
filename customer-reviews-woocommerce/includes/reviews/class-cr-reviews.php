@@ -125,6 +125,7 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 			add_action( 'cr_review_after_comment_text', array( $this, 'display_incentivized_badge' ), 8 );
 			// a filter for voting buttons on customer uploaded media pop-up
 			add_filter( 'cr_reviews_media_voting', array( $this, 'display_media_voting' ), 10, 2 );
+			add_action( 'delete_comment', array( $this, 'delete_review_media_attachments' ), 10, 2 );
 		}
 		public function custom_fields_attachment( $comment_form ) {
 			$post_id = get_the_ID();
@@ -1856,6 +1857,33 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 			}
 		}
 		return (bool) $verified;
+	}
+
+	public function delete_review_media_attachments( $comment_id, $comment ) {
+		$meta_keys = array(
+			self::REVIEWS_META_LCL_IMG,
+			self::REVIEWS_META_LCL_VID,
+		);
+		foreach ( $meta_keys as $meta_key ) {
+			$meta_values = get_comment_meta( $comment_id, $meta_key, false );
+
+			if ( empty( $meta_values ) ) {
+				continue;
+			}
+
+			foreach ( $meta_values as $attachment_id ) {
+
+				$attachment_id = absint( $attachment_id );
+				if ( ! $attachment_id ) {
+					continue;
+				}
+
+				// Make sure the attachment exists and is a media item
+				if ( 'attachment' === get_post_type( $attachment_id ) ) {
+					wp_delete_attachment( $attachment_id, true );
+				}
+			}
+		}
 	}
 }
 

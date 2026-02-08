@@ -313,14 +313,14 @@ if ( ! class_exists( 'CR_Endpoint' ) ) :
 											if( wp_attachment_is( 'image', $body2->order->items[$i]->media[$m] ) ) {
 												$media_meta[] = array(
 													'meta' => CR_Reviews::REVIEWS_META_LCL_IMG,
-													'value' => esc_url_raw( $body2->order->items[$i]->media[$m] )
+													'value' => intval( $body2->order->items[$i]->media[$m] )
 												);
 											}
 											// video
 											else if( wp_attachment_is( 'video', $body2->order->items[$i]->media[$m] ) ) {
 												$media_meta[] = array(
 													'meta' => CR_Reviews::REVIEWS_META_LCL_VID,
-													'value' => esc_url_raw( $body2->order->items[$i]->media[$m] )
+													'value' => intval( $body2->order->items[$i]->media[$m] )
 												);
 											}
 										}

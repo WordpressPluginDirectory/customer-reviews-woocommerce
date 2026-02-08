@@ -4,7 +4,7 @@ Tags: woocommerce, review plugin, review reminder, customer reviews, review for 
 Requires at least: 4.5
 Tested up to: 6.9
 Requires PHP: 7.2
-Stable tag: 5.99.0
+Stable tag: 5.99.2
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl.html
 
@@ -234,6 +234,11 @@ If you would like to change how reviews are sorted on product pages, it is possi
 
 == Changelog ==
 
+= 5.99.2 =
+* A temporary fix for 'WooCommerce Recent Reviews' widget in admin dashboard 
+= 5.99.1 =
+* Improvement: media files attached to a review are automatically removed when the review is deleted
+* Bug fix: media files uploaded to local aggregated review forms not linked to reviews correctly
 = 5.99.0 =
 * New feature: display of product recommendation statistics on the Reviews page in WordPress admin console
 * New feature: 'group' parameter for the [cusrev_reviews_rating] shortcode to display aggregated ratings of child products linked under a grouped product
