@@ -93,9 +93,15 @@ if ( ! class_exists( 'CR_Sender' ) ) :
 				} else {
 					// skip sending because EU customer but no consent was received
 					if (
-						'yes' !== $consent &&
-						self::is_eu_customer( $order ) &&
-						'yes' === get_option( 'ivole_verified_reviews', 'no' )
+						(
+							'yes' !== $consent &&
+							'yes' === get_option( 'ivole_customer_consent', 'no' )
+						) ||
+						(
+							'yes' !== $consent &&
+							self::is_eu_customer( $order ) &&
+							'yes' === get_option( 'ivole_verified_reviews', 'no' )
+						)
 					) {
 						$order->add_order_note( __( 'CR: a review reminder was not scheduled because the customer did not provide their consent.', 'customer-reviews-woocommerce' ) );
 						return;

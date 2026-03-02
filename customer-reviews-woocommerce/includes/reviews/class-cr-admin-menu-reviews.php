@@ -760,7 +760,7 @@ if ( ! class_exists( 'Ivole_Reviews_Admin_Menu' ) ):
 						$comment_ID,
 						'ivole_country',
 						array(
-							'code' => $review_country,
+							'code' => strtolower( $review_country ),
 							'desc' => $review_location
 						)
 					);
@@ -1100,7 +1100,11 @@ if ( ! class_exists( 'Ivole_Reviews_Admin_Menu' ) ):
 
 		public function wc_dashboard_widget_reviews( $located, $template_name, $args, $template_path, $default_path ) {
 			if ( $template_name === 'dashboard-widget-reviews.php' ) {
-				$custom = plugin_dir_path( dirname( dirname( __FILE__ ) ) ) . 'templates/cr-dashboard-widget-reviews.php';
+				$custom = CR_Utils::cr_locate_template(
+					'cr-dashboard-widget-reviews.php',
+					'customer-reviews-woocommerce',
+					dirname( dirname( dirname( __FILE__ ) ) ) . '/templates/'
+				);
 				if ( file_exists( $custom ) ) {
 					return $custom;
 				}

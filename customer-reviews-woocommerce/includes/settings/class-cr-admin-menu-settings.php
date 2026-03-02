@@ -28,7 +28,7 @@ if ( ! class_exists( 'CR_Settings_Admin_Menu' ) ):
 				$this->current_tab = $_GET['tab'];
 			}
 
-			$this->download_api = 'https://api.cusrev.com/v1/production/wp-download/';
+			$this->download_api = 'https://api.cusrev.com/v2/wp-download/';
 
 			add_action( 'admin_init', array( $this, 'save_settings' ) );
 			add_action( 'admin_menu', array( $this, 'register_settings_menu' ), 11 );

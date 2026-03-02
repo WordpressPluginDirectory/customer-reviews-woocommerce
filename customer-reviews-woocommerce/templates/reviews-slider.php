@@ -33,7 +33,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 							<?php
 							echo esc_html( $author );
 							if( $country_code ) {
-								echo '<img src="' . CR_Utils::cr_get_plugin_dir_url() . 'img/flags/' . $country_code . '.svg" class="ivole-grid-country-icon" width="20" height="15" alt="' . $country_code . '">';
+								echo '<img src="' . CR_Utils::cr_get_plugin_dir_url() . 'img/flags/' .
+								rawurlencode( strtolower( $country_code ) ) .
+								'.svg" class="ivole-grid-country-icon" width="20" height="15" alt="' .
+								esc_attr( strtoupper( $country_code ) ) .
+								'">';
 							}
 							?>
 						</div>

@@ -1,4 +1,8 @@
 <?php
+/**
+ * @version 10.5.0
+ */
+
 defined( 'ABSPATH' ) || exit;
 
 /**

@@ -651,15 +651,17 @@ if ( ! class_exists( 'CR_Discount_Tiers' ) ):
 			) {
 				$coupon['channel'] = $coupon_settings[$setting_index]['channel'];
 				$s = self::read_coupon_tiers_table();
-				if( $s and is_array( $s ) ) {
+				if ( $s and is_array( $s ) ) {
 					$tier_w_coupon = 0;
 					$compare_count = -1;
 					foreach( self::$tiers as $tier ) {
-						if( in_array( $s[self::$tiers_settings['cr_coupon_type']][$tier], array( 'dynamic', 'static' ) ) &&
+						if (
+							in_array( $s[self::$tiers_settings['cr_coupon_type']][$tier], array( 'dynamic', 'static' ) ) &&
 					 		$media_count >= $s[self::$tiers_settings['cr_media_count']][$tier] &&
-							$compare_count < $s[self::$tiers_settings['cr_media_count']][$tier] ) {
-								$compare_count = $s[self::$tiers_settings['cr_media_count']][$tier];
-								$tier_w_coupon = $tier;
+							$compare_count < $s[self::$tiers_settings['cr_media_count']][$tier]
+						) {
+							$compare_count = $s[self::$tiers_settings['cr_media_count']][$tier];
+							$tier_w_coupon = $tier;
 						}
 					}
 					if( 0 < $tier_w_coupon ) {

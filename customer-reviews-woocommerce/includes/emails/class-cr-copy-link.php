@@ -30,14 +30,7 @@ class CR_Copy_Link {
 		$this->find['coupon-code'] = '{coupon_code}';
 		$this->find['discount-amount'] = '{discount_amount}';
 
-		// copying links is currently avaiable only for self-hosted aggregated review forms
-		$wp_locale = get_locale();
-		$wp_lang = explode( '_', $wp_locale );
-		if( is_array( $wp_lang ) && 0 < count( $wp_lang ) ) {
-			$this->language = strtoupper( $wp_lang[0] );
-		} else {
-			$this->language = 'EN';
-		}
+		$this->language = Ivole_Email::fetch_language();
 
 		$order = false;
 		if ( $order_id ) {
@@ -105,7 +98,7 @@ class CR_Copy_Link {
 				$data['form']['header'],
 				$data['form']['description'],
 				$data['order']['items'],
-				false,
+				( 0 === $order_id ? true : false ),
 				$data['language'],
 				null
 			);
@@ -296,6 +289,44 @@ class CR_Copy_Link {
 				);
 				return array( 7, __( 'Error: the order does not contain any products for which review reminders are enabled in the settings.', 'customer-reviews-woocommerce' ) );
 			}
+		} elseif ( 0 === $order_id ) {
+			// a test order
+			$data = array(
+				'shop' => array(
+					'name' => Ivole_Email::get_blogname(),
+			 		'domain' => Ivole_Email::get_blogurl(),
+				 	'country' => apply_filters( 'woocommerce_get_base_location', get_option( 'woocommerce_default_country' ) ) ),
+				'email' => array(
+					'to' => ''
+				),
+				'customer' => array(
+					'firstname' => __( 'Jane', 'customer-reviews-woocommerce' ),
+					'lastname' => __( 'Doe', 'customer-reviews-woocommerce' )
+				),
+				'order' => array(
+					'id' => '12345',
+			 		'date' => date_i18n( 'd.m.Y', time() ),
+					'currency' => get_woocommerce_currency(),
+				 	'items' => CR_Email_Func::get_test_items()
+				),
+				'form' => array(
+					'header' => $this->replace_variables( $this->form_header ),
+					'description' => $this->replace_variables( $this->form_body ),
+				 	'commentRequired' => $comment_required,
+				 	'allowMedia' => $allowMedia,
+				 	'shopRating' => $shop_rating,
+				 	'ratingBar' => $ratingBar,
+				 	'geoLocation' => $geolocation
+				),
+				'colors' => array(
+					'form' => array(
+						'bg' => get_option( 'ivole_form_color_bg', '#0f9d58' ),
+						'text' => get_option( 'ivole_form_color_text', '#ffffff' ),
+						'el' => get_option( 'ivole_form_color_el', '#1AB394' )
+					)
+				),
+				'language' => $this->language
+			);
 		} else {
 			return array( 8, __( 'Error: invalid order ID', 'customer-reviews-woocommerce' ) );
 		}

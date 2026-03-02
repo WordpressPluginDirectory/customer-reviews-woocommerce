@@ -209,6 +209,19 @@ if ( ! class_exists( 'CR_Shortcodes_Settings' ) ):
 			'<li>' . sprintf( __( '%1$s parameter accepts a comma-separated list of non-product pages (e.g., regular WordPress pages or posts) or %2$s. If non-product page IDs are provided, the block will display Q & A linked to the corresponding non-product pages. If the parameter is equal to %3$s, the block will display Q & A for all non-product pages in the store.', 'customer-reviews-woocommerce' ), '<code>shop</code>', '<code>"all"</code>', '<code>"all"</code>' ) . '</li>' .
 			'</ul>';
 
+			if ( 'no' === get_option( 'ivole_verified_reviews', 'no' )  ) {
+				$shortcodes_desc .= '<br><p class="cr-admin-shortcodes-large"><code>[cusrev_review_button]</code></p>' .
+				'<p>' . __( 'Use this shortcode to display a button linking to an aggregated review form in the customer-facing WooCommerce email notifications "Processing order" and "Completed order". You can add the shortcode in the “Additional content” field of these email notifications. Below are the default parameters of the shortcode:', 'customer-reviews-woocommerce' ) . '</p>' .
+				'<p class="cr-admin-shortcodes"><code>[cusrev_review_button label="Review" bg="#0073aa" color="#ffffff" radius="4px"]</code></p>' .
+				'<p class="cr-admin-shortcodes"><b>' . __( 'Parameters:', 'customer-reviews-woocommerce' ) . '</b></p>' .
+				'<ul>' .
+				'<li>' . sprintf( __( '%1$s parameter accepts a string that will be used as the button text.', 'customer-reviews-woocommerce' ), '<code>label</code>' ) . '</li>' .
+				'<li>' . sprintf( __( '%1$s parameter accepts a hex color code that defines the button\'s background color.', 'customer-reviews-woocommerce' ), '<code>bg</code>' ) . '</li>' .
+				'<li>' . sprintf( __( '%1$s parameter accepts a hex color code that defines the text color of the button.', 'customer-reviews-woocommerce' ), '<code>color</code>' ) . '</li>' .
+				'<li>' . sprintf( __( '%1$s parameter accepts a value that defines the border radius of the button\'s corners.', 'customer-reviews-woocommerce' ), '<code>radius</code>' ) . '</li>' .
+				'</ul>';
+			}
+
 			$shortcodes_desc = apply_filters( 'cr_settings_shortcodes_desc', $shortcodes_desc );
 			?>
 			<tr valign="top">

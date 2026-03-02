@@ -111,14 +111,19 @@ if ( ! class_exists( 'CR_Endpoint' ) ) :
 						$customer_user_id = $customer_user->ID;
 					}
 
-					//Country / region of the customer
+					// Country / region of the customer
 					$country = null;
-					if( isset( $body2->geo_location ) && isset( $body2->geo_location->code )
-						&& isset( $body2->geo_location->desc ) ) {
+					if (
+						isset( $body2->geo_location ) &&
+						isset( $body2->geo_location->code ) &&
+						isset( $body2->geo_location->desc )
+					) {
 						$country_code = sanitize_text_field( $body2->geo_location->code );
-						if( strlen( $country_code ) > 0 ) {
-							$country = array( 'code' => $country_code,
-								'desc' => sanitize_text_field( $body2->geo_location->desc ) );
+						if ( 0 < strlen( $country_code ) ) {
+							$country = array(
+								'code' => strtolower( $country_code ),
+								'desc' => sanitize_text_field( $body2->geo_location->desc )
+							);
 						}
 					}
 

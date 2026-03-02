@@ -18,6 +18,7 @@ if ( ! class_exists( 'CR_Reminders_Tracking' ) ) :
 			) {
 				$orderIds = array_unique( $_POST['orderIds'] );
 				$orderIds = array_filter( $orderIds );
+				$orderIds = array_values( $orderIds );
 
 				if ( 0 < count( $orderIds ) ) {
 					$licenseKey = get_option( 'ivole_license_key', '' );

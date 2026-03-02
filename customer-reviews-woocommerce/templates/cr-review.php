@@ -93,7 +93,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 										} else {
 											$country_desc = $country['code'];
 										}
-										echo '<img src="' . $cr_plugin_dir_url . 'img/flags/' . $country['code'] . '.svg" class="ivole-review-country-icon" alt="' . $country['code'] . '" title="' . $country_desc . '">';
+										echo '<img src="' .
+											$cr_plugin_dir_url . 'img/flags/' .
+											rawurlencode( strtolower( $country['code'] ) ) .
+											'.svg" class="ivole-review-country-icon" alt="' .
+											esc_attr( strtoupper( $country['code'] ) ) .
+											'" title="' .
+											esc_attr( $country_desc ) .
+											'">';
 									}
 								}
 								?>

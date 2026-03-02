@@ -1214,7 +1214,13 @@ class CR_Reviews_List_Table extends WP_List_Table {
 		$country = get_comment_meta( $comment->comment_ID, 'ivole_country', true );
 		if ( is_array( $country ) && 2 === count( $country ) ) {
 			if ( isset( $country['code'] ) && $country['code'] ) {
-				$country_string = '<div class="cr-review-country-cont"><img src="' . plugin_dir_url( dirname( dirname( __FILE__ ) ) ) . 'img/flags/' . $country['code'] . '.svg" class="cr-review-country-icon" alt="' . $country['code'] . '">';
+				$country_string = '<div class="cr-review-country-cont"><img src="' .
+					plugin_dir_url( dirname( dirname( __FILE__ ) ) ) .
+					'img/flags/' .
+					rawurlencode( strtolower( $country['code'] ) ) .
+					'.svg" class="cr-review-country-icon" alt="' .
+					esc_attr( strtoupper( $country['code'] ) ) .
+					'">';
 				if ( isset( $country['desc'] ) ) {
 					$country_string .= '<span class="cr-review-country-text">' . $country['desc'] . '</span>';
 				}

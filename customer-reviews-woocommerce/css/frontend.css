@@ -284,8 +284,8 @@ div.iv-comment-image img {
 .cr-reviews-grid .cr-summaryBox-wrap {
 	margin: 0 10px 20px 10px;
 }
-#reviews .cr-summaryBox-wrap .ivole-summaryBox,
-#reviews .cr-summaryBox-wrap .cr-overall-rating-wrap,
+.cr-summaryBox-wrap .ivole-summaryBox,
+.cr-summaryBox-wrap .cr-overall-rating-wrap,
 .cr-all-reviews-shortcode .cr-summaryBox-wrap .ivole-summaryBox,
 .cr-all-reviews-shortcode .cr-summaryBox-wrap .cr-overall-rating-wrap,
 .cr-reviews-grid .cr-summaryBox-wrap .ivole-summaryBox,
@@ -599,6 +599,7 @@ div.iv-comment-image img {
 	width: 100%;
 	margin: 0;
 	box-sizing: border-box;
+	border-radius: 3px;
 }
 .cr-all-reviews-shortcode .cr-review-form-comment.cr-review-form-error .cr-review-form-comment-txt,
 .cr-ajax-reviews-review-form .cr-review-form-comment.cr-review-form-error .cr-review-form-comment-txt,
@@ -753,6 +754,7 @@ div.iv-comment-image img {
 	font-size: 14px;
 	margin: 0;
 	box-sizing: border-box;
+	border-radius: 3px;
 }
 .cr-review-form-wrap .cr-onsite-question .cr-onsite-question-inp {
 	border: solid 1px #D8E2E7;
@@ -2237,8 +2239,8 @@ img.ivole-verified-badge-ext-icon {
 	position: relative;
 	flex-grow: 1;
 }
-#reviews.cr-reviews-ajax-reviews .cr-input-text,
-.cr-all-reviews-shortcode .cr-ajax-search .cr-input-text,
+.cr-reviews-ajax-reviews input.cr-input-text[type="text"],
+.cr-all-reviews-shortcode .cr-ajax-search input.cr-input-text[type="text"],
 .cr-ajax-search input[type="text"] {
 	border: 1px solid;
 	border-radius: 4px 4px 4px 4px;
@@ -2253,8 +2255,8 @@ img.ivole-verified-badge-ext-icon {
 	font-size: 1em;
 	box-sizing: border-box;
 }
-.rtl #reviews.cr-reviews-ajax-reviews .cr-input-text,
-.rtl .cr-all-reviews-shortcode .cr-ajax-search .cr-input-text,
+.rtl .cr-reviews-ajax-reviews input.cr-input-text[type="text"],
+.rtl .cr-all-reviews-shortcode .cr-ajax-search input.cr-input-text[type="text"],
 .rtl .cr-ajax-search input[type="text"] {
 	padding-right: calc(1.5em + .75rem);
 	padding-left: 1.8em;
