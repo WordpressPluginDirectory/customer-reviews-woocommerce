@@ -646,13 +646,13 @@ if ( ! class_exists( 'CR_Endpoint' ) ) :
 		public function create_review_permissions_check( WP_REST_Request $request ) {
 			$body = $request->get_body();
 			$body2 = json_decode( $body );
-			if( json_last_error() === JSON_ERROR_NONE ) {
-				if( isset( $body2->key ) && isset( $body2->order ) ) {
-					if( isset( $body2->order->id ) ) {
+			if ( json_last_error() === JSON_ERROR_NONE ) {
+				if ( isset( $body2->key ) && isset( $body2->order ) ) {
+					if ( isset( $body2->order->id ) ) {
 						$order = wc_get_order( $body2->order->id );
 						if ( $order ) {
 							$saved_key = $order->get_meta( 'ivole_secret_key', true );
-							if( $body2->key === $saved_key ) {
+							if ( ! empty( $saved_key ) && $body2->key === $saved_key ) {
 								return true;
 							} else {
 								return new WP_Error(
@@ -669,8 +669,8 @@ if ( ! class_exists( 'CR_Endpoint' ) ) :
 							);
 						}
 					}
-				} else if( isset( $body2->test ) ) {
-					if( false != get_option( 'ivole_test_secret_key' ) && $body2->test === get_option( 'ivole_test_secret_key' ) ){
+				} else if ( isset( $body2->test ) ) {
+					if ( false != get_option( 'ivole_test_secret_key' ) && $body2->test === get_option( 'ivole_test_secret_key' ) ){
 						 return true;
 					}
 				}

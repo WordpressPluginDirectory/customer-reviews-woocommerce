@@ -293,6 +293,8 @@
 
 			crSendClickEvent(productId, formId);
 		} );
+
+		crPrePopulateRatings();
 	} );
 
 	function crSendClickEvent(productId, formId) {
@@ -312,6 +314,41 @@
 				keepalive: true
 			});
 		}
+	}
+
+	// Function to get all GET parameters as an object
+	function crGetQueryParams() {
+		var params = {};
+		window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(_, key, value) {
+			params[key] = decodeURIComponent(value);
+		});
+		return params;
+	}
+
+	// Pre-populate ratings
+	function crPrePopulateRatings() {
+		var params = crGetQueryParams();
+
+		// Loop through keys like rating-0, rating-1, ...
+		jQuery.each(params, function(key, value) {
+			if (key.startsWith("rating-")) {
+				var index = parseInt(key.split("-")[1], 10);
+				var itemId = index + 1; // rating-0 -> data-itemid=1, rating-1 -> data-itemid=2
+
+				// Only target items with data-itemid > 0 (products)
+				var $item = jQuery(".cr-form-item[data-itemid='" + itemId + "']");
+				if ($item.length && itemId > 0) {
+					var rating = parseInt(value, 10);
+
+					// Ensure rating is between 1 and 5
+					if (rating >= 1 && rating <= 5) {
+						$item.find( ".cr-form-item-rating-radio .cr-form-item-inner" ).removeClass( "cr-form-active-radio" );
+						$item.find( ".cr-form-item-rating-radio .cr-form-item-inner[data-rating='" + rating + "']" ).addClass( "cr-form-active-radio" );
+						$item.find( ".cr-form-item-question" ).removeClass( "cr-form-error" );
+					}
+				}
+			}
+		});
 	}
 
 } )();

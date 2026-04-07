@@ -862,11 +862,12 @@ if ( ! class_exists( 'CR_Settings_Admin_Menu' ) ):
 												<ul class="cr-features-bnr-ul">
 													<li>A visual editor for email templates</li>
 													<li>Customize colors and fonts</li>
-													<li>Multiple email templates for different languages</li>
+													<li>Create email templates for different languages</li>
+													<li>Embed review form in emails</li>
 												</ul>
 												<ul class="cr-features-bnr-ul">
-													<li>Add an unsubscribe link to emails</li>
-													<li>A shortcode to display an unsubscribe form</li>
+													<li>Include an unsubscribe link to emails</li>
+													<li>Display an unsubscribe form with a shortcode</li>
 													<li>Add a custom logo and images</li>
 												</ul>
 											</div>

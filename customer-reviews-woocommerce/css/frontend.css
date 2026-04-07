@@ -2485,7 +2485,7 @@ img.ivole-verified-badge-ext-icon {
 	justify-content: center;
 	align-items: center;
 }
-#reviews.cr-reviews-ajax-reviews .cr-ajax-reviews-cus-images-modal,
+.cr-reviews-ajax-reviews .cr-ajax-reviews-cus-images-modal,
 .cr-all-reviews-shortcode .cr-ajax-reviews-cus-images-modal {
 	visibility: visible;
 	position: relative;
@@ -4079,9 +4079,13 @@ img.ivole-verified-badge-ext-icon {
 	font-weight: bold;
 }
 @media all and (max-width: 700px) {
-	#reviews.cr-reviews-ajax-reviews div.cr-ajax-reviews-cus-images-modal div.cr-ajax-reviews-slide-main-flex,
+	.cr-reviews-ajax-reviews .cr-ajax-reviews-cus-images-modal .cr-ajax-reviews-slide-main-flex,
 	.cr-all-reviews-shortcode .cr-ajax-reviews-cus-images-modal .cr-ajax-reviews-slide-main-flex {
 		flex-direction: column;
+	}
+	.cr-reviews-ajax-reviews .cr-ajax-reviews-cus-images-modal .cr-ajax-reviews-slide-main-flex .cr-ajax-reviews-slide-main-comment,
+	.cr-all-reviews-shortcode .cr-ajax-reviews-cus-images-modal .cr-ajax-reviews-slide-main-flex .cr-ajax-reviews-slide-main-comment {
+		width: 100%;
 	}
 	#reviews.cr-reviews-ajax-reviews div.cr-ajax-reviews-cus-images-modal div.cr-ajax-reviews-cus-images-slider-main .cr-ajax-reviews-slide-main-comment {
 		width: 100%;
@@ -4091,7 +4095,8 @@ img.ivole-verified-badge-ext-icon {
 		max-width: 400px;
 		margin: 0 auto;
 	}
-	#reviews.cr-reviews-ajax-reviews div.cr-ajax-reviews-cus-images-modal {
+	.cr-reviews-ajax-reviews .cr-ajax-reviews-cus-images-modal,
+	.cr-all-reviews-shortcode .cr-ajax-reviews-cus-images-modal {
 		overflow-y: scroll;
 	}
 }

@@ -277,21 +277,31 @@ if ( ! class_exists( 'CR_Email_Func' ) ) :
 			return $language;
 		}
 
-		public static function get_local_email_template( $data, $is_test ) {
+		public static function get_local_email_template( $data, $is_test, $is_verified ) {
 			// create an external email id
 			$ext_id = self::create_email_ext_id();
-			// create a local form
-			$form = self::create_local_form( $data, $is_test );
-			$cr_email_form_link = '';
-			if( 0 === $form['code'] ) {
-				$cr_email_form_link = esc_url( $form['text'] . '?r=' . $ext_id );
-			} else {
+			if ( $is_verified ) {
+				// get a CusRev form
 				return array(
 					'code' => 1,
-					'template' => $form['text'],
+					'template' => 'CusRev review forms with a WordPress default mailer are not supported yet',
 					'form_link' => '',
 					'email_id' => $ext_id
 				);
+			} else {
+				// create a local form
+				$form = self::create_local_form( $data, $is_test );
+				$cr_email_form_link = '';
+				if( 0 === $form['code'] ) {
+					$cr_email_form_link = esc_url( $form['text'] . '?r=' . $ext_id );
+				} else {
+					return array(
+						'code' => 1,
+						'template' => $form['text'],
+						'form_link' => '',
+						'email_id' => $ext_id
+					);
+				}
 			}
 			// fetch a local email template
 			$template = wc_locate_template(
@@ -371,7 +381,12 @@ if ( ! class_exists( 'CR_Email_Func' ) ) :
 			$mailer = get_option( 'ivole_mailer_review_reminder', 'cr' );
 			if( 'wp' === $mailer ) {
 				// WP mailer
-				$data['verification'] = 'local';
+				$is_verified = ( 'yes' === get_option( 'ivole_verified_reviews', 'no' ) ) ? true : false;
+				if ( $is_verified ) {
+					$data['verification'] = 'verified';
+				} else {
+					$data['verification'] = 'local';
+				}
 				$headers = ['Content-Type: text/html; charset=UTF-8'];
 				if ( filter_var( $data['email']['from'], FILTER_VALIDATE_EMAIL ) ) {
 					$headers[] = 'From: ' . $data['email']['fromText'] . ' <' . $data['email']['from'] . '>';
@@ -382,7 +397,7 @@ if ( ! class_exists( 'CR_Email_Func' ) ) :
 				// need to enhance $data with a review button translation that is available only for the self-hosted mode
 				$data['email']['reviewBtn'] = $data_extra['reviewBtn'];
 				//
-				$message = self::get_local_email_template( $data, $is_test );
+				$message = self::get_local_email_template( $data, $is_test, $is_verified );
 				if( 0 === $message['code'] ) {
 					$message['template'] = apply_filters(
 						'cr_local_review_reminder_template',

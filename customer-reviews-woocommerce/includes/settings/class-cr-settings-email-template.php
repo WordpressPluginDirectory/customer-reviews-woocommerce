@@ -213,13 +213,12 @@ if ( ! class_exists( 'CR_Email_Template' ) ):
 			switch( $this->name ) {
 				case 'review_reminder':
 				case 'review_discount':
-					if( $verified ) {
+					$options = array(
+						'wp' => __( 'WordPress Default', 'customer-reviews-woocommerce' )
+					);
+					if ( $verified ) {
 						$options = array(
 							'cr' => __( 'CusRev (AWS SES)', 'customer-reviews-woocommerce' )
-						);
-					} else {
-						$options = array(
-							'wp' => __( 'WordPress Default', 'customer-reviews-woocommerce' )
 						);
 					}
 					break;
@@ -256,7 +255,7 @@ if ( ! class_exists( 'CR_Email_Template' ) ):
 				case 'review_discount':
 				default:
 					$id = 'ivole_email_from_name';
-					$type = $verified ? 'email_from_name' : 'text';
+					$type = ( 'cr' === $this->mailer ) ? 'email_from_name' : 'text';
 					break;
 			}
 			$this->fields[10] = array(
@@ -280,7 +279,7 @@ if ( ! class_exists( 'CR_Email_Template' ) ):
 				case 'review_discount':
 				default:
 					$id = 'ivole_email_from';
-					$type = $verified ? 'email_from' : 'email';
+					$type = ( 'cr' === $this->mailer ) ? 'email_from' : 'email';
 					break;
 			}
 			$this->fields[15] = array(
@@ -343,7 +342,7 @@ if ( ! class_exists( 'CR_Email_Template' ) ):
 					'title'    => __( '"Reply-To" address', 'customer-reviews-woocommerce' ),
 					'type'     => 'email',
 					'desc'     => $desc,
-					'default'  => get_option( 'admin_email' ),
+					'default'  => apply_filters( 'wp_mail_from', get_option( 'admin_email' ) ),
 					'id'       => $id,
 					'class' => 'cr-admin-settings-wide-text',
 					'desc_tip' => true,
@@ -365,7 +364,7 @@ if ( ! class_exists( 'CR_Email_Template' ) ):
 					'title'    => __( 'Email for Notifications', 'customer-reviews-woocommerce' ),
 					'type'     => 'email',
 					'desc'     => __( 'Specify an email to receive notifications about new reviews and errors. It is recommended to provide an email address that you regularly check.', 'customer-reviews-woocommerce' ),
-					'default'  => get_option( 'admin_email' ),
+					'default'  => apply_filters( 'wp_mail_from', get_option( 'admin_email' ) ),
 					'id'       => 'ivole_email_bcc',
 					'desc_tip' => true,
 					'class' => 'cr-admin-settings-wide-text',
@@ -626,7 +625,7 @@ if ( ! class_exists( 'CR_Email_Template' ) ):
 				'class' => $class
 			);
 
-			$this->fields = apply_filters( 'cr_settings_email_template', $this->fields, $this->name );
+			$this->fields = apply_filters( 'cr_settings_email_template', $this->fields, $this->name, $this->mailer );
 			ksort( $this->fields );
 		}
 

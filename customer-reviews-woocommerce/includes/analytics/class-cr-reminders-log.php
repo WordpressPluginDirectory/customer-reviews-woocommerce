@@ -210,23 +210,39 @@ class CR_Reminders_Log {
 
 		global $wpdb;
 		$table_name = $wpdb->prefix . self::LOGS_TABLE;
-		if ( $search ) {
-			if ( $status ) {
-				$select_q = "SELECT * FROM `$table_name` WHERE `status` = '$status' AND ( `customerName` LIKE '%$search%' OR `customerEmail` LIKE '%$search%' OR `orderId` LIKE '%$search%' ) ORDER BY `$orderby` $order LIMIT $start, $per_page";
-				$select_t = "SELECT COUNT(*) FROM `$table_name` WHERE `status` = '$status' AND ( `customerName` LIKE '%$search%' OR `customerEmail` LIKE '%$search%' OR `orderId` LIKE '%$search%' ) ORDER BY `$orderby` $order";
-			} else {
-				$select_q = "SELECT * FROM `$table_name` WHERE `customerName` LIKE '%$search%' OR `customerEmail` LIKE '%$search%' OR `orderId` LIKE '%$search%' ORDER BY `$orderby` $order LIMIT $start, $per_page";
-				$select_t = "SELECT COUNT(*) FROM `$table_name` WHERE `customerName` LIKE '%$search%' OR `customerEmail` LIKE '%$search%' OR `orderId` LIKE '%$search%' ORDER BY `$orderby` $order";
-			}
-		} else {
-			if ( $status ) {
-				$select_q = "SELECT * FROM `$table_name` WHERE `status` = '$status' ORDER BY `$orderby` $order LIMIT $start, $per_page";
-				$select_t = "SELECT COUNT(*) FROM `$table_name` WHERE `status` = '$status' ORDER BY `$orderby` $order";
-			} else {
-				$select_q = "SELECT * FROM `$table_name` ORDER BY `$orderby` $order LIMIT $start, $per_page";
-				$select_t = "SELECT COUNT(*) FROM `$table_name` ORDER BY `$orderby` $order";
-			}
+
+		$where = [];
+		$params = [];
+
+		// Status filter
+		if ( $status ) {
+			$where[] = "`status` = %s";
+			$params[] = $status;
 		}
+
+		// Search filter
+		if ( $search ) {
+			$like = '%' . $wpdb->esc_like( $search ) . '%';
+			$where[] = "( `customerName` LIKE %s OR `customerEmail` LIKE %s OR `orderId` LIKE %s )";
+			$params[] = $like;
+			$params[] = $like;
+			$params[] = $like;
+		}
+
+		// Combine WHERE clause
+		$where_sql = $where ? 'WHERE ' . implode( ' AND ', $where ) : '';
+
+		// Final queries
+		$select_q = $wpdb->prepare(
+			"SELECT * FROM `$table_name` $where_sql ORDER BY `$orderby` $order LIMIT %d, %d",
+			array_merge( $params, [ $start, $per_page ] )
+		);
+
+		$select_t = $wpdb->prepare(
+			"SELECT COUNT(*) FROM `$table_name` $where_sql",
+			$params
+		);
+
 		$records = $wpdb->get_results(
 			$select_q,
 			ARRAY_A
@@ -264,7 +280,10 @@ class CR_Reminders_Log {
 
 			// get the current status of the reminder
 			$records = $wpdb->get_results(
-				"SELECT * FROM `$this->logs_tbl_name` WHERE `extId` = '$extId';",
+				$wpdb->prepare(
+					"SELECT * FROM `$this->logs_tbl_name` WHERE `extId` = %s",
+					$extId
+				),
 				ARRAY_A
 			);
 
@@ -312,7 +331,10 @@ class CR_Reminders_Log {
 			if ( $extId ) {
 				// get the current status of the reminder
 				$records = $wpdb->get_results(
-					"SELECT * FROM `$this->logs_tbl_name` WHERE `extId` = '$extId';",
+					$wpdb->prepare(
+						"SELECT * FROM `$this->logs_tbl_name` WHERE `extId` = %s",
+						$extId
+					),
 					ARRAY_A
 				);
 
@@ -341,7 +363,10 @@ class CR_Reminders_Log {
 		if ( $id ) {
 			$table_name = $wpdb->prefix . self::LOGS_TABLE;
 			$record = $wpdb->get_row(
-				"SELECT * FROM `$table_name` WHERE `id` = '$id';",
+				$wpdb->prepare(
+					"SELECT * FROM `$table_name` WHERE `id` = %d",
+					$id
+				),
 				ARRAY_A
 			);
 			if ( is_array( $record ) ) {

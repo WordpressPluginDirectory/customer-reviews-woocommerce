@@ -64,8 +64,7 @@ if ( ! class_exists( 'CR_Manual' ) ) :
 						'no' !== $consent
 					) ||
 					(
-						'yes' !== $verified_reviews &&
-						'no' !== $consent
+						'yes' !== $verified_reviews
 					)
 				) {
 					// Set the action button
@@ -283,10 +282,29 @@ if ( ! class_exists( 'CR_Manual' ) ) :
 						return;
 					}
 					//count reviews that an order has received
+					$order_id = $order->get_id();
 					$args = array(
 						'count' => true,
-						'meta_key' => array( 'ivole_order', 'ivole_order_locl' ),
-						'meta_value' => $order->get_id()
+						'type' => 'review',
+						'meta_query' => array(
+							'relation' => 'OR',
+							array(
+								'key'   => 'ivole_order',
+								'value' => $order_id
+							),
+							array(
+								'key'   => 'ivole_order_locl',
+								'value' => $order_id
+							),
+							array(
+								'key'   => 'ivole_order_priv',
+								'value' => $order_id
+							),
+							array(
+								'key'   => 'ivole_order_unve',
+								'value' => $order_id
+							)
+						)
 					);
 					$reviews_count = get_comments( $args );
 					$reviews_text = '';
@@ -312,7 +330,7 @@ if ( ! class_exists( 'CR_Manual' ) ) :
 									echo sprintf( __( 'A review reminder will be scheduled after the status is set to %s', 'customer-reviews-woocommerce' ), '\'' . $this->order_status_name . '\'' );
 								}
 							} else {
-								echo __( 'Automatic review reminders are disabled', 'customer-reviews-woocommerce' );
+								echo __( 'Automatic review reminders are disabled', 'customer-reviews-woocommerce' ) . $reviews_text;
 							}
 						} else {
 							if( !$reminder ) {
@@ -325,7 +343,7 @@ if ( ! class_exists( 'CR_Manual' ) ) :
 										echo sprintf( __( 'A review reminder will be scheduled after the status is set to %s', 'customer-reviews-woocommerce' ), '\'' . $this->order_status_name . '\'' );
 									}
 								} else {
-									echo __( 'Automatic review reminders are disabled', 'customer-reviews-woocommerce' );
+									echo __( 'Automatic review reminders are disabled', 'customer-reviews-woocommerce' ) . $reviews_text;
 								}
 							} else {
 								//a review reminder has been sent via WP Cron
