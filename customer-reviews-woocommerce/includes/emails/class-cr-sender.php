@@ -100,7 +100,7 @@ if ( ! class_exists( 'CR_Sender' ) ) :
 						(
 							'yes' !== $consent &&
 							self::is_eu_customer( $order ) &&
-							'yes' === get_option( 'ivole_verified_reviews', 'no' )
+							'cr' === get_option( 'ivole_mailer_review_reminder', 'wp' )
 						)
 					) {
 						$order->add_order_note( __( 'CR: a review reminder was not scheduled because the customer did not provide their consent.', 'customer-reviews-woocommerce' ) );

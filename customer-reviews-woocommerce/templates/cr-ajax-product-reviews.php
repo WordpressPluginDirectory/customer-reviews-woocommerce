@@ -8,6 +8,11 @@ if ( ! comments_open() ) {
 	return;
 }
 
+// check for page builders like Divi that could overwrite WooCommerce $product variable
+if ( ! $product || ! is_a( $product, 'WC_Product' ) ) {
+	$product = wc_get_product( get_the_ID() );
+}
+
 $no_comments_yet = true;
 
 //check for old WooCommerce versions

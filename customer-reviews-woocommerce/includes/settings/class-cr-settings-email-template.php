@@ -217,9 +217,7 @@ if ( ! class_exists( 'CR_Email_Template' ) ):
 						'wp' => __( 'WordPress Default', 'customer-reviews-woocommerce' )
 					);
 					if ( $verified ) {
-						$options = array(
-							'cr' => __( 'CusRev (AWS SES)', 'customer-reviews-woocommerce' )
-						);
+						$options['cr'] = __( 'CusRev (AWS SES)', 'customer-reviews-woocommerce' );
 					}
 					break;
 				case 'qna_reply':

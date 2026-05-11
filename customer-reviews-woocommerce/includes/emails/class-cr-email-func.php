@@ -278,17 +278,91 @@ if ( ! class_exists( 'CR_Email_Func' ) ) :
 		}
 
 		public static function get_local_email_template( $data, $is_test, $is_verified ) {
-			// create an external email id
-			$ext_id = self::create_email_ext_id();
 			if ( $is_verified ) {
+				$ext_id = '';
+				// remove unnecessary data from the request
+				$lean_data = $data;
+				unset( $lean_data['email'] );
+				unset( $lean_data['customer'] );
+				unset( $lean_data['colors']['email'] );
+				unset( $lean_data['templateId'] );
+				unset( $lean_data['verification'] );
+				//
+				if ( ! $is_test ) {
+					unset( $lean_data['trackOpens'] );
+					unset( $lean_data['schedule'] );
+					$api_url = 'https://api.cusrev.com/v2/review-form';
+				} else {
+					unset( $lean_data['order']['items'] );
+					$api_url = 'https://api.cusrev.com/v2/test-form';
+				}
 				// get a CusRev form
-				return array(
-					'code' => 1,
-					'template' => 'CusRev review forms with a WordPress default mailer are not supported yet',
-					'form_link' => '',
-					'email_id' => $ext_id
+				$data_string = json_encode( $lean_data );
+				$ch = curl_init();
+				curl_setopt( $ch, CURLOPT_URL, $api_url );
+				curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+				curl_setopt( $ch, CURLOPT_CUSTOMREQUEST, "POST" );
+				curl_setopt( $ch, CURLOPT_POSTFIELDS, $data_string );
+				curl_setopt( $ch, CURLOPT_CONNECTTIMEOUT, 10 );
+				curl_setopt( $ch, CURLOPT_TIMEOUT, 30 );
+				curl_setopt( $ch, CURLOPT_HTTPHEADER, array(
+					'Content-Type: application/json',
+					'Content-Length: ' . strlen( $data_string ) )
 				);
+				$result = curl_exec( $ch );
+				// check response
+				if ( false === $result ) {
+					return array(
+						'code' => 1,
+						'template' => 'cURL error',
+						'form_link' => '',
+						'email_id' => $ext_id
+					);
+				} else {
+					$cr_email_form_link = '';
+					$result = json_decode( $result, true );
+					if ( ! $is_test ) {
+						// an actual order
+						if (
+							isset( $result['status'] ) &&
+							isset( $result['url'] ) &&
+							isset( $result['extId'] ) &&
+							'OK' === $result['status'] &&
+							$result['url'] &&
+							$result['extId']
+						) {
+							$cr_email_form_link = esc_url( $result['url'] );
+							$ext_id = sanitize_file_name( $result['extId'] );
+						} else {
+							return array(
+								'code' => 1,
+								'template' => isset( $result['details'] ) ? esc_html( $result['details'] ) : 'Error in response format',
+								'form_link' => '',
+								'email_id' => $ext_id
+							);
+						}
+					} else {
+						// a test
+						if (
+							isset( $result['status'] ) &&
+							isset( $result['url'] ) &&
+							'OK' === $result['status'] &&
+							$result['url']
+						) {
+							$cr_email_form_link = esc_url( $result['url'] );
+						} else {
+							return array(
+								'code' => 1,
+								'template' => isset( $result['details'] ) ? esc_html( $result['details'] ) : 'Error in response format',
+								'form_link' => '',
+								'email_id' => $ext_id
+							);
+						}
+					}
+				}
 			} else {
+				// create an external email id
+				$ext_id = self::create_email_ext_id();
 				// create a local form
 				$form = self::create_local_form( $data, $is_test );
 				$cr_email_form_link = '';

@@ -46,7 +46,7 @@ if ( ! class_exists( 'CR_Reviews_Media_Download' ) ) :
 				$commentMeta = array( 'newCache' => 'cr_media_cache' );
 				if( $mediaFiles ) {
 					foreach( $mediaFiles as $mediaFile ) {
-						$downloadURL = unserialize( $mediaFile->meta_value );
+						$downloadURL = maybe_unserialize( $mediaFile->meta_value );
 						$transientExists = get_transient( $downloadURL['url'] );
 						if( !$transientExists  ) {
 							$mediaFileToDownload = $mediaFile;
@@ -86,17 +86,29 @@ if ( ! class_exists( 'CR_Reviews_Media_Download' ) ) :
 
 		public function download_media_frontend() {
 			$transientFrontendExists = get_transient( 'cr_download_media_frontend' );
-			if( !$transientFrontendExists && isset( $_POST['reviewID'] ) && 0 < intval( $_POST['reviewID'] ) ) {
+			if ( ! $transientFrontendExists && isset( $_POST['reviewID'] ) && 0 < intval( $_POST['reviewID'] ) ) {
 				global $wpdb;
 				$reviewID = intval( $_POST['reviewID'] );
-				$mediaFiles = $wpdb->get_results( "SELECT comment_id, meta_key, meta_value FROM $wpdb->commentmeta WHERE comment_id = '" . $reviewID . "' AND ( meta_key = 'ivole_review_image' OR meta_key = 'ivole_review_video' )", OBJECT );
+
+				$mediaFiles = $wpdb->get_results(
+					$wpdb->prepare(
+						"SELECT comment_id, meta_key, meta_value
+						FROM {$wpdb->commentmeta}
+						WHERE comment_id = %d
+						AND ( meta_key = %s OR meta_key = %s )",
+						$reviewID,
+						CR_Reviews::REVIEWS_META_IMG,
+						CR_Reviews::REVIEWS_META_VID
+					),
+					OBJECT
+				);
 
 				$mediaFileToDownload = null;
 				$downloadURL = '';
 				$commentMeta = array( 'newCache' => 'cr_media_cache' );
 				if( $mediaFiles ) {
 					foreach( $mediaFiles as $mediaFile ) {
-						$downloadURL = unserialize( $mediaFile->meta_value );
+						$downloadURL = maybe_unserialize( $mediaFile->meta_value );
 						$transientExists = get_transient( $downloadURL['url'] );
 						if( !$transientExists  ) {
 							$mediaFileToDownload = $mediaFile;

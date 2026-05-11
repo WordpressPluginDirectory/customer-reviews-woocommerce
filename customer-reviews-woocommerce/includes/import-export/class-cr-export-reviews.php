@@ -214,30 +214,68 @@ class CR_Export_Reviews {
 		$total_replies = intval( $_POST['totalReplies'] );
 		$total = $total_reviews + $total_replies;
 		$shop_page_ids_a = CR_Reviews_List_Table::get_shop_page();
-		$shop_page_ids = implode( ',', $shop_page_ids_a );
+		$shop_page_ids_a = array_map( 'intval', (array) $shop_page_ids_a );
+		if ( $shop_page_ids_a ) {
+			$placeholders = implode( ',', array_fill( 0, count( $shop_page_ids_a ), '%d' ) );
+			$in_clause = " OR p.ID IN ($placeholders)";
+			$in_args = $shop_page_ids_a;
+		} else {
+			$in_clause = '';
+			$in_args = array();
+		}
 		if ( 0 >= $total ) {
 			// count reviews
-			$query_count_reviews = "SELECT COUNT(*) FROM $wpdb->comments c " .
-				"INNER JOIN $wpdb->posts p ON p.ID = c.comment_post_ID " .
-				"INNER JOIN $wpdb->commentmeta m ON m.comment_id = c.comment_ID " .
-				"WHERE c.comment_approved = '1' AND (p.post_type = 'product' OR p.ID IN(" . $shop_page_ids . ")) AND m.meta_key ='rating'";
+			$query_count_reviews = $wpdb->prepare(
+				"SELECT COUNT(*)
+					FROM {$wpdb->comments} c
+					INNER JOIN {$wpdb->posts} p ON p.ID = c.comment_post_ID
+					INNER JOIN {$wpdb->commentmeta} m ON m.comment_id = c.comment_ID
+					WHERE c.comment_approved = %s
+						AND (p.post_type = %s{$in_clause})
+						AND m.meta_key = %s",
+				array_merge(
+					array( '1', 'product' ),
+					$in_args,
+					array( 'rating' )
+				)
+			);
 			$total_reviews = $wpdb->get_var( $query_count_reviews );
 			// count replies to reviews
-			$query_count_replies = "SELECT COUNT(*) FROM $wpdb->comments c " .
-				"INNER JOIN $wpdb->posts p ON p.ID = c.comment_post_ID " .
-				"INNER JOIN $wpdb->commentmeta m ON m.comment_id = c.comment_parent " .
-				"WHERE c.comment_approved = '1' AND (p.post_type = 'product' OR p.ID IN(" . $shop_page_ids . ")) AND m.meta_key ='rating'";
+			$query_count_replies = $wpdb->prepare(
+				"SELECT COUNT(*)
+					FROM {$wpdb->comments} c
+					INNER JOIN {$wpdb->posts} p ON p.ID = c.comment_post_ID
+					INNER JOIN {$wpdb->commentmeta} m ON m.comment_id = c.comment_parent
+					WHERE c.comment_approved = %s
+						AND (p.post_type = %s{$in_clause})
+						AND m.meta_key = %s",
+				array_merge(
+					array( '1', 'product' ),
+					$in_args,
+					array( 'rating' )
+				)
+			);
 			$total_replies = $wpdb->get_var( $query_count_replies );
 		}
 		//
 		$offset_reviews = intval( $_POST['offsetReviews'] );
 		$offset_replies = intval( $_POST['offsetReplies'] );
 		// read next chunk of reviews from the database
-		$query_reviews_chunk = "SELECT * FROM $wpdb->comments c " .
-			"INNER JOIN $wpdb->posts p ON p.ID = c.comment_post_ID " .
-			"INNER JOIN $wpdb->commentmeta m ON m.comment_id = c.comment_ID " .
-			"WHERE c.comment_approved = '1' AND (p.post_type = 'product' OR p.ID IN(" . $shop_page_ids . ")) AND m.meta_key ='rating'" .
-			"LIMIT " . $offset_reviews . "," . self::$file_write_buffer;
+		$query_reviews_chunk = $wpdb->prepare(
+			"SELECT *
+				FROM {$wpdb->comments} c
+				INNER JOIN {$wpdb->posts} p ON p.ID = c.comment_post_ID
+				INNER JOIN {$wpdb->commentmeta} m ON m.comment_id = c.comment_ID
+				WHERE c.comment_approved = %s
+					AND (p.post_type = %s{$in_clause})
+					AND m.meta_key = %s
+				LIMIT %d, %d",
+			array_merge(
+				array( '1', 'product' ),
+				$in_args,
+				array( 'rating', $offset_reviews, self::$file_write_buffer )
+			)
+		);
 		$result_reviews_chunk = $wpdb->get_results( $query_reviews_chunk );
 		if ( ! $result_reviews_chunk && ! is_array( $result_reviews_chunk ) ) {
 			wp_send_json(
@@ -278,11 +316,21 @@ class CR_Export_Reviews {
 		$last_chunk = false;
 		if ( self::$file_write_buffer > count( $result_reviews_chunk ) ) {
 			// all reviews have been fetched, now select replies to reviews
-			$query_replies_chunk = "SELECT * FROM $wpdb->comments c " .
-				"INNER JOIN $wpdb->posts p ON p.ID = c.comment_post_ID " .
-				"INNER JOIN $wpdb->commentmeta m ON m.comment_id = c.comment_parent " .
-				"WHERE c.comment_approved = '1' AND (p.post_type = 'product' OR p.ID IN(" . $shop_page_ids . ")) AND m.meta_key ='rating'" .
-				"LIMIT " . $offset_replies . "," . self::$file_write_buffer;
+			$query_replies_chunk = $wpdb->prepare(
+				"SELECT *
+					FROM {$wpdb->comments} c
+					INNER JOIN {$wpdb->posts} p ON p.ID = c.comment_post_ID
+					INNER JOIN {$wpdb->commentmeta} m ON m.comment_id = c.comment_parent
+					WHERE c.comment_approved = %s
+						AND (p.post_type = %s{$in_clause})
+						AND m.meta_key = %s
+					LIMIT %d, %d",
+				array_merge(
+					array( '1', 'product' ),
+					$in_args,
+					array( 'rating', $offset_replies, self::$file_write_buffer )
+				)
+			);
 			$result_replies_chunk = $wpdb->get_results( $query_replies_chunk );
 			if ( ! $result_replies_chunk && ! is_array( $result_replies_chunk ) ) {
 				wp_send_json(

@@ -106,6 +106,7 @@ if ( ! class_exists( 'CR_Reviews_Slider' ) ) {
 					}
 				}
 				if ( $tags ) {
+					$tags = self::get_wpml_translated_tag_ids( $tags );
 					$comment_in = get_objects_in_term( $tags, 'cr_tag' );
 					if ( ! is_wp_error( $comment_in ) && $comment_in ) {
 						$comment_in = array_map( 'intval', $comment_in );
@@ -120,7 +121,8 @@ if ( ! class_exists( 'CR_Reviews_Slider' ) ) {
 				isset( $attributes['tag_ids'] ) &&
 				$attributes['tag_ids']
 			) {
-				$comment_in = get_objects_in_term( $attributes['tag_ids'], 'cr_tag' );
+				$tag_ids = self::get_wpml_translated_tag_ids( $attributes['tag_ids'] );
+				$comment_in = get_objects_in_term( $tag_ids, 'cr_tag' );
 				if ( ! is_wp_error( $comment_in ) && $comment_in ) {
 					$comment_in = array_map( 'intval', $comment_in );
 				} else {
@@ -525,6 +527,49 @@ if ( ! class_exists( 'CR_Reviews_Slider' ) ) {
 					echo $output;
 				}
 			}
+		}
+
+		public static function get_wpml_translated_tag_ids( $term_ids ) {
+			$term_ids = array_values( array_unique( array_map( 'intval', (array) $term_ids ) ) );
+
+			// Fast exit for sites without WPML
+			if ( ! has_filter( 'wpml_current_language' ) ) {
+				return $term_ids;
+			}
+
+			$all_ids = $term_ids;
+
+			foreach ( $term_ids as $term_id ) {
+				$trid = apply_filters(
+					'wpml_element_trid',
+					null,
+					$term_id,
+					'tax_cr_tag'
+				);
+
+				if ( ! $trid ) {
+					continue;
+				}
+
+				$translations = apply_filters(
+					'wpml_get_element_translations',
+					null,
+					$trid,
+					'tax_cr_tag'
+				);
+
+				if ( ! is_array( $translations ) ) {
+					continue;
+				}
+
+				foreach ( $translations as $translation ) {
+					if ( isset( $translation->element_id ) ) {
+						$all_ids[] = (int) $translation->element_id;
+					}
+				}
+			}
+
+			return array_values( array_unique( $all_ids ) );
 		}
 
 	}

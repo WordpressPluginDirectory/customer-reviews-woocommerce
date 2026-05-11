@@ -130,9 +130,7 @@ if ( ! class_exists( 'CR_Review_Reminder_Settings' ) ):
 					}
 					$_POST['ivole_verified_reviews'] = 'no';
 				}
-				if( 'yes' === $_POST['ivole_verified_reviews'] ) {
-					update_option( 'ivole_mailer_review_reminder', 'cr', false );
-				} else {
+				if ( 'no' === $_POST['ivole_verified_reviews'] ) {
 					update_option( 'ivole_mailer_review_reminder', 'wp', false );
 					$_POST['ivole_scheduler_type'] = 'wp';
 				}
@@ -143,9 +141,9 @@ if ( ! class_exists( 'CR_Review_Reminder_Settings' ) ):
 
 		protected function init_settings() {
 			$language_desc = __( 'Choose language that will be used for various elements of emails and review forms.', 'customer-reviews-woocommerce' );
-			$verified_reviews = get_option( 'ivole_verified_reviews', 'no' );
+			$mailer = get_option( 'ivole_mailer_review_reminder', 'wp' );
 
-			if( 'yes' === $verified_reviews ) {
+			if ( 'cr' === $mailer ) {
 				$available_languages = array(
 					'AR'  => __( 'Arabic', 'customer-reviews-woocommerce' ),
 					'BG'  => __( 'Bulgarian', 'customer-reviews-woocommerce' ),
@@ -195,7 +193,6 @@ if ( ! class_exists( 'CR_Review_Reminder_Settings' ) ):
 					$language_desc .= ' ' . __( 'It looks like you have qTranslate-X plugin activated. You might want to choose "qTranslate-X Automatic" option to enable automatic selection of language.', 'customer-reviews-woocommerce' );
 					$available_languages = array( 'QQ' => __( 'qTranslate-X Automatic', 'customer-reviews-woocommerce' ) ) + $available_languages;
 				}
-
 				// WPML integration
 				if ( defined( 'ICL_LANGUAGE_CODE' ) ) {
 					$language_desc .= ' ' . __( 'It looks like you have WPML or Polylang plugins activated. You might want to choose "WPML/Polylang Automatic" option to enable automatic selection of language.', 'customer-reviews-woocommerce' );
@@ -218,7 +215,7 @@ if ( ! class_exists( 'CR_Review_Reminder_Settings' ) ):
 				}
 			}
 
-			if( 'yes' === $verified_reviews ) {
+			if ( 'cr' === $mailer ) {
 				$scheduler_options = array(
 					'wp'  => __( 'WordPress Cron', 'customer-reviews-woocommerce' ),
 					'cr' => __( 'CR Cron', 'customer-reviews-woocommerce' )
@@ -420,7 +417,7 @@ if ( ! class_exists( 'CR_Review_Reminder_Settings' ) ):
 			);
 
 			// some features of review forms are not available for local forms
-			if( 0 < count( $available_languages ) ) {
+			if ( 0 < count( $available_languages ) ) {
 				$this->settings[100] = array(
 					'title' => __( 'Language', 'customer-reviews-woocommerce' ),
 					'type'  => 'title',
@@ -455,14 +452,9 @@ if ( ! class_exists( 'CR_Review_Reminder_Settings' ) ):
 				'id'   => 'ivole_options_email'
 			);
 			$auto_consent = true;
-			if( 'yes' === $verified_reviews ) {
-				$desc = sprintf(
-					__( 'Adjust template of the aggregated review forms that will be created and sent to customers by CusRev. Modifications will be applied to the next review form created after saving settings. If you enable <b>advanced</b> form templates in your account on %1$sCusRev website%2$s, they will <b>override</b> the settings below.', 'customer-reviews-woocommerce' ),
-					'<a href="https://www.cusrev.com/login.html" target="_blank" rel="noopener noreferrer">', '</a>'
-				);
+			if ( 'cr' === $mailer ) {
 				$auto_consent = self::get_auto_show_consent();
 			} else {
-				$desc = __( 'Adjust template of the aggregated review forms that will be created and sent to customers. Modifications will be applied to the next review form created after saving settings.', 'customer-reviews-woocommerce' );
 				$auto_consent = false;
 			}
 			if ( ! $auto_consent ) {
@@ -826,14 +818,6 @@ if ( ! class_exists( 'CR_Review_Reminder_Settings' ) ):
 											);
 											echo wc_help_tip(
 												__( 'CusRev (Customer Reviews) is a service for businesses that offers a voluntary scheme for verification of reviews submitted by customers', 'customer-reviews-woocommerce' )
-											);
-										?>
-									</li>
-									<li>
-										<?php
-											esc_html_e( 'Review invitations will be sent by CusRev on behalf of your store', 'customer-reviews-woocommerce' );
-											echo wc_help_tip(
-												__( 'CusRev uses AWS SES (Simple Email Service) for sending emails to ensure their excellent deliverability', 'customer-reviews-woocommerce' )
 											);
 										?>
 									</li>

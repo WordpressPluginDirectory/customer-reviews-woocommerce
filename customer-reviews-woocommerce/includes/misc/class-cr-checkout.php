@@ -14,10 +14,7 @@ if ( ! class_exists( 'CR_Checkout' ) ) :
 			if (
 				'yes' === get_option( 'ivole_customer_consent', 'yes' ) ||
 				(
-					(
-						'yes' === get_option( 'ivole_verified_reviews', 'no' ) ||
-						'cr' === get_option( 'ivole_mailer_review_reminder', 'cr' )
-					) &&
+					'cr' === get_option( 'ivole_mailer_review_reminder', 'wp' ) &&
 					CR_Review_Reminder_Settings::get_auto_show_consent()
 				)
 			) {

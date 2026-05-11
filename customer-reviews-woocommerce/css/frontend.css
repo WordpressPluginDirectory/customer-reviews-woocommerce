@@ -1608,7 +1608,8 @@ div.cr-review-tags-filter.cr-review-tags-filter-disabled {
 .cr-all-reviews-shortcode.cr-all-reviews-new-review ol.commentlist,
 .cr-reviews-grid.cr-reviews-grid-new-review .cr-reviews-grid-inner,
 .cr-all-reviews-shortcode.cr-all-reviews-new-review .cr-review-tags-filter,
-.cr-reviews-grid.cr-reviews-grid-new-review .cr-review-tags-filter {
+.cr-reviews-grid.cr-reviews-grid-new-review .cr-review-tags-filter,
+.cr-all-reviews-shortcode.cr-all-reviews-new-review .cr-ajax-reviews-cus-images-div {
 	display: none;
 }
 .cr-all-reviews-shortcode .ivole-review-country-icon,

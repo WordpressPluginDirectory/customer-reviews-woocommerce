@@ -367,6 +367,7 @@ if ( ! class_exists( 'CR_Attributes_Product_Feed' ) ):
 					OR meta.meta_key LIKE '\_alg_ean%'
 					OR meta.meta_key LIKE '\_wpsso_product%'
 					OR meta.meta_key LIKE '\_ts_%'
+					OR meta.meta_key LIKE '\_wc_gla%'
 					OR meta.meta_key = '_unit_product'
 					OR meta.meta_key = '_unit'
 					OR meta.meta_key = '_unit_base'

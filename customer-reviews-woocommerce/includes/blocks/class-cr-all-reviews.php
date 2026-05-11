@@ -1392,8 +1392,14 @@ if (! class_exists('CR_All_Reviews')) :
 				'code' => 100,
 				'message' => ''
 			);
-			if( isset( $_POST['cr_item'] ) ) {
-				if( isset( $_FILES ) && is_array( $_FILES ) && 0 < count( $_FILES ) ) {
+			if ( 'yes' !== get_option( 'ivole_attach_image', 'no' ) ) {
+				$return['code'] = 504;
+				$return['message'] = __( 'Error: attachment of media files is disabled in the settings', 'customer-reviews-woocommerce' );
+				wp_send_json( $return );
+				return;
+			}
+			if ( isset( $_POST['cr_item'] ) ) {
+				if ( isset( $_FILES ) && is_array( $_FILES ) && 0 < count( $_FILES ) ) {
 					// check the file size
 					$attach_image_size = get_option( 'ivole_attach_image_size', 25 );
 					$max_size = 1024 * 1024 * $attach_image_size;
@@ -1406,7 +1412,7 @@ if (! class_exists('CR_All_Reviews')) :
 					// check the file type
 					$file_name_parts = explode( '.', $_FILES['cr_file']['name'] );
 					$file_ext = $file_name_parts[ count( $file_name_parts ) - 1 ];
-					if( ! CR_Reviews::is_valid_file_type( $file_ext ) ) {
+					if ( ! CR_Reviews::is_valid_file_type( $file_ext ) ) {
 						$return['code'] = 502;
 						$return['message'] = __( 'Error: accepted file types are PNG, JPG, JPEG, GIF, MP4, MPEG, OGG, WEBM, MOV, AVI', 'customer-reviews-woocommerce' );
 						wp_send_json( $return );
@@ -1415,9 +1421,9 @@ if (! class_exists('CR_All_Reviews')) :
 					// upload the file
 					$post_id = $_POST['cr_item'] ? $_POST['cr_item'] : 0;
 					$attachmentId = media_handle_upload( 'cr_file', $post_id );
-					if( !is_wp_error( $attachmentId ) ) {
+					if ( !is_wp_error( $attachmentId ) ) {
 						$upload_key = bin2hex( openssl_random_pseudo_bytes( 10 ) );
-						if( false !== update_post_meta( $attachmentId, 'cr-upload-temp-key', $upload_key ) ) {
+						if ( false !== update_post_meta( $attachmentId, 'cr-upload-temp-key', $upload_key ) ) {
 							// return to js
 							$return['attachment'] = array(
 								'id' => $attachmentId,

@@ -606,7 +606,20 @@ class CR_Google_Shopping_Prod_Feed {
 					break;
 				}
 			}
-			$_product->availability = $product->is_in_stock() ? 'in stock' : 'out of stock';
+			if ( $product->is_in_stock() ) {
+				if ( $product->is_on_backorder() ) {
+					$_product->availability = 'backorder';
+				} else {
+					$_product->availability = 'in stock';
+				}
+			} else {
+				$_product->availability = 'out of stock';
+			}
+			$_product->availability = apply_filters(
+				'cr_gs_product_feed_availability',
+				$_product->availability,
+				$product
+			);
 
 			if( 'incl' === get_option( 'woocommerce_tax_display_shop' ) ) {
 				$_product->price = wc_get_price_including_tax( $product ) . ' ' . get_woocommerce_currency();

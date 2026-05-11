@@ -45,10 +45,11 @@ if ( ! class_exists( 'CR_Local_Forms_Ajax' ) ) :
 
 						foreach( $_POST['items'] as $review_item ) {
 							foreach( $db_items as $key => $item ) {
-								if( intval( $review_item['id'] ) === intval( $item['id'] ) ) {
-									$db_items[$key]['rating'] = $review_item['rating'];
-									$db_items[$key]['comment'] = $review_item['comment'];
-									if( isset( $review_item['media'] ) ) {
+								if ( intval( $review_item['id'] ) === intval( $item['id'] ) ) {
+									$db_items[$key]['rating'] = intval( $review_item['rating'] );
+									$db_items[$key]['comment'] = wp_kses_post( $review_item['comment'] );
+									if ( isset( $review_item['media'] ) && is_array( $review_item['media'] ) ) {
+										$review_item['media'] = array_map( 'intval', $review_item['media'] );
 										$db_items[$key]['media'] = array_values( $review_item['media'] );
 									} else {
 										$db_items[$key]['media'] = array();

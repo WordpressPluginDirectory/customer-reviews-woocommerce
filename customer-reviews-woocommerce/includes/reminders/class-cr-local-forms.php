@@ -59,6 +59,11 @@ if ( ! class_exists( 'CR_Local_Forms' ) ) :
 				} else {
 					$this->extra = '';
 				}
+				if ( property_exists( $record, 'currency' ) ) {
+					$this->currency = $record->currency;
+				} else {
+					$this->currency = '';
+				}
 				// delete media files uploaded with test reviews
 				if( self::TEST_FORM === $this->form_id && $this->items ) {
 					foreach( $this->items as $key => $item ) {
@@ -185,20 +190,10 @@ if ( ! class_exists( 'CR_Local_Forms' ) ) :
 				// otherwise product item
 				$cr_form_item_rating_name = __( 'Rating', 'customer-reviews-woocommerce' );
 				$cr_form_item_image = $item->image;
-				// WPML Multi-currency compatibility
-				$price_args = array();
-				if ( self::TEST_FORM !== $this->form_id ) {
-					if ( has_filter( 'wpml_translate_single_string' ) && ! function_exists( 'pll_get_post' ) ) {
-						$order_obj = wc_get_order( $this->order_id );
-						if ( $order_obj ) {
-							$currency = $order_obj->get_currency();
-							if ( $currency ) {
-								$price_args['currency'] = $currency;
-							}
-						}
-					}
-				}
-				//
+				// currency if available
+				$price_args = array(
+					'currency' => $this->currency
+				);
 				if ( isset( $item->pricePerItem ) ) {
 					$cr_form_item_price = CR_Email_Func::cr_price( $item->pricePerItem, $price_args );
 				} else {
@@ -367,6 +362,10 @@ if ( ! class_exists( 'CR_Local_Forms' ) ) :
 					)
 				);
 			}
+			// add 'currency' column if it doesn't exist
+			if( ! $wpdb->get_var( $wpdb->prepare( "SHOW COLUMNS FROM `$table_name` LIKE %s", 'currency' ) ) ) {
+				$wpdb->query( "ALTER TABLE `$table_name` ADD `currency` varchar(10) DEFAULT NULL AFTER `formBody`;" );
+			}
 
 			// cleanup old review forms
 			$expiry_period = intval( get_option( 'ivole_form_expiry_period', 0 ) );
@@ -393,6 +392,13 @@ if ( ! class_exists( 'CR_Local_Forms' ) ) :
 				$formId = strtolower( uniqid() );
 			}
 
+			// get currency
+			$order_currency = '';
+			$order = wc_get_order( $orderId );
+			if ( $order ) {
+				$order_currency = $order->get_currency();
+			}
+
 			$insert_args = array(
 				'formId' => $formId,
 				'orderId' => $orderId,
@@ -400,6 +406,7 @@ if ( ! class_exists( 'CR_Local_Forms' ) ) :
 				'customerName' => trim( $customer[ 'firstname' ] . ' ' . $customer[ 'lastname' ] ),
 				'formHeader' => $header,
 				'formBody' => $body,
+				'currency' => $order_currency,
 				'items' => json_encode( $items ),
 				'language' => $language,
 				'dateCreated' => gmdate('Y-m-d H:i:s')
@@ -418,7 +425,7 @@ if ( ! class_exists( 'CR_Local_Forms' ) ) :
 			// insert data
 			$res = $wpdb->replace( $table_name, $insert_args );
 			if( false !== $res ) {
-				$formUrl = get_home_url() . '/' . self::FORMS_SLUG . '/' . $formId . '/';
+				$formUrl = home_url( '/' . self::FORMS_SLUG . '/' . $formId . '/' );
 				do_action( 'cr_local_forms_created', $orderId, $formId, $formUrl );
 				return array( 'code' => 0, 'text' => $formUrl );
 			} else {

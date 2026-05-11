@@ -509,6 +509,8 @@ class CR_Google_Shopping_Feed {
 		}
 		update_option( 'ivole_product_reviews_feed_cron', $cron_options_to_save );
 
+		$reviews = apply_filters( 'cr_gs_product_reviews_feed_data', $reviews, $args );
+
 		return $reviews;
 	}
 

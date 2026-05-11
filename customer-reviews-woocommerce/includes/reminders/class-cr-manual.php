@@ -57,6 +57,7 @@ if ( ! class_exists( 'CR_Manual' ) ) :
 				$order_id = method_exists( $order, 'get_id' ) ? $order->get_id() : $order->id;
 				$consent = $order->get_meta( '_ivole_cr_consent', true );
 				$verified_reviews = get_option( 'ivole_verified_reviews', 'no' );
+				$mailer = get_option( 'ivole_mailer_review_reminder', 'wp' );
 				if (
 					'yes' === $consent ||
 					(
@@ -64,7 +65,7 @@ if ( ! class_exists( 'CR_Manual' ) ) :
 						'no' !== $consent
 					) ||
 					(
-						'yes' !== $verified_reviews
+						'cr' !== $mailer
 					)
 				) {
 					// Set the action button
