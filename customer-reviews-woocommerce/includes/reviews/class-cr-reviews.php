@@ -382,7 +382,7 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 			}
 		}
 		public function cr_style_1() {
-			if( is_product() ) {
+			if ( is_product() ) {
 				$assets_version = Ivole::CR_VERSION;
 				if( ! $this->disable_lightbox ) {
 					wp_enqueue_script( 'wc-photoswipe-ui-default' );
@@ -405,10 +405,12 @@ if ( ! class_exists( 'CR_Reviews' ) ) :
 						'cr_images_upload_limit' => $this->limit_file_count,
 						'cr_images_upload_max_size' => $this->limit_file_size,
 						'rating_filter' => self::$rating_get_filter,
-						'reviews_tab' => self::$reviews_tab
+						'reviews_tab' => self::$reviews_tab,
+						'flags_url' => plugin_dir_url( dirname( dirname( __FILE__ ) ) ) . 'img/flags/'
 					)
 			);
 			wp_enqueue_script( 'cr-frontend-js' );
+			do_action( 'cr_after_enqueue_scripts_scripts' );
 		}
 	}
 	public function cr_style_2() {

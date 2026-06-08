@@ -103,7 +103,7 @@ if ( ! class_exists( 'CR_Settings_Admin_Menu' ) ):
 						<?php if ( empty( $GLOBALS['hide_save_button'] ) ) : ?>
 							<button name="save" class="button-primary woocommerce-save-button" type="submit" value="<?php esc_attr_e( 'Save changes', 'woocommerce' ); ?>"><?php esc_html_e( 'Save changes', 'woocommerce' ); ?></button>
 						<?php endif; ?>
-						<?php wp_nonce_field( 'ivole-settings' ); ?>
+						<?php wp_nonce_field( 'cr-settings' ); ?>
 					</p>
 				</div>
 			</form>
@@ -114,7 +114,7 @@ if ( ! class_exists( 'CR_Settings_Admin_Menu' ) ):
 
 		public function save_settings() {
 			if ( $this->is_this_page() && ! empty( $_POST ) ) {
-				check_admin_referer( 'ivole-settings' );
+				check_admin_referer( 'cr-settings' );
 
 				do_action( 'cr_save_settings_' . $this->current_tab );
 

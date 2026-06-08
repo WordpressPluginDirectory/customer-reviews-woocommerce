@@ -697,10 +697,12 @@ if (! class_exists('CR_All_Reviews')) :
 					'cr_ajax_object',
 					array(
 						'ajax_url' => admin_url( 'admin-ajax.php' ),
-						'disable_lightbox' => ( $disable_lightbox ? 1 : 0 )
+						'disable_lightbox' => ( $disable_lightbox ? 1 : 0 ),
+						'flags_url' => plugin_dir_url( dirname( dirname( __FILE__ ) ) ) . 'img/flags/'
 					)
 				);
 				wp_enqueue_script( 'cr-frontend-js' );
+				do_action( 'cr_after_enqueue_allreviews_scripts' );
 			}
 		}
 

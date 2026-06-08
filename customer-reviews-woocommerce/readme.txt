@@ -2,9 +2,9 @@
 Contributors: ivole
 Tags: woocommerce, review plugin, review reminder, customer reviews, review for discount
 Requires at least: 4.5
-Tested up to: 6.9
+Tested up to: 7.0
 Requires PHP: 7.2
-Stable tag: 5.109.0
+Stable tag: 5.110.1
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl.html
 
@@ -234,6 +234,11 @@ If you would like to change how reviews are sorted on product pages, it is possi
 
 == Changelog ==
 
+= 5.110.1 =
+* Improvement: CSS improvement for compatibility with third-party themes
+= 5.110.0 =
+* Improvement: WordPress and WooCommerce compatibility update
+* Improvement: additional filters and actions
 = 5.109.0 =
 * Improvement: prevent upload of media files if 'Attach Images/Videos' setting is disabled
 = 5.108.0 =

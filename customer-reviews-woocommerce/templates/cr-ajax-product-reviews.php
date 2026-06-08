@@ -135,7 +135,7 @@ $nonce = wp_create_nonce( "cr_product_reviews_" . $cr_product_id );
 
 	<?php
 		$cr_ajax_review_form_class = 'cr-ajax-reviews-review-form';
-		if( $no_comments_yet && $new_reviews_allowed ) {
+		if ( $no_comments_yet && $new_reviews_allowed ) {
 			$cr_ajax_review_form_class .= ' cr-ajax-reviews-review-form-nc';
 		}
 	?>

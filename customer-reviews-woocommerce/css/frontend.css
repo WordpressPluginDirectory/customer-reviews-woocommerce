@@ -867,6 +867,7 @@ div.iv-comment-image img {
 .cr-all-reviews-shortcode .cr-review-form-submitting .cr-onsite-question,
 .cr-all-reviews-shortcode .cr-review-form-submitting .cr-onsite-question-inp,
 .cr-all-reviews-shortcode .cr-review-form-submitting .cr-review-form-terms,
+.cr-all-reviews-shortcode .cr-review-form-submitting .cr-review-form-location,
 .cr-ajax-reviews-review-form .cr-review-form-submitting .cr-review-form-buttons .cr-review-form-submit,
 .cr-ajax-reviews-review-form .cr-review-form-submitting .cr-review-form-buttons .cr-review-form-cancel,
 .cr-ajax-reviews-review-form .cr-review-form-submitting .cr-review-form-rating .cr-review-form-rating-inner,
@@ -877,6 +878,7 @@ div.iv-comment-image img {
 .cr-ajax-reviews-review-form .cr-review-form-submitting .cr-onsite-question,
 .cr-ajax-reviews-review-form .cr-review-form-submitting .cr-onsite-question-inp,
 .cr-ajax-reviews-review-form .cr-review-form-submitting .cr-review-form-terms,
+.cr-ajax-reviews-review-form .cr-review-form-submitting .cr-review-form-location,
 .cr-reviews-grid .cr-review-form-submitting .cr-review-form-buttons .cr-review-form-submit,
 .cr-reviews-grid .cr-review-form-submitting .cr-review-form-buttons .cr-review-form-cancel,
 .cr-reviews-grid .cr-review-form-submitting .cr-review-form-rating .cr-review-form-rating-inner,
@@ -887,6 +889,7 @@ div.iv-comment-image img {
 .cr-reviews-grid .cr-review-form-submitting .cr-onsite-question,
 .cr-reviews-grid .cr-review-form-submitting .cr-onsite-question-inp,
 .cr-reviews-grid .cr-review-form-submitting .cr-review-form-terms,
+.cr-reviews-grid .cr-review-form-submitting .cr-review-form-location,
 .cr-qna-block .cr-review-form-submitting.cr-qna-new-q-form,
 .cr-qna-block .cr-review-form-submitting.cr-qna-list-inl-answ {
 	pointer-events: none;
@@ -977,6 +980,109 @@ div.iv-comment-image img {
 .cr-qna-block .cr-review-form-res .cr-captcha-terms,
 .cr-qna-block .cr-review-form-res .cr-review-form-terms {
 	display: none;
+}
+.cr-all-reviews-shortcode .cr-review-form-location-chips,
+.cr-ajax-reviews-review-form .cr-review-form-location-chips,
+.cr-reviews-grid .cr-review-form-location-chips {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px;
+	border: solid 1px #D8E2E7;
+	background-color: #FFFFFF;
+	box-shadow: none;
+	position: relative;
+	padding: 16px 16px;
+	color: #0E252C;
+	font-size: 14px;
+	width: 100%;
+	margin: 0;
+	box-sizing: border-box;
+	border-radius: 3px;
+}
+.cr-review-form-location-chips .cr-review-location-chip {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	margin: 0;
+	cursor: pointer;
+}
+.cr-review-form-location-chips .cr-review-location-chip input {
+	position: absolute;
+	opacity: 0;
+	pointer-events: none;
+}
+.cr-review-form-location-chips .cr-review-location-chip span {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 30px;
+	padding: 0 15px;
+	border: 1px solid #D9D9D9;
+	border-radius: 10px;
+	background: #FFFFFF;
+	color: #7A7A7A;
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 1;
+	gap: 5px;
+	transition:
+		background-color .2s ease,
+		border-color .2s ease,
+		color .2s ease;
+}
+.cr-review-form-location-chips .cr-review-location-chip input:checked + span {
+	background: #19B394;
+	border-color: #19B394;
+	color: #FFFFFF;
+}
+.cr-review-form-location-chips .cr-review-location-chip:hover span {
+	border-color: #19B394;
+}
+.cr-review-form-location.cr-review-form-location-loading {
+	.cr-review-location-chip {
+		display: none;
+		pointer-events: none;
+	}
+	.cr-review-form-location-loading-row {
+		display: flex;
+	}
+}
+.cr-review-form-location.cr-review-form-location-error {
+	.cr-review-location-chip {
+		display: none;
+		pointer-events: none;
+	}
+	.cr-review-form-location-loading-row {
+		display: none;
+	}
+	.cr-review-form-location-error-message {
+		display: flex;
+	}
+}
+.cr-review-form-location .cr-review-form-location-loading-row,
+.cr-review-form-location .cr-review-form-location-error-message {
+	display: none;
+	align-items: center;
+	margin: 0px;
+	min-height: 30px;
+	gap: 12px;
+	color: #4D5D64;
+	font-size: 12px;
+}
+.cr-review-form-location .cr-location-spinner {
+	width: 18px;
+	height: 18px;
+	border: 2px solid #D9D9D9;
+	border-top-color: #19B394;
+	border-radius: 50%;
+	animation: cr-location-spin .8s linear infinite;
+}
+.cr-review-form-location .cr-review-country-icon {
+	display: inline;
+	height: 12px;
+	width: auto;
+	margin: 0;
+	border-radius: 0;
 }
 .cr-all-reviews-shortcode .cr-review-form-result,
 .cr-ajax-reviews-review-form .cr-review-form-result,
@@ -1248,6 +1354,11 @@ div.ivole-summaryBox.cr-summaryBar-updating,
 	}
 	100% {
 		fill: #FFFFFF;
+	}
+}
+@keyframes cr-location-spin {
+	to {
+		transform: rotate(360deg);
 	}
 }
 .cr-voting-cont-uni span.cr-voting-downvote svg .cr-voting-svg-int {

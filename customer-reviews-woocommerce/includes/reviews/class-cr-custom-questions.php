@@ -397,6 +397,7 @@ if ( ! class_exists( 'CR_Custom_Questions' ) ) :
 						update_comment_meta( $comment_id, self::$meta_id, $cus_questions );
 					}
 				}
+				do_action( 'cr_submit_onsite_question', $comment_id, $post );
 			}
 		}
 

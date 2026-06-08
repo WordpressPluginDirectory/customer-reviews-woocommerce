@@ -125,6 +125,10 @@ if( $cr_current_user instanceof WP_User ) {
 		</div>
 
 		<?php
+			do_action( 'cr_review_form_after_name_email', $cr_form_settings_array, $cr_hash );
+		?>
+
+		<?php
 			if( $cr_form_media_enabled ) :
 		?>
 			<div class="cr-form-item-media cr-form-item-container">
